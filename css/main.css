@@ -576,12 +576,12 @@ td {
 }
 .post pre,
 .post .highlight {
-  background: #002451;
+  background: #000;
   margin: 20px 0;
   padding: 15px;
   overflow: auto;
   font-size: 13px;
-  color: #fff;
+  color: #eaeaea;
   line-height: 1.6;
 }
 .post .highlight .gutter pre,
@@ -618,7 +618,7 @@ td {
 }
 .post .highlight figcaption {
   font-size: 0.85em;
-  color: #7285b7;
+  color: #969896;
   line-height: 1em;
   margin-bottom: 1em;
 }
@@ -645,7 +645,7 @@ td {
   border-style: solid;
   border-color: #ccc;
   border-width: 1px 0;
-  background: #002451;
+  background: #000;
   padding: 15px 40px 15px 15px;
 }
 .post .gist .gist-file {
@@ -671,8 +671,8 @@ td {
   border: none;
 }
 .post .gist .gist-file .gist-meta {
-  background: #002451;
-  color: #7285b7;
+  background: #000;
+  color: #969896;
   font: 13px Consolas, "Microsoft YaHei";
   text-shadow: 0 0;
   padding: 0;
@@ -687,7 +687,7 @@ td {
   text-decoration: underline;
 }
 pre .comment {
-  color: #7285b7;
+  color: #969896;
 }
 pre .variable,
 pre .attribute,
@@ -701,7 +701,7 @@ pre .html .doctype,
 pre .css .id,
 pre .css .class,
 pre .css .pseudo {
-  color: #ff9da4;
+  color: #d54e53;
 }
 pre .number,
 pre .preprocessor,
@@ -709,11 +709,11 @@ pre .built_in,
 pre .literal,
 pre .params,
 pre .constant {
-  color: #ffc58f;
+  color: #e78c45;
 }
 pre .ruby .class .title,
 pre .css .rules .attribute {
-  color: #d1f1a9;
+  color: #b9ca4a;
 }
 pre .string,
 pre .value,
@@ -721,11 +721,11 @@ pre .inheritance,
 pre .header,
 pre .ruby .symbol,
 pre .xml .cdata {
-  color: #d1f1a9;
+  color: #b9ca4a;
 }
 pre .title,
 pre .css .hexcolor {
-  color: #9ff;
+  color: #70c0b1;
 }
 pre .function,
 pre .python .decorator,
@@ -735,11 +735,11 @@ pre .ruby .title .keyword,
 pre .perl .sub,
 pre .javascript .title,
 pre .coffeescript .title {
-  color: #bbdaff;
+  color: #7aa6da;
 }
 pre .keyword,
 pre .javascript .function {
-  color: #ebbbff;
+  color: #c397d8;
 }
 html,
 body {
@@ -1058,7 +1058,7 @@ body {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #e33061;
+  background: #ffff70;
 }
 .sidebar-nav {
   margin: 0;
