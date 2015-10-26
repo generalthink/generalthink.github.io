@@ -30,7 +30,7 @@
 
 
 
-  <meta name="keywords" content="家 生活 感悟" />
+  <meta name="keywords" content="java fastjson 序列化" />
 
 
 
@@ -39,16 +39,17 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="回家的路与感想">
+<meta name="description" content="fastjson定制序列化以及反序列化">
 <meta property="og:type" content="article">
-<meta property="og:title" content="回家">
-<meta property="og:url" content="http://yoursite.com/2015/10/03/go-home/index.html">
+<meta property="og:title" content="fastjson定制序列化以及反序列化">
+<meta property="og:url" content="http://yoursite.com/2015/10/26/fastjson-use/index.html">
 <meta property="og:site_name" content="I am TKing">
-<meta property="og:description" content="回家的路与感想">
-<meta property="og:updated_time" content="2015-10-03T07:44:40.045Z">
+<meta property="og:description" content="fastjson定制序列化以及反序列化">
+<meta property="og:image" content="http://7xlvme.com1.z0.glb.clouddn.com/hexo-toJSONString.png">
+<meta property="og:updated_time" content="2015-10-26T14:22:36.499Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="回家">
-<meta name="twitter:description" content="回家的路与感想">
+<meta name="twitter:title" content="fastjson定制序列化以及反序列化">
+<meta name="twitter:description" content="fastjson定制序列化以及反序列化">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -58,7 +59,7 @@
   };
 </script>
 
-  <title> 回家 | I am TKing </title>
+  <title> fastjson定制序列化以及反序列化 | I am TKing </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -189,7 +190,7 @@
           
           
             
-              回家
+              fastjson定制序列化以及反序列化
             
           
         </h1>
@@ -198,8 +199,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-10-03T15:03:34+08:00" content="2015-10-03">
-            2015-10-03
+          <time itemprop="dateCreated" datetime="2015-10-26T20:03:19+08:00" content="2015-10-26">
+            2015-10-26
           </time>
         </span>
 
@@ -208,8 +209,8 @@
             &nbsp; | &nbsp; 分类于
             
               <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                <a href="/categories/life/" itemprop="url" rel="index">
-                  <span itemprop="name">life</span>
+                <a href="/categories/java/" itemprop="url" rel="index">
+                  <span itemprop="name">java</span>
                 </a>
               </span>
 
@@ -224,8 +225,8 @@
           
             <span class="post-comments-count">
               &nbsp; | &nbsp;
-              <a href="/2015/10/03/go-home/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/03/go-home/" itemprop="commentsCount"></span>
+              <a href="/2015/10/26/fastjson-use/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/26/fastjson-use/" itemprop="commentsCount"></span>
               </a>
             </span>
           
@@ -239,19 +240,27 @@
       
 
       
-        <span itemprop="articleBody"><p>&#x5341;&#x6708;&#x4E00;&#x53F7;&#xFF0C;&#x6211;&#x5728;&#x56DE;&#x5BB6;&#x7684;&#x8DEF;&#x4E0A;&#x3002;</p>
-<p>&#x84DD;&#x5929;&#x767D;&#x4E91;&#xFF0C;&#x9E1F;&#x8BED;&#x82B1;&#x9999;&#x3002;</p>
-<p>&#x8FD9;&#x4E00;&#x523B;&#x7684;&#x5FC3;&#x60C5;&#x4E0D;&#x5916;&#x5982;&#x662F;&#x3002;</p>
-<p>&#x867D;&#x7136;&#x6211;&#x88AB;&#x5835;&#x5728;&#x4E86;&#x534A;&#x8DEF;&#xFF0C;&#x53EF;&#x601D;&#x4E61;&#x7684;&#x5FC3;&#x60C5;&#x5728;&#x8FD9;&#x4E00;&#x523B;&#x5C24;&#x5176;&#x6D53;&#x70C8;&#x3002;</p>
-<p>&#x5230;&#x4E86;&#xFF0C;&#x5230;&#x4E86;&#xFF0C;&#x7EC8;&#x4E8E;&#x5230;&#x4E86;&#xFF0C;&#x5C3D;&#x7BA1;&#x591C;&#x8272;&#x6D53;&#x70C8;&#x3002;</p>
-<p>&#x770B;&#x89C1;&#x7237;&#x7237;&#x5976;&#x5976;&#x719F;&#x6089;&#x7684;&#x9762;&#x5B54;&#xFF0C;&#x4E00;&#x79CD;&#x611F;&#x52A8;&#x6D8C;&#x4E0A;&#x5FC3;&#x5934;&#xFF0C;&#x6211;&#x77E5;&#x9053;&#x4ED6;&#x4EEC;&#x5728;&#x7B49;&#x6211;&#x56DE;&#x5BB6;&#xFF0C;&#x4E0D;&#x8BBA;&#x591A;&#x665A;&#xFF0C;&#x4E0D;&#x8BBA;&#x591A;&#x8FDC;&#x3002;</p>
-<p>&#x6211;&#x7231;&#x4F60;&#xFF0C;&#x6211;&#x7684;&#x5BB6;&#x3002;</p>
-<p>&#x6211;&#x662F;&#x6211;&#x4EEC;&#x5BB6;&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x5927;&#x5B66;&#x751F;&#xFF0C;&#x4ED6;&#x4EEC;&#x4E3A;&#x6211;&#x9A84;&#x50B2;&#xFF0C;&#x4E3A;&#x6211;&#x81EA;&#x8C6A;&#x3002;</p>
-<p>&#x6211;&#x5E38;&#x5E38;&#x5728;&#x53CD;&#x601D;&#xFF0C;&#x5176;&#x5B9E;&#x6211;&#x8FD8;&#x505A;&#x5F97;&#x4E0D;&#x591F;&#x597D;&#xFF0C;&#x6211;&#x7684;&#x6210;&#x5C31;&#x8FD8;&#x5F88;&#x4F4E;&#x3002;</p>
-<p>&#x6211;&#x60F3;&#x8981;&#x6210;&#x529F;&#xFF0C;&#x6E34;&#x671B;&#x6210;&#x529F;&#xFF0C;&#x6BCF;&#x4E2A;&#x4EBA;&#x5E94;&#x8BE5;&#x90FD;&#x6E34;&#x671B;&#x3002;&#x4F46;&#x662F;&#x5929;&#x4E0B;&#x6CA1;&#x6709;&#x6389;&#x9985;&#x997C;&#x7684;&#x4E8B;&#x60C5;&#xFF0C;&#x6240;&#x4EE5;&#x8981;&#x66F4;&#x52A0;&#x52AA;&#x529B;&#x3002;</p>
-<p>&#x6BCF;&#x4E2A;&#x4EBA;&#x4E00;&#x8F88;&#x5B50;&#x5E94;&#x8BE5;&#x8981;&#x6709;&#x68A6;&#x60F3;&#xFF0C;&#x8981;&#x6709;&#x8FFD;&#x6C42;&#xFF0C;&#x4EBA;&#x4E4B;&#x4E00;&#x751F;&#x624D;&#x4E0D;&#x81F3;&#x4E8E;&#x6D51;&#x6D51;&#x5669;&#x5669;&#x3002;</p>
-<p>&#x4E3A;&#x4E86;&#x68A6;&#x60F3;&#x800C;&#x52AA;&#x529B;&#xFF0C;&#x5373;&#x4F7F;&#x5931;&#x8D25;&#xFF0C;&#x6211;&#x4E5F;&#x662F;&#x5728;&#x8DEF;&#x4E0A;&#x3002;</p>
-<p>&#x6211;&#x7231;&#x4F60;&#xFF0C;&#x6211;&#x7684;&#x5BB6;&#x3002;&#x7ED9;&#x4E86;&#x6211;&#x52A8;&#x529B;&#xFF0C;&#x7ED9;&#x4E86;&#x6211;&#x4F9D;&#x9760;&#xFF0C;&#x7ED9;&#x4E86;&#x6211;&#x65B9;&#x5411;&#x3002;</p>
+        <span itemprop="articleBody"><p><strong>&#x5148;&#x6765;&#x770B;&#x4E00;&#x6BB5;&#x5E8F;&#x5217;&#x5316;&#x7684;&#x4EE3;&#x7801;</strong>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FastJsonTest</span> </span>{</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">FastJsonTest</span><span class="params">()</span> </span>{</span><br><span class="line">  </span><br><span class="line">  }</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{</span><br><span class="line">    Map&lt;String, String&gt; map = <span class="keyword">new</span> HashMap&lt;String, String&gt;();</span><br><span class="line">    map.put(<span class="string">&quot;12&quot;</span>, <span class="string">&quot;zhangsan1&quot;</span>);</span><br><span class="line">    map.put(<span class="string">&quot;121&quot;</span>, <span class="string">&quot;zhangsan2&quot;</span>);</span><br><span class="line">    map.put(<span class="string">&quot;122&quot;</span>, <span class="string">&quot;zhangsan3&quot;</span>);</span><br><span class="line"></span><br><span class="line">    String gString = JSON.toJSONString(map, <span class="keyword">new</span> PropertyFilter() {</span><br><span class="line">      </span><br><span class="line">      <span class="annotation">@Override</span></span><br><span class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">apply</span><span class="params">(Object object, String name, Object value)</span> </span>{</span><br><span class="line">       System.out.println(object.toString()+<span class="string">&quot;...&quot;</span>+name+<span class="string">&quot;...&quot;</span>+value);</span><br><span class="line">       <span class="keyword">if</span>(name.equalsIgnoreCase(<span class="string">&quot;121&quot;</span>) || value.equals(<span class="string">&quot;zhangsan2&quot;</span>))</span><br><span class="line">         <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">       </span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">      }</span><br><span class="line">    }, SerializerFeature.BrowserCompatible);<span class="comment">//SerializerFeature.WriteNonStringKeyAsString</span></span><br><span class="line"></span><br><span class="line">    System.out.println(gString);<span class="comment">//{&quot;122&quot;:&quot;zhangsan3&quot;,&quot;12&quot;:&quot;zhangsan1&quot;}</span></span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></table></figure></p>
+<p>toJSONString &#x6709;&#x5F88;&#x591A;&#x91CD;&#x6784;&#x7684;&#x65B9;&#x6CD5;:
+<img src="http://7xlvme.com1.z0.glb.clouddn.com/hexo-toJSONString.png" alt="toJSONString"></p>
+<p>SerializerFeature: &#x5728;&#x5176;&#x4E2D;&#x53EF;&#x4EE5;&#x5B9A;&#x4E49;&#x5E8F;&#x5217;&#x5316;&#x6210;json&#x4E32;&#x7684;&#x65F6;&#x5019;&#x7684;&#x5404;&#x79CD;&#x7279;&#x6027;</p>
+<ol>
+<li>SerializerFeature.BrowserCompatible &#x6807;&#x793A;&#x517C;&#x5BB9;&#x6E38;&#x89C8;&#x5668;</li>
+<li>SerializerFeature.WriteNonStringKeyAsString &#x5C06;&#x975E;&#x5B57;&#x7B26;&#x4E32;&#x7C7B;&#x578B;&#x7684;key&#x5F53;&#x6210;&#x5B57;&#x7B26;&#x4E32;&#x6765;&#x5904;&#x7406;</li>
+</ol>
+<p>&#x4F7F;&#x7528;&#x4E0A;&#x9762;&#x4E24;&#x79CD;&#x4E2D;&#x7684;&#x4EFB;&#x610F;&#x4E00;&#x79CD;&#x90FD;&#x4F1A;&#x4E3A;key&#x52A0;&#x4E0A;&#x53CC;&#x5F15;&#x53F7;&#x3002;</p>
+<p>SerializeFilter:  &#x5B9A;&#x5236;&#x5E8F;&#x5217;&#x5316;&#xFF0C;&#x5B83;&#x662F;&#x4E00;&#x4E2A;&#x63A5;&#x53E3;,fastjson&#x4E2D;&#x9884;&#x5B9A;&#x4E49;&#x4E86;&#x90E8;&#x5206;&#x5E38;&#x7528;&#x7684;filter</p>
+<ol>
+<li>PropertyPreFilter &#x6839;&#x636E;PropertyName&#x5224;&#x65AD;&#x662F;&#x5426;&#x5E8F;&#x5217;&#x5316;</li>
+<li>PropertyFilter &#x6839;&#x636E;PropertyName&#x548C;PropertyValue&#x6765;&#x5224;&#x65AD;&#x662F;&#x5426;&#x5E8F;&#x5217;&#x5316;</li>
+<li>NameFilter &#x4FEE;&#x6539;Key&#xFF0C;&#x5982;&#x679C;&#x9700;&#x8981;&#x4FEE;&#x6539;Key,process&#x8FD4;&#x56DE;&#x503C;&#x5219;&#x53EF;</li>
+<li>ValueFilter &#x4FEE;&#x6539;Value</li>
+<li>BeforeFilter &#x5E8F;&#x5217;&#x5316;&#x65F6;&#x5728;&#x6700;&#x524D;&#x6DFB;&#x52A0;&#x5185;&#x5BB9;</li>
+<li>AfterFilter &#x5E8F;&#x5217;&#x5316;&#x65F6;&#x5728;&#x6700;&#x540E;&#x6DFB;&#x52A0;&#x5185;&#x5BB9;</li>
+</ol>
+<p>&#x66F4;&#x591A;&#x5E8F;&#x5217;&#x5316;&#x4FE1;&#x606F;&#x8BF7;&#x53C2;&#x8003;:<a href="https://github.com/alibaba/fastjson/wiki/%E5%AE%9A%E5%88%B6%E5%BA%8F%E5%88%97%E5%8C%96" target="_blank" rel="external">https://github.com/alibaba/fastjson/wiki/&#x5B9A;&#x5236;&#x5E8F;&#x5217;&#x5316;</a></p>
+<p>&#x53CD;&#x5E8F;&#x5217;&#x5316;&#x8BF7;&#x53C2;&#x8003;:<a href="https://github.com/alibaba/fastjson/wiki/ParseProcess" target="_blank" rel="external">https://github.com/alibaba/fastjson/wiki/ParseProcess</a></p>
 </span>
       
     </div>
@@ -260,7 +269,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/home/" rel="tag">#home</a>
+            <a href="/tags/java/" rel="tag">#java</a>
+          
+            <a href="/tags/json/" rel="tag">#json</a>
           
         </div>
       
@@ -269,13 +280,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/10/26/fastjson-use/" rel="prev">fastjson定制序列化以及反序列化</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/10/02/how-to-use-fastjson/" rel="next">fastjson使用</a>
+              <a href="/2015/10/03/go-home/" rel="next">回家</a>
             
           </div>
         </div>
@@ -290,10 +299,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2015/10/03/go-home/"
-     data-title="回家"
+        <div class="ds-share flat" data-thread-key="2015/10/26/fastjson-use/"
+     data-title="fastjson定制序列化以及反序列化"
      data-content=""
-     data-url="http://yoursite.com/2015/10/03/go-home/">
+     data-url="http://yoursite.com/2015/10/26/fastjson-use/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -319,8 +328,8 @@
         
           <div class="comments" id="comments">
             
-              <div class="ds-thread" data-thread-key="2015/10/03/go-home/"
-                   data-title="回家" data-url="http://yoursite.com/2015/10/03/go-home/">
+              <div class="ds-thread" data-thread-key="2015/10/26/fastjson-use/"
+                   data-title="fastjson定制序列化以及反序列化" data-url="http://yoursite.com/2015/10/26/fastjson-use/">
               </div>
             
           </div>
