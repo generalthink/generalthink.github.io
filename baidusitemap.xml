@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://yoursite.com/2016/01/06/mysql-slow-query-optimize/</loc>
+    <lastmod>2016-01-06T15:18:46.908Z</lastmod>
+    <data>
+        <display>
+        <title>mysql-index-and-mysql-slow-query-optimize</title>
+        <pubTime>2016-01-06T13:59:17.000Z</pubTime>
+        
+        <tag>mysql</tag>
+         
+         
+           
+             
+              <breadCrumb title="mysql" url="http://yoursite.com/categories/mysql/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2015/11/15/fastjson-serializerFeature/</loc>
     <lastmod>2015-11-15T07:46:53.120Z</lastmod>
     <data>
