@@ -2,6 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2016/02/14/show-number-in-computer/</loc>
+    <lastmod>2016-02-15T08:23:04.872Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2016/02/14/float-number-in-computer/</loc>
+    <lastmod>2016-02-15T08:21:09.150Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2016/01/06/mysql-slow-query-optimize/</loc>
     <lastmod>2016-01-06T15:18:46.908Z</lastmod>
   </url>

@@ -4,6 +4,46 @@
 
     
   <url>
+    <loc>http://yoursite.com/2016/02/14/show-number-in-computer/</loc>
+    <lastmod>2016-02-15T08:23:04.872Z</lastmod>
+    <data>
+        <display>
+        <title>计算机中的补码</title>
+        <pubTime>2016-02-14T06:06:17.000Z</pubTime>
+        
+        <tag>java</tag>
+         
+         
+           
+             
+              <breadCrumb title="java" url="http://yoursite.com/categories/java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://yoursite.com/2016/02/14/float-number-in-computer/</loc>
+    <lastmod>2016-02-15T08:21:09.150Z</lastmod>
+    <data>
+        <display>
+        <title>浮点数在计算机中的表示方法</title>
+        <pubTime>2016-02-14T13:55:19.000Z</pubTime>
+        
+        <tag>java</tag>
+         
+         
+           
+             
+              <breadCrumb title="java" url="http://yoursite.com/categories/java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2016/01/06/mysql-slow-query-optimize/</loc>
     <lastmod>2016-01-06T15:18:46.908Z</lastmod>
     <data>
