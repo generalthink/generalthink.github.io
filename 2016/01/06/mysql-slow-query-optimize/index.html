@@ -43,15 +43,15 @@
 
 <meta name="description" content="&amp;#x5DE5;&amp;#x4F5C;&amp;#x4E2D;&amp;#x6709;&amp;#x9047;&amp;#x5230;mysql&amp;#x4F18;&amp;#x5316;&amp;#x7684;&amp;#x95EE;&amp;#x9898;,&amp;#x5F53;&amp;#x65F6;&amp;#x67E5;&amp;#x627E;&amp;#x4E86;&amp;#x5F88;&amp;#x591A;&amp;#x8D44;&amp;#x6599;&amp;#xFF0C;&amp;#x76F4;&amp;#x5230;&amp;#x770B;&amp;#">
 <meta property="og:type" content="article">
-<meta property="og:title" content="mysql-index-and-mysql-slow-query-optimize">
+<meta property="og:title" content="Mysql索引原理以及慢查询优化">
 <meta property="og:url" content="http://yoursite.com/2016/01/06/mysql-slow-query-optimize/index.html">
 <meta property="og:site_name" content="I am TKing">
 <meta property="og:description" content="&amp;#x5DE5;&amp;#x4F5C;&amp;#x4E2D;&amp;#x6709;&amp;#x9047;&amp;#x5230;mysql&amp;#x4F18;&amp;#x5316;&amp;#x7684;&amp;#x95EE;&amp;#x9898;,&amp;#x5F53;&amp;#x65F6;&amp;#x67E5;&amp;#x627E;&amp;#x4E86;&amp;#x5F88;&amp;#x591A;&amp;#x8D44;&amp;#x6599;&amp;#xFF0C;&amp;#x76F4;&amp;#x5230;&amp;#x770B;&amp;#">
 <meta property="og:image" content="http://tech.meituan.com/img/mysql_index/various-system-software-hardware-latencies.png">
 <meta property="og:image" content="http://tech.meituan.com/img/mysql_index/btree.jpg">
-<meta property="og:updated_time" content="2016-01-06T15:18:46.908Z">
+<meta property="og:updated_time" content="2016-09-28T14:42:01.616Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="mysql-index-and-mysql-slow-query-optimize">
+<meta name="twitter:title" content="Mysql索引原理以及慢查询优化">
 <meta name="twitter:description" content="&amp;#x5DE5;&amp;#x4F5C;&amp;#x4E2D;&amp;#x6709;&amp;#x9047;&amp;#x5230;mysql&amp;#x4F18;&amp;#x5316;&amp;#x7684;&amp;#x95EE;&amp;#x9898;,&amp;#x5F53;&amp;#x65F6;&amp;#x67E5;&amp;#x627E;&amp;#x4E86;&amp;#x5F88;&amp;#x591A;&amp;#x8D44;&amp;#x6599;&amp;#xFF0C;&amp;#x76F4;&amp;#x5230;&amp;#x770B;&amp;#">
 
 
@@ -61,8 +61,9 @@
     sidebar: 'post'
   };
 </script>
-
-  <title> mysql-index-and-mysql-slow-query-optimize | I am TKing </title>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  <title> Mysql索引原理以及慢查询优化 | I am TKing </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -157,14 +158,6 @@
           </a>
         </li>
       
-        
-        <li class="menu-item menu-item-show">
-          <a href="/mypage/" rel="section">
-            <i class="menu-item-icon icon-next-show"></i> <br />
-            ShowYou
-          </a>
-        </li>
-      
 
       
       
@@ -193,7 +186,7 @@
           
           
             
-              mysql-index-and-mysql-slow-query-optimize
+              Mysql索引原理以及慢查询优化
             
           
         </h1>
@@ -234,6 +227,14 @@
             </span>
           
         
+        
+        
+           <span class="post-comments-count">
+            <span id="busuanzi_container_page_pv">
+              &nbsp; | &nbsp;<span id="busuanzi_value_page_pv"></span>次阅读
+            </span>
+          </span>
+        
       </div>
     </header>
 
@@ -244,6 +245,7 @@
 
       
         <span itemprop="articleBody"><p>&#x5DE5;&#x4F5C;&#x4E2D;&#x6709;&#x9047;&#x5230;mysql&#x4F18;&#x5316;&#x7684;&#x95EE;&#x9898;,&#x5F53;&#x65F6;&#x67E5;&#x627E;&#x4E86;&#x5F88;&#x591A;&#x8D44;&#x6599;&#xFF0C;&#x76F4;&#x5230;&#x770B;&#x5230;&#x4E86;&#x8FD9;&#x7BC7;&#x6587;&#x7AE0;&#x5BF9;mysql&#x7684;&#x6162;&#x67E5;&#x8BE2;&#x4EE5;&#x53CA;&#x4F18;&#x5316;&#x6709;&#x4E86;&#x66F4;&#x52A0;&#x6DF1;&#x5165;&#x7684;&#x8BA4;&#x8BC6;&#x3002;</p>
+<p>&#x4EE5;&#x4E0B;&#x7684;&#x6587;&#x7AE0;&#x5185;&#x5BB9;&#x5747;&#x4E3A;&#x8F6C;&#x8F7D;,&#x53EF;&#x4EE5;&#x5230;<a href="http://tech.meituan.com/mysql-index.html" target="_blank" rel="external">http://tech.meituan.com/mysql-index.html</a>&#x67E5;&#x770B;&#x539F;&#x6587;&#x3002;</p>
 <p>MySQL&#x51ED;&#x501F;&#x7740;&#x51FA;&#x8272;&#x7684;&#x6027;&#x80FD;&#x3001;&#x4F4E;&#x5EC9;&#x7684;&#x6210;&#x672C;&#x3001;&#x4E30;&#x5BCC;&#x7684;&#x8D44;&#x6E90;&#xFF0C;&#x5DF2;&#x7ECF;&#x6210;&#x4E3A;&#x7EDD;&#x5927;&#x591A;&#x6570;&#x4E92;&#x8054;&#x7F51;&#x516C;&#x53F8;&#x7684;&#x9996;&#x9009;&#x5173;&#x7CFB;&#x578B;&#x6570;&#x636E;&#x5E93;&#x3002;&#x867D;&#x7136;&#x6027;&#x80FD;&#x51FA;&#x8272;&#xFF0C;&#x4F46;&#x6240;&#x8C13;&#x201C;&#x597D;&#x9A6C;&#x914D;&#x597D;&#x978D;&#x201D;&#xFF0C;&#x5982;&#x4F55;&#x80FD;&#x591F;&#x66F4;&#x597D;&#x7684;&#x4F7F;&#x7528;&#x5B83;&#xFF0C;&#x5DF2;&#x7ECF;&#x6210;&#x4E3A;&#x5F00;&#x53D1;&#x5DE5;&#x7A0B;&#x5E08;&#x7684;&#x5FC5;&#x4FEE;&#x8BFE;&#xFF0C;&#x6211;&#x4EEC;&#x7ECF;&#x5E38;&#x4F1A;&#x4ECE;&#x804C;&#x4F4D;&#x63CF;&#x8FF0;&#x4E0A;&#x770B;&#x5230;&#x8BF8;&#x5982;&#x201C;&#x7CBE;&#x901A;MySQL&#x201D;&#x3001;&#x201C;SQL&#x8BED;&#x53E5;&#x4F18;&#x5316;&#x201D;&#x3001;&#x201C;&#x4E86;&#x89E3;&#x6570;&#x636E;&#x5E93;&#x539F;&#x7406;&#x201D;&#x7B49;&#x8981;&#x6C42;&#x3002;&#x6211;&#x4EEC;&#x77E5;&#x9053;&#x4E00;&#x822C;&#x7684;&#x5E94;&#x7528;&#x7CFB;&#x7EDF;&#xFF0C;&#x8BFB;&#x5199;&#x6BD4;&#x4F8B;&#x5728;10:1&#x5DE6;&#x53F3;&#xFF0C;&#x800C;&#x4E14;&#x63D2;&#x5165;&#x64CD;&#x4F5C;&#x548C;&#x4E00;&#x822C;&#x7684;&#x66F4;&#x65B0;&#x64CD;&#x4F5C;&#x5F88;&#x5C11;&#x51FA;&#x73B0;&#x6027;&#x80FD;&#x95EE;&#x9898;&#xFF0C;&#x9047;&#x5230;&#x6700;&#x591A;&#x7684;&#xFF0C;&#x4E5F;&#x662F;&#x6700;&#x5BB9;&#x6613;&#x51FA;&#x95EE;&#x9898;&#x7684;&#xFF0C;&#x8FD8;&#x662F;&#x4E00;&#x4E9B;&#x590D;&#x6742;&#x7684;&#x67E5;&#x8BE2;&#x64CD;&#x4F5C;&#xFF0C;&#x6240;&#x4EE5;&#x67E5;&#x8BE2;&#x8BED;&#x53E5;&#x7684;&#x4F18;&#x5316;&#x663E;&#x7136;&#x662F;&#x91CD;&#x4E2D;&#x4E4B;&#x91CD;&#x3002;
 &#x672C;&#x4EBA;&#x4ECE;13&#x5E74;7&#x6708;&#x4EFD;&#x8D77;&#xFF0C;&#x4E00;&#x76F4;&#x5728;&#x7F8E;&#x56E2;&#x6838;&#x5FC3;&#x4E1A;&#x52A1;&#x7CFB;&#x7EDF;&#x90E8;&#x505A;&#x6162;&#x67E5;&#x8BE2;&#x7684;&#x4F18;&#x5316;&#x5DE5;&#x4F5C;&#xFF0C;&#x5171;&#x8BA1;&#x5341;&#x4F59;&#x4E2A;&#x7CFB;&#x7EDF;&#xFF0C;&#x7D2F;&#x8BA1;&#x89E3;&#x51B3;&#x548C;&#x79EF;&#x7D2F;&#x4E86;&#x4E0A;&#x767E;&#x4E2A;&#x6162;&#x67E5;&#x8BE2;&#x6848;&#x4F8B;&#x3002;&#x968F;&#x7740;&#x4E1A;&#x52A1;&#x7684;&#x590D;&#x6742;&#x6027;&#x63D0;&#x5347;&#xFF0C;&#x9047;&#x5230;&#x7684;&#x95EE;&#x9898;&#x5343;&#x5947;&#x767E;&#x602A;&#xFF0C;&#x4E94;&#x82B1;&#x516B;&#x95E8;&#xFF0C;&#x532A;&#x5937;&#x6240;&#x601D;&#x3002;&#x672C;&#x6587;&#x65E8;&#x5728;&#x4EE5;&#x5F00;&#x53D1;&#x5DE5;&#x7A0B;&#x5E08;&#x7684;&#x89D2;&#x5EA6;&#x6765;&#x89E3;&#x91CA;&#x6570;&#x636E;&#x5E93;&#x7D22;&#x5F15;&#x7684;&#x539F;&#x7406;&#x548C;&#x5982;&#x4F55;&#x4F18;&#x5316;&#x6162;&#x67E5;&#x8BE2;&#x3002;</p>
 <h3 id="&#x4E00;&#x4E2A;&#x6162;&#x67E5;&#x8BE2;&#x5F15;&#x53D1;&#x7684;&#x601D;&#x8003;">&#x4E00;&#x4E2A;&#x6162;&#x67E5;&#x8BE2;&#x5F15;&#x53D1;&#x7684;&#x601D;&#x8003;</h3>
@@ -458,7 +460,7 @@ rows&#x8FD4;&#x56DE;&#x7684;&#x90FD;&#x975E;&#x5E38;&#x5C11;&#xFF0C;&#x770B;&#x4
     <div class="post-spread">
       
         <div class="ds-share flat" data-thread-key="2016/01/06/mysql-slow-query-optimize/"
-     data-title="mysql-index-and-mysql-slow-query-optimize"
+     data-title="Mysql索引原理以及慢查询优化"
      data-content=""
      data-url="http://yoursite.com/2016/01/06/mysql-slow-query-optimize/">
   <div class="ds-share-inline">
@@ -487,7 +489,7 @@ rows&#x8FD4;&#x56DE;&#x7684;&#x90FD;&#x975E;&#x5E38;&#x5C11;&#xFF0C;&#x770B;&#x4
           <div class="comments" id="comments">
             
               <div class="ds-thread" data-thread-key="2016/01/06/mysql-slow-query-optimize/"
-                   data-title="mysql-index-and-mysql-slow-query-optimize" data-url="http://yoursite.com/2016/01/06/mysql-slow-query-optimize/">
+                   data-title="Mysql索引原理以及慢查询优化" data-url="http://yoursite.com/2016/01/06/mysql-slow-query-optimize/">
               </div>
             
           </div>
@@ -527,14 +529,14 @@ rows&#x8FD4;&#x56DE;&#x7684;&#x90FD;&#x975E;&#x5E38;&#x5C11;&#xFF0C;&#x770B;&#x4
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-count">14</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             <a href="/categories">
-              <span class="site-state-item-count">4</span>
+              <span class="site-state-item-count">5</span>
               <span class="site-state-item-name">分类</span>
               </a>
           </div>
@@ -611,25 +613,21 @@ rows&#x8FD4;&#x56DE;&#x7684;&#x90FD;&#x975E;&#x5E38;&#x5C11;&#xFF0C;&#x770B;&#x4
     </main>
 
     <footer id="footer" class="footer">
-      <div class="footer-inner"> <div class="copyright" >
-  
-  &copy; &nbsp;  2014 - 
-  <span itemprop="copyrightYear">2016</span>
-  <span class="with-love">
-    <i class="icon-next-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">generalthink</span>
+      <div class="footer-inner"> <div class="powered-by">
+  <a href="http://www.miitbeian.gov.cn/">蜀ICP备16009462号</a>
 </div>
 
-<div class="powered-by">
-  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
-</div>
 
 <div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
-  </a>
+
+  Copyright &copy; &nbsp;  2014 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="author" itemprop="copyrightHolder">generalthink.All rights reserved.</span>
+</div>
+
+
+<div class="copyright" >
+  
 </div>
 
 

@@ -1,0 +1,745 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="baidu-site-verification" content="EYxran2Vav" />
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+    <meta name="description" content="相信自己做一个自信的人" />
+
+
+
+  <meta name="keywords" content="java,jvm,gc参数设置" />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="I am TKing" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="&amp;#x6211;&amp;#x9047;&amp;#x5230;&amp;#x4E00;&amp;#x4E2A;&amp;#x4E00;&amp;#x4E2A;&amp;#x95EE;&amp;#x9898;
+&amp;#x6211;&amp;#x9047;&amp;#x5230;&amp;#x4E86;&amp;#x4E00;&amp;#x4E2A;&amp;#x95EE;&amp;#x9898;,&amp;#x8FD9;&amp;#x4E2A;&amp;#x95EE;&amp;#x9898;&amp;#x771F;&amp;#x7684;&amp;#x5F88;&amp;#x96B">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于GC参数的一个问题">
+<meta property="og:url" content="http://yoursite.com/2016/11/30/about-gc-parameters/index.html">
+<meta property="og:site_name" content="I am TKing">
+<meta property="og:description" content="&amp;#x6211;&amp;#x9047;&amp;#x5230;&amp;#x4E00;&amp;#x4E2A;&amp;#x4E00;&amp;#x4E2A;&amp;#x95EE;&amp;#x9898;
+&amp;#x6211;&amp;#x9047;&amp;#x5230;&amp;#x4E86;&amp;#x4E00;&amp;#x4E2A;&amp;#x95EE;&amp;#x9898;,&amp;#x8FD9;&amp;#x4E2A;&amp;#x95EE;&amp;#x9898;&amp;#x771F;&amp;#x7684;&amp;#x5F88;&amp;#x96B">
+<meta property="og:image" content="http://7xlvme.com1.z0.glb.clouddn.com/default_server.png">
+<meta property="og:updated_time" content="2016-11-30T14:20:21.695Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关于GC参数的一个问题">
+<meta name="twitter:description" content="&amp;#x6211;&amp;#x9047;&amp;#x5230;&amp;#x4E00;&amp;#x4E2A;&amp;#x4E00;&amp;#x4E2A;&amp;#x95EE;&amp;#x9898;
+&amp;#x6211;&amp;#x9047;&amp;#x5230;&amp;#x4E86;&amp;#x4E00;&amp;#x4E2A;&amp;#x95EE;&amp;#x9898;,&amp;#x8FD9;&amp;#x4E2A;&amp;#x95EE;&amp;#x9898;&amp;#x771F;&amp;#x7684;&amp;#x5F88;&amp;#x96B">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  <title> 关于GC参数的一个问题 | I am TKing </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">I am TKing</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            <i class="menu-item-icon icon-next-commonweal"></i> <br />
+            公益404
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              关于GC参数的一个问题
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2016-11-30T21:23:32+08:00" content="2016-11-30">
+            2016-11-30
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/java/" itemprop="url" rel="index">
+                  <span itemprop="name">java</span>
+                </a>
+              </span>
+
+              
+              
+                ， 
+              
+
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/java/jvm/" itemprop="url" rel="index">
+                  <span itemprop="name">jvm</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2016/11/30/about-gc-parameters/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/30/about-gc-parameters/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+        
+        
+           <span class="post-comments-count">
+            <span id="busuanzi_container_page_pv">
+              &nbsp; | &nbsp;<span id="busuanzi_value_page_pv"></span>次阅读
+            </span>
+          </span>
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h3 id="&#x6211;&#x9047;&#x5230;&#x4E00;&#x4E2A;&#x4E00;&#x4E2A;&#x95EE;&#x9898;">&#x6211;&#x9047;&#x5230;&#x4E00;&#x4E2A;&#x4E00;&#x4E2A;&#x95EE;&#x9898;</h3>
+<p>&#x6211;&#x9047;&#x5230;&#x4E86;&#x4E00;&#x4E2A;&#x95EE;&#x9898;,&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#x771F;&#x7684;&#x5F88;&#x96BE;,&#x6211;&#x60F3;&#x8BF4;&#x5728;&#x56FD;&#x5185;&#x53BB;&#x5173;&#x6CE8;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#x7684;&#x4EBA;&#x5E94;&#x8BE5;&#x5E76;&#x4E0D;&#x591A;&#xFF0C;&#x81F3;&#x5C11;&#x6211;&#x95EE;&#x4E86;&#x5F88;&#x591A;&#x4EBA;&#x4F46;&#x662F;&#x4ED6;&#x4EEC;&#x5E76;&#x6CA1;&#x6709;&#x53BB;&#x6DF1;&#x7A76;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#xFF0C;&#x4E0D;&#x8FC7;&#x65E2;&#x7136;&#x8BA9;&#x6211;&#x53D1;&#x73B0;&#x4E86;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#x90A3;&#x4E48;&#x6211;&#x80AF;&#x5B9A;&#x4E0D;&#x80FD;&#x5E26;&#x7740;&#x7591;&#x60D1;&#x79BB;&#x5F00;&#xFF0C;&#x6211;&#x5FC5;&#x987B;&#x5F97;&#x7559;&#x4E0B;&#x70B9;&#x4EC0;&#x4E48;&#xFF0C;&#x6240;&#x4EE5;&#x6211;&#x89E3;&#x51B3;&#x4E86;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#xFF0C;&#x7136;&#x540E;&#x5199;&#x4E0B;&#x4E86;&#x8FD9;&#x7BC7;&#x535A;&#x5BA2;&#xFF0C;&#x6211;&#x90FD;&#x4E0D;&#x77E5;&#x9053;&#x5E94;&#x8BE5;&#x600E;&#x4E48;&#x8D5E;&#x7F8E;&#x81EA;&#x5DF1;&#x4E86;,&#x597D;&#x4E86;&#x4E0D;&#x5439;&#x725B;&#x903C;&#x4E86;&#x3002;&#x3002;&#x3002;</p>
+<p>&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#x662F;&#x8FD9;&#x6837;&#x7684;&#xFF0C;&#x6211;&#x4EEC;&#x90FD;&#x77E5;&#x9053;&#x53EF;&#x4EE5;&#x8BBE;&#x7F6E;VM&#x53C2;&#x6570;&#x6765;&#x8BBE;&#x7F6E;&#x5806;&#x7684;&#x5927;&#x5C0F;,&#x901A;&#x8FC7;-Xmx&#x8BBE;&#x7F6E;&#x5806;&#x7684;&#x6700;&#x5927;&#x503C;,-Xms&#x8BBE;&#x7F6E;&#x5806;&#x7684;&#x6700;&#x5C0F;&#x503C;&#x3002;&#x7136;&#x540E;&#x865A;&#x62DF;&#x673A;&#x5728;&#x542F;&#x52A8;&#x7684;&#x65F6;&#x5019;&#x4F1A;&#x6839;&#x636E;&#x6211;&#x4EEC;&#x7684;&#x53C2;&#x6570;&#x8FDB;&#x884C;&#x52A8;&#x6001;&#x8C03;&#x6574;&#x3002;&#x4F46;&#x662F;&#x8FD9;&#x5176;&#x4E2D;&#x8FD8;&#x662F;&#x6709;&#x70B9;&#x5C0F;&#x79D8;&#x5BC6;&#x7684;&#x3002;</p>
+<p>&#x6211;&#x4EEC;&#x5728;&#x672C;&#x5730;&#x8FD0;&#x884C;&#x8FD9;&#x6837;&#x7684;&#x4E00;&#x6BB5;&#x4EE3;&#x7801;:
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//VM Args&#xFF1A;-Xms4m  -Xmx4m -XX:+PrintGCDetails</span></span><br><span class="line">  <span class="annotation">@Test</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">heapOutOfMomory</span><span class="params">()</span> </span>{</span><br><span class="line">    Byte[] b = <span class="keyword">new</span> Byte[<span class="number">1</span>*<span class="number">1024</span>*<span class="number">1024</span>];</span><br><span class="line">  }</span><br></pre></td></tr></table></figure></p>
+<p>&#x67E5;&#x770B;&#x6253;&#x5370;&#x51FA;&#x6765;&#x7684;&#x7684;GC&#x4FE1;&#x606F;&#xFF1A;
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[GC [PSYoungGen: <span class="number">2344</span>K-&gt;<span class="number">312</span>K(<span class="number">2368</span>K)] <span class="number">2910</span>K-&gt;<span class="number">1477</span>K(<span class="number">5120</span>K), <span class="number">0.0083535</span> secs] [Times: user=<span class="number">0.05</span> sys=<span class="number">0.00</span>, real=<span class="number">0.01</span> secs] </span><br><span class="line">Heap</span><br><span class="line"> PSYoungGen      total <span class="number">2368</span>K, used <span class="number">1830</span>K [<span class="number">0x00000000ffd60000</span>, <span class="number">0x0000000100000000</span>, <span class="number">0x0000000100000000</span>)</span><br><span class="line">  eden space <span class="number">2048</span>K, <span class="number">74</span>% used [<span class="number">0x00000000ffd60000</span>,<span class="number">0x00000000ffedb9d8</span>,<span class="number">0x00000000fff60000</span>)</span><br><span class="line">  from space <span class="number">320</span>K, <span class="number">97</span>% used [<span class="number">0x00000000fffb0000</span>,<span class="number">0x00000000ffffe010</span>,<span class="number">0x0000000100000000</span>)</span><br><span class="line">  to   space <span class="number">320</span>K, <span class="number">0</span>% used [<span class="number">0x00000000fff60000</span>,<span class="number">0x00000000fff60000</span>,<span class="number">0x00000000fffb0000</span>)</span><br><span class="line"> ParOldGen       total <span class="number">5504</span>K, used <span class="number">5261</span>K [<span class="number">0x00000000ff800000</span>, <span class="number">0x00000000ffd60000</span>, <span class="number">0x00000000ffd60000</span>)</span><br><span class="line">  object space <span class="number">5504</span>K, <span class="number">95</span>% used [<span class="number">0x00000000ff800000</span>,<span class="number">0x00000000ffd23760</span>,<span class="number">0x00000000ffd60000</span>)</span><br><span class="line"> PSPermGen       total <span class="number">21248</span>K, used <span class="number">5716</span>K [<span class="number">0x00000000fa600000</span>, <span class="number">0x00000000fbac0000</span>, <span class="number">0x00000000ff800000</span>)</span><br><span class="line">  object space <span class="number">21248</span>K, <span class="number">26</span>% used [<span class="number">0x00000000fa600000</span>,<span class="number">0x00000000fab95308</span>,<span class="number">0x00000000fbac0000</span>)</span><br></pre></td></tr></table></figure></p>
+<p>&#x53D1;&#x73B0;&#x4E86;&#x5427;&#xFF01;&#x5806;&#x7684;&#x5927;&#x5C0F;&#x662F;5504(ParOldGen)+320(from)+320(to)+2048(eden) = 8192(8M),&#x867D;&#x7136;&#x6211;&#x4EEC;&#x8BBE;&#x7F6E;&#x7684;&#x662F;4M,&#x4F46;&#x662F;&#x5B9E;&#x9645;&#x4E0A;&#x5374;&#x662F;8M?&#x90A3;&#x4E48;&#x8FD9;&#x4E2A;&#x4E3A;&#x4EC0;&#x4E48;&#x4E86;?&#x6211;&#x4EEC;&#x7684;&#x53C2;&#x6570;&#x6CA1;&#x6709;&#x8D77;&#x4F5C;&#x7528;?</p>
+<h3 id="&#x548C;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x6709;&#x5173;&#x7684;vm">&#x548C;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x6709;&#x5173;&#x7684;VM</h3>
+<p>&#x6211;&#x4EEC;&#x5148;&#x770B;&#x4E00;&#x4E2A;&#x56FE;,&#x5982;&#x56FE;&#x6240;&#x793A;64&#x4F4D;&#x7684;windows&#x7CFB;&#x7EDF;&#x662F;Server&#x6A21;&#x5F0F;,&#x800C;&#x5176;&#x9ED8;&#x8BA4;&#x7684;&#x6536;&#x96C6;&#x5668;&#x662F;parallel scavenge&#x3002;
+<img src="http://7xlvme.com1.z0.glb.clouddn.com/default_server.png" alt="&#x4E0D;&#x540C;&#x7CFB;&#x7EDF;&#x4E0B;&#x7684;server"></p>
+<p>&#x4E3A;&#x4EC0;&#x4E48;&#x8FD9;&#x4E2A;&#x6536;&#x96C6;&#x5668;&#x5C31;&#x8FD9;&#x4E48;&#x795E;&#x5947;&#x5462;&#xFF1F;&#x7ECF;&#x8FC7;&#x6211;&#x7684;&#x63A2;&#x7D22;&#x53D1;&#x73B0;
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">The problem is os::page_size_for_region, in particular the <span class="operator"><span class="keyword">check</span>: </span><br><span class="line"><span class="keyword">if</span> ((region_min_size &amp; <span class="keyword">mask</span>) == <span class="number">0</span> &amp;&amp; (region_max_size &amp; <span class="keyword">mask</span>) == <span class="number">0</span>) </span><br><span class="line"></span><br><span class="line"><span class="keyword">If</span> page_size_for_region <span class="keyword">is</span> called <span class="keyword">with</span> min_region_size <span class="keyword">and</span> max_region_size that <span class="keyword">are</span> a multiple <span class="keyword">of</span> a page <span class="keyword">size</span> larger <span class="keyword">than</span> <span class="keyword">than</span> max_page_size, <span class="keyword">then</span> page_size_for_region will <span class="keyword">return</span> that page. </span><br><span class="line"></span><br><span class="line">This problem manifests itself <span class="keyword">on</span> Solaris <span class="keyword">using</span> <span class="keyword">large</span> pages. Solaris will <span class="keyword">use</span> a page <span class="keyword">size</span> <span class="keyword">of</span> <span class="number">2</span> MB. <span class="keyword">If</span> -Xmx4m <span class="keyword">is</span> used, <span class="keyword">then</span> GenerationSizer::initialize_size_info will <span class="keyword">call</span> page_size_for_region(<span class="number">4</span>MB, <span class="number">4</span>MB, <span class="number">8</span> <span class="comment">/* min_pages*/</span>). Since <span class="number">4</span>MB <span class="keyword">is</span> a multiple <span class="number">2</span>MB, page_size_for_region will <span class="keyword">return</span> <span class="number">2</span>MB. The bug <span class="keyword">is</span> that we ask <span class="keyword">for</span> <span class="keyword">at</span> <span class="keyword">least</span> <span class="number">8</span> pages, which would <span class="keyword">limit</span> the page <span class="keyword">size</span> <span class="keyword">to</span> <span class="number">4</span>MB/<span class="number">8</span> = <span class="number">0.5</span>MB (<span class="number">512</span> KB). Since <span class="keyword">parallel</span> scavenge needs <span class="keyword">at</span> <span class="keyword">least</span> <span class="number">4</span> pages, we <span class="keyword">get</span> a <span class="keyword">heap</span> <span class="keyword">size</span> <span class="number">4</span> * <span class="number">2</span>MB = <span class="number">8</span>MB, even though the <span class="keyword">user</span> specified -Xmx4m!</span></span><br></pre></td></tr></table></figure></p>
+<p>&#x4E8B;&#x60C5;&#x5F53;&#x7136;&#x4E0D;&#x4F1A;&#x5230;&#x4E86;&#x8FD9;&#x91CC;&#x5C31;&#x7ED3;&#x675F;&#x3002;&#x6211;&#x4EEC;&#x77E5;&#x9053;-XX:SurvivorRatio&#x8868;&#x793A;Eden&#x533A;&#x4E0E;Survivor&#x533A;&#x7684;&#x5927;&#x5C0F;&#x6BD4;&#x503C;&#xFF0C;&#x9ED8;&#x8BA4;&#x662F;8&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x8BF4;eden:from=8&#xFF0C;&#x4F46;&#x662F;&#x5F88;&#x660E;&#x663E;&#x6211;&#x4EEC;&#x6253;&#x5370;&#x51FA;&#x6765;&#x7684;&#x4FE1;&#x606F;&#x5E76;&#x4E0D;&#x662F;&#x8FD9;&#x6837;,2048:320=6,&#x90A3;&#x4E48;&#x8FD9;&#x4E2A;8&#x54EA;&#x91CC;&#x6765;&#x7684;&#x5462;&#xFF1F;&#x987F;&#x65F6;&#x6211;&#x53C8;&#x5D29;&#x6E83;&#x4E86;,&#x8FD8;&#x597D;&#x7ECF;&#x8FC7;&#x6211;&#x4E0D;&#x7BA1;&#x7684;&#x67E5;&#x627E;&#x8D44;&#x6599;&#xFF0C;&#x7FFB;&#x770B;JDK&#x6E90;&#x7801;,&#x53D1;&#x73B0;&#x4E86;&#x539F;&#x6765;&#x662F;&#x662F;&#x8FD9;&#x6837;&#x7684;
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// The survivor ratio&apos;s are calculated &quot;raw&quot;, unlike the</span></span><br><span class="line">    <span class="comment">// default gc, which adds 2 to the ratio value. We need to</span></span><br><span class="line">    <span class="comment">// make sure the values are valid before using them.</span></span><br><span class="line">    <span class="keyword">if</span> (MinSurvivorRatio &lt; <span class="number">3</span>) {</span><br><span class="line">      MinSurvivorRatio = <span class="number">3</span>;</span><br><span class="line">    }</span><br></pre></td></tr></table></figure></p>
+<p>&#x8FD9;&#x91CC;&#x53EF;&#x4EE5;&#x67E5;&#x770B;&#x8D44;&#x6599;<a href="https://searchcode.com/codesearch/view/17980811/" target="_blank" rel="external">parallelScavenge&#x4E2D;GenerationSize</a></p>
+<p>&#x4F60;&#x4EE5;&#x4E3A;&#x5230;&#x4E86;&#x8FD9;&#x91CC;&#x95EE;&#x9898;&#x5C31;&#x5B8C;&#x4E86;&#x5417;&#xFF1F;&#x6211;&#x544A;&#x8BC9;&#x4F60;&#x5E76;&#x6CA1;&#x6709;&#x3002;</p>
+<h3 id="&#x89E3;&#x51B3;&#x4E00;&#x4E2A;&#x95EE;&#x9898;">&#x89E3;&#x51B3;&#x4E00;&#x4E2A;&#x95EE;&#x9898;</h3>
+<p>&#x6211;&#x9047;&#x5230;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#x7684;&#x65F6;&#x5019;&#x6211;&#x4E5F;&#x662F;&#x5F88;&#x5D29;&#x6E83;&#x7684;,&#x6211;&#x5148;&#x662F;&#x7FFB;&#x9605;&#x4E66;&#x7C4D;&#xFF0C;&#x7136;&#x540E;&#x53D1;&#x73B0;&#x6CA1;&#x6709;&#xFF0C;&#x7136;&#x540E;&#x4E3A;&#x7FA4;&#x53CB;&#xFF0C;&#x53BB;&#x793E;&#x533A;&#x63D0;&#x95EE;&#x9898;&#xFF0C;&#x8FD8;&#x662F;&#x6CA1;&#x6709;&#x80FD;&#x591F;&#x89E3;&#x51B3;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#x3002;</p>
+<p>&#x4F46;&#x662F;&#x6211;&#x662F;&#x8C01;&#x5440;&#xFF01;&#x6211;&#x6CA1;&#x6709;&#x653E;&#x5F03;&#xFF0C;&#x6CA1;&#x6709;&#x5F97;&#x8FC7;&#x8D77;&#x8FC7;&#xFF0C;&#x6211;&#x8FD8;&#x548C;&#x4F60;&#x8017;&#x4E0A;&#x4E86;&#x3002;&#x7136;&#x540E;&#x6211;&#x53BB;&#x7FFB;&#x9605;&#x5B98;&#x65B9;&#x6587;&#x6863;&#xFF0C;&#x7136;&#x540E;&#x8BA9;&#x6211;&#x53D1;&#x73B0;&#x4E86;&#x8FD9;&#x4E2A;client&#x548C;server&#x7AEF;&#x7684;&#x533A;&#x522B;&#xFF0C;&#x662F;&#x7684;&#x4E4B;&#x524D;&#x6211;&#x6CA1;&#x6709;&#x53D1;&#x73B0;&#x8FD9;&#x4E2A;&#x3002;&#x7136;&#x540E;&#x5B98;&#x65B9;&#x6587;&#x6863;&#x4E0A;&#x6CA1;&#x63A5;&#x7740;&#x8BF4;&#x8FD9;&#x4E9B;&#x7EC6;&#x8282;&#xFF0C;&#x7136;&#x540E;&#x6211;&#x5C31;&#x53BB;&#x627E;&#x6E90;&#x7801;&#x5440;&#xFF01;&#x6211;&#x770B;&#x4EBA;&#x5BB6;&#x6E90;&#x7801;&#x600E;&#x4E48;&#x8BF4;&#x7684;&#x5440;&#xFF0C;&#x8FD9;&#x6837;&#x4E00;&#x5C42;&#x4E00;&#x5C42;&#x627E;&#x4E0B;&#x6765;&#xFF0C;&#x6700;&#x7EC8;&#x95EE;&#x9898;&#x89E3;&#x51B3;&#x4E86;&#x3002;</p>
+<p>&#x867D;&#x7136;&#x73B0;&#x5728;&#x770B;&#x6765;&#x6211;&#x5199;&#x51FA;&#x6765;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#x771F;&#x7684;&#x5F88;&#x5C0F;&#xFF0C;&#x53EF;&#x662F;&#x5728;&#x627E;&#x95EE;&#x9898;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#x786E;&#x5B9E;&#x82B1;&#x8D39;&#x4E86;&#x5F88;&#x591A;&#x4E8B;&#x4EF6;&#xFF0C;&#x4F46;&#x662F;&#x8FD9;&#x4E5F;&#x953B;&#x70BC;&#x4E86;&#x6211;&#x89E3;&#x51B3;&#x95EE;&#x9898;&#x7684;&#x601D;&#x7EF4;&#x3002;</p>
+<p>&#x6211;&#x7684;&#x65B9;&#x6CD5;&#x5982;&#x4E0B;&#xFF1A;</p>
+<ol>
+<li>&#x786E;&#x5B9A;&#x662F;&#x81EA;&#x5DF1;&#x914D;&#x7F6E;&#x4E0D;&#x5BF9;&#x8FD8;&#x662F;&#x81EA;&#x5DF1;&#x7406;&#x89E3;&#x6709;&#x8BEF;</li>
+<li>&#x5728;1&#x7684;&#x57FA;&#x7840;&#x4E0A;&#x5B9A;&#x4F4D;&#x95EE;&#x9898;&#x89E3;&#x51B3;&#x65B9;&#x5411;&#x662F;&#x5BFB;&#x627E;&#x5B98;&#x65B9;&#x6587;&#x6863;&#x8FD8;&#x662F;&#x52A0;&#x6DF1;&#x7406;&#x89E3;</li>
+<li>&#x627E;&#x7B54;&#x6848;&#xFF0C;&#x505A;&#x5B9E;&#x9A8C;&#x3002;</li>
+</ol>
+<h3 id="&#x53C2;&#x8003;&#x6587;&#x6863;">&#x53C2;&#x8003;&#x6587;&#x6863;</h3>
+<ol>
+<li>http://docs.oracle.com/javase/7/docs/technotes/guides/vm/server-class.html</li>
+<li>http://www.oracle.com/technetwork/java/javase/gc-tuning-6-140523.html</li>
+<li>http://www.oracle.com/technetwork/java/faq-140837.html</li>
+<li>https://bugs.openjdk.java.net/browse/JDK-4484370</li>
+<li>https://bugs.openjdk.java.net/browse/JDK-8027915</li>
+<li>https://searchcode.com/codesearch/view/17980811/</li>
+</ol>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag">#java</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/31/start-with-OutOfMemory/" rel="next">从OutOfMemory开始</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/11/30/about-gc-parameters/"
+     data-title="关于GC参数的一个问题"
+     data-content=""
+     data-url="http://yoursite.com/2016/11/30/about-gc-parameters/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2016/11/30/about-gc-parameters/"
+                   data-title="关于GC参数的一个问题" data-url="http://yoursite.com/2016/11/30/about-gc-parameters/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="http://7xlvme.com1.z0.glb.clouddn.com/avatar.jpg" alt="generalthink" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">generalthink</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">相信自己做一个自信的人</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="menu-item-icon icon-next-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/k" target="_blank">github</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/think123" target="_blank">zhihu</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name">友情链接</p>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.baidu.com" target="_blank">baidu</a>
+              </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.it2048.cn" target="_blank">it2048</a>
+              </span>
+            
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#我遇到一个一个问题"><span class="nav-text">我遇到一个一个问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#和操作系统有关的vm"><span class="nav-text">和操作系统有关的VM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决一个问题"><span class="nav-text">解决一个问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考文档"><span class="nav-text">参考文档</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="powered-by">
+  <a href="http://www.miitbeian.gov.cn/">蜀ICP备16009462号</a>
+</div>
+
+
+<div class="theme-info">
+
+  Copyright &copy; &nbsp;  2014 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="author" itemprop="copyrightHolder">generalthink.All rights reserved.</span>
+</div>
+
+
+<div class="copyright" >
+  
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"generalthink"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>

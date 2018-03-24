@@ -4,6 +4,154 @@
 
     
   <url>
+    <loc>http://yoursite.com/2016/06/09/infobright-use/</loc>
+    <lastmod>2018-03-24T14:13:29.230Z</lastmod>
+    <data>
+        <display>
+        <title>infobright使用以及问题汇总</title>
+        <pubTime>2016-06-09T04:49:40.000Z</pubTime>
+        
+        <tag>infobright</tag>
+         
+        <tag>mysql</tag>
+         
+         
+           
+             
+              <breadCrumb title="mysql" url="http://yoursite.com/categories/mysql/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://yoursite.com/2016/11/30/about-gc-parameters/</loc>
+    <lastmod>2016-11-30T14:20:21.695Z</lastmod>
+    <data>
+        <display>
+        <title>关于GC参数的一个问题</title>
+        <pubTime>2016-11-30T13:23:32.000Z</pubTime>
+        
+        <tag>java</tag>
+         
+         
+           
+             
+              <breadCrumb title="java" url="http://yoursite.com/categories/java/"/>
+          
+             
+              <breadCrumb title="jvm" url="http://yoursite.com/categories/java/jvm/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://yoursite.com/2016/10/31/start-with-OutOfMemory/</loc>
+    <lastmod>2016-11-02T14:26:53.099Z</lastmod>
+    <data>
+        <display>
+        <title>从OutOfMemory开始</title>
+        <pubTime>2016-10-31T12:57:56.000Z</pubTime>
+        
+        <tag>java</tag>
+         
+         
+           
+             
+              <breadCrumb title="java" url="http://yoursite.com/categories/java/"/>
+          
+             
+              <breadCrumb title="多线程" url="http://yoursite.com/categories/java/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://yoursite.com/2016/01/06/mysql-slow-query-optimize/</loc>
+    <lastmod>2016-09-28T14:42:01.616Z</lastmod>
+    <data>
+        <display>
+        <title>Mysql索引原理以及慢查询优化</title>
+        <pubTime>2016-01-06T13:59:17.000Z</pubTime>
+        
+        <tag>mysql</tag>
+         
+         
+           
+             
+              <breadCrumb title="mysql" url="http://yoursite.com/categories/mysql/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://yoursite.com/2016/09/21/talk-thread-safe/</loc>
+    <lastmod>2016-09-28T14:24:49.229Z</lastmod>
+    <data>
+        <display>
+        <title>浅谈java线程安全</title>
+        <pubTime>2016-09-21T14:27:34.000Z</pubTime>
+        
+        <tag>java</tag>
+         
+         
+           
+             
+              <breadCrumb title="java" url="http://yoursite.com/categories/java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://yoursite.com/2016/08/30/mysql-basic-note/</loc>
+    <lastmod>2016-08-30T15:18:10.625Z</lastmod>
+    <data>
+        <display>
+        <title>Mysql必知必会读书笔记</title>
+        <pubTime>2016-08-30T14:15:41.000Z</pubTime>
+        
+        <tag>mysql</tag>
+         
+         
+           
+             
+              <breadCrumb title="mysql" url="http://yoursite.com/categories/mysql/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://yoursite.com/2016/07/18/primitive-type-in-java/</loc>
+    <lastmod>2016-07-31T16:06:40.356Z</lastmod>
+    <data>
+        <display>
+        <title>谈谈Java中的基本数据类型</title>
+        <pubTime>2016-07-18T00:19:16.000Z</pubTime>
+        
+        <tag>java</tag>
+         
+         
+           
+             
+              <breadCrumb title="java" url="http://yoursite.com/categories/java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2016/02/14/show-number-in-computer/</loc>
     <lastmod>2016-02-15T08:23:04.872Z</lastmod>
     <data>
@@ -37,26 +185,6 @@
            
              
               <breadCrumb title="java" url="http://yoursite.com/categories/java/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://yoursite.com/2016/01/06/mysql-slow-query-optimize/</loc>
-    <lastmod>2016-01-06T15:18:46.908Z</lastmod>
-    <data>
-        <display>
-        <title>mysql-index-and-mysql-slow-query-optimize</title>
-        <pubTime>2016-01-06T13:59:17.000Z</pubTime>
-        
-        <tag>mysql</tag>
-         
-         
-           
-             
-              <breadCrumb title="mysql" url="http://yoursite.com/categories/mysql/"/>
           
         </display>
     </data>
@@ -147,26 +275,6 @@
     </url>
 
     
-    
-  <url>
-    <loc>http://yoursite.com/2015/10/03/go-home/</loc>
-    <lastmod>2015-10-03T07:44:40.045Z</lastmod>
-    <data>
-        <display>
-        <title>回家</title>
-        <pubTime>2015-10-03T07:03:34.000Z</pubTime>
-        
-        <tag>home</tag>
-         
-         
-           
-             
-              <breadCrumb title="life" url="http://yoursite.com/categories/life/"/>
-          
-        </display>
-    </data>
-    </url>
-
     
   <url>
     <loc>http://yoursite.com/2015/09/20/hexo-for-github-blog/</loc>
