@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2018/03/25/basic-use-of-regular-expressions/</loc>
+    <lastmod>2018-03-28T15:27:46.876Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2016/06/09/infobright-use/</loc>
     <lastmod>2018-03-24T14:13:29.230Z</lastmod>
   </url>
