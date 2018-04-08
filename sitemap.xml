@@ -2,8 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2018/04/08/write-high-performance-regular-expressions/</loc>
+    <lastmod>2018-04-08T15:05:31.843Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2018/03/25/basic-use-of-regular-expressions/</loc>
-    <lastmod>2018-03-28T15:27:46.876Z</lastmod>
+    <lastmod>2018-04-08T14:56:41.677Z</lastmod>
   </url>
   
   <url>
