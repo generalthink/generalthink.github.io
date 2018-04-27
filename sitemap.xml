@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2018/04/27/java-programer-always-use-command/</loc>
+    <lastmod>2018-04-27T13:46:18.932Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2018/04/08/write-high-performance-regular-expressions/</loc>
     <lastmod>2018-04-15T07:59:11.268Z</lastmod>
   </url>
