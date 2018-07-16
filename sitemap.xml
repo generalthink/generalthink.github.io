@@ -2,8 +2,18 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2018/07/16/how-to-use-methods-about-thread/</loc>
+    <lastmod>2018-07-16T14:08:48.273Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2015/11/15/fastjson-serializerFeature/</loc>
+    <lastmod>2018-07-16T12:24:14.581Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2018/07/11/idea-shortcut-key-md/</loc>
-    <lastmod>2018-07-11T13:19:48.281Z</lastmod>
+    <lastmod>2018-07-16T12:19:53.442Z</lastmod>
   </url>
   
   <url>
@@ -64,11 +74,6 @@
   <url>
     <loc>http://yoursite.com/2016/02/14/float-number-in-computer/</loc>
     <lastmod>2016-02-15T08:21:09.150Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2015/11/15/fastjson-serializerFeature/</loc>
-    <lastmod>2015-11-15T07:46:53.120Z</lastmod>
   </url>
   
   <url>
