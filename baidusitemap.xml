@@ -5,10 +5,10 @@
     
   <url>
     <loc>http://yoursite.com/2018/07/16/how-to-use-methods-about-thread/</loc>
-    <lastmod>2018-07-16T14:08:48.273Z</lastmod>
+    <lastmod>2018-07-16T14:20:01.929Z</lastmod>
     <data>
         <display>
-        <title>how-to-use-methods-about-thread.md</title>
+        <title>关于wait,notify,join,sleep的用法说明</title>
         <pubTime>2018-07-16T12:21:05.000Z</pubTime>
         
         <tag>多线程</tag>
@@ -17,6 +17,28 @@
            
              
               <breadCrumb title="多线程" url="http://yoursite.com/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://yoursite.com/2018/07/11/idea-shortcut-key-md/</loc>
+    <lastmod>2018-07-16T14:13:20.872Z</lastmod>
+    <data>
+        <display>
+        <title>从Eclipse到Idea,常用的快捷键</title>
+        <pubTime>2018-07-11T13:01:49.000Z</pubTime>
+        
+        <tag>Idea</tag>
+         
+        <tag>工具</tag>
+         
+         
+           
+             
+              <breadCrumb title="工具" url="http://yoursite.com/categories/%E5%B7%A5%E5%85%B7/"/>
           
         </display>
     </data>
@@ -37,28 +59,6 @@
            
              
               <breadCrumb title="java" url="http://yoursite.com/categories/java/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://yoursite.com/2018/07/11/idea-shortcut-key-md/</loc>
-    <lastmod>2018-07-16T12:19:53.442Z</lastmod>
-    <data>
-        <display>
-        <title>从Eclipse到Idea,常用的快捷键</title>
-        <pubTime>2018-07-11T13:01:49.000Z</pubTime>
-        
-        <tag>Idea</tag>
-         
-        <tag>工具</tag>
-         
-         
-           
-             
-              <breadCrumb title="工具" url="http://yoursite.com/categories/%E5%B7%A5%E5%85%B7/"/>
           
         </display>
     </data>
