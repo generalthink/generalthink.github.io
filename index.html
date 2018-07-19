@@ -185,6 +185,109 @@
           
           
             
+              <a class="post-title-link" href="/2018/07/19/lock-optimization-about-java/" itemprop="url">
+                java中锁的优化
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2018-07-19T21:22:46+08:00" content="2018-07-19">
+            2018-07-19
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/java/" itemprop="url" rel="index">
+                  <span itemprop="name">java</span>
+                </a>
+              </span>
+
+              
+              
+                ， 
+              
+
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/java/jvm/" itemprop="url" rel="index">
+                  <span itemprop="name">jvm</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2018/07/19/lock-optimization-about-java/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2018/07/19/lock-optimization-about-java/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+        
+        
+          
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="description">多线程编码中,我们常用到synchronized关键字,都知道它是加锁关键字，也或多或少听说过轻量级锁，重量级锁，偏向锁这些关键字，可是我们知道这些具体指的是什么吗？为了我们更优的使用，JVM团队在背后做了多少努力?</span>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2018/07/19/lock-optimization-about-java/">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2018/07/16/how-to-use-methods-about-thread/" itemprop="url">
                 关于wait,notify,join,sleep的用法说明
               </a>
@@ -1028,135 +1131,6 @@
 
 
     
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2016/07/18/primitive-type-in-java/" itemprop="url">
-                谈谈Java中的基本数据类型
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2016-07-18T08:19:16+08:00" content="2016-07-18">
-            2016-07-18
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分类于
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                <a href="/categories/java/" itemprop="url" rel="index">
-                  <span itemprop="name">java</span>
-                </a>
-              </span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2016/07/18/primitive-type-in-java/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/18/primitive-type-in-java/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-        
-        
-          
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-            &#x8BA4;&#x8BC6;Java&#x4E2D;&#x7684;&#x57FA;&#x672C;&#x6570;&#x636E;&#x7C7B;&#x578B;
-Java&#x4E2D;&#x6709;8&#x5927;&#x57FA;&#x672C;&#x6570;&#x636E;&#x7C7B;&#x578B;,&#x5B83;&#x7684;&#x5BF9;&#x5E94;&#x5305;&#x88C5;&#x7C7B;&#x578B;&#x4EE5;&#x53CA;&#x6570;&#x636E;&#x8303;&#x56F4;&#x5982;&#x4E0B;:
-
-
-
-&#x57FA;&#x672C;&#x6570;&#x636E;&#x7C7B;&#x578B;&#x540D;&#x79F0;
-&#x5C01;&#x88C5;&#x6570;&#x636E;&#x7C7B;&#x578B;&#x540D;&#x79F0;
-&#x6240;&#x5360;&#x5B57;&#x8282;&#x6570;
-&#x53D6;&#x503C;&#x8303;&#x56F4;
-
-
-
-
-boolean
-Boolean
-1
-true/false
-
-
-byte
-Byte
-1
--128~127
-
-
-char
-Character
-2
-0~65535
-
-
-short
-Short
-2
--
-            ...
-          </span>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/07/18/primitive-type-in-java/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1195,7 +1169,7 @@ Short
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">19</span>
+              <span class="site-state-item-count">20</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
