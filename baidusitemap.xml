@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>http://yoursite.com/2018/07/24/something-about-synchronized/</loc>
+    <lastmod>2018-07-24T13:35:49.326Z</lastmod>
+    <data>
+        <display>
+        <title>something-about-synchronized</title>
+        <pubTime>2018-07-24T13:26:25.000Z</pubTime>
+        
+        <tag>jvm</tag>
+         
+        <tag>多线程</tag>
+         
+         
+           
+             
+              <breadCrumb title="多线程" url="http://yoursite.com/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2018/07/19/lock-optimization-about-java/</loc>
     <lastmod>2018-07-19T14:44:39.838Z</lastmod>
     <data>
