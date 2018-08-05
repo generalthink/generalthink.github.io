@@ -4,8 +4,28 @@
 
     
   <url>
+    <loc>http://yoursite.com/2018/08/05/you-should-know-from-mysql-to-mongodb/</loc>
+    <lastmod>2018-08-05T12:25:29.594Z</lastmod>
+    <data>
+        <display>
+        <title>you-should-know-from-mysql-to-mongodb</title>
+        <pubTime>2018-08-05T12:19:43.000Z</pubTime>
+        
+        <tag>mongodb</tag>
+         
+         
+           
+             
+              <breadCrumb title="mongodb" url="http://yoursite.com/categories/mongodb/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2018/07/19/lock-optimization-about-java/</loc>
-    <lastmod>2018-07-26T10:08:34.165Z</lastmod>
+    <lastmod>2018-07-26T10:13:49.912Z</lastmod>
     <data>
         <display>
         <title>java中锁的优化</title>
