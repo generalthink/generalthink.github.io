@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2018/08/12/what-is-java-memory-model/</loc>
+    <lastmod>2018-08-12T14:47:19.788Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2018/08/05/you-should-know-from-mysql-to-mongodb/</loc>
     <lastmod>2018-08-05T13:10:03.621Z</lastmod>
   </url>

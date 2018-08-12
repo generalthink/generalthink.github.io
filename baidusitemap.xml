@@ -4,6 +4,29 @@
 
     
   <url>
+    <loc>http://yoursite.com/2018/08/12/what-is-java-memory-model/</loc>
+    <lastmod>2018-08-12T14:47:19.788Z</lastmod>
+    <data>
+        <display>
+        <title>一篇文章讲懂Java内存模型</title>
+        <pubTime>2018-08-12T12:53:42.000Z</pubTime>
+        
+        <tag>jvm</tag>
+         
+         
+           
+             
+              <breadCrumb title="jvm" url="http://yoursite.com/categories/jvm/"/>
+          
+             
+              <breadCrumb title="多线程" url="http://yoursite.com/categories/jvm/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2018/08/05/you-should-know-from-mysql-to-mongodb/</loc>
     <lastmod>2018-08-05T13:10:03.621Z</lastmod>
     <data>
