@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2018/08/13/springmvc-sourcecode-analysis/</loc>
+    <lastmod>2018-08-13T14:46:47.772Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2018/08/12/what-is-java-memory-model/</loc>
     <lastmod>2018-08-13T13:37:46.272Z</lastmod>
   </url>
