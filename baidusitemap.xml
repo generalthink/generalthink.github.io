@@ -5,14 +5,19 @@
     
   <url>
     <loc>http://yoursite.com/2018/09/27/how-to-use-graphql/</loc>
-    <lastmod>2018-09-27T13:59:04.866Z</lastmod>
+    <lastmod>2018-09-27T14:17:23.837Z</lastmod>
     <data>
         <display>
-        <title>how-to-use-graphql</title>
+        <title>Graphql在项目中的使用</title>
         <pubTime>2018-09-27T13:59:04.000Z</pubTime>
         
+        <tag>Graphql</tag>
+         
          
            
+             
+              <breadCrumb title="Graphql" url="http://yoursite.com/categories/Graphql/"/>
+          
         </display>
     </data>
     </url>
