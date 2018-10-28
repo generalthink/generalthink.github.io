@@ -47,8 +47,8 @@
 <meta property="og:url" content="http://yoursite.com/2018/07/19/lock-optimization-about-java/index.html">
 <meta property="og:site_name" content="I am TKing">
 <meta property="og:description" content="多线程编码中,我们常用到synchronized关键字,都知道它是加锁关键字，也或多或少听说过轻量级锁，重量级锁，偏向锁这些关键字，可是我们知道这些具体指的是什么吗？为了我们更优的使用，JVM团队在背后做了多少努力?">
-<meta property="og:image" content="http://7xlvme.com1.z0.glb.clouddn.com/mark_word.png">
-<meta property="og:updated_time" content="2018-07-26T10:13:49.912Z">
+<meta property="og:image" content="http://yoursite.com/images/mark_word.png">
+<meta property="og:updated_time" content="2018-10-28T13:15:28.123Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java中锁的优化">
 <meta name="twitter:description" content="多线程编码中,我们常用到synchronized关键字,都知道它是加锁关键字，也或多或少听说过轻量级锁，重量级锁，偏向锁这些关键字，可是我们知道这些具体指的是什么吗？为了我们更优的使用，JVM团队在背后做了多少努力?">
@@ -281,7 +281,7 @@
 <p>&#x5BF9;&#x8C61;&#x5934;&#x4FE1;&#x606F;&#x4E0E;&#x5BF9;&#x8C61;&#x81EA;&#x5B9A;&#x4E49;&#x7684;&#x6570;&#x636E;&#x65E0;&#x5173;&#x7684;&#x989D;&#x5916;&#x5B58;&#x50A8;&#x6210;&#x672C;&#xFF0C;&#x8003;&#x8651;&#x865A;&#x62DF;&#x673A;&#x7684;&#x7A7A;&#x95F4;&#x6548;&#x7387;&#xFF0C;Mark Word&#x88AB;&#x8BBE;&#x8BA1;&#x6210;&#x4E00;&#x4E2A;&#x975E;&#x56FA;&#x5B9A;&#x7684;&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x4EE5;&#x4FBF;&#x5728;&#x6781;&#x5C0F;&#x7684;&#x7A7A;&#x95F4;&#x5B58;&#x50A8;&#x66F4;&#x591A;&#x7684;&#x4FE1;&#x606F;&#xFF0C;&#x5B83;&#x4F1A;&#x6839;&#x636E;&#x5BF9;&#x8C61;&#x7684;&#x72B6;&#x6001;&#x590D;&#x7528;&#x81EA;&#x5DF1;&#x7684;&#x5B58;&#x50A8;&#x7A7A;&#x95F4;&#x3002;</p>
 <p>&#x90A3;&#x4E48;&#x4ECE;&#x54EA;&#x91CC;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x8FD9;&#x4E9B;&#x4FE1;&#x606F;&#x5462;&#xFF1F;&#x6709;&#x95EE;&#x9898;&#x5F53;&#x7136;&#x770B;&#x6E90;&#x7801;&#xFF0C;&#x4ECE;github&#x4E0A;jdk&#x7684;&#x6E90;&#x7801;<a href="https://github.com/openjdk-mirror/jdk7u-hotspot/blob/50bdefc3afe944ca74c3093e7448d6b889cd20d1/src/share/vm/oops/markOop.hpp#L38" target="_blank" rel="external">&#x6E90;&#x7801;</a></p>
 <p>&#x6574;&#x7406;&#x4E0B;&#xFF0C;&#x8FD9;&#x91CC;&#x5728;&#x5185;&#x5B58;&#x4E2D;&#x7684;&#x5E03;&#x5C40;&#x5982;&#x4E0B;&#xFF1A;</p>
-<p><img src="http://7xlvme.com1.z0.glb.clouddn.com/mark_word.png" alt="32&#x4F4D;&#x7CFB;&#x7EDF;mark word">
+<p><img src="/images/mark_word.png" alt="32&#x4F4D;&#x7CFB;&#x7EDF;mark word">
 &#x4E0A;&#x56FE;&#x8868;&#x660E;&#x4E86;MarkWord&#x5728;&#x4E0D;&#x540C;&#x72B6;&#x6001;&#x4E0B;&#x7684;&#x5B58;&#x50A8;&#x5185;&#x5BB9;&#xFF0C;&#x5F53;&#x7136;&#x4E0A;&#x9762;&#x8FD9;&#x662F;32&#x4F4D;&#x7CFB;&#x7EDF;&#x7684;&#xFF0C;&#x5982;&#x679C;&#x662F;64&#x4F4D;&#x57FA;&#x672C;&#x4E0A;&#x662F;&#x5927;&#x540C;&#x5C0F;&#x5F02;&#xFF0C;</p>
 <h4 id="&#x504F;&#x5411;&#x9501;">&#x504F;&#x5411;&#x9501;</h4>
 <p>&#x5F53;&#x7EBF;&#x7A0B;A&#x8FDB;&#x5165;&#x4E34;&#x754C;&#x533A;&#x51C6;&#x5907;&#x6267;&#x884C;&#x4EE3;&#x7801;&#x7684;&#x65F6;&#x5019;&#xFF0C;jvm&#x53D1;&#x73B0;&#x6B64;&#x65F6;&#x53EA;&#x6709;&#x4E00;&#x4E2A;&#x7EBF;&#x7A0B;&#x5728;&#x6267;&#x884C;&#x4E34;&#x754C;&#x533A;&#x4EE3;&#x7801;&#x6240;&#x4EE5;&#x6B64;&#x65F6;&#x4F1A;&#x5C06;&#x662F;&#x5426;&#x504F;&#x5411;&#x9501;&#x7684;&#x6807;&#x5FD7;&#x4F4D;&#x4FEE;&#x6539;&#x4E3A;1&#xFF0C;
