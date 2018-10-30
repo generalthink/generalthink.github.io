@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2018/10/30/how-to-use-graphql2/</loc>
+    <lastmod>2018-10-30T13:13:34.482Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2015/09/20/hexo-for-github-blog/</loc>
     <lastmod>2018-10-28T13:20:02.693Z</lastmod>
   </url>

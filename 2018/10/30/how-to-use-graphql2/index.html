@@ -30,7 +30,7 @@
 
 
 
-  <meta name="keywords" content="github hexo blog 博客" />
+  <meta name="keywords" content="Graphql,GraphQLResolver,SpringMVC" />
 
 
 
@@ -41,18 +41,21 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="使用hexo3搭建属于自己的github博客">
+<meta name="description" content="GraphQLResolver的使用,使用GraphQLResolver自定义接口数据的返回">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用hexo搭建github博客">
-<meta property="og:url" content="http://yoursite.com/2015/09/20/hexo-for-github-blog/index.html">
+<meta property="og:title" content="how-to-use-graphql2">
+<meta property="og:url" content="http://yoursite.com/2018/10/30/how-to-use-graphql2/index.html">
 <meta property="og:site_name" content="I am TKing">
-<meta property="og:description" content="使用hexo3搭建属于自己的github博客">
-<meta property="og:image" content="http://yoursite.com/images/hexo-nodejs-add-to-path.png">
-<meta property="og:image" content="http://yoursite.com/images/hexo-deploy-error.png">
-<meta property="og:updated_time" content="2018-10-28T13:20:02.693Z">
+<meta property="og:description" content="GraphQLResolver的使用,使用GraphQLResolver自定义接口数据的返回">
+<meta property="og:image" content="http://yoursite.com/images/graphql2-playground-post.png">
+<meta property="og:image" content="http://yoursite.com/images/graphql2-playground-open-console.png">
+<meta property="og:image" content="http://yoursite.com/images/graphql2-devtool-copy2curl.png">
+<meta property="og:image" content="http://yoursite.com/images/graphql2-curl-postman.png">
+<meta property="og:image" content="http://yoursite.com/images/graphql2-get-request-in-postman.png">
+<meta property="og:updated_time" content="2018-10-30T13:13:34.482Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="使用hexo搭建github博客">
-<meta name="twitter:description" content="使用hexo3搭建属于自己的github博客">
+<meta name="twitter:title" content="how-to-use-graphql2">
+<meta name="twitter:description" content="GraphQLResolver的使用,使用GraphQLResolver自定义接口数据的返回">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -63,7 +66,7 @@
 </script>
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
 </script>
-  <title> 使用hexo搭建github博客 | I am TKing </title>
+  <title> how-to-use-graphql2 | I am TKing </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -186,7 +189,7 @@
           
           
             
-              使用hexo搭建github博客
+              how-to-use-graphql2
             
           
         </h1>
@@ -195,8 +198,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-09-20T22:09:46+08:00" content="2015-09-20">
-            2015-09-20
+          <time itemprop="dateCreated" datetime="2018-10-30T20:56:08+08:00" content="2018-10-30">
+            2018-10-30
           </time>
         </span>
 
@@ -205,8 +208,8 @@
             &nbsp; | &nbsp; 分类于
             
               <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                <a href="/categories/learning/" itemprop="url" rel="index">
-                  <span itemprop="name">learning</span>
+                <a href="/categories/Graphql/" itemprop="url" rel="index">
+                  <span itemprop="name">Graphql</span>
                 </a>
               </span>
 
@@ -237,71 +240,34 @@
       
 
       
-        <span itemprop="articleBody"><ol>
-<li>
-<p>&#x4F7F;&#x7528;&#x5DE5;&#x5177;&#x7248;&#x672C;
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">git</span>&#x7248;&#x672C;<span class="pseudo">:git</span> <span class="tag">version</span> 2<span class="class">.5</span><span class="class">.2</span><span class="class">.windows</span><span class="class">.2</span></span><br><span class="line"><span class="tag">npm</span>&#x7248;&#x672C;<span class="pseudo">:2</span><span class="class">.14</span><span class="class">.2</span></span><br><span class="line"><span class="rule"><span class="attribute">hexo</span>:<span class="value"> <span class="number">3.1</span>.<span class="number">1</span></span></span></span><br></pre></td></tr></table></figure></p>
-</li>
-<li>
-<p>github&#x8D26;&#x53F7;,&#x540C;&#x65F6;&#x65B0;&#x5EFA;&#x4E00;&#x4E2A;&#x4ED3;&#x5E93;,&#x4ED3;&#x5E93;&#x540D;&#x79F0;&#x662F;&#x56FA;&#x5B9A;&#x7684;,&#x683C;&#x5F0F;&#x4E3A;: <strong>your_username.github.io</strong></p>
-</li>
-<li>
-<p>&#x73AF;&#x5883;&#x51C6;&#x5907;
-<a href="http://git-scm.com/" target="_blank" rel="external">git</a>
-<a href="https://nodejs.org/en/" target="_blank" rel="external">node.js</a>
-<strong>&#x5B89;&#x88C5;&#x6CE8;&#x610F;:</strong>
-<img src="/images/hexo-nodejs-add-to-path.png" alt="&#x8BB0;&#x4F4F;&#x6DFB;&#x52A0;&#x5230;path"></p>
-</li>
-<li>
-<p>&#x6253;&#x5F00;&#x521A;&#x521A;&#x5B89;&#x88C5;&#x597D;&#x7684;git&#x5BA2;&#x6237;&#x7AEF;,&#x7136;&#x540E;&#x548C;github&#x5EFA;&#x7ACB;SSH&#x8FDE;&#x63A5;</p>
-<ul>
-<li><a href="https://help.github.com/articles/generating-ssh-keys/" target="_blank" rel="external">&#x5EFA;&#x7ACB;&#x8FDE;&#x63A5;</a></li>
-</ul>
-</li>
-<li>
-<p>hexo&#x5B89;&#x88C5;
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-cli -g</span><br><span class="line">$ <span class="built_in">cd</span> f:  <span class="comment">#&#x53EF;&#x4EE5;&#x662F;&#x4EFB;&#x4F55;&#x8DEF;&#x5F84;</span></span><br><span class="line">$ hexo init blog</span><br><span class="line">$ <span class="built_in">cd</span> blog</span><br><span class="line">$ npm install</span><br><span class="line"><span class="comment">#3.0&#x7248;&#x672C;&#x548C;2.0&#x7248;&#x672C;&#x7684;&#x533A;&#x522B;,3.0&#x5DF2;&#x7ECF;&#x5C06;&#x53D1;&#x5E03;&#x7684;&#x7A0B;&#x5E8F;&#x72EC;&#x7ACB;&#x51FA;&#x6765;&#x4E86;&#xFF0C;&#x6240;&#x4EE5;&#x9700;&#x8981;&#x5B89;&#x88C5;</span></span><br><span class="line">$ npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure></p>
-</li>
-<li>
-<p>&#x53D1;&#x5E03;</p>
-<ul>
-<li>
-<p>&#x4FEE;&#x6539;blog&#x6839;&#x76EE;&#x5F55;&#x4E0B;&#x7684;_config.yml&#x6587;&#x4EF6;,&#x5C06;deploy&#x8282;&#x70B9;&#x4FEE;&#x6539;&#x4E3A;&#x5982;&#x4E0B;&#x5185;&#x5BB9;(&#x5C06;<strong>generalthink</strong>&#x66FF;&#x6362;&#x6210;&#x81EA;&#x5DF1;github&#x7684;&#x540D;&#x79F0;):
-<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">deploy</span>: </span><br><span class="line"><span class="attribute">type</span>: git  </span><br><span class="line"><span class="attribute">repo</span>: git<span class="variable">@github</span>.<span class="attribute">com</span>:generalthink/generalthink.github.io.git</span><br><span class="line"><span class="attribute">branch</span>: master</span><br></pre></td></tr></table></figure></p>
-</li>
-<li>
-<p>hexo deploy</p>
-</li>
-</ul>
-</li>
-<li>
-<p>&#x8BBF;&#x95EE;&#x81EA;&#x5DF1;&#x7684;&#x535A;&#x5BA2;,&#x535A;&#x5BA2;&#x5730;&#x5740;&#x4E3A;:http://your_username.github.io</p>
-</li>
-<li>
-<p>_config.yml&#x6587;&#x4EF6;&#x7684;&#x914D;&#x7F6E;&#x5747;&#x4E3A;key: value&#x5F62;&#x5F0F;,&#x503C;&#x5F97;&#x4E00;&#x63D0;&#x7684;&#x662F;value&#x524D;&#x9762;&#x5FC5;&#x987B;&#x8981;&#x6709;&#x4E00;&#x4E2A;&#x7A7A;&#x683C;</p>
-</li>
-<li>
-<p>&#x5E38;&#x89C1;&#x9519;&#x8BEF;&#x53C2;&#x8003;</p>
-<ul>
-<li>
-<p><img src="/images/hexo-deploy-error.png" alt="deploy&#x9519;&#x8BEF;"></p>
-</li>
-<li>
-<p>&#x89E3;&#x51B3;&#x65B9;&#x6848;,&#x8FD9;&#x4E2A;&#x662F;&#x7531;&#x4E8E;&#x65F6;&#x95F4;&#x4E45;&#x4E86;SSH&#x8FDE;&#x63A5;&#x8FC7;&#x671F;&#x5BFC;&#x81F4;&#x7684;,&#x6B64;&#x65F6;&#x91CD;&#x65B0;&#x5EFA;&#x7ACB;&#x8FDE;&#x63A5;&#x5373;&#x53EF;,&#x4F7F;&#x7528;
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">eval</span> $(ssh-agent <span class="operator">-s</span>)</span><br><span class="line">$ ssh-add ~/.ssh/id_rsa</span><br></pre></td></tr></table></figure></p>
-<p>&#x6216;&#x8005;&#x53C2;&#x8003;<a href="https://help.github.com/articles/generating-ssh-keys/" target="_blank" rel="external">https://help.github.com/articles/generating-ssh-keys/</a></p>
-</li>
-</ul>
-</li>
-<li>
-<p>&#x5EFA;&#x8BAE;&#x53C2;&#x8003;&#x6587;&#x6863;:</p>
+        <span itemprop="articleBody"><p>&#x5728;&#x4E0A;&#x4E00;&#x7BC7;&#x6587;&#x7AE0;&#x4E2D;&#x6211;&#x4EEC;&#x4ECB;&#x7ECD;&#x4E86;Graphql&#x96C6;&#x6210;SpringMVC&#xFF0C;&#x4ECA;&#x5929;&#x5C31;&#x6765;&#x4ECB;&#x7ECD;&#x4E0B;GraphQLResolver&#x7684;&#x4F7F;&#x7528;&#x3002;
+&#x5047;&#x8BBE;&#x6211;&#x4EEC;&#x60F3;&#x8981;Book&#x8FD9;&#x4E2A;API&#x8FD4;&#x56DE;desc&#x8FD9;&#x4E2A;&#x5B57;&#x6BB5;,desc&#x53EF;&#x80FD;&#x5E76;&#x4E0D;&#x5728;&#x6570;&#x636E;&#x5E93;&#x4E2D;,&#x6216;&#x8005;&#x662F;&#x4F60;&#x60F3;&#x4E2A;&#x6027;&#x5316;&#x5B9A;&#x5236;&#x4F60;&#x7684;&#x8FD4;&#x56DE;&#x6570;&#x636E;,&#x8FD9;&#x4E2A;&#x65F6;&#x5019;&#x5C31;&#x8F6E;&#x5230;GraphQLResolver&#x4E86;&#x3002;</p>
+<h3 id="graphqlresolver&#x7684;&#x4F7F;&#x7528;">GraphQLResolver&#x7684;&#x4F7F;&#x7528;</h3>
 <ol>
-<li><a href="https://hexo.io/docs/" target="_blank" rel="external">https://hexo.io/docs/</a></li>
-<li><a href="http://cnfeat.com/blog/2014/05/10/how-to-build-a-blog/" target="_blank" rel="external">http://cnfeat.com/blog/2014/05/10/how-to-build-a-blog/</a></li>
-<li><a href="http://ibruce.info/2013/11/22/hexo-your-blog/" target="_blank" rel="external">http://ibruce.info/2013/11/22/hexo-your-blog/</a></li>
+<li>&#x9996;&#x5148;&#x5C06;schema.graphqls&#x4E2D;&#x5173;&#x4E8E;book&#x7684;&#x58F0;&#x660E;&#x53D8;&#x66F4;&#x5982;&#x4E0B;&#xFF1A;</li>
 </ol>
-</li>
+<p><figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="typedef"><span class="keyword">type</span> <span class="type">Book</span> <span class="container">{</span><br><span class="line">id: <span class="type">Long</span></span><br><span class="line">name: <span class="type">String</span></span><br><span class="line">url: <span class="type">String</span></span><br><span class="line">person: <span class="type">Person</span></span><br><span class="line">desc: <span class="type">String</span></span><br><span class="line">}</span></span></span><br></pre></td></tr></table></figure></p>
+<p>&#x4F46;&#x662F;Book&#x7C7B;&#x7684;&#x58F0;&#x660E;&#x4ECD;&#x7136;&#x6CA1;&#x6709;&#x4EFB;&#x4F55;&#x53D8;&#x5316;</p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Data</span></span><br><span class="line"><span class="annotation">@AllArgsConstructor</span></span><br><span class="line"><span class="annotation">@NoArgsConstructor</span></span><br><span class="line"><span class="annotation">@Builder</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Book</span> </span>{    </span><br><span class="line">	<span class="keyword">private</span> Long id;    </span><br><span class="line">	<span class="keyword">private</span> String name;    </span><br><span class="line">	<span class="keyword">private</span> String url;   </span><br><span class="line">	<span class="keyword">private</span> Person person;</span><br><span class="line"> }</span><br></pre></td></tr></table></figure></p>
+<p>&#x4F46;&#x662F;&#x6211;&#x4EEC;&#x7684;&#x58F0;&#x660E;&#x4E2D;&#x662F;&#x6DFB;&#x52A0;&#x4E86;desc&#x8FD9;&#x4E2A;&#x5B57;&#x6BB5;&#x7684;,&#x90A3;&#x4E48;&#x6211;&#x4EEC;&#x600E;&#x4E48;&#x5904;&#x7406;&#x8FD9;&#x4E2A;&#x5B57;&#x6BB5;&#x5462;&#xFF1F;</p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.coxautodev.graphql.tools.GraphQLResolver;</span><br><span class="line"><span class="keyword">import</span> com.generalthink.graphql.com.generalthink.graphql.bean.Book;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="annotation">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BookResolver</span> <span class="keyword">implements</span> <span class="title">GraphQLResolver</span>&lt;<span class="title">Book</span>&gt; </span>{</span><br><span class="line">    <span class="comment">//&#x83B7;&#x53D6;desc&#x5B57;&#x6BB5;&#x7684;&#x5904;&#x7406;&#x65B9;&#x5F0F;&#xFF0C;getUpperFieldName</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getDesc</span><span class="params">(Book book)</span> </span>{</span><br><span class="line">        <span class="keyword">if</span>(<span class="string">&quot;Java&quot;</span>.equals(book.getName())) {</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;great book&quot;</span>;</span><br><span class="line">        } <span class="keyword">else</span> {</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;unrecommened book&quot;</span>;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></table></figure></p>
+<ol start="2">
+<li>&#x5728;GraphqlEndopoint&#x4E2D;&#x58F0;&#x660E;&#x9700;&#x8981;&#x5904;&#x7406;&#x7684;resolver:</li>
 </ol>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="annotation">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GraphqlEndpoint</span> <span class="keyword">extends</span> <span class="title">SimpleGraphQLServlet</span> </span>{</span><br><span class="line"></span><br><span class="line"><span class="annotation">@Autowired</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">GraphqlEndpoint</span><span class="params">(Query query, Mutation mutation, BookResolver bookResolver)</span> </span>{</span><br><span class="line"><span class="keyword">super</span>(SchemaParser.newParser()</span><br><span class="line">.file(<span class="string">&quot;schema.graphqls&quot;</span>)</span><br><span class="line">.resolvers(query,mutation,bookResolver)</span><br><span class="line">.scalars(Scalars.JAVA_LONG)</span><br><span class="line">.build()</span><br><span class="line">.makeExecutableSchema());</span><br><span class="line">}</span><br><span class="line">}</span><br></pre></td></tr></table></figure></p>
+<p>&#x6B64;&#x65F6;&#x4F7F;&#x7528;grapqhql playgound&#x53D1;&#x8D77;&#x8BF7;&#x6C42;&#xFF1A;
+<img src="/images/graphql2-playground-post.png" alt="grapqhl palyground"></p>
+<h3 id="graphql-playground&#x7684;&#x4F7F;&#x7528;">Graphql Playground&#x7684;&#x4F7F;&#x7528;</h3>
+<p>playground&#x5DE5;&#x5177;&#x8FD8;&#x6709;&#x4E00;&#x4E2A;chome&#x63D2;&#x4EF6;&#x7248;,&#x53EF;&#x4EE5;&#x5728;&#x5E94;&#x7528;&#x5546;&#x5E97;&#x641C;&#x7D22;graphiql&#x5B89;&#x88C5;,&#x540C;&#x6837;&#x53EF;&#x4EE5;&#x63D0;&#x4F9B;&#x4E00;&#x6837;&#x7684;&#x529F;&#x80FD;&#xFF0C;&#x4E0A;&#x9762;&#x770B;&#x4E86;&#x77E5;&#x9053;&#x5982;&#x4F55;&#x53D1;&#x8D77;&#x8BF7;&#x6C42;&#xFF0C;&#x4F46;&#x662F;&#x5728;&#x6211;&#x4EEC;&#x524D;&#x7AEF;&#x4E2D;&#x5982;&#x4F55;&#x53D1;&#x8D77;&#x8BF7;&#x6C42;&#x5462;&#xFF1F;</p>
+<p>&#x9996;&#x5148;&#x6253;&#x5F00;chrome&#x8C03;&#x8BD5;&#x5DE5;&#x5177;
+<img src="/images/graphql2-playground-open-console.png" alt="&#x6253;&#x5F00;dev Tool"></p>
+<p>&#x53D1;&#x8D77;graphql&#x8BF7;&#x6C42;&#xFF0C;&#x53EF;&#x4EE5;&#x5728;dev tools&#x4E2D;&#x770B;&#x5230;&#x5177;&#x4F53;&#x7684;&#x8BF7;&#x6C42;&#xFF0C;&#x6B64;&#x65F6;&#x53EF;&#x4EE5;&#x5C06;&#x8BF7;&#x6C42;&#x590D;&#x5236;&#x4E3A;cURL&#x6216;&#x8005;&#x67E5;&#x770B;&#x5177;&#x4F53;&#x7684;&#x53D1;&#x8D77;&#x7684;&#x8BF7;&#x6C42;&#x4F53;
+<img src="/images/graphql2-devtool-copy2curl.png" alt="&#x8BF7;&#x6C42;&#x62F7;&#x8D1D;&#x4E3A;cURL"></p>
+<p>&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x628A;&#x5177;&#x4F53;&#x8BF7;&#x6C42;&#x5BFC;&#x51FA;&#x4E3A;cURL&#xFF0C;&#x7136;&#x540E;&#x5BFC;&#x5165;&#x5230;postman&#x4E2D;
+<img src="/images/graphql2-curl-postman.png" alt="&#x5BFC;&#x5165;&#x8BF7;&#x6C42;&#x5230;postman"></p>
+<p>&#x67E5;&#x770B;&#x8BF7;&#x6C42;&#x7ED3;&#x679C;
+<img src="/images/graphql2-get-request-in-postman.png" alt="&#x5728;postman&#x4E2D;&#x53D1;&#x8D77;&#x8BF7;&#x6C42;"></p>
+<p>&#x4F1A;&#x53D1;&#x73B0;&#x5728;web&#x8BF7;&#x6C42;&#x4E2D;&#xFF0C;&#x662F;&#x5C06;&#x8BF7;&#x6C42;&#x53C2;&#x6570;&#x5168;&#x90E8;&#x653E;&#x5230;body&#x4F53;&#x4E2D;&#x53D1;&#x9001;&#x5230;&#x540E;&#x7AEF;&#x7684;&#x3002;&#x5728;&#x8FD9;&#x6B21;&#x4F7F;&#x7528;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x53D1;&#x73B0;graphql&#x6240;&#x6709;&#x8FD4;&#x56DE;&#x7684;&#x53C2;&#x6570;&#x90FD;&#x662F;&#x53EF;&#x4EE5;&#x7531;&#x524D;&#x7AEF;&#x81EA;&#x5DF1;&#x5B9A;&#x5236;&#x7684;,&#x800C;&#x4E14;&#x4F7F;&#x7528;graphql playground&#x7684;&#x8FC7;&#x7A0B;&#x53EF;&#x4EE5;&#x8BA9;&#x6211;&#x4EEC;&#x77E5;&#x9053;&#x8BF7;&#x6C42;&#x9700;&#x8981;&#x54EA;&#x4E9B;&#x53C2;&#x6570;&#xFF0C;&#x8FD4;&#x56DE;&#x53EF;&#x4EE5;&#x7531;&#x54EA;&#x4E9B;&#x503C;&#xFF0C;&#x4F7F;&#x7528;&#x8FD8;&#x662F;&#x6781;&#x4E3A;&#x65B9;&#x4FBF;&#x7684;&#x3002;</p>
 </span>
       
     </div>
@@ -310,7 +276,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/hexo/" rel="tag">#hexo</a>
+            <a href="/tags/Graphql/" rel="tag">#Graphql</a>
           
         </div>
       
@@ -319,11 +285,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/10/02/how-to-use-fastjson/" rel="prev">fastjson使用</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/27/how-to-use-graphql/" rel="next">Graphql在项目中的使用</a>
             
           </div>
         </div>
@@ -348,8 +314,8 @@
         
           <div class="comments" id="comments">
             
-              <div class="ds-thread" data-thread-key="2015/09/20/hexo-for-github-blog/"
-                   data-title="使用hexo搭建github博客" data-url="http://yoursite.com/2015/09/20/hexo-for-github-blog/">
+              <div class="ds-thread" data-thread-key="2018/10/30/how-to-use-graphql2/"
+                   data-title="how-to-use-graphql2" data-url="http://yoursite.com/2018/10/30/how-to-use-graphql2/">
               </div>
             
           </div>
@@ -459,7 +425,7 @@
           <div class="post-toc">
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#graphqlresolver的使用"><span class="nav-text">GraphQLResolver的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#graphql-playground的使用"><span class="nav-text">Graphql Playground的使用</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
