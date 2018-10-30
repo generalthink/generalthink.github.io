@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://yoursite.com/"/>
-  <updated>2018-10-30T13:13:34.482Z</updated>
+  <updated>2018-10-30T13:18:54.307Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,11 +15,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title><![CDATA[how-to-use-graphql2]]></title>
+    <title><![CDATA[Graphql在项目中的使用(二)]]></title>
     <link href="http://yoursite.com/2018/10/30/how-to-use-graphql2/"/>
     <id>http://yoursite.com/2018/10/30/how-to-use-graphql2/</id>
     <published>2018-10-30T12:56:08.000Z</published>
-    <updated>2018-10-30T13:13:34.482Z</updated>
+    <updated>2018-10-30T13:18:54.307Z</updated>
     <content type="html"><![CDATA[<p>&#x5728;&#x4E0A;&#x4E00;&#x7BC7;&#x6587;&#x7AE0;&#x4E2D;&#x6211;&#x4EEC;&#x4ECB;&#x7ECD;&#x4E86;Graphql&#x96C6;&#x6210;SpringMVC&#xFF0C;&#x4ECA;&#x5929;&#x5C31;&#x6765;&#x4ECB;&#x7ECD;&#x4E0B;GraphQLResolver&#x7684;&#x4F7F;&#x7528;&#x3002;
 &#x5047;&#x8BBE;&#x6211;&#x4EEC;&#x60F3;&#x8981;Book&#x8FD9;&#x4E2A;API&#x8FD4;&#x56DE;desc&#x8FD9;&#x4E2A;&#x5B57;&#x6BB5;,desc&#x53EF;&#x80FD;&#x5E76;&#x4E0D;&#x5728;&#x6570;&#x636E;&#x5E93;&#x4E2D;,&#x6216;&#x8005;&#x662F;&#x4F60;&#x60F3;&#x4E2A;&#x6027;&#x5316;&#x5B9A;&#x5236;&#x4F60;&#x7684;&#x8FD4;&#x56DE;&#x6570;&#x636E;,&#x8FD9;&#x4E2A;&#x65F6;&#x5019;&#x5C31;&#x8F6E;&#x5230;GraphQLResolver&#x4E86;&#x3002;</p>
 <h3 id="graphqlresolver&#x7684;&#x4F7F;&#x7528;">GraphQLResolver&#x7684;&#x4F7F;&#x7528;</h3>
