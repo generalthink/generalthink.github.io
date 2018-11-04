@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://yoursite.com/2018/11/04/garbage-collection/</loc>
+    <lastmod>2018-11-04T08:08:10.212Z</lastmod>
+    <data>
+        <display>
+        <title>Java中的垃圾回收算法以及垃圾回收器</title>
+        <pubTime>2018-11-04T06:45:40.000Z</pubTime>
+        
+        <tag>jvm</tag>
+         
+         
+           
+             
+              <breadCrumb title="jvm" url="http://yoursite.com/categories/jvm/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2018/10/30/how-to-use-graphql2/</loc>
     <lastmod>2018-10-30T13:18:54.307Z</lastmod>
     <data>
