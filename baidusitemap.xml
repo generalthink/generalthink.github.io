@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://yoursite.com/2018/11/24/how-to-use-hbase-in-docker/</loc>
+    <lastmod>2018-11-24T07:12:10.441Z</lastmod>
+    <data>
+        <display>
+        <title>在Docker中使用HBase</title>
+        <pubTime>2018-11-24T06:53:39.000Z</pubTime>
+        
+        <tag>HBase</tag>
+         
+         
+           
+             
+              <breadCrumb title="HBase" url="http://yoursite.com/categories/HBase/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2018/11/24/hbase-basic/</loc>
     <lastmod>2018-11-24T06:47:11.441Z</lastmod>
     <data>
