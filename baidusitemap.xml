@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://yoursite.com/2018/11/24/hbase-basic/</loc>
+    <lastmod>2018-11-24T06:47:11.441Z</lastmod>
+    <data>
+        <display>
+        <title>深入浅出Hbase</title>
+        <pubTime>2018-11-24T05:09:28.000Z</pubTime>
+        
+        <tag>HBase</tag>
+         
+         
+           
+             
+              <breadCrumb title="HBase" url="http://yoursite.com/categories/HBase/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2018/11/13/jvm-log-analysis/</loc>
     <lastmod>2018-11-14T14:07:59.971Z</lastmod>
     <data>

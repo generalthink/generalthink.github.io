@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://yoursite.com/"/>
-  <updated>2018-11-14T14:07:59.971Z</updated>
+  <updated>2018-11-24T06:47:11.441Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -13,6 +13,236 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[深入浅出Hbase]]></title>
+    <link href="http://yoursite.com/2018/11/24/hbase-basic/"/>
+    <id>http://yoursite.com/2018/11/24/hbase-basic/</id>
+    <published>2018-11-24T05:09:28.000Z</published>
+    <updated>2018-11-24T06:47:11.441Z</updated>
+    <content type="html"><![CDATA[<p>&#x672C;&#x6587;&#x5168;&#x6587;&#x8F6C;&#x8F7D;&#x81EA;:<a href="https://www.ibm.com/developerworks/cn/analytics/library/ba-cn-bigdata-hbase/index.html" target="_blank" rel="external">https://www.ibm.com/developerworks/cn/analytics/library/ba-cn-bigdata-hbase/index.html</a>
+&#x539F;&#x6587;&#x4E2D;&#x6709;&#x5173;&#x4E8E;Phoenix&#x7684;&#x90E8;&#x5206;&#x4F7F;&#x7528;&#xFF0C;&#x4E2A;&#x4EBA;&#x89C9;&#x5F97;HBase&#x7684;&#x5185;&#x5BB9;&#x662F;&#x6700;&#x597D;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x53EA;&#x8F6C;&#x8F7D;&#x4E86;&#x5173;&#x4E8E;HBase&#x90E8;&#x5206;&#x7684;&#xFF0C;&#x5982;&#x679C;&#x4E0B;&#x60F3;&#x8981;&#x770B;Phoenix,
+&#x53EF;&#x4EE5;&#x67E5;&#x770B;&#x539F;&#x6587;&#x3002;</p>
+<p>&#x63D0;&#x5230;&#x5927;&#x6570;&#x636E;&#x7684;&#x5B58;&#x50A8;&#xFF0C;&#x5927;&#x591A;&#x6570;&#x4EBA;&#x9996;&#x5148;&#x8054;&#x60F3;&#x5230;&#x7684;&#x662F; Hadoop &#x548C; Hadoop &#x4E2D;&#x7684; HDFS &#x6A21;&#x5757;&#x3002;&#x5927;&#x5BB6;&#x719F;&#x77E5;&#x7684; Spark&#x3001;&#x4EE5;&#x53CA; Hadoop &#x7684; MapReduce&#xFF0C;&#x53EF;&#x4EE5;&#x7406;&#x89E3;&#x4E3A;&#x4E00;&#x79CD;&#x8BA1;&#x7B97;&#x6846;&#x67B6;&#x3002;&#x800C; HDFS&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x8BA4;&#x4E3A;&#x662F;&#x4E3A;&#x8BA1;&#x7B97;&#x6846;&#x67B6;&#x670D;&#x52A1;&#x7684;&#x5B58;&#x50A8;&#x5C42;&#x3002;&#x56E0;&#x6B64;&#x4E0D;&#x7BA1;&#x662F; Spark &#x8FD8;&#x662F; MapReduce&#xFF0C;&#x90FD;&#x9700;&#x8981;&#x4F7F;&#x7528; HDFS &#x4F5C;&#x4E3A;&#x9ED8;&#x8BA4;&#x7684;&#x6301;&#x4E45;&#x5316;&#x5B58;&#x50A8;&#x5C42;&#x3002;</p>
+<p>&#x90A3;&#x4E48; HBase &#x53C8;&#x662F;&#x4EC0;&#x4E48;&#xFF0C;&#x53EF;&#x4EE5;&#x7528;&#x5728;&#x54EA;&#x91CC;&#xFF0C;&#x89E3;&#x51B3;&#x4EC0;&#x4E48;&#x6837;&#x7684;&#x95EE;&#x9898;&#xFF1F;</p>
+<p>&#x7B80;&#x5355;&#x5730;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x8BA4;&#x4E3A; HBase &#x662F;&#x4E00;&#x79CD;&#x7C7B;&#x4F3C;&#x4E8E;&#x6570;&#x636E;&#x5E93;&#x7684;&#x5B58;&#x50A8;&#x5C42;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x8BF4; HBase &#x9002;&#x7528;&#x4E8E;&#x7ED3;&#x6784;&#x5316;&#x7684;&#x5B58;&#x50A8;&#x3002;&#x5E76;&#x4E14; HBase &#x662F;&#x4E00;&#x79CD;&#x5217;&#x5F0F;&#x7684;&#x5206;&#x5E03;&#x5F0F;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x662F;&#x7531;&#x5F53;&#x5E74;&#x7684; Google &#x516C;&#x5E03;&#x7684; BigTable &#x7684;&#x8BBA;&#x6587;&#x800C;&#x751F;&#x3002;&#x4E0D;&#x8FC7;&#x8FD9;&#x91CC;&#x4E5F;&#x8981;&#x6CE8;&#x610F; HBase &#x5E95;&#x5C42;&#x4F9D;&#x65E7;&#x4F9D;&#x8D56; HDFS &#x6765;&#x4F5C;&#x4E3A;&#x5176;&#x7269;&#x7406;&#x5B58;&#x50A8;&#xFF0C;&#x8FD9;&#x70B9;&#x7C7B;&#x4F3C;&#x4E8E; Hive&#x3002;</p>
+<p>&#x53EF;&#x80FD;&#x6709;&#x7684;&#x8BFB;&#x8005;&#x4F1A;&#x597D;&#x5947; HBase &#x4E8E; Hive &#x7684;&#x533A;&#x522B;&#xFF0C;&#x6211;&#x4EEC;&#x7B80;&#x5355;&#x7684;&#x68B3;&#x7406;&#x4E00;&#x4E0B; Hive &#x548C; HBase &#x7684;&#x5E94;&#x7528;&#x573A;&#x666F;&#xFF1A;
+Hive &#x9002;&#x5408;&#x7528;&#x6765;&#x5BF9;&#x4E00;&#x6BB5;&#x65F6;&#x95F4;&#x5185;&#x7684;&#x6570;&#x636E;&#x8FDB;&#x884C;&#x5206;&#x6790;&#x67E5;&#x8BE2;&#xFF0C;&#x4F8B;&#x5982;&#xFF0C;&#x7528;&#x6765;&#x8BA1;&#x7B97;&#x8D8B;&#x52BF;&#x6216;&#x8005;&#x7F51;&#x7AD9;&#x7684;&#x65E5;&#x5FD7;&#x3002;Hive &#x4E0D;&#x5E94;&#x8BE5;&#x7528;&#x6765;&#x8FDB;&#x884C;&#x5B9E;&#x65F6;&#x7684;&#x67E5;&#x8BE2;&#xFF08;Hive &#x7684;&#x8BBE;&#x8BA1;&#x76EE;&#x7684;&#xFF0C;&#x4E5F;&#x4E0D;&#x662F;&#x652F;&#x6301;&#x5B9E;&#x65F6;&#x7684;&#x67E5;&#x8BE2;&#xFF09;&#x3002;&#x56E0;&#x4E3A;&#x5B83;&#x9700;&#x8981;&#x5F88;&#x957F;&#x65F6;&#x95F4;&#x624D;&#x53EF;&#x4EE5;&#x8FD4;&#x56DE;&#x7ED3;&#x679C;&#xFF1B;HBase &#x5219;&#x975E;&#x5E38;&#x9002;&#x5408;&#x7528;&#x6765;&#x8FDB;&#x884C;&#x5927;&#x6570;&#x636E;&#x7684;&#x5B9E;&#x65F6;&#x67E5;&#x8BE2;&#xFF0C;&#x4F8B;&#x5982; Facebook &#x7528; HBase &#x8FDB;&#x884C;&#x6D88;&#x606F;&#x548C;&#x5B9E;&#x65F6;&#x7684;&#x5206;&#x6790;&#x3002;</p>
+<p>&#x5BF9;&#x4E8E; Hive &#x548C; HBase &#x7684;&#x90E8;&#x7F72;&#x6765;&#x8BF4;&#xFF0C;&#x4E5F;&#x6709;&#x4E00;&#x4E9B;&#x533A;&#x522B;&#xFF0C;Hive &#x4E00;&#x822C;&#x53EA;&#x8981;&#x6709; Hadoop &#x4FBF;&#x53EF;&#x4EE5;&#x5DE5;&#x4F5C;&#x3002;&#x800C; HBase &#x5219;&#x8FD8;&#x9700;&#x8981; Zookeeper &#x7684;&#x5E2E;&#x52A9;&#xFF08;Zookeeper&#xFF0C;&#x662F;&#x4E00;&#x4E2A;&#x7528;&#x6765;&#x8FDB;&#x884C;&#x5206;&#x5E03;&#x5F0F;&#x534F;&#x8C03;&#x7684;&#x670D;&#x52A1;&#xFF0C;&#x8FD9;&#x4E9B;&#x670D;&#x52A1;&#x5305;&#x62EC;&#x914D;&#x7F6E;&#x670D;&#x52A1;&#xFF0C;&#x7EF4;&#x62A4;&#x5143;&#x4FE1;&#x606F;&#x548C;&#x547D;&#x540D;&#x7A7A;&#x95F4;&#x670D;&#x52A1;&#xFF09;&#x3002;&#x518D;&#x800C;&#xFF0C;HBase &#x672C;&#x8EAB;&#x53EA;&#x63D0;&#x4F9B;&#x4E86; Java &#x7684; API &#x63A5;&#x53E3;&#xFF0C;&#x5E76;&#x4E0D;&#x76F4;&#x63A5;&#x652F;&#x6301; SQL &#x7684;&#x8BED;&#x53E5;&#x67E5;&#x8BE2;&#xFF0C;&#x800C; Hive &#x5219;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x4F7F;&#x7528; HQL&#xFF08;&#x4E00;&#x79CD;&#x7C7B; SQL &#x8BED;&#x8A00;&#xFF09;&#x3002;&#x5982;&#x679C;&#x60F3;&#x8981;&#x5728; HBase &#x4E0A;&#x4F7F;&#x7528; SQL&#xFF0C;&#x5219;&#x9700;&#x8981;&#x8054;&#x5408;&#x4F7F;&#x7528; Apache Phonenix&#xFF0C;&#x6216;&#x8005;&#x8054;&#x5408;&#x4F7F;&#x7528; Hive &#x548C; HBase&#x3002;</p>
+<p>&#x4F46;&#x662F;&#x548C;&#x4E0A;&#x9762;&#x63D0;&#x5230;&#x7684;&#x4E00;&#x6837;&#xFF0C;&#x5982;&#x679C;&#x96C6;&#x6210;&#x4F7F;&#x7528; Hive &#x67E5;&#x8BE2; HBase &#x7684;&#x6570;&#x636E;&#xFF0C;&#x5219;&#x65E0;&#x6CD5;&#x7ED5;&#x8FC7; MapReduce&#xFF0C;&#x90A3;&#x4E48;&#x5B9E;&#x65F6;&#x6027;&#x8FD8;&#x662F;&#x6709;&#x4E00;&#x5B9A;&#x7684;&#x635F;&#x5931;&#x3002;Phoenix &#x52A0; HBase &#x7684;&#x7EC4;&#x5408;&#x5219;&#x4E0D;&#x7ECF;&#x8FC7; MapReduce &#x7684;&#x6846;&#x67B6;&#xFF0C;&#x56E0;&#x6B64;&#x5F53;&#x4F7F;&#x7528; Phoneix &#x52A0; HBase &#x7684;&#x7EC4;&#x6210;&#xFF0C;&#x5B9E;&#x65F6;&#x6027;&#x4E0A;&#x4F1A;&#x4F18;&#x4E8E; Hive &#x52A0; HBase &#x7684;&#x7EC4;&#x5408;&#xFF0C;&#x6211;&#x4EEC;&#x540E;&#x7EED;&#x4E5F;&#x4F1A;&#x793A;&#x4F8B;&#x6027;&#x4ECB;&#x7ECD;&#x5982;&#x4F55;&#x4F7F;&#x7528;&#x4E24;&#x8005;&#x3002;&#x6700;&#x540E;&#x6211;&#x4EEC;&#x518D;&#x63D0;&#x4E0B; Hive &#x548C; HBase &#x6240;&#x4F7F;&#x7528;&#x7684;&#x5B58;&#x50A8;&#x5C42;&#xFF0C;&#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B; Hive &#x548C; HBase &#x7684;&#x5B58;&#x50A8;&#x5C42;&#x90FD;&#x662F; HDFS&#x3002;&#x4F46;&#x662F; HBase &#x5728;&#x4E00;&#x4E9B;&#x7279;&#x6B8A;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x4E5F;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x4F7F;&#x7528;&#x672C;&#x673A;&#x7684;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x3002;&#x4F8B;&#x5982; Ambari &#x4E2D;&#x7684; AMS &#x670D;&#x52A1;&#x76F4;&#x63A5;&#x5728;&#x672C;&#x5730;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x4E0A;&#x8FD0;&#x884C; HBase&#x3002;</p>
+<h3 id="hbase-&#x4E0E;&#x4F20;&#x7EDF;&#x5173;&#x7CFB;&#x6570;&#x636E;&#x5E93;&#x7684;&#x533A;&#x522B;">HBase &#x4E0E;&#x4F20;&#x7EDF;&#x5173;&#x7CFB;&#x6570;&#x636E;&#x5E93;&#x7684;&#x533A;&#x522B;</h3>
+<p>&#x9996;&#x5148;&#x8BA9;&#x6211;&#x4EEC;&#x4E86;&#x89E3;&#x4E0B;&#x4EC0;&#x4E48;&#x662F; ACID&#x3002;ACID &#x662F;&#x6307;&#x6570;&#x636E;&#x5E93;&#x4E8B;&#x52A1;&#x6B63;&#x786E;&#x6267;&#x884C;&#x7684;&#x56DB;&#x4E2A;&#x57FA;&#x672C;&#x8981;&#x7D20;&#x7684;&#x7F29;&#x5199;&#xFF0C;&#x5176;&#x5305;&#x542B;&#xFF1A;&#x539F;&#x5B50;&#x6027;&#xFF08;Atomicity&#xFF09;&#x3001;&#x4E00;&#x81F4;&#x6027;&#xFF08;Consistency&#xFF09;&#x3001;&#x9694;&#x79BB;&#x6027;&#xFF08;Isolation&#xFF09;&#x4EE5;&#x53CA;&#x6301;&#x4E45;&#x6027;&#xFF08;Durability&#xFF09;&#x3002;&#x5BF9;&#x4E8E;&#x4E00;&#x4E2A;&#x652F;&#x6301;&#x4E8B;&#x52A1;&#xFF08;Transaction&#xFF09;&#x7684;&#x6570;&#x636E;&#x5E93;&#x7CFB;&#x7EDF;&#xFF0C;&#x5FC5;&#x9700;&#x8981;&#x5177;&#x6709;&#x8FD9;&#x56DB;&#x79CD;&#x7279;&#x6027;&#xFF0C;&#x5426;&#x5219;&#x5728;&#x4E8B;&#x52A1;&#x8FC7;&#x7A0B;&#xFF08;Transaction Processing&#xFF09;&#x5F53;&#x4E2D;&#x65E0;&#x6CD5;&#x4FDD;&#x8BC1;&#x6570;&#x636E;&#x7684;&#x6B63;&#x786E;&#x6027;&#xFF0C;&#x4EA4;&#x6613;&#x8FC7;&#x7A0B;&#x6781;&#x53EF;&#x80FD;&#x8FBE;&#x4E0D;&#x5230;&#x4EA4;&#x6613;&#x65B9;&#x7684;&#x8981;&#x6C42;&#x3002;&#x4E0B;&#x9762;&#xFF0C;&#x6211;&#x4EEC;&#x5C31;&#x7B80;&#x5355;&#x7684;&#x4ECB;&#x7ECD;&#x4E0B;&#x8FD9; 4 &#x4E2A;&#x7279;&#x6027;&#x7684;&#x542B;&#x4E49;&#x3002;</p>
+<ul>
+<li>
+<p>&#x539F;&#x5B50;&#x6027;(Atomicity)&#x662F;&#x6307;&#x4E00;&#x4E2A;&#x4E8B;&#x52A1;&#x8981;&#x4E48;&#x5168;&#x90E8;&#x6267;&#x884C;,&#x8981;&#x4E48;&#x5168;&#x90E8;&#x4E0D;&#x6267;&#x884C;&#x3002;&#x6362;&#x53E5;&#x8BDD;&#x8BF4;&#xFF0C;&#x4E00;&#x4E2A;&#x4E8B;&#x52A1;&#x4E0D;&#x53EF;&#x80FD;&#x53EA;&#x6267;&#x884C;&#x4E86;&#x4E00;&#x534A;&#x5C31;&#x505C;&#x6B62;&#x4E86;&#x3002;&#x6BD4;&#x5982;&#x4E00;&#x4E2A;&#x4E8B;&#x60C5;&#x5206;&#x4E3A;&#x4E24;&#x6B65;&#x5B8C;&#x6210;&#x624D;&#x53EF;&#x4EE5;&#x5B8C;&#x6210;&#xFF0C;&#x90A3;&#x4E48;&#x8FD9;&#x4E24;&#x6B65;&#x5FC5;&#x987B;&#x540C;&#x65F6;&#x5B8C;&#x6210;&#xFF0C;&#x8981;&#x4E48;&#x4E00;&#x6B65;&#x4E5F;&#x4E0D;&#x6267;&#x884C;&#xFF0C;&#x7EDD;&#x4E0D;&#x4F1A;&#x505C;&#x7559;&#x5728;&#x67D0;&#x4E00;&#x4E2A;&#x4E2D;&#x95F4;&#x72B6;&#x6001;&#x3002;&#x5982;&#x679C;&#x4E8B;&#x7269;&#x6267;&#x884C;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x53D1;&#x751F;&#x9519;&#x8BEF;&#xFF0C;&#x7CFB;&#x7EDF;&#x4F1A;&#x5C06;&#x4E8B;&#x7269;&#x7684;&#x72B6;&#x6001;&#x56DE;&#x6EDA;&#x5230;&#x6700;&#x5F00;&#x59CB;&#x7684;&#x72B6;&#x6001;&#x3002;</p>
+</li>
+<li>
+<p>&#x4E00;&#x81F4;&#x6027;(Consistency)&#x662F;&#x6307;&#x4E8B;&#x52A1;&#x7684;&#x8FD0;&#x884C;&#x5E76;&#x4E0D;&#x6539;&#x53D8;&#x6570;&#x636E;&#x5E93;&#x4E2D;&#x6570;&#x636E;&#x7684;&#x4E00;&#x81F4;&#x6027;&#x3002;&#x4E5F;&#x5C31;&#x662F;&#x8BF4;&#xFF0C;&#x65E0;&#x8BBA;&#x5E76;&#x53D1;&#x4E8B;&#x52A1;&#x6709;&#x591A;&#x5C11;&#x4E2A;&#xFF0C;&#x4F46;&#x662F;&#x5FC5;&#x987B;&#x4FDD;&#x8BC1;&#x6570;&#x636E;&#x4ECE;&#x4E00;&#x4E2A;&#x4E00;&#x81F4;&#x6027;&#x7684;&#x72B6;&#x6001;&#x8F6C;&#x6362;&#x5230;&#x53E6;&#x4E00;&#x4E2A;&#x4E00;&#x81F4;&#x6027;&#x7684;&#x72B6;&#x6001;&#x3002;&#x4F8B;&#x5982;&#x6709; a&#x3001;b &#x4E24;&#x4E2A;&#x8D26;&#x6237;&#xFF0C;&#x5206;&#x522B;&#x90FD;&#x662F; 10&#x3002;&#x5F53; a &#x589E;&#x52A0; 5 &#x65F6;&#xFF0C;b &#x4E5F;&#x4F1A;&#x968F;&#x7740;&#x6539;&#x53D8;&#xFF0C;&#x603B;&#x503C; 20 &#x662F;&#x4E0D;&#x4F1A;&#x6539;&#x53D8;&#x7684;&#x3002;</p>
+</li>
+<li>
+<p>&#x9694;&#x79BB;&#x6027;&#xFF08;Isolation&#xFF09;&#x662F;&#x6307;&#x4E24;&#x4E2A;&#x4EE5;&#x4E0A;&#x7684;&#x4E8B;&#x52A1;&#x4E0D;&#x4F1A;&#x51FA;&#x73B0;&#x4EA4;&#x9519;&#x6267;&#x884C;&#x7684;&#x72B6;&#x6001;&#x3002;&#x56E0;&#x4E3A;&#x8FD9;&#x6837;&#x53EF;&#x80FD;&#x4F1A;&#x5BFC;&#x81F4;&#x6570;&#x636E;&#x4E0D;&#x4E00;&#x81F4;&#x3002;&#x5982;&#x679C;&#x6709;&#x591A;&#x4E2A;&#x4E8B;&#x52A1;&#xFF0C;&#x8FD0;&#x884C;&#x5728;&#x76F8;&#x540C;&#x7684;&#x65F6;&#x95F4;&#x5185;&#xFF0C;&#x6267;&#x884C;&#x76F8;&#x540C;&#x7684;&#x529F;&#x80FD;&#xFF0C;&#x4E8B;&#x52A1;&#x7684;&#x9694;&#x79BB;&#x6027;&#x5C06;&#x786E;&#x4FDD;&#x6BCF;&#x4E00;&#x4E8B;&#x52A1;&#x5728;&#x7CFB;&#x7EDF;&#x4E2D;&#x8BA4;&#x4E3A;&#x53EA;&#x6709;&#x8BE5;&#x4E8B;&#x52A1;&#x5728;&#x4F7F;&#x7528;&#x7CFB;&#x7EDF;&#x3002;&#x8FD9;&#x79CD;&#x5C5E;&#x6027;&#x6709;&#x65F6;&#x79F0;&#x4E3A;&#x4E32;&#x884C;&#x5316;&#xFF0C;&#x4E3A;&#x4E86;&#x9632;&#x6B62;&#x4E8B;&#x52A1;&#x64CD;&#x4F5C;&#x95F4;&#x7684;&#x6DF7;&#x6DC6;&#xFF0C;&#x5FC5;&#x987B;&#x4E32;&#x884C;&#x5316;&#x6216;&#x5E8F;&#x5217;&#x5316;&#x8BF7;&#x6C42;&#xFF0C;&#x4F7F;&#x5F97;&#x5728;&#x540C;&#x4E00;&#x65F6;&#x95F4;&#x4EC5;&#x6709;&#x4E00;&#x4E2A;&#x8BF7;&#x6C42;&#x7528;&#x4E8E;&#x540C;&#x4E00;&#x6570;&#x636E;&#x3002;</p>
+</li>
+<li>
+<p>&#x6301;&#x4E45;&#x6027;(Durability)&#x6307;&#x4E8B;&#x52A1;&#x6267;&#x884C;&#x6210;&#x529F;&#x4EE5;&#x540E;,&#x8BE5;&#x4E8B;&#x52A1;&#x5BF9;&#x6570;&#x636E;&#x5E93;&#x6240;&#x4F5C;&#x7684;&#x66F4;&#x6539;&#x4FBF;&#x662F;&#x6301;&#x4E45;&#x7684;&#x4FDD;&#x5B58;&#x5728;&#x6570;&#x636E;&#x5E93;&#x4E4B;&#x4E2D;&#xFF0C;&#x4E0D;&#x4F1A;&#x65E0;&#x7F18;&#x65E0;&#x6545;&#x7684;&#x56DE;&#x6EDA;&#x3002;</p>
+</li>
+</ul>
+<p>&#x5728;&#x5177;&#x4F53;&#x7684;&#x4ECB;&#x7ECD; HBase &#x4E4B;&#x524D;&#xFF0C;&#x6211;&#x4EEC;&#x5148;&#x7B80;&#x5355;&#x5BF9;&#x6BD4;&#x4E0B; HBase &#x4E0E;&#x4F20;&#x7EDF;&#x5173;&#x7CFB;&#x6570;&#x636E;&#x5E93;&#x7684;&#xFF08;RDBMS&#xFF0C;&#x5168;&#x79F0;&#x4E3A; Relational Database Management System&#xFF09;&#x533A;&#x522B;&#x3002;&#x5982;&#x8868; 1 &#x6240;&#x793A;&#x3002;</p>
+<p>&#x8868; 1. HBase &#x4E0E; RDBMS &#x7684;&#x533A;&#x522B;</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>HBase</th>
+<th>RDBMS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&#x786C;&#x4EF6;&#x67B6;&#x6784;</td>
+<td>&#x7C7B;&#x4F3C;&#x4E8E; Hadoop &#x7684;&#x5206;&#x5E03;&#x5F0F;&#x96C6;&#x7FA4;&#xFF0C;&#x786C;&#x4EF6;&#x6210;&#x672C;&#x4F4E;&#x5EC9;</td>
+<td>&#x4F20;&#x7EDF;&#x7684;&#x591A;&#x6838;&#x7CFB;&#x7EDF;&#xFF0C;&#x786C;&#x4EF6;&#x6210;&#x672C;&#x6602;&#x8D35;</td>
+</tr>
+<tr>
+<td>&#x5BB9;&#x9519;&#x6027;</td>
+<td>&#x7531;&#x8F6F;&#x4EF6;&#x67B6;&#x6784;&#x5B9E;&#x73B0;&#xFF0C;&#x7531;&#x4E8E;&#x7531;&#x591A;&#x4E2A;&#x8282;&#x70B9;&#x7EC4;&#x6210;&#xFF0C;&#x6240;&#x4EE5;&#x4E0D;&#x62C5;&#x5FC3;&#x4E00;&#x70B9;&#x6216;&#x51E0;&#x70B9;&#x5B95;&#x673A;</td>
+<td>&#x4E00;&#x822C;&#x9700;&#x8981;&#x989D;&#x5916;&#x786C;&#x4EF6;&#x8BBE;&#x5907;&#x5B9E;&#x73B0; HA &#x673A;&#x5236;</td>
+</tr>
+<tr>
+<td>&#x6570;&#x636E;&#x5E93;&#x5927;&#x5C0F;</td>
+<td>PB</td>
+<td>GB&#x3001;TB</td>
+</tr>
+<tr>
+<td>&#x6570;&#x636E;&#x6392;&#x5E03;&#x65B9;&#x5F0F;</td>
+<td>&#x7A00;&#x758F;&#x7684;&#x3001;&#x5206;&#x5E03;&#x7684;&#x591A;&#x7EF4;&#x7684; Map</td>
+<td>&#x4EE5;&#x884C;&#x548C;&#x5217;&#x7EC4;&#x7EC7;</td>
+</tr>
+<tr>
+<td>&#x6570;&#x636E;&#x7C7B;&#x578B;</td>
+<td>Bytes</td>
+<td>&#x4E30;&#x5BCC;&#x7684;&#x6570;&#x636E;&#x7C7B;&#x578B;</td>
+</tr>
+<tr>
+<td>&#x4E8B;&#x7269;&#x652F;&#x6301;</td>
+<td>ACID &#x53EA;&#x652F;&#x6301;&#x5355;&#x4E2A; Row &#x7EA7;&#x522B;</td>
+<td>&#x5168;&#x9762;&#x7684; ACID &#x652F;&#x6301;&#xFF0C;&#x5BF9; Row &#x548C;&#x8868;</td>
+</tr>
+<tr>
+<td>&#x67E5;&#x8BE2;&#x8BED;&#x8A00;</td>
+<td>&#x53EA;&#x652F;&#x6301; Java API &#xFF08;&#x9664;&#x975E;&#x4E0E;&#x5176;&#x4ED6;&#x6846;&#x67B6;&#x4E00;&#x8D77;&#x4F7F;&#x7528;&#xFF0C;&#x5982; Phoenix&#x3001;Hive&#xFF09;</td>
+<td>SQL</td>
+</tr>
+<tr>
+<td>&#x7D22;&#x5F15;</td>
+<td>&#x53EA;&#x652F;&#x6301; Row-key&#xFF0C;&#x9664;&#x975E;&#x4E0E;&#x5176;&#x4ED6;&#x6280;&#x672F;&#x4E00;&#x8D77;&#x5E94;&#x7528;&#xFF0C;&#x5982; Phoenix&#x3001;Hive</td>
+<td>&#x652F;&#x6301;</td>
+</tr>
+<tr>
+<td>&#x541E;&#x5410;&#x91CF;</td>
+<td>&#x767E;&#x4E07;&#x67E5;&#x8BE2;/&#x6BCF;&#x79D2;</td>
+<td>&#x6570;&#x5343;&#x67E5;&#x8BE2;/&#x6BCF;&#x79D2;</td>
+</tr>
+</tbody>
+</table>
+<p>&#x7406;&#x89E3;&#x4E86;&#x4E0A;&#x9762;&#x7684;&#x8868;&#x683C;&#x4E4B;&#x540E;&#xFF0C;&#x6211;&#x4EEC;&#x5728;&#x770B;&#x770B;&#x6570;&#x636E;&#x662F;&#x5982;&#x4F55;&#x5728; HBase &#x4EE5;&#x53CA; RDBMS &#x4E2D;&#x6392;&#x5E03;&#x7684;&#x3002;&#x9996;&#x5148;&#xFF0C;&#x6570;&#x636E;&#x5728; RDBMS &#x7684;&#x6392;&#x5E03;&#x5927;&#x81F4;&#x5982;&#x8868; 2&#x3002;</p>
+<p>&#x8868; 2. &#x6570;&#x636E;&#x5728; RDBMS &#x4E2D;&#x7684;&#x6392;&#x5E03;&#x793A;&#x4F8B;</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>&#x59D3;</th>
+<th>&#x540D;</th>
+<th>&#x5BC6;&#x7801;</th>
+<th>&#x65F6;&#x95F4;&#x6233;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>&#x5F20;</td>
+<td>&#x4E09;</td>
+<td>111</td>
+<td>20160719</td>
+</tr>
+<tr>
+<td>2</td>
+<td>&#x674E;</td>
+<td>&#x56DB;</td>
+<td>222</td>
+<td>20160720</td>
+</tr>
+</tbody>
+</table>
+<p>&#x90A3;&#x4E48;&#x6570;&#x636E;&#x5728; HBase &#x4E2D;&#x7684;&#x6392;&#x5E03;&#x4F1A;&#x662F;&#x4EC0;&#x4E48;&#x6837;&#x5B50;&#x5462;&#xFF1F;&#x5982;&#x8868; 3 &#x6240;&#x793A;&#xFF08;&#x8FD9;&#x53EA;&#x662F;&#x903B;&#x8F91;&#x4E0A;&#x7684;&#x6392;&#x5E03;&#xFF09;&#x3002;</p>
+<table>
+<thead>
+<tr>
+<th>Row-Key</th>
+<th>Value&#xFF08;CF&#x3001;Qualifier&#x3001;Version&#xFF09;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>info{&apos;&#x59D3;&apos;: &apos;&#x5F20;&apos;&#xFF0C;&apos;&#x540D;&apos;:&apos;&#x4E09;&apos;} pwd{&apos;&#x5BC6;&#x7801;&apos;: &apos;111&apos;}</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Info{&apos;&#x59D3;&apos;: &apos;&#x674E;&apos;&#xFF0C;&apos;&#x540D;&apos;:&apos;&#x56DB;&apos;} pwd{&apos;&#x5BC6;&#x7801;&apos;: &apos;222&apos;}</td>
+</tr>
+</tbody>
+</table>
+<p>&#x4ECE;&#x4E0A;&#x9762;&#x793A;&#x4F8B;&#x8868;&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#xFF0C;&#x5728; HBase &#x4E2D;&#x9996;&#x5148;&#x4F1A;&#x6709; Column Family &#x7684;&#x6982;&#x5FF5;&#xFF0C;&#x7B80;&#x79F0;&#x4E3A; CF&#x3002;CF &#x4E00;&#x822C;&#x7528;&#x4E8E;&#x5C06;&#x76F8;&#x5173;&#x7684;&#x5217;&#xFF08;Column&#xFF09;&#x7EC4;&#x5408;&#x8D77;&#x6765;&#x3002;&#x5728;&#x7269;&#x7406;&#x4E0A; HBase &#x5176;&#x5B9E;&#x662F;&#x6309; CF &#x5B58;&#x50A8;&#x7684;&#xFF0C;&#x53EA;&#x662F;&#x6309;&#x7167; Row-key &#x5C06;&#x76F8;&#x5173; CF &#x4E2D;&#x7684;&#x5217;&#x5173;&#x8054;&#x8D77;&#x6765;&#x3002;&#x7269;&#x7406;&#x4E0A;&#x7684;&#x6570;&#x636E;&#x6392;&#x5E03;&#x5927;&#x81F4;&#x53EF;&#x4EE5;&#x5982;&#x8868; 4 &#x6240;&#x793A;&#x3002;</p>
+<table>
+<thead>
+<tr>
+<th>Row-Key</th>
+<th>CF:Column-Key</th>
+<th>&#x65F6;&#x95F4;&#x6233;</th>
+<th>Cell Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>info:fn</td>
+<td>123456789</td>
+<td>&#x4E09;</td>
+</tr>
+<tr>
+<td>1</td>
+<td>info:ln</td>
+<td>123456789</td>
+<td>&#x5F20;</td>
+</tr>
+<tr>
+<td>2</td>
+<td>info:fn</td>
+<td>123456789</td>
+<td>&#x56DB;</td>
+</tr>
+<tr>
+<td>2</td>
+<td>info:ln</td>
+<td>123456789</td>
+<td>&#x674E;</td>
+</tr>
+</tbody>
+</table>
+<p>&#x6211;&#x4EEC;&#x5DF2;&#x7ECF;&#x63D0;&#x5230; HBase &#x662F;&#x6309;&#x7167; CF &#x6765;&#x5B58;&#x50A8;&#x6570;&#x636E;&#x7684;&#x3002;&#x5728;&#x8868; 3 &#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x770B;&#x5230;&#x4E86;&#x4E24;&#x4E2A; CF&#xFF0C;&#x5206;&#x522B;&#x662F; info &#x548C; pwd&#x3002;info &#x5B58;&#x50A8;&#x7740;&#x59D3;&#x540D;&#x76F8;&#x5173;&#x5217;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x800C; pwd &#x5219;&#x662F;&#x5BC6;&#x7801;&#x76F8;&#x5173;&#x7684;&#x6570;&#x636E;&#x3002;&#x4E0A;&#x8868;&#x4FBF;&#x662F; info &#x8FD9;&#x4E2A; CF &#x5B58;&#x50A8;&#x5728; Hbase &#x4E2D;&#x7684;&#x6570;&#x636E;&#x6392;&#x5E03;&#x3002;Pwd &#x7684;&#x6570;&#x636E;&#x6392;&#x5E03;&#x662F;&#x7C7B;&#x4F3C;&#x7684;&#x3002;&#x4E0A;&#x8868;&#x4E2D;&#x7684; fn &#x548C; ln &#x79F0;&#x4E4B;&#x4E3A; Column-key &#x6216;&#x8005; Qulifimer&#x3002;&#x5728; Hbase &#x4E2D;&#xFF0C;Row-key &#x52A0;&#x4E0A; CF &#x52A0;&#x4E0A; Qulifier &#x518D;&#x52A0;&#x4E0A;&#x4E00;&#x4E2A;&#x65F6;&#x95F4;&#x6233;&#x624D;&#x53EF;&#x4EE5;&#x5B9A;&#x4F4D;&#x5230;&#x4E00;&#x4E2A;&#x5355;&#x5143;&#x683C;&#x6570;&#x636E;&#xFF08;Hbase &#x4E2D;&#x6BCF;&#x4E2A;&#x5355;&#x5143;&#x683C;&#x9ED8;&#x8BA4;&#x6709; 3 &#x4E2A;&#x65F6;&#x95F4;&#x6233;&#x7684;&#x7248;&#x672C;&#x6570;&#x636E;&#xFF09;&#x3002;&#x521D;&#x5B66;&#x8005;&#xFF0C;&#x5728;&#x4E00;&#x5F00;&#x59CB;&#x63A5;&#x89E6;&#x8FD9;&#x4E9B;&#x6982;&#x5FF5;&#x662F;&#x5F88;&#x5BB9;&#x6613;&#x6DF7;&#x6DC6;&#x3002;&#x5176;&#x5B9E;&#x4E0D;&#x7BA1;&#x662F; CF &#x8FD8;&#x662F; Qulifier &#x90FD;&#x662F;&#x5BA2;&#x6237;&#x5B9A;&#x4E49;&#x51FA;&#x6765;&#x7684;&#x3002;&#x4E5F;&#x5C31;&#x662F;&#x8BF4;&#x5728; HBase &#x4E2D;&#x521B;&#x5EFA;&#x8868;&#x683C;&#x65F6;&#xFF0C;&#x5C31;&#x9700;&#x8981;&#x6307;&#x5B9A;&#x8868;&#x683C;&#x7684; CF&#x3001;Row-key &#x4EE5;&#x53CA; Qulifier&#x3002;&#x6211;&#x4EEC;&#x4F1A;&#x5728;&#x540E;&#x7EED;&#x7684;&#x4ECB;&#x7ECD;&#x4E2D;&#xFF0C;&#x5C1D;&#x8BD5;&#x6307;&#x5B9A;&#x8FD9;&#x4E9B;&#x76F8;&#x5173;&#x7684;&#x6982;&#x5FF5;&#xFF0C;&#x4EE5;&#x4FBF;&#x52A0;&#x6DF1;&#x7406;&#x89E3;&#x3002;&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x5148;&#x901A;&#x8FC7;&#x4E0B;&#x56FE;&#x7406;&#x89E3;&#x4E0B; HBase &#x4E2D;&#xFF0C;&#x903B;&#x8F91;&#x4E0A;&#x7684;&#x6570;&#x636E;&#x6392;&#x5E03;&#x4E0E;&#x7269;&#x7406;&#x4E0A;&#x7684;&#x6570;&#x636E;&#x6392;&#x5E03;&#x4E4B;&#x95F4;&#x7684;&#x5173;&#x7CFB;&#x3002;</p>
+<p>&#x56FE; 1. Hbase &#x4E2D;&#x903B;&#x8F91;&#x4E0A;&#x6570;&#x636E;&#x7684;&#x6392;&#x5E03;&#x4E0E;&#x7269;&#x7406;&#x4E0A;&#x6392;&#x5E03;&#x7684;&#x5173;&#x8054;</p>
+<p><img src="/images/hbase-logic-data.png" alt="Hbase&#x6570;&#x636E;&#x5206;&#x5E03;"></p>
+<p>&#x4ECE;&#x4E0A;&#x56FE;&#x6211;&#x4EEC;&#x770B;&#x5230; Row1 &#x5230; Row5 &#x7684;&#x6570;&#x636E;&#x5206;&#x5E03;&#x5728;&#x4E24;&#x4E2A; CF &#x4E2D;&#xFF0C;&#x5E76;&#x4E14;&#x6BCF;&#x4E2A; CF &#x5BF9;&#x5E94;&#x4E00;&#x4E2A; HFile&#x3002;&#x5E76;&#x4E14;&#x903B;&#x8F91;&#x4E0A;&#x6BCF;&#x4E00;&#x884C;&#x4E2D;&#x7684;&#x4E00;&#x4E2A;&#x5355;&#x5143;&#x683C;&#x6570;&#x636E;&#xFF0C;&#x5BF9;&#x5E94;&#x4E8E; HFile &#x4E2D;&#x7684;&#x4E00;&#x884C;&#xFF0C;&#x7136;&#x540E;&#x5F53;&#x7528;&#x6237;&#x6309;&#x7167; Row-key &#x67E5;&#x8BE2;&#x6570;&#x636E;&#x7684;&#x65F6;&#x5019;&#xFF0C;HBase &#x4F1A;&#x904D;&#x5386;&#x4E24;&#x4E2A; HFile&#xFF0C;&#x901A;&#x8FC7;&#x76F8;&#x540C;&#x7684; Row-Key &#x6807;&#x8BC6;&#xFF0C;&#x5C06;&#x76F8;&#x5173;&#x7684;&#x5355;&#x5143;&#x683C;&#x7EC4;&#x7EC7;&#x6210;&#x884C;&#x8FD4;&#x56DE;&#xFF0C;&#x8FD9;&#x6837;&#x4FBF;&#x6709;&#x4E86;&#x903B;&#x8F91;&#x4E0A;&#x7684;&#x884C;&#x6570;&#x636E;&#x3002;&#x8BB2;&#x89E3;&#x5230;&#x8FD9;&#xFF0C;&#x6211;&#x4EEC;&#x5C31;&#x5927;&#x81F4;&#x4E86;&#x89E3; HBase &#x4E2D;&#x7684;&#x6570;&#x636E;&#x6392;&#x5E03;&#x683C;&#x5F0F;&#xFF0C;&#x4EE5;&#x53CA;&#x4E0E; RDBMS &#x7684;&#x4E00;&#x4E9B;&#x533A;&#x522B;&#x3002;</p>
+<p>&#x5BF9;&#x4E8E; RDBMS &#x6765;&#x8BF4;&#xFF0C;&#x4E00;&#x822C;&#x90FD;&#x662F;&#x4EE5; SQL &#x4F5C;&#x4E3A;&#x4E3A;&#x4E3B;&#x8981;&#x7684;&#x8BBF;&#x95EE;&#x65B9;&#x5F0F;&#x3002;&#x800C; HBase &#x662F;&#x4E00;&#x79CD;&quot;NoSQL&quot;&#x6570;&#x636E;&#x5E93;&#x3002;&quot;NoSQL&quot;&#x662F;&#x4E00;&#x4E2A;&#x901A;&#x7528;&#x8BCD;&#x8868;&#x793A;&#x8BE5;&#x6570;&#x636E;&#x5E93;&#x5E76;&#x4E0D;&#x662F; RDBMS &#x3002;&#x73B0;&#x5728;&#x7684;&#x5E02;&#x9762;&#x4E0A;&#x6709;&#x8BB8;&#x591A;&#x79CD; NoSQL &#x6570;&#x636E;&#x5E93;&#xFF0C;&#x5982; BerkeleyDB &#x662F;&#x672C;&#x5730; NoSQL &#x6570;&#x636E;&#x5E93;&#x7684;&#x4F8B;&#x5B50;, HBase &#x5219;&#x4E3A;&#x5927;&#x578B;&#x5206;&#x5E03;&#x5F0F; NoSql &#x6570;&#x636E;&#x5E93;&#x3002;&#x4ECE;&#x6280;&#x672F;&#x4E0A;&#x6765;&#x8BF4;&#xFF0C;Hbase &#x66F4;&#x50CF;&#x662F;&quot;&#x6570;&#x636E;&#x5B58;&#x50A8;&quot;&#x800C;&#x975E;&quot;&#x6570;&#x636E;&#x5E93;&quot;&#xFF08;HBase &#x548C; HDFS &#x90FD;&#x5C5E;&#x4E8E;&#x5927;&#x6570;&#x636E;&#x7684;&#x5B58;&#x50A8;&#x5C42;&#xFF09;&#x3002;&#x56E0;&#x6B64;&#xFF0C;HBase &#x7F3A;&#x5C11;&#x5F88;&#x591A; RDBMS &#x7279;&#x6027;&#xFF0C;&#x5982;&#x5217;&#x7C7B;&#x578B;&#xFF0C;&#x4E8C;&#x7EA7;&#x7D22;&#x5F15;&#xFF0C;&#x89E6;&#x53D1;&#x5668;&#x548C;&#x9AD8;&#x7EA7;&#x67E5;&#x8BE2;&#x8BED;&#x8A00;&#x7B49;&#x3002;&#x7136;&#x800C;, HBase &#x4E5F;&#x5177;&#x6709;&#x8BB8;&#x591A;&#x5176;&#x4ED6;&#x7279;&#x5F81;&#x540C;&#x65F6;&#x652F;&#x6301;&#x7EBF;&#x6027;&#x5316;&#x548C;&#x6A21;&#x5757;&#x5316;&#x6269;&#x5145;&#x3002;&#x6700;&#x660E;&#x663E;&#x7684;&#x65B9;&#x5F0F;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x589E;&#x52A0; Region Server &#x7684;&#x6570;&#x91CF;&#x6269;&#x5C55; HBase&#x3002;&#x5E76;&#x4E14; HBase &#x53EF;&#x4EE5;&#x653E;&#x5728;&#x666E;&#x901A;&#x7684;&#x670D;&#x52A1;&#x5668;&#x4E2D;&#xFF0C;&#x4F8B;&#x5982;&#x5C06;&#x96C6;&#x7FA4;&#x4ECE; 5 &#x4E2A;&#x6269;&#x5145;&#x5230; 10 &#x4E2A; Region Server &#x65F6;&#xFF0C;&#x5B58;&#x50A8;&#x7A7A;&#x95F4;&#x548C;&#x5904;&#x7406;&#x5BB9;&#x91CF;&#x90FD;&#x53EF;&#x4EE5;&#x540C;&#x65F6;&#x7FFB;&#x500D;&#x3002;&#x5F53;&#x7136; RDBMS &#x4E5F;&#x80FD;&#x5F88;&#x597D;&#x7684;&#x6269;&#x5145;&#xFF0C;&#x4F46;&#x4EC5;&#x5BF9;&#x4E00;&#x4E2A;&#x70B9;&#xFF0C;&#x5C24;&#x5176;&#x662F;&#x5BF9;&#x4E00;&#x4E2A;&#x5355;&#x72EC;&#x6570;&#x636E;&#x5E93;&#x670D;&#x52A1;&#x5668;&#x800C;&#x8A00;&#xFF0C;&#x4E3A;&#x4E86;&#x66F4;&#x597D;&#x7684;&#x6027;&#x80FD;&#xFF0C;&#x5F80;&#x5F80;&#x9700;&#x8981;&#x7279;&#x6B8A;&#x7684;&#x786C;&#x4EF6;&#x548C;&#x5B58;&#x50A8;&#x8BBE;&#x5907;&#xFF08;&#x5F80;&#x5F80;&#x4EF7;&#x683C;&#x4E5F;&#x975E;&#x5E38;&#x6602;&#x8D35;&#xFF09;&#x3002;</p>
+<h3 id="hbase-&#x76F8;&#x5173;&#x7684;&#x6A21;&#x5757;&#x4EE5;&#x53CA;-hbase-&#x8868;&#x683C;&#x7684;&#x7279;&#x6027;">HBase &#x76F8;&#x5173;&#x7684;&#x6A21;&#x5757;&#x4EE5;&#x53CA; HBase &#x8868;&#x683C;&#x7684;&#x7279;&#x6027;</h3>
+<p>&#x5728;&#x8FD9;&#x91CC;&#xFF0C;&#x8BA9;&#x6211;&#x4EEC;&#x4E86;&#x89E3;&#x4E0B; HBase &#x90FD;&#x6709;&#x54EA;&#x4E9B;&#x6A21;&#x5757;&#xFF0C;&#x4EE5;&#x53CA;&#x5927;&#x81F4;&#x7684;&#x5DE5;&#x4F5C;&#x6D41;&#x7A0B;&#x3002;&#x524D;&#x9762;&#x6211;&#x4EEC;&#x63D0;&#x5230;&#x8FC7; HBase &#x4E5F;&#x662F;&#x6784;&#x5EFA;&#x4E8E; HDFS &#x4E4B;&#x4E0A;&#xFF0C;&#x8FD9;&#x662F;&#x6B63;&#x786E;&#x7684;&#xFF0C;&#x4F46;&#x4E5F;&#x4E0D;&#x662F;&#x5B8C;&#x5168;&#x6B63;&#x786E;&#x3002;HBase &#x5176;&#x5B9E;&#x4E5F;&#x652F;&#x6301;&#x76F4;&#x63A5;&#x5728;&#x672C;&#x5730;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x4E4B;&#x4E0A;&#x8FD0;&#x884C;&#xFF0C;&#x4E0D;&#x8FC7;&#x8FD9;&#x6837;&#x7684; HBase &#x53EA;&#x80FD;&#x8FD0;&#x884C;&#x5728;&#x4E00;&#x53F0;&#x673A;&#x5668;&#x4E0A;&#xFF0C;&#x90A3;&#x4E48;&#x5BF9;&#x4E8E;&#x5206;&#x5E03;&#x5F0F;&#x5927;&#x6570;&#x636E;&#x7684;&#x73AF;&#x5883;&#x662F;&#x6CA1;&#x6709;&#x610F;&#x4E49;&#x7684;&#xFF08;&#x8FD9;&#x4E5F;&#x662F;&#x6240;&#x8C13;&#x7684; HBase &#x7684;&#x5355;&#x673A;&#x6A21;&#x5F0F;&#xFF09;&#x3002;&#x4E00;&#x822C;&#x53EA;&#x7528;&#x4E8E;&#x6D4B;&#x8BD5;&#x6216;&#x8005;&#x9A8C;&#x8BC1;&#x67D0;&#x4E00;&#x4E2A; HBase &#x7684;&#x529F;&#x80FD;&#xFF0C;&#x540E;&#x9762;&#x6211;&#x4EEC;&#x5728;&#x8BE6;&#x7EC6;&#x7684;&#x4ECB;&#x7ECD; HBase &#x7684;&#x51E0;&#x79CD;&#x8FD0;&#x884C;&#x6A21;&#x5F0F;&#x3002;&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x53EA;&#x8981;&#x8BB0;&#x5F97;&#x5728;&#x5206;&#x5E03;&#x5F0F;&#x7684;&#x751F;&#x4EA7;&#x73AF;&#x5883;&#x4E2D;&#xFF0C;HBase &#x9700;&#x8981;&#x8FD0;&#x884C;&#x5728; HDFS &#x4E4B;&#x4E0A;&#xFF0C;&#x4EE5; HDFS &#x4F5C;&#x4E3A;&#x5176;&#x57FA;&#x7840;&#x7684;&#x5B58;&#x50A8;&#x8BBE;&#x65BD;&#x3002;HBase &#x4E0A;&#x5C42;&#x63D0;&#x4F9B;&#x4E86;&#x8BBF;&#x95EE;&#x7684;&#x6570;&#x636E;&#x7684; Java API &#x5C42;&#xFF0C;&#x4F9B;&#x5E94;&#x7528;&#x8BBF;&#x95EE;&#x5B58;&#x50A8;&#x5728; HBase &#x7684;&#x6570;&#x636E;&#x3002;&#x5728; HBase &#x7684;&#x96C6;&#x7FA4;&#x4E2D;&#x4E3B;&#x8981;&#x7531; Master &#x548C; Region Server &#x7EC4;&#x6210;&#xFF0C;&#x4EE5;&#x53CA; Zookeeper&#xFF0C;&#x5177;&#x4F53;&#x6A21;&#x5757;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#x3002;</p>
+<p><img src="/images/hbase-module.png" alt="&#x7EC4;&#x6210;Hbase&#x6A21;&#x5757;"></p>
+<p>&#x63A5;&#x4E0B;&#x6765;&#xFF0C;&#x6211;&#x4EEC;&#x7B80;&#x5355;&#x7684;&#x4E00;&#x4E00;&#x4ECB;&#x7ECD;&#x4E0B; HBase &#x4E2D;&#x76F8;&#x5173;&#x6A21;&#x5757;&#x7684;&#x4F5C;&#x7528;&#x3002;</p>
+<ol>
+<li>
+<p>Master</p>
+<p>HBase Master &#x7528;&#x4E8E;&#x534F;&#x8C03;&#x591A;&#x4E2A; Region Server&#xFF0C;&#x4FA6;&#x6D4B;&#x5404;&#x4E2A; Region Server &#x4E4B;&#x95F4;&#x7684;&#x72B6;&#x6001;&#xFF0C;&#x5E76;&#x5E73;&#x8861; Region Server &#x4E4B;&#x95F4;&#x7684;&#x8D1F;&#x8F7D;&#x3002;HBase Master &#x8FD8;&#x6709;&#x4E00;&#x4E2A;&#x804C;&#x8D23;&#x5C31;&#x662F;&#x8D1F;&#x8D23;&#x5206;&#x914D; Region &#x7ED9; Region Server&#x3002;HBase &#x5141;&#x8BB8;&#x591A;&#x4E2A; Master &#x8282;&#x70B9;&#x5171;&#x5B58;&#xFF0C;&#x4F46;&#x662F;&#x8FD9;&#x9700;&#x8981; Zookeeper &#x7684;&#x5E2E;&#x52A9;&#x3002;&#x4E0D;&#x8FC7;&#x5F53;&#x591A;&#x4E2A; Master &#x8282;&#x70B9;&#x5171;&#x5B58;&#x65F6;&#xFF0C;&#x53EA;&#x6709;&#x4E00;&#x4E2A; Master &#x662F;&#x63D0;&#x4F9B;&#x670D;&#x52A1;&#x7684;&#xFF0C;&#x5176;&#x4ED6;&#x7684; Master &#x8282;&#x70B9;&#x5904;&#x4E8E;&#x5F85;&#x547D;&#x7684;&#x72B6;&#x6001;&#x3002;&#x5F53;&#x6B63;&#x5728;&#x5DE5;&#x4F5C;&#x7684; Master &#x8282;&#x70B9;&#x5B95;&#x673A;&#x65F6;&#xFF0C;&#x5176;&#x4ED6;&#x7684; Master &#x5219;&#x4F1A;&#x63A5;&#x7BA1; HBase &#x7684;&#x96C6;&#x7FA4;&#x3002;</p>
+</li>
+<li>
+<p>Region Server</p>
+<p>&#x5BF9;&#x4E8E;&#x4E00;&#x4E2A; Region Server &#x800C;&#x8A00;&#xFF0C;&#x5176;&#x5305;&#x62EC;&#x4E86;&#x591A;&#x4E2A; Region&#x3002;Region Server &#x7684;&#x4F5C;&#x7528;&#x53EA;&#x662F;&#x7BA1;&#x7406;&#x8868;&#x683C;&#xFF0C;&#x4EE5;&#x53CA;&#x5B9E;&#x73B0;&#x8BFB;&#x5199;&#x64CD;&#x4F5C;&#x3002;Client &#x76F4;&#x63A5;&#x8FDE;&#x63A5; Region Server&#xFF0C;&#x5E76;&#x901A;&#x4FE1;&#x83B7;&#x53D6; HBase &#x4E2D;&#x7684;&#x6570;&#x636E;&#x3002;&#x5BF9;&#x4E8E; Region &#x800C;&#x8A00;&#xFF0C;&#x5219;&#x662F;&#x771F;&#x5B9E;&#x5B58;&#x653E; HBase &#x6570;&#x636E;&#x7684;&#x5730;&#x65B9;&#xFF0C;&#x4E5F;&#x5C31;&#x8BF4; Region &#x662F; HBase &#x53EF;&#x7528;&#x6027;&#x548C;&#x5206;&#x5E03;&#x5F0F;&#x7684;&#x57FA;&#x672C;&#x5355;&#x4F4D;&#x3002;&#x5982;&#x679C;&#x5F53;&#x4E00;&#x4E2A;&#x8868;&#x683C;&#x5F88;&#x5927;&#xFF0C;&#x5E76;&#x7531;&#x591A;&#x4E2A; CF &#x7EC4;&#x6210;&#x65F6;&#xFF0C;&#x90A3;&#x4E48;&#x8868;&#x7684;&#x6570;&#x636E;&#x5C06;&#x5B58;&#x653E;&#x5728;&#x591A;&#x4E2A; Region &#x4E4B;&#x95F4;&#xFF0C;&#x5E76;&#x4E14;&#x5728;&#x6BCF;&#x4E2A; Region &#x4E2D;&#x4F1A;&#x5173;&#x8054;&#x591A;&#x4E2A;&#x5B58;&#x50A8;&#x7684;&#x5355;&#x5143;&#xFF08;Store&#xFF09;&#x3002;</p>
+</li>
+<li>
+<p>Zookeeper</p>
+<p>&#x5BF9;&#x4E8E; HBase &#x800C;&#x8A00;&#xFF0C;Zookeeper &#x7684;&#x4F5C;&#x7528;&#x662F;&#x81F3;&#x5173;&#x91CD;&#x8981;&#x7684;&#x3002;&#x9996;&#x5148; Zookeeper &#x662F;&#x4F5C;&#x4E3A; HBase Master &#x7684; HA &#x89E3;&#x51B3;&#x65B9;&#x6848;&#x3002;&#x4E5F;&#x5C31;&#x662F;&#x8BF4;&#xFF0C;&#x662F; Zookeeper &#x4FDD;&#x8BC1;&#x4E86;&#x81F3;&#x5C11;&#x6709;&#x4E00;&#x4E2A; HBase Master &#x5904;&#x4E8E;&#x8FD0;&#x884C;&#x72B6;&#x6001;&#x3002;&#x5E76;&#x4E14; Zookeeper &#x8D1F;&#x8D23; Region &#x548C; Region Server &#x7684;&#x6CE8;&#x518C;&#x3002;&#x5176;&#x5B9E; Zookeeper &#x53D1;&#x5C55;&#x5230;&#x76EE;&#x524D;&#x4E3A;&#x6B62;&#xFF0C;&#x5DF2;&#x7ECF;&#x6210;&#x4E3A;&#x4E86;&#x5206;&#x5E03;&#x5F0F;&#x5927;&#x6570;&#x636E;&#x6846;&#x67B6;&#x4E2D;&#x5BB9;&#x9519;&#x6027;&#x7684;&#x6807;&#x51C6;&#x6846;&#x67B6;&#x3002;&#x4E0D;&#x5149;&#x662F; HBase&#xFF0C;&#x51E0;&#x4E4E;&#x6240;&#x6709;&#x7684;&#x5206;&#x5E03;&#x5F0F;&#x5927;&#x6570;&#x636E;&#x76F8;&#x5173;&#x7684;&#x5F00;&#x6E90;&#x6846;&#x67B6;&#xFF0C;&#x90FD;&#x4F9D;&#x8D56;&#x4E8E; Zookeeper &#x5B9E;&#x73B0; HA&#x3002;</p>
+</li>
+</ol>
+<p>&#x4E00;&#x4E2A;&#x5B8C;&#x6574;&#x5206;&#x5E03;&#x5F0F;&#x7684; HBase &#x7684;&#x5DE5;&#x4F5C;&#x539F;&#x7406;&#x793A;&#x610F;&#x56FE;&#x5982;&#x4E0B;&#xFF1A;
+<img src="/images/hbase-work-process.png" alt="Hbase&#x5DE5;&#x4F5C;&#x539F;&#x7406;&#x56FE;"></p>
+<p>&#x5728;&#x4E0A;&#x9762;&#x7684;&#x56FE;&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x51E0;&#x4E2A;&#x6211;&#x4EEC;&#x4E4B;&#x524D;&#x6CA1;&#x6709;&#x63D0;&#x5230;&#x7684;&#x6982;&#x5FF5;&#xFF1A;Store&#x3001;MemStore&#x3001;StoreFile &#x4EE5;&#x53CA; HFile&#x3002;&#x5E26;&#x7740;&#x8FD9;&#x51E0;&#x4E2A;&#x65B0;&#x7684;&#x6982;&#x5FF5;&#xFF0C;&#x6211;&#x4EEC;&#x5B8C;&#x6574;&#x7684;&#x68B3;&#x7406;&#x4E0B;&#x6574;&#x4E2A; HBase &#x7684;&#x5DE5;&#x4F5C;&#x6D41;&#x7A0B;&#x3002;</p>
+<p>&#x9996;&#x5148;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x77E5;&#x9053; HBase &#x7684;&#x96C6;&#x7FA4;&#x662F;&#x901A;&#x8FC7; Zookeeper &#x6765;&#x8FDB;&#x884C;&#x673A;&#x5668;&#x4E4B;&#x524D;&#x7684;&#x534F;&#x8C03;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x8BF4; HBase Master &#x4E0E; Region Server &#x4E4B;&#x95F4;&#x7684;&#x5173;&#x7CFB;&#x662F;&#x4F9D;&#x8D56; Zookeeper &#x6765;&#x7EF4;&#x62A4;&#x3002;&#x5F53;&#x4E00;&#x4E2A; Client &#x9700;&#x8981;&#x8BBF;&#x95EE; HBase &#x96C6;&#x7FA4;&#x65F6;&#xFF0C;Client &#x9700;&#x8981;&#x5148;&#x548C; Zookeeper &#x6765;&#x901A;&#x4FE1;&#xFF0C;&#x7136;&#x540E;&#x624D;&#x4F1A;&#x627E;&#x5230;&#x5BF9;&#x5E94;&#x7684; Region Server&#x3002;&#x6BCF;&#x4E00;&#x4E2A; Region Server &#x7BA1;&#x7406;&#x7740;&#x5F88;&#x591A;&#x4E2A; Region&#x3002;&#x5BF9;&#x4E8E; HBase &#x6765;&#x8BF4;&#xFF0C;Region &#x662F; HBase &#x5E76;&#x884C;&#x5316;&#x7684;&#x57FA;&#x672C;&#x5355;&#x5143;&#x3002;&#x56E0;&#x6B64;&#xFF0C;&#x6570;&#x636E;&#x4E5F;&#x90FD;&#x5B58;&#x50A8;&#x5728; Region &#x4E2D;&#x3002;&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x7279;&#x522B;&#x6CE8;&#x610F;&#xFF0C;&#x6BCF;&#x4E00;&#x4E2A; Region &#x90FD;&#x53EA;&#x5B58;&#x50A8;&#x4E00;&#x4E2A; Column Family &#x7684;&#x6570;&#x636E;&#xFF0C;&#x5E76;&#x4E14;&#x662F;&#x8BE5; CF &#x4E2D;&#x7684;&#x4E00;&#x6BB5;&#xFF08;&#x6309; Row &#x7684;&#x533A;&#x95F4;&#x5206;&#x6210;&#x591A;&#x4E2A; Region&#xFF09;&#x3002;Region &#x6240;&#x80FD;&#x5B58;&#x50A8;&#x7684;&#x6570;&#x636E;&#x5927;&#x5C0F;&#x662F;&#x6709;&#x4E0A;&#x9650;&#x7684;&#xFF0C;&#x5F53;&#x8FBE;&#x5230;&#x8BE5;&#x4E0A;&#x9650;&#x65F6;&#xFF08;Threshold&#xFF09;&#xFF0C;Region &#x4F1A;&#x8FDB;&#x884C;&#x5206;&#x88C2;&#xFF0C;&#x6570;&#x636E;&#x4E5F;&#x4F1A;&#x5206;&#x88C2;&#x5230;&#x591A;&#x4E2A; Region &#x4E2D;&#xFF0C;&#x8FD9;&#x6837;&#x4FBF;&#x53EF;&#x4EE5;&#x63D0;&#x9AD8;&#x6570;&#x636E;&#x7684;&#x5E76;&#x884C;&#x5316;&#xFF0C;&#x4EE5;&#x53CA;&#x63D0;&#x9AD8;&#x6570;&#x636E;&#x7684;&#x5BB9;&#x91CF;&#x3002;&#x6BCF;&#x4E2A; Region &#x5305;&#x542B;&#x7740;&#x591A;&#x4E2A; Store &#x5BF9;&#x8C61;&#x3002;&#x6BCF;&#x4E2A; Store &#x5305;&#x542B;&#x4E00;&#x4E2A; MemStore&#xFF0C;&#x548C;&#x4E00;&#x4E2A;&#x6216;&#x591A;&#x4E2A; HFile&#x3002;MemStore &#x4FBF;&#x662F;&#x6570;&#x636E;&#x5728;&#x5185;&#x5B58;&#x4E2D;&#x7684;&#x5B9E;&#x4F53;&#xFF0C;&#x5E76;&#x4E14;&#x4E00;&#x822C;&#x90FD;&#x662F;&#x6709;&#x5E8F;&#x7684;&#x3002;&#x5F53;&#x6570;&#x636E;&#x5411; Region &#x5199;&#x5165;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x4F1A;&#x5148;&#x5199;&#x5165; MemStore&#x3002;&#x5F53; MemStore &#x4E2D;&#x7684;&#x6570;&#x636E;&#x9700;&#x8981;&#x5411;&#x5E95;&#x5C42;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x503E;&#x5012;&#xFF08;Dump&#xFF09;&#x65F6;&#xFF08;&#x4F8B;&#x5982; MemStore &#x4E2D;&#x7684;&#x6570;&#x636E;&#x4F53;&#x79EF;&#x5230;&#x8FBE; MemStore &#x914D;&#x7F6E;&#x7684;&#x6700;&#x5927;&#x503C;&#xFF09;&#xFF0C;Store &#x4FBF;&#x4F1A;&#x521B;&#x5EFA; StoreFile&#xFF0C;&#x800C; StoreFile &#x5C31;&#x662F;&#x5BF9; HFile &#x4E00;&#x5C42;&#x5C01;&#x88C5;&#x3002;&#x6240;&#x4EE5; MemStore &#x4E2D;&#x7684;&#x6570;&#x636E;&#x4F1A;&#x6700;&#x7EC8;&#x5199;&#x5165;&#x5230; HFile &#x4E2D;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x78C1;&#x76D8; IO&#x3002;&#x7531;&#x4E8E; HBase &#x5E95;&#x5C42;&#x4F9D;&#x9760; HDFS&#xFF0C;&#x56E0;&#x6B64; HFile &#x90FD;&#x5B58;&#x50A8;&#x5728; HDFS &#x4E4B;&#x4E2D;&#x3002;&#x8FD9;&#x4FBF;&#x662F;&#x6574;&#x4E2A; HBase &#x5DE5;&#x4F5C;&#x7684;&#x539F;&#x7406;&#x7B80;&#x8FF0;&#x3002;</p>
+<p>&#x6211;&#x4EEC;&#x4E86;&#x89E3;&#x4E86; HBase &#x5927;&#x81F4;&#x7684;&#x5DE5;&#x4F5C;&#x539F;&#x7406;&#xFF0C;&#x90A3;&#x4E48;&#x5728; HBase &#x7684;&#x5DE5;&#x4F5C;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x5982;&#x4F55;&#x4FDD;&#x8BC1;&#x6570;&#x636E;&#x7684;&#x53EF;&#x9760;&#x6027;&#x5462;&#xFF1F;&#x5E26;&#x7740;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#xFF0C;&#x6211;&#x4EEC;&#x7406;&#x89E3;&#x4E0B; HLog &#x7684;&#x4F5C;&#x7528;&#x3002;HBase &#x4E2D;&#x7684; HLog &#x673A;&#x5236;&#x662F; WAL &#x7684;&#x4E00;&#x79CD;&#x5B9E;&#x73B0;&#xFF0C;&#x800C; WAL&#xFF08;&#x4E00;&#x822C;&#x7FFB;&#x8BD1;&#x4E3A;&#x9884;&#x5199;&#x65E5;&#x5FD7;&#xFF09;&#x662F;&#x4E8B;&#x52A1;&#x673A;&#x5236;&#x4E2D;&#x5E38;&#x89C1;&#x7684;&#x4E00;&#x81F4;&#x6027;&#x7684;&#x5B9E;&#x73B0;&#x65B9;&#x5F0F;&#x3002;&#x6BCF;&#x4E2A; Region Server &#x4E2D;&#x90FD;&#x4F1A;&#x6709;&#x4E00;&#x4E2A; HLog &#x7684;&#x5B9E;&#x4F8B;&#xFF0C;Region Server &#x4F1A;&#x5C06;&#x66F4;&#x65B0;&#x64CD;&#x4F5C;&#xFF08;&#x5982; Put&#xFF0C;Delete&#xFF09;&#x5148;&#x8BB0;&#x5F55;&#x5230; WAL&#xFF08;&#x4E5F;&#x5C31;&#x662F; HLog&#xFF09;&#x4E2D;&#xFF0C;&#x7136;&#x540E;&#x5C06;&#x5176;&#x5199;&#x5165;&#x5230; Store &#x7684; MemStore&#xFF0C;&#x6700;&#x7EC8; MemStore &#x4F1A;&#x5C06;&#x6570;&#x636E;&#x5199;&#x5165;&#x5230;&#x6301;&#x4E45;&#x5316;&#x7684; HFile &#x4E2D;&#xFF08;MemStore &#x5230;&#x8FBE;&#x914D;&#x7F6E;&#x7684;&#x5185;&#x5B58;&#x9600;&#x503C;&#xFF09;&#x3002;&#x8FD9;&#x6837;&#x5C31;&#x4FDD;&#x8BC1;&#x4E86; HBase &#x7684;&#x5199;&#x7684;&#x53EF;&#x9760;&#x6027;&#x3002;&#x5982;&#x679C;&#x6CA1;&#x6709; WAL&#xFF0C;&#x5F53; Region Server &#x5B95;&#x6389;&#x7684;&#x65F6;&#x5019;&#xFF0C;MemStore &#x8FD8;&#x6CA1;&#x6709;&#x5199;&#x5165;&#x5230; HFile&#xFF0C;&#x6216;&#x8005; StoreFile &#x8FD8;&#x6CA1;&#x6709;&#x4FDD;&#x5B58;&#xFF0C;&#x6570;&#x636E;&#x5C31;&#x4F1A;&#x4E22;&#x5931;&#x3002;&#x6216;&#x8BB8;&#x6709;&#x7684;&#x8BFB;&#x8005;&#x4F1A;&#x62C5;&#x5FC3; HFile &#x672C;&#x8EAB;&#x4F1A;&#x4E0D;&#x4F1A;&#x4E22;&#x5931;&#xFF0C;&#x8FD9;&#x662F;&#x7531; HDFS &#x6765;&#x4FDD;&#x8BC1;&#x7684;&#x3002;&#x5728; HDFS &#x4E2D;&#x7684;&#x6570;&#x636E;&#x9ED8;&#x8BA4;&#x4F1A;&#x6709; 3 &#x4EFD;&#x3002;&#x56E0;&#x6B64;&#x8FD9;&#x91CC;&#x5E76;&#x4E0D;&#x8003;&#x8651; HFile &#x672C;&#x8EAB;&#x7684;&#x53EF;&#x9760;&#x6027;&#x3002;</p>
+<p>&#x524D;&#x9762;&#xFF0C;&#x6211;&#x4EEC;&#x5F88;&#x591A;&#x6B21;&#x63D0;&#x5230;&#x4E86; HFile&#xFF0C;&#x4E5F;&#x5C31;&#x662F; HBase &#x6301;&#x4E45;&#x5316;&#x7684;&#x5B58;&#x50A8;&#x6587;&#x4EF6;&#x3002;&#x4E5F;&#x8BB8;&#x6709;&#x7684;&#x8BFB;&#x8005;&#x8FD8;&#x4E0D;&#x80FD;&#x5B8C;&#x5168;&#x7406;&#x89E3; HFile&#xFF0C;&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x4FBF;&#x8BE6;&#x7EC6;&#x7684;&#x770B;&#x770B; HFile &#x7684;&#x7ED3;&#x6784;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x3002;</p>
+<p><img src="/images/hbase-hfile.png" alt="HFile&#x7ED3;&#x6784;&#x56FE;"></p>
+<p>&#x4ECE;&#x56FE;&#x4E2D;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x770B;&#x5230; HFile &#x7531;&#x5F88;&#x591A;&#x4E2A;&#x6570;&#x636E;&#x5757;&#xFF08;Block&#xFF09;&#x7EC4;&#x6210;&#xFF0C;&#x5E76;&#x4E14;&#x6709;&#x4E00;&#x4E2A;&#x56FA;&#x5B9A;&#x7684;&#x7ED3;&#x5C3E;&#x5757;&#x3002;&#x5176;&#x4E2D;&#x7684;&#x6570;&#x636E;&#x5757;&#x662F;&#x7531;&#x4E00;&#x4E2A; Header &#x548C;&#x591A;&#x4E2A; Key-Value &#x7684;&#x952E;&#x503C;&#x5BF9;&#x7EC4;&#x6210;&#x3002;&#x5728;&#x7ED3;&#x5C3E;&#x7684;&#x6570;&#x636E;&#x5757;&#x4E2D;&#x5305;&#x542B;&#x4E86;&#x6570;&#x636E;&#x76F8;&#x5173;&#x7684;&#x7D22;&#x5F15;&#x4FE1;&#x606F;&#xFF0C;&#x7CFB;&#x7EDF;&#x4E5F;&#x662F;&#x901A;&#x8FC7;&#x7ED3;&#x5C3E;&#x7684;&#x7D22;&#x5F15;&#x4FE1;&#x606F;&#x627E;&#x5230; HFile &#x4E2D;&#x7684;&#x6570;&#x636E;&#x3002;HFile &#x4E2D;&#x7684;&#x6570;&#x636E;&#x5757;&#x5927;&#x5C0F;&#x9ED8;&#x8BA4;&#x4E3A; 64KB&#x3002;&#x5982;&#x679C;&#x8BBF;&#x95EE; HBase &#x6570;&#x636E;&#x5E93;&#x7684;&#x573A;&#x666F;&#x591A;&#x4E3A;&#x6709;&#x5E8F;&#x7684;&#x8BBF;&#x95EE;&#xFF0C;&#x90A3;&#x4E48;&#x5EFA;&#x8BAE;&#x5C06;&#x8BE5;&#x503C;&#x8BBE;&#x7F6E;&#x7684;&#x5927;&#x4E00;&#x4E9B;&#x3002;&#x5982;&#x679C;&#x573A;&#x666F;&#x591A;&#x4E3A;&#x968F;&#x673A;&#x8BBF;&#x95EE;&#xFF0C;&#x90A3;&#x4E48;&#x5EFA;&#x8BAE;&#x5C06;&#x8BE5;&#x503C;&#x8BBE;&#x7F6E;&#x7684;&#x5C0F;&#x4E00;&#x4E9B;&#x3002;&#x4E00;&#x822C;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x901A;&#x8FC7;&#x8C03;&#x6574;&#x8BE5;&#x503C;&#x53EF;&#x4EE5;&#x63D0;&#x9AD8; HBase &#x7684;&#x6027;&#x80FD;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x8981;&#x7528;&#x5F88;&#x77ED;&#x7684;&#x4E00;&#x53E5;&#x8BDD;&#x603B;&#x7ED3; HBase&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x8BA4;&#x4E3A; HBase &#x5C31;&#x662F;&#x4E00;&#x4E2A;&#x6709;&#x5E8F;&#x7684;&#x591A;&#x7EF4; Map&#xFF0C;&#x5176;&#x4E2D;&#x6BCF;&#x4E00;&#x4E2A; Row-key &#x6620;&#x5C04;&#x4E86;&#x8BB8;&#x591A;&#x6570;&#x636E;&#xFF0C;&#x8FD9;&#x4E9B;&#x6570;&#x636E;&#x5B58;&#x50A8;&#x5728; CF &#x4E2D;&#x7684; Column&#x3002;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x7528;&#x4E0B;&#x56FE;&#x6765;&#x8868;&#x793A;&#x8FD9;&#x53E5;&#x8BDD;&#x3002;</p>
+<p><img src="/images/hbase-data-reflect.png" alt="Hbase&#x6570;&#x636E;&#x6620;&#x5C04;"></p>
+<h3 id="hbase-&#x7684;&#x4F7F;&#x7528;&#x5EFA;&#x8BAE;">HBase &#x7684;&#x4F7F;&#x7528;&#x5EFA;&#x8BAE;</h3>
+<p>&#x4E4B;&#x524D;&#x6211;&#x4ECB;&#x7ECD;&#x4E86;&#x5F88;&#x591A; HBase &#x4E0E; RDBMS &#x7684;&#x533A;&#x522B;&#xFF0C;&#x4EE5;&#x53CA;&#x4E00;&#x4E9B;&#x4F18;&#x52BF;&#x7684;&#x5730;&#x65B9;&#x3002;&#x90A3;&#x4E48;&#x4EC0;&#x4E48;&#x65F6;&#x5019;&#x6700;&#x9700;&#x8981; HBase&#xFF0C;&#x6216;&#x8005;&#x8BF4; HBase &#x662F;&#x5426;&#x53EF;&#x4EE5;&#x66FF;&#x4EE3;&#x539F;&#x6709;&#x7684; RDBMS&#xFF1F;&#x5BF9;&#x4E8E;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#xFF0C;&#x6211;&#x4EEC;&#x5FC5;&#x987B;&#x65F6;&#x523B;&#x8C28;&#x8BB0;&#x2014;&#x2014;HBase &#x5E76;&#x4E0D;&#x9002;&#x5408;&#x6240;&#x6709;&#x95EE;&#x9898;&#xFF0C;&#x5176;&#x8BBE;&#x8BA1;&#x76EE;&#x6807;&#x5E76;&#x4E0D;&#x662F;&#x66FF;&#x4EE3; RDBMS&#xFF0C;&#x800C;&#x662F;&#x5BF9; RDBMS &#x7684;&#x4E00;&#x4E2A;&#x91CD;&#x8981;&#x8865;&#x5145;&#xFF0C;&#x5C24;&#x5176;&#x662F;&#x5BF9;&#x5927;&#x6570;&#x636E;&#x7684;&#x573A;&#x666F;&#x3002;&#x5F53;&#x9700;&#x8981;&#x8003;&#x91CF; HBase &#x4F5C;&#x4E3A;&#x4E00;&#x4E2A;&#x5907;&#x9009;&#x9879;&#x65F6;&#xFF0C;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x8FDB;&#x884C;&#x5982;&#x4E0B;&#x7684;&#x8C03;&#x7814;&#x5DE5;&#x4F5C;&#x3002;</p>
+<p>&#x9996;&#x5148;&#xFF0C;&#x8981;&#x786E;&#x4FE1;&#x6709;&#x8DB3;&#x591F;&#x591A;&#x6570;&#x636E;&#xFF0C;&#x5982;&#x679C;&#x6709;&#x4E0A;&#x4EBF;&#x6216;&#x4E0A;&#x5343;&#x4EBF;&#x884C;&#x6570;&#x636E;&#xFF0C;HBase &#x624D;&#x4F1A;&#x662F;&#x4E00;&#x4E2A;&#x5F88;&#x597D;&#x7684;&#x5907;&#x9009;&#x3002;&#x5176;&#x6B21;&#xFF0C;&#x9700;&#x8981;&#x786E;&#x4FE1;&#x4E1A;&#x52A1;&#x4E0A;&#x53EF;&#x4EE5;&#x4E0D;&#x4F9D;&#x8D56; RDBMS &#x7684;&#x989D;&#x5916;&#x7279;&#x6027;&#xFF0C;&#x4F8B;&#x5982;&#xFF0C;&#x5217;&#x6570;&#x636E;&#x7C7B;&#x578B;, &#x4E8C;&#x7EA7;&#x7D22;&#x5F15;&#xFF0C;SQL &#x67E5;&#x8BE2;&#x8BED;&#x8A00;&#x7B49;&#x3002;&#x518D;&#x800C;&#xFF0C;&#x9700;&#x8981;&#x786E;&#x4FDD;&#x6709;&#x8DB3;&#x591F;&#x786C;&#x4EF6;&#x3002;&#x4E14;&#x4E0D;&#x8BF4; HBase&#xFF0C;&#x4E00;&#x822C;&#x60C5;&#x51B5;&#x4E0B;&#x5F53; HDFS &#x7684;&#x96C6;&#x7FA4;&#x5C0F;&#x4E8E; 5 &#x4E2A;&#x6570;&#x636E;&#x8282;&#x70B9;&#x65F6;&#xFF0C;&#x4E5F;&#x5E72;&#x4E0D;&#x597D;&#x4EC0;&#x4E48;&#x4E8B;&#x60C5; (HDFS &#x9ED8;&#x8BA4;&#x4F1A;&#x5C06;&#x6BCF;&#x4E00;&#x4E2A; Block &#x6570;&#x636E;&#x5907;&#x4EFD; 3 &#x5206;)&#xFF0C;&#x8FD8;&#x8981;&#x52A0;&#x4E0A;&#x4E00;&#x4E2A; NameNode&#x3002;</p>
+<p>&#x4EE5;&#x4E0B;&#x6211;&#x7ED9;&#x4E86;&#x4E00;&#x4E9B;&#x4F7F;&#x7528; HBase &#x65F6;&#x5019;&#x5BF9;&#x8868;&#x683C;&#x8BBE;&#x8BA1;&#x7684;&#x4E00;&#x4E9B;&#x5EFA;&#x8BAE;&#xFF0C;&#x8BFB;&#x8005;&#x4E5F;&#x53EF;&#x4EE5;&#x7406;&#x89E3;&#x80CC;&#x540E;&#x7684;&#x542B;&#x4E49;&#x3002;&#x4E0D;&#x8FC7;&#x6211;&#x5E76;&#x4E0D;&#x5E0C;&#x671B;&#x8FD9;&#x4E9B;&#x5EFA;&#x8BAE;&#x6210;&#x4E3A;&#x4F7F;&#x7528; HBase &#x7684;&#x6559;&#x6761;&#xFF0C;&#x6BD5;&#x7ADF;&#x4E5F;&#x6709;&#x4E0D;&#x5C3D;&#x5408;&#x7406;&#x7684;&#x5730;&#x65B9;&#x3002;&#x9996;&#x5148;&#xFF0C;&#x4E00;&#x4E2A; HBase &#x6570;&#x636E;&#x5E93;&#x662F;&#x5426;&#x9AD8;&#x6548;&#xFF0C;&#x5F88;&#x5927;&#x7A0B;&#x5EA6;&#x4F1A;&#x548C; Row-Key &#x7684;&#x8BBE;&#x8BA1;&#x6709;&#x5173;&#x3002;&#x56E0;&#x6B64;&#xFF0C;&#x5982;&#x4F55;&#x8BBE;&#x8BA1; Row-key &#x662F;&#x4F7F;&#x7528; HBase &#x65F6;&#xFF0C;&#x4E00;&#x4E2A;&#x975E;&#x5E38;&#x91CD;&#x8981;&#x7684;&#x8BDD;&#x9898;&#x3002;&#x968F;&#x7740;&#x6570;&#x636E;&#x8BBF;&#x95EE;&#x65B9;&#x5F0F;&#x7684;&#x4E0D;&#x540C;&#xFF0C;Row-Key &#x7684;&#x8BBE;&#x8BA1;&#x4E5F;&#x4F1A;&#x6709;&#x6240;&#x4E0D;&#x540C;&#x3002;&#x4E0D;&#x8FC7;&#x6982;&#x62EC;&#x8D77;&#x6765;&#x7684;&#x5B97;&#x65E8;&#x53EA;&#x6709;&#x4E00;&#x4E2A;&#xFF0C;&#x90A3;&#x5C31;&#x662F;&#x5C3D;&#x53EF;&#x80FD;&#x9009;&#x62E9;&#x4E00;&#x4E2A; Row-Key&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x4F60;&#x7684;&#x6570;&#x636E;&#x5747;&#x5300;&#x7684;&#x5206;&#x5E03;&#x5728;&#x96C6;&#x7FA4;&#x4E2D;&#x3002;&#x8FD9;&#x4E5F;&#x5F88;&#x5BB9;&#x6613;&#x7406;&#x89E3;&#xFF0C;&#x56E0;&#x4E3A; HBase &#x662F;&#x4E00;&#x4E2A;&#x5206;&#x5E03;&#x5F0F;&#x73AF;&#x5883;&#xFF0C;Client &#x4F1A;&#x8BBF;&#x95EE;&#x4E0D;&#x540C; Region Server &#x83B7;&#x53D6;&#x6570;&#x636E;&#x3002;&#x5982;&#x679C;&#x6570;&#x636E;&#x6392;&#x5E03;&#x5747;&#x5300;&#x5728;&#x4E0D;&#x540C;&#x7684;&#x591A;&#x4E2A;&#x8282;&#x70B9;&#xFF0C;&#x90A3;&#x4E48;&#x5728;&#x6279;&#x91CF;&#x7684; Client &#x4FBF;&#x53EF;&#x4EE5;&#x4ECE;&#x4E0D;&#x540C;&#x7684; Region Server &#x4E0A;&#x83B7;&#x53D6;&#x6570;&#x636E;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x74F6;&#x9888;&#x5728;&#x67D0;&#x4E00;&#x4E2A;&#x8282;&#x70B9;&#xFF0C;&#x6027;&#x80FD;&#x81EA;&#x7136;&#x4F1A;&#x6709;&#x6240;&#x63D0;&#x5347;&#x3002;&#x5BF9;&#x4E8E;&#x5177;&#x4F53;&#x7684;&#x5EFA;&#x8BAE;&#x6211;&#x4EEC;&#x4E00;&#x822C;&#x6709;&#x51E0;&#x6761;&#xFF1A;</p>
+<ol>
+<li>&#x5F53;&#x5BA2;&#x6237;&#x7AEF;&#x9700;&#x8981;&#x9891;&#x7E41;&#x7684;&#x5199;&#x4E00;&#x5F20;&#x8868;&#xFF0C;&#x968F;&#x673A;&#x7684; RowKey &#x4F1A;&#x83B7;&#x5F97;&#x66F4;&#x597D;&#x7684;&#x6027;&#x80FD;&#x3002;</li>
+<li>&#x5F53;&#x5BA2;&#x6237;&#x7AEF;&#x9700;&#x8981;&#x9891;&#x7E41;&#x7684;&#x8BFB;&#x4E00;&#x5F20;&#x8868;&#xFF0C;&#x6709;&#x5E8F;&#x7684; RowKey &#x5219;&#x4F1A;&#x83B7;&#x5F97;&#x66F4;&#x597D;&#x7684;&#x6027;&#x80FD;&#x3002;</li>
+<li>&#x5BF9;&#x4E8E;&#x65F6;&#x95F4;&#x8FDE;&#x7EED;&#x7684;&#x6570;&#x636E;&#xFF08;&#x4F8B;&#x5982; log&#xFF09;&#xFF0C;&#x6709;&#x5E8F;&#x7684; RowKey &#x4F1A;&#x5F88;&#x65B9;&#x4FBF;&#x67E5;&#x8BE2;&#x4E00;&#x6BB5;&#x65F6;&#x95F4;&#x7684;&#x6570;&#x636E;&#xFF08;Scan &#x64CD;&#x4F5C;&#xFF09;&#x3002;</li>
+</ol>
+<p>&#x4E0A;&#x9762;&#x6211;&#x4EEC;&#x8C08;&#x53CA;&#x4E86;&#x5BF9; Row-Key &#x7684;&#x8BBE;&#x8BA1;&#xFF0C;&#x63A5;&#x7740;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x60F3;&#x60F3;&#x662F;&#x5426; Column Family &#x4E5F;&#x4F1A;&#x5728;&#x4E0D;&#x540C;&#x7684;&#x573A;&#x666F;&#x9700;&#x8981;&#x4E0D;&#x540C;&#x7684;&#x8BBE;&#x8BA1;&#x65B9;&#x6848;&#x5462;&#x3002;&#x7B54;&#x6848;&#x662F;&#x80AF;&#x5B9A;&#x7684;&#xFF0C;&#x4E0D;&#x8FC7; CF &#x8DDF; Row-key &#x6BD4;&#x8F83;&#x7684;&#x8BDD;&#xFF0C;&#x786E;&#x5B9E;&#x4E5F;&#x7B80;&#x5355;&#x4E00;&#x4E9B;&#xFF0C;&#x4F46;&#x8FD9;&#x5E76;&#x4E0D;&#x610F;&#x5473;&#x7740; CF &#x7684;&#x8BBE;&#x8BA1;&#x5C31;&#x662F;&#x4E00;&#x4E2A;&#x7410;&#x788E;&#x7684;&#x8BDD;&#x9898;&#x3002;&#x5728; RDBMS&#xFF08;&#x4F20;&#x7EDF;&#x5173;&#x7CFB;&#x6570;&#x636E;&#x5E93;&#xFF09;&#x7CFB;&#x7EDF;&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x77E5;&#x9053;&#x5982;&#x679C;&#x5F53;&#x7528;&#x6237;&#x7684;&#x4FE1;&#x606F;&#x5206;&#x6563;&#x5728;&#x4E0D;&#x540C;&#x7684;&#x8868;&#x4E2D;&#xFF0C;&#x4FBF;&#x9700;&#x8981;&#x6839;&#x636E;&#x4E00;&#x4E2A; Key &#x8FDB;&#x884C; Join &#x64CD;&#x4F5C;&#x3002;&#x800C;&#x5728; HBase &#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x8BBE;&#x8BA1; CF &#x6765;&#x805A;&#x5408;&#x7528;&#x6237;&#x6240;&#x6709;&#x76F8;&#x5173;&#x4FE1;&#x606F;&#x3002;&#x7B80;&#x5355;&#x6765;&#x8BF4;&#xFF0C;&#x5C31;&#x662F;&#x9700;&#x8981;&#x5C06;&#x6570;&#x636E;&#x6309;&#x7C7B;&#x522B;&#xFF08;&#x6216;&#x8005;&#x4E00;&#x4E2A;&#x7279;&#x6027;&#xFF09;&#x805A;&#x5408;&#x5728;&#x4E00;&#x4E2A;&#x6216;&#x591A;&#x4E2A; CF &#x4E2D;&#x3002;&#x8FD9;&#x6837;&#xFF0C;&#x4FBF;&#x53EF;&#x4EE5;&#x6839;&#x636E; CF &#x83B7;&#x53D6;&#x8FD9;&#x7C7B;&#x4FE1;&#x606F;&#x3002;&#x4E0A;&#x9762;&#xFF0C;&#x6211;&#x4EEC;&#x8BB2;&#x89E3;&#x8FC7;&#x4E00;&#x4E2A; Region &#x5BF9;&#x5E94;&#x4E8E;&#x4E00;&#x4E2A; CF&#x3002;&#x90A3;&#x4E48;&#x8BBE;&#x60F3;&#xFF0C;&#x5982;&#x679C;&#x5728;&#x4E00;&#x4E2A;&#x8868;&#x4E2D;&#x5B9A;&#x4E49;&#x4E86;&#x591A;&#x4E2A; CF &#x65F6;&#xFF0C;&#x5C31;&#x5FC5;&#x7136;&#x4F1A;&#x6709;&#x591A;&#x4E2A; Region&#x3002;&#x5F53; Client &#x67E5;&#x8BE2;&#x6570;&#x636E;&#x65F6;&#xFF0C;&#x5C31;&#x4E0D;&#x5F97;&#x4E0D;&#x67E5;&#x8BE2;&#x591A;&#x4E2A; Region&#x3002;&#x8FD9;&#x6837;&#x6027;&#x80FD;&#x81EA;&#x7136;&#x4F1A;&#x6709;&#x6240;&#x4E0B;&#x964D;&#xFF0C;&#x5C24;&#x5176;&#x5F53; Region &#x5938;&#x673A;&#x5668;&#x7684;&#x65F6;&#x5019;&#x3002;&#x56E0;&#x6B64;&#x5728;&#x5927;&#x591A;&#x6570;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x4E00;&#x4E2A;&#x8868;&#x683C;&#x4E0D;&#x4F1A;&#x8D85;&#x8FC7; 2 &#x5230; 3 &#x4E2A; CF&#xFF0C;&#x800C;&#x4E14;&#x5F88;&#x591A;&#x60C5;&#x51B5;&#x4E0B;&#x90FD;&#x662F; 1 &#x4E2A; CF &#x5C31;&#x8DB3;&#x591F;&#x4E86;&#x3002;</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[提到大数据的存储，大多数人首先联想到的是 Hadoop 和 Hadoop 中的 HDFS 模块。大家熟知的 Spark、以及 Hadoop 的 MapReduce，可以理解为一种计算框架。而 HDFS，我们可以认为是为计算框架服务的存储层。因此不管是 Spark 还是 MapReduce，都需要使用 HDFS 作为默认的持久化存储层。那么 HBase 又是什么，可以用在哪里，解决什么样的问题？]]>
+    
+    </summary>
+    
+      <category term="HBase" scheme="http://yoursite.com/tags/HBase/"/>
+    
+      <category term="HBase" scheme="http://yoursite.com/categories/HBase/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[JVM日志分析]]></title>
@@ -2011,105 +2241,6 @@ Integer&#x8FDB;&#x884C;&#x6BD4;&#x8F83;&#x7684;&#x65F6;&#x5019;&#x4F1A;&#x53D1;&
       <category term="java" scheme="http://yoursite.com/tags/java/"/>
     
       <category term="java" scheme="http://yoursite.com/categories/java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[infobright使用以及问题汇总]]></title>
-    <link href="http://yoursite.com/2016/06/09/infobright-use/"/>
-    <id>http://yoursite.com/2016/06/09/infobright-use/</id>
-    <published>2016-06-09T04:49:40.000Z</published>
-    <updated>2018-10-28T13:16:43.733Z</updated>
-    <content type="html"><![CDATA[<p>&#x6700;&#x8FD1;&#x597D;&#x4E45;&#x6CA1;&#x6709;&#x5199;&#x535A;&#x5BA2;&#x4E86;&#xFF0C;&#x4E3B;&#x8981;&#x662F;&#x6700;&#x8FD1;&#x592A;&#x5FD9;&#xFF0C;&#x4E00;&#x76F4;&#x90FD;&#x5728;&#x52A0;&#x73ED;&#xFF0C;&#x6240;&#x4EE5;&#x6CA1;&#x6709;&#x65F6;&#x95F4;&#x5199;&#x535A;&#x5BA2;&#xFF0C;&#x4F46;&#x662F;&#x8FD9;&#x4E2A;&#x535A;&#x5BA2;&#x8FD8;&#x662F;&#x8017;&#x8D39;&#x4E86;&#x81EA;&#x5DF1;&#x6BD4;&#x8F83;&#x5927;&#x7684;&#x5FC3;&#x8840;&#x7684;&#xFF0C;&#x4ECE;&#x5907;&#x6848;&#x5230;&#x7EC4;&#x5EFA;&#xFF0C;&#x4E00;&#x8DEF;&#x8FC7;&#x6765;&#x4E00;&#x8DEF;&#x5FC3;&#x9178;&#x5440;&#xFF0C;&#x5DE5;&#x4F5C;&#x4E00;&#x5E74;&#x4EE5;&#x6765;&#x81EA;&#x5DF1;&#x8FDB;&#x6B65;&#x4E5F;&#x86EE;&#x5927;&#xFF0C;&#x5904;&#x7406;&#x4E8B;&#x60C5;&#x7684;&#x80FD;&#x529B;&#x4E5F;&#x5F97;&#x5230;&#x4E86;&#x4E00;&#x5B9A;&#x7684;&#x63D0;&#x9AD8;&#xFF0C;&#x4E4B;&#x524D;&#x63A5;&#x89E6;&#x5230;&#x7684;&#x5DE5;&#x4F5C;&#x4F7F;&#x7528;&#x6BD4;&#x8F83;&#x591A;&#x7684;&#x662F;Infobright&#xFF0C;&#x7531;&#x4E8E;&#x5DE5;&#x4F5C;&#x5185;&#x5BB9;&#x6D89;&#x53CA;&#x5230;&#x4E86;&#x5927;&#x91CF;&#x7684;&#x67E5;&#x8BE2;&#xFF0C;&#x4E5F;&#x4E0D;&#x4F7F;&#x7528;&#x4E8B;&#x52A1;&#xFF0C;&#x6240;&#x7528;&#x6211;&#x4EEC;&#x7684;&#x6570;&#x636E;&#x5E93;&#x4F7F;&#x7528;&#x7684;&#x6700;&#x591A;&#x7684;&#x5C31;&#x662F;MyIsam&#x4EE5;&#x53CA;Brighthouse&#x5F15;&#x64CE;&#xFF0C;&#x4F46;&#x662F;Infobright&#x7684;&#x8D44;&#x6599;&#x6BD4;&#x8F83;&#x5C11;&#xFF0C;&#x73B0;&#x5728;&#x5C31;&#x9488;&#x5BF9;&#x81EA;&#x5DF1;&#x5728;&#x8FD9;&#x8FC7;&#x7A0B;&#x4E2D;&#x9047;&#x5230;&#x7684;&#x95EE;&#x9898;&#x8FDB;&#x884C;&#x4E00;&#x4E2A;&#x603B;&#x7ED3;&#x3002;</p>
-<p>&lt;!--more--&gt;</p>
-<h3 id="&#x5173;&#x4E8E;infobright">&#x5173;&#x4E8E;Infobright</h3>
-<p>Infobright&#x662F;&#x57FA;&#x4E8E;&#x4E13;&#x5229;&#x6280;&#x672F;&#x7684;&#x5217;&#x5F0F;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x4E00;&#x4E2A;&#x57FA;&#x4E8E;MySQL&#x5F00;&#x53D1;&#x7684;&#x5F00;&#x6E90;&#x6570;&#x636E;&#x4ED3;&#x5E93;&#xFF08;Data Warehouse&#xFF09;&#x8F6F;&#x4EF6;&#xFF0C;&#x53EF;&#x4F5C;&#x4E3A;MySQL&#x7684;&#x4E00;&#x4E2A;&#x5B58;&#x50A8;&#x5F15;&#x64CE;&#x6765;&#x4F7F;&#x7528;&#xFF0C;SELECT&#x67E5;&#x8BE2;&#x4E0E;&#x666E;&#x901A;MySQL&#x65E0;&#x533A;&#x522B;&#x3002;</p>
-<h3 id="infobright&#x7684;&#x4F18;&#x70B9;">Infobright&#x7684;&#x4F18;&#x70B9;</h3>
-<ol>
-<li>
-<p>&#x9AD8;&#x538B;&#x7F29;&#x6BD4;&#x7387;&#xFF0C;&#x5E73;&#x5747;&#x538B;&#x7F29;&#x6BD4;&#x53EF;&#x8FBE;10&#xFF1A;1&#x3002;&#xFF08;&#x7ECF;&#x6D4B;&#x8BD5;&#xFF0C;&#x6211;&#x4EEC;&#x7684;1500&#x4E07;&#x6761;697M&#x65E5;&#x5FD7;&#x6570;&#x636E;&#x538B;&#x7F29;&#x6BD4;&#x4F8B;&#x4E3A;6&#xFF1A;1&#xFF0C;&#x538B;&#x7F29;&#x540E;&#x6570;&#x636E;&#x5927;&#x5C0F;&#x4EC5;&#x4E3A;114M&#xFF09;</p>
-</li>
-<li>
-<p>&#x5217;&#x5B58;&#x50A8;&#xFF0C;&#x5373;&#x4F7F;&#x6570;&#x636E;&#x91CF;&#x5341;&#x5206;&#x5DE8;&#x5927;&#xFF0C;&#x67E5;&#x8BE2;&#x901F;&#x5EA6;&#x4E5F;&#x5F88;&#x5FEB;&#x3002;&#xFF08;&#x7ECF;&#x6D4B;&#x8BD5;&#xFF0C;&#x4E00;&#x6761;&#x5728;infobright&#x4E2D;&#x7684;&#x590D;&#x5408;&#x67E5;&#x8BE2;&#x8981;30&#x79D2;&#xFF0C;&#x5728;mysql&#x4E2D;&#x8981;&#x4E00;&#x5206;&#x591A;&#xFF09;</p>
-</li>
-<li>
-<p>&#x4E0D;&#x9700;&#x8981;&#x5EFA;&#x7D22;&#x5F15;&#xFF0C;&#x5C31;&#x907F;&#x514D;&#x4E86;&#x7EF4;&#x62A4;&#x7D22;&#x5F15;&#x53CA;&#x7D22;&#x5F15;&#x968F;&#x7740;&#x6570;&#x636E;&#x81A8;&#x80C0;&#x7684;&#x95EE;&#x9898;&#x3002;&#x628A;&#x6BCF;&#x5217;&#x6570;&#x636E;&#x5206;&#x5757;&#x538B;&#x7F29;&#x5B58;&#x653E;&#xFF0C;&#x6BCF;&#x5757;&#x6709;&#x77E5;&#x8BC6;&#x7F51;&#x683C;&#x8282;&#x70B9;&#x8BB0;&#x5F55;&#x5757;&#x5185;&#x7684;&#x7EDF;&#x8BA1;&#x4FE1;&#x606F;&#xFF0C;&#x4EE3;&#x66FF;&#x7D22;&#x5F15;&#xFF0C;&#x52A0;&#x901F;&#x641C;&#x7D22;&#x3002;</p>
-</li>
-<li>
-<p>&#x5355;&#x4E00;&#x53F0;&#x670D;&#x52A1;&#x5668;&#x53EF;&#x4EE5;&#x9AD8;&#x6548;&#x5730;&#x8BFB;&#x5199;30T&#x6570;&#x636E;&#x3002;&#x5177;&#x6709;&#x53EF;&#x6269;&#x5C55;&#x6027;&#xFF0C;&#x8FD9;&#x91CC;&#x662F;&#x6307;&#x5BF9;&#x4E8E;&#x540C;&#x6837;&#x7684;&#x67E5;&#x8BE2;&#xFF0C;&#x5F53;&#x6570;&#x636E;&#x91CF;&#x662F;10T&#x65F6;&#xFF0C;&#x5B83;&#x8017;&#x8D39;&#x7684;&#x65F6;&#x95F4;&#x4E0D;&#x5E94;&#x8BE5;&#x6BD4;1T&#x6570;&#x636E;&#x91CF;&#x65F6;&#x6162;&#x592A;&#x591A;&#xFF0C;&#x57FA;&#x672C;&#x662F;&#x4E00;&#x4E2A;&#x6570;&#x91CF;&#x7EA7;&#x5185;&#x3002;</p>
-</li>
-</ol>
-<p><strong>&#x6CE8;:&#x5B9E;&#x9645;&#x4E0A;infobright&#x53D6;&#x4E00;&#x6761;&#x8BB0;&#x5F55;&#x6BD4;mysql&#x8981;&#x6162;&#x5F88;&#x591A;&#xFF0C;&#x4F46;&#x5B83;&#x53D6;100W&#x6761;&#x8BB0;&#x5F55;&#x4F1A;&#x6BD4;mysql&#x5FEB;&#x3002;&#x6240;&#x4EE5;&#x6BD4;&#x8F83;&#x9002;&#x7528;&#x4E8E;&#x65E5;&#x5FD7;&#x3001;&#x6216;&#x6C47;&#x603B;&#x7684;&#x5927;&#x91CF;&#x7684;&#x6570;&#x636E;&#x3002;</strong></p>
-<h3 id="infobright&#x7684;&#x9650;&#x5236;">Infobright&#x7684;&#x9650;&#x5236;</h3>
-<ol>
-<li>
-<p>&#x4E0D;&#x652F;&#x6301;&#x6570;&#x636E;&#x66F4;&#x65B0;&#xFF1A;&#x793E;&#x533A;&#x7248;Infobright&#x53EA;&#x80FD;&#x4F7F;&#x7528;&#x201C;LOAD DATA INFILE&#x201D;&#x7684;&#x65B9;&#x5F0F;&#x5BFC;&#x5165;&#x6570;&#x636E;&#xFF0C;&#x4E0D;&#x652F;&#x6301;INSERT&#x3001;UPDATE&#x3001;DELETE</p>
-</li>
-<li>
-<p>&#x4E0D;&#x652F;&#x6301;&#x9AD8;&#x5E76;&#x53D1;&#xFF1A;&#x53EA;&#x80FD;&#x652F;&#x6301;10-18&#x591A;&#x4E2A;&#x5E76;&#x53D1;&#x67E5;&#x8BE2;</p>
-</li>
-</ol>
-<h3 id="infobright&#x7684;&#x5B89;&#x88C5;">Infobright&#x7684;&#x5B89;&#x88C5;</h3>
-<h4 id="&#x4E0B;&#x8F7D;&#x5730;&#x5740;">&#x4E0B;&#x8F7D;&#x5730;&#x5740;</h4>
-<p><a href="http://www.infobright.org/index.php/download/ICE/" target="_blank" rel="external">infobright&#x4E0B;&#x8F7D;&#x5730;&#x5740;</a></p>
-<h4 id="linux&#x4E0B;&#x7684;&#x5B89;&#x88C5;">Linux&#x4E0B;&#x7684;&#x5B89;&#x88C5;</h4>
-<p>&#x7F51;&#x4E0A;&#x5F88;&#x591A;Linux&#x4E0B;&#x7684;&#x5B89;&#x88C5;&#x7248;&#x672C;&#xFF0C;&#x4F46;&#x662F;&#x5927;&#x90FD;&#x662F;&#x6284;&#x88AD;&#x5F20;&#x5BB4;&#x7684;&#x535A;&#x5BA2;&#xFF0C;&#x5982;&#x679C;&#x9700;&#x8981;&#x770B;Linux&#x4E0B;&#x5B89;&#x88C5;&#xFF0C;&#x53BB;&#x770B;&#x5F20;&#x5BB4;&#x7684;&#x535A;&#x5BA2;&#x5C31;&#x884C;&#x4E86;</p>
-<h4 id="windows&#x4E0B;&#x7684;&#x5B89;&#x88C5;">Windows&#x4E0B;&#x7684;&#x5B89;&#x88C5;</h4>
-<p><strong>&#x5B89;&#x88C5;&#x6B65;&#x9AA4;</strong>
-<img src="/images/hexo-infobright_setup_1.png" alt="Infobright&#x5B89;&#x88C5;"></p>
-<p><img src="/images/hexo-infobright_setup_2.png" alt="Infobright&#x5B89;&#x88C5;"></p>
-<p><img src="/images/hexo-infobright_setup_3.png" alt="Infobright&#x5B89;&#x88C5;"></p>
-<p><strong>&#x67E5;&#x770B;&#x5B89;&#x88C5;&#x662F;&#x5426;&#x6210;&#x529F;</strong>
-<img src="/images/hexo-infobright_setup_4.png" alt="Infobright&#x670D;&#x52A1;&#x542F;&#x52A8;">
-&#x5982;&#x679C;&#x670D;&#x52A1;&#x6CA1;&#x6709;&#x542F;&#x52A8;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x547D;&#x4EE4;&#x624B;&#x52A8;&#x542F;&#x52A8;&#x670D;&#x52A1;</p>
-<p><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">net <span class="built_in">start</span> infobright  <span class="comment">--&#x542F;&#x52A8;&#x670D;&#x52A1;</span></span><br><span class="line">net <span class="built_in">stop</span> infobright  <span class="comment">--&#x6682;&#x505C;&#x670D;&#x52A1;</span></span><br></pre></td></tr></table></figure></p>
-<p><img src="/images/hexo-infobright_setup_5.png" alt="Infobright&#x8FDE;&#x63A5;"></p>
-<p><img src="/images/hexo-infobright_setup_6.png" alt="Infobright&#x8FDE;&#x63A5;"></p>
-<p><strong>Infobright&#x7684;&#x914D;&#x7F6E;&#x4EE5;&#x53CA;&#x4F7F;&#x7528;</strong>
-<img src="/images/hexo-infobright_use_2.png" alt="Infobright&#x7684;&#x914D;&#x7F6E;">
-<img src="/images/hexo-infobright_use_1.png" alt="&#x521B;&#x5EFA;BrightHouse&#x6570;&#x636E;&#x5E93;&#x8868;"></p>
-<h3 id="infobright&#x5728;java&#x4E2D;&#x7684;&#x4F7F;&#x7528;">Infobright&#x5728;Java&#x4E2D;&#x7684;&#x4F7F;&#x7528;</h3>
-<p>&#x5B89;&#x88C5;&#x597D;&#x4E86;&#x4E4B;&#x540E;&#xFF0C;&#x6211;&#x4EEC;&#x5E94;&#x8BE5;&#x5982;&#x4F55;&#x4F7F;&#x7528;&#x5462;&#xFF1F;&#x5176;&#x5B9E;&#x4F7F;&#x7528;&#x65B9;&#x5F0F;&#x548C;Mysql&#x7684;&#x6B63;&#x5E38;&#x4F7F;&#x7528;&#x65B9;&#x5F0F;&#x53EA;&#x6709;&#x7EC6;&#x5FAE;&#x7684;&#x533A;&#x522B;&#xFF0C;ICE&#x7248;&#x672C;&#x4E0D;&#x652F;&#x6301;INSERT,UPDATE,DELETE&#x8BED;&#x53E5;,&#x6536;&#x8D39;&#x7248;&#x672C;&#x7684;&#x53EF;&#x4EE5;,Select&#x8BED;&#x53E5;&#x548C;Mysql&#x4F7F;&#x7528;&#x4E00;&#x81F4;&#x3002;</p>
-<ol>
-<li><strong>&#x5EFA;&#x8868;&#x8BED;&#x53E5;</strong></li>
-</ol>
-<p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`user_info`</span> (</span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">bigint</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`name`</span> <span class="built_in">varchar</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`age`</span> <span class="built_in">int</span>(<span class="number">3</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`user_desc`</span> <span class="built_in">varchar</span>(<span class="number">1024</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">default</span> <span class="string">&apos;&apos;</span></span><br><span class="line">) <span class="keyword">ENGINE</span>=BRIGHTHOUSE <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8;</span></span><br></pre></td></tr></table></figure></p>
-<ol start="2">
-<li><strong>&#x5728;&#x4EE3;&#x7801;&#x4E2D;&#x7684;&#x4F7F;&#x7528;</strong></li>
-</ol>
-<p>&#x67E5;&#x8BE2;&#x8BED;&#x6CD5;&#x548C;Mysql&#x8BED;&#x6CD5;&#x4E00;&#x81F4;&#xFF0C;&#x6CA1;&#x6709;&#x4EFB;&#x4F55;&#x533A;&#x522B;(&#x4E0D;&#x652F;&#x6301;insert&#x3001;update&#x3001;delete)</p>
-<ol start="3">
-<li>
-<p><strong>&#x6CE8;&#x610F;&#x4E8B;&#x9879;</strong>
-Infobright&#x5F15;&#x64CE;&#x4E0E;&#x4E4B;&#x524D;MyISAM&#x5F15;&#x64CE;&#x4E0D;&#x540C;&#x7684;&#x4E00;&#x4E9B;&#x7279;&#x6027;(&#x4F1A;&#x5F71;&#x54CD;&#x5230;&#x6211;&#x4EEC;&#x7684;&#x7279;&#x6027;):</p>
-<ul>
-<li>
-<p>&#x4E0D;&#x652F;&#x6301;&#x6570;&#x636E;&#x66F4;&#x65B0;&#xFF0C;&#x53EA;&#x80FD;&#x4F7F;&#x7528;&#x201C;LOAD DATA INFILE&#x201D;&#x7684;&#x65B9;&#x5F0F;&#x5BFC;&#x5165;&#x6570;&#x636E;&#xFF0C;&#x4E0D;&#x652F;&#x6301;INSERT&#x3001;UPDATE&#x3001;DELETE&#xFF1B;&#x5982;&#x679C;&#x6709;&#x4FEE;&#x6539;&#x8868;&#x7684;&#x64CD;&#x4F5C;&#xFF0C;&#x4E0D;&#x80FD;&#x4F7F;&#x7528;Infobright&#x7684;&#x8868;&#x3002;</p>
-</li>
-<li>
-<p>&#x5EFA;&#x8868;&#x65F6;&#x4E0D;&#x80FD;&#x6709;AUTO_INCREMENT&#x81EA;&#x589E;&#x3001;unsigned&#x65E0;&#x7B26;&#x53F7;&#x3001;unique&#x552F;&#x4E00;&#x3001;&#x4E3B;&#x952E;PRIMARY KEY&#x3001;&#x7D22;&#x5F15;KEY&#x3002;</p>
-</li>
-<li>
-<p>varchar&#x3001;char&#x5B57;&#x6BB5;&#x548C;TEXT&#x5B57;&#x6BB5;&#x7684;&#x957F;&#x5EA6;&#x53EF;&#x80FD;&#x4F1A;&#x6BD4;&#x4E4B;&#x524D;&#x7684;&#x77ED;&#x3002;&#x4F8B;&#x5982;&#x4F7F;&#x7528;text&#x5B57;&#x6BB5;&#xFF0C;&#x6700;&#x957F;&#x652F;&#x6301;65535&#x5B57;&#x8282;&#xFF0C;&#x76EE;&#x524D;&#x53EA;&#x80FD;&#x652F;&#x6301;22000&#x5DE6;&#x53F3;&#x3002;</p>
-</li>
-<li>
-<p>varchar&#x548C;char&#x5B57;&#x6BB5;&#x8FD8;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;comment lookup&#xFF0C;comment lookup&#x80FD;&#x591F;&#x663E;&#x8457;&#x5730;&#x63D0;&#x9AD8;&#x538B;&#x7F29;&#x6BD4;&#x7387;&#x548C;&#x67E5;&#x8BE2;&#x6027;&#x80FD;&#x3002;&#x4F46;&#x662F;&#x4F7F;&#x7528;lookup&#x4E0D;&#x80FD;&#x79BB;&#x6563;&#x5EA6;&#x592A;&#x9AD8;&#xFF0C;&#x4F8B;&#x5982;&#x4E00;&#x4E2A;&#x8868;&#x4E0D;&#x80FD;&#x79BB;&#x6563;&#x8D85;&#x8FC7;20000&#x6761;&#x3002;
-comment lookup&#x4F7F;&#x7528;&#x5F88;&#x7B80;&#x5355;&#xFF0C;&#x5728;&#x521B;&#x5EFA;&#x6570;&#x636E;&#x5E93;&#x8868;&#x7684;&#x65F6;&#x5019;&#x5982;&#x4E0B;&#x5B9A;&#x4E49;&#x5373;&#x53EF;&#xFF1A;</p>
-</li>
-</ul>
-<p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`user_info2`</span> (</span><br><span class="line"></span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">int</span>(<span class="number">20</span>)  <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`name`</span> <span class="built_in">varchar</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">&apos;look up&apos;</span>,</span><br><span class="line">  <span class="string">`age`</span> <span class="built_in">int</span>(<span class="number">3</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`user_desc`</span> <span class="built_in">varchar</span>(<span class="number">1024</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">default</span> <span class="string">&apos;&apos;</span></span><br><span class="line">) <span class="keyword">ENGINE</span>=BRIGHTHOUSE <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8;</span></span><br></pre></td></tr></table></figure></p>
-</li>
-</ol>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>&#x6700;&#x8FD1;&#x597D;&#x4E45;&#x6CA1;&#x6709;&#x5199;&#x535A;&#x5BA2;&#x4E86;&#xFF0C;&#x4E3B;&#x8981;&#x662F;&#x6700;&#x8FD1;&#x592A;&]]>
-    </summary>
-    
-      <category term="infobright" scheme="http://yoursite.com/tags/infobright/"/>
-    
-      <category term="mysql" scheme="http://yoursite.com/tags/mysql/"/>
-    
-      <category term="mysql" scheme="http://yoursite.com/categories/mysql/"/>
     
   </entry>
   
