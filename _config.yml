@@ -76,7 +76,7 @@ pagination_dir: page
 theme: next
 
 symbols_count_time:
-  symbols: false
+  symbols: true
   time: true
   total_symbols: true
   total_time: true
