@@ -1,0 +1,1637 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+    
+      
+    
+    
+  <script src="https://cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+  
+  
+    
+  
+  <link rel="stylesheet" media="all" href="https://cdn.bootcss.com/Han/3.3.0/han.min.js">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="https://cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+  
+
+<link href="https://cdn.jsdelivr.net/npm/font-awesome@4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    fastclick: true,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="线上经常会遇到服务器繁忙,请求响应缓慢，这个时候大多是在进行大量的gc或者full gc，为了排查这方面的问题我们就要清楚的知道">
+<meta name="keywords" content="jvm日志分析,jvm日志分析图,ParNew日志分析,CMS日志分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JVM日志分析">
+<meta property="og:url" content="http://yoursite.com/2018/11/13/jvm-log-analysis/index.html">
+<meta property="og:site_name" content="Zhu.Yang">
+<meta property="og:description" content="线上经常会遇到服务器繁忙,请求响应缓慢，这个时候大多是在进行大量的gc或者full gc，为了排查这方面的问题我们就要清楚的知道">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/jvm-log-gc.png">
+<meta property="og:image" content="http://yoursite.com/images/jvm-log-cms-init.png">
+<meta property="og:image" content="http://yoursite.com/images/jvm-log-cms-mark-sweep.png">
+<meta property="og:image" content="http://yoursite.com/images/jvm-log-cms-concurrent-clean.png">
+<meta property="og:image" content="http://yoursite.com/images/jvm-log-cms-concurrent-clean2.png">
+<meta property="og:image" content="http://yoursite.com/images/jvm-log-cms-concurrent-clean.png">
+<meta property="og:updated_time" content="2018-12-16T13:14:11.253Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JVM日志分析">
+<meta name="twitter:description" content="线上经常会遇到服务器繁忙,请求响应缓慢，这个时候大多是在进行大量的gc或者full gc，为了排查这方面的问题我们就要清楚的知道">
+<meta name="twitter:image" content="http://yoursite.com/images/jvm-log-gc.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/11/13/jvm-log-analysis/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>JVM日志分析 | Zhu.Yang</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion .logo-line-before i { left: initial; }
+    .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zhu.Yang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">朱阳的个人博客</h1>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/13/jvm-log-analysis/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhu.Yang">
+      <meta itemprop="description" content="面朝大海，去他妈的。">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhu.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">JVM日志分析
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-11-13 21:39:44" itemprop="dateCreated datePublished" datetime="2018-11-13T21:39:44+08:00">2018-11-13</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-12-16 21:14:11" itemprop="dateModified" datetime="2018-12-16T21:14:11+08:00">2018-12-16</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/jvm/" itemprop="url" rel="index"><span itemprop="name">jvm</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/11/13/jvm-log-analysis/" class="leancloud_visitors" data-flag-title="JVM日志分析">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">11k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">10 分钟</span>
+              
+            </div>
+          
+
+          
+              <div class="post-description">线上经常会遇到服务器繁忙,请求响应缓慢，这个时候大多是在进行大量的gc或者full gc，为了排查这方面的问题我们就要清楚的知道</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>今天这篇文章主要是对生产环境中（Java7）常用的两种垃圾收集器（ParNew：年轻代，CMS：老年代）从日志信息上进行分析，做一下总结，这样当我们在排查相应的问题时，看到 GC 的日志信息，不会再那么陌生，能清楚地知道这些日志是什么意思，GC 线程当前处在哪个阶段，正在做什么事情等。</p>
+<p>我们的应用程序一般是运行在tomcat中,通过在tomcat中配置对应的参数可以可以生产gc日志信息:</p>
+<ul>
+<li>-verbose.gc开关可显示GC的操作内容。打开它，可以显示最忙和最空闲收集行为发生的时间、收集前后的内存大小、收集需要的时间等。</li>
+<li>打开-xx:+printGCdetails开关，可以详细了解GC中的变化。</li>
+<li>打开-XX:+PrintGCTimeStamps开关，可以了解这些垃圾收集发生的时间，自JVM启动以后以秒计量。</li>
+<li>最后，通过-xx:+PrintHeapAtGC开关了解堆的更详细的信息。</li>
+<li>为了了解新域的情况，可以通过-XX:+PrintTenuringDistribution开关了解获得使用期的对象权。</li>
+<li>-Xloggc:$CATALINA_BASE/logs/gc.log gc日志产生的路径</li>
+<li>-XX:+PrintGCApplicationStoppedTime 输出GC造成应用暂停的时间</li>
+<li>-XX:+PrintGCDateStamps GC发生的时间信息</li>
+</ul>
+<p>还可以通过笨神的JVM平台来根据需求生成和解析JVM参数<a href="http://xxfox.perfma.com/jvm/generate" target="_blank" rel="noopener">http://xxfox.perfma.com/jvm/generate</a></p>
+<h3 id="GC日志格式"><a href="#GC日志格式" class="headerlink" title="GC日志格式"></a>GC日志格式</h3><p><img src="/images/jvm-log-gc.png" alt="GC日志格式总览"></p>
+<h3 id="ParNew收集器日志分析"><a href="#ParNew收集器日志分析" class="headerlink" title="ParNew收集器日志分析"></a>ParNew收集器日志分析</h3><p>ParNew 收集器是年轻代常用的垃圾收集器，它采用的是复制算法，youngGC 时一个典型的日志信息如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2018-04-12T13:48:26.134+0800: 15578.050: [GC2018-04-12T13:48:26.135+0800: 15578.050: [ParNew: 3412467K-&gt;59681K(3774912K), 0.0971990 secs] 9702786K-&gt;6354533K(24746432K), 0.0974940 secs][Times: user=0.95 sys=0.00, real=0.09 secs]</span><br></pre></td></tr></table></figure>
+<p>GC日志开头的”[GC”和“[Full GC”说明了这次垃圾收集的停顿类型。”[DefNew”、”[Tenured”、“[Perm”表示GC发生的区域，和GC收集器密切相关。比如使用Serial收集器中的新生代名为”Default New Generation”,所以显示为“[DefNew”.如果是ParNew收集器，新生代名称会变为”[ParaNew”,意思是Parallel New Generation.如果采用Parallel Scavenge收集器，那它配套的新生代名称为“[PSYoungGen”,老年代和永久代同理。</p>
+<p>依次分析一下上面日志信息的含义：</p>
+<ul>
+<li>2018-04-12T13:48:26.134+0800： Mirror GC 发生的时间</li>
+<li>15578.050：GC 开始时，相对 JVM 启动的相对时间，单位时秒，这里是4h+；</li>
+<li>ParNew：收集器名称，这里是 ParNew 收集器，它使用的是并行的 mark-copy 算法，GC 过程也会 Stop the World；</li>
+<li>3412467K-&gt;59681K：收集前后年轻代的使用情况，这里是 3.25G-&gt;58.28M；</li>
+<li>3774912K：整个年轻代的容量，这里是 3.6G；</li>
+<li>0.0971990 secs：Duration for the collection w/o final cleanup.</li>
+<li>9702786K-&gt;6354533K：收集前后整个堆的使用情况，这里是 9.25G-&gt;6.06G;</li>
+<li>24746432K：整个堆的容量，这里是 23.6G；</li>
+<li>0.0974940 secs：ParNew 收集器标记和复制年轻代活着的对象所花费的时间（包括和老年代通信的开销、对象晋升到老年代开销、垃圾收集周期结束一些最后的清理对象等的花销）；</li>
+</ul>
+<p>更全一点的参数说明:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[GC [&lt;collector&gt;: &lt;starting occupancy1&gt; -&gt; &lt;ending occupancy1&gt;, &lt;pause time1&gt; secs] &lt;starting occupancy3&gt; -&gt; &lt;ending occupancy3&gt;, &lt;pause time3&gt; secs]</span><br><span class="line"> </span><br><span class="line">&lt;collector&gt;              GC收集器的名称</span><br><span class="line">&lt;starting occupancy1&gt;    新生代在GC前占用的内存</span><br><span class="line">&lt;ending occupancy1&gt;      新生代在GC后占用的内存</span><br><span class="line">&lt;pause time1&gt;            新生代局部收集时jvm暂停处理的时间</span><br><span class="line">&lt;starting occupancy3&gt;    JVM Heap 在GC前占用的内存</span><br><span class="line">&lt;ending occupancy3&gt;      JVM Heap 在GC后占用的内存</span><br><span class="line">&lt;pause time3&gt;            GC过程中jvm暂停处理的总时间</span><br></pre></td></tr></table></figure>
+<p>对于 [Times: user=0.95 sys=0.00, real=0.09 secs]，这里面涉及到三种时间类型，含义如下：</p>
+<ul>
+<li>user：GC 线程在垃圾收集期间所使用的 CPU 总时间；</li>
+<li>sys：系统调用或者等待系统事件花费的时间；</li>
+<li>real：应用被暂停的时钟时间，由于 GC 线程是多线程的，导致了 real 小于 (user+real)，如果是 gc 线程是单线程的话，real 是接近于 (user+real) 时间。</li>
+</ul>
+<h3 id="CMS收集器日志分析"><a href="#CMS收集器日志分析" class="headerlink" title="CMS收集器日志分析"></a>CMS收集器日志分析</h3><p>CMS 收集器是老年代经常使用的收集器，它采用的是标记-清楚算法，应用程序在发生一次 Full GC 时，典型的 GC 日志信息如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">2018-04-12T13:48:26.233+0800: 15578.148: [GC [1 CMS-initial-mark: 6294851K(20971520K)] 6354687K(24746432K), 0.0466580 secs] [Times: user=0.04 sys=0.00, real=0.04 secs]</span><br><span class="line"></span><br><span class="line">2018-04-12T13:48:26.280+0800: 15578.195: [CMS-concurrent-mark-start]</span><br><span class="line"></span><br><span class="line">2018-04-12T13:48:26.418+0800: 15578.333: [CMS-concurrent-mark: 0.138/0.138 secs] [Times: user=1.01 sys=0.21, real=0.14 secs]</span><br><span class="line"></span><br><span class="line">2018-04-12T13:48:26.418+0800: 15578.334: [CMS-concurrent-preclean-start]</span><br><span class="line"></span><br><span class="line">2018-04-12T13:48:26.476+0800: 15578.391: [CMS-concurrent-preclean: 0.056/0.057 secs] [Times: user=0.20 sys=0.12, real=0.06 secs]</span><br><span class="line"></span><br><span class="line">2018-04-12T13:48:26.476+0800: 15578.391: [CMS-concurrent-abortable-preclean-start]</span><br><span class="line"></span><br><span class="line">2018-04-12T13:48:29.989+0800: 15581.905: [CMS-concurrent-abortable-preclean: 3.506/3.514 secs] [Times: user=11.93 sys=6.77, real=3.51 secs]</span><br><span class="line"></span><br><span class="line">2018-04-12T13:48:29.991+0800: 15581.906: [GC[YG occupancy: 1805641 K (3774912 K)]2018-04-12T13:48:29.991+0800: 15581.906: [GC2018-04-12T13:48:29.991+0800: 15581.906: [ParNew: 1805641K-&gt;48395K(3774912K), 0.0826620 secs] 8100493K-&gt;6348225K(24746432K), 0.0829480 secs] [Times: user=0.81 sys=0.00, real=0.09 secs]2018-04-12T13:48:30.074+0800: 15581.989: [Rescan (parallel) , 0.0429390 secs]2018-04-12T13:48:30.117+0800: 15582.032: [weak refs processing, 0.0027800 secs]2018-04-12T13:48:30.119+0800: 15582.035: [class unloading, 0.0033120 secs]2018-04-12T13:48:30.123+0800: 15582.038: [scrub symbol table, 0.0016780 secs]2018-04-12T13:48:30.124+0800: 15582.040: [scrub string table, 0.0004780 secs] [1 CMS-remark: 6299829K(20971520K)] 6348225K(24746432K), 0.1365130 secs] [Times: user=1.24 sys=0.00, real=0.14 secs]</span><br><span class="line"></span><br><span class="line">2018-04-12T13:48:30.128+0800: 15582.043: [CMS-concurrent-sweep-start]</span><br><span class="line"></span><br><span class="line">2018-04-12T13:48:36.638+0800: 15588.553: [GC2018-04-12T13:48:36.638+0800: 15588.554: [ParNew: 3403915K-&gt;52142K(3774912K), 0.0874610 secs] 4836483K-&gt;1489601K(24746432K), 0.0877490 secs] [Times: user=0.84 sys=0.00, real=0.09 secs]</span><br><span class="line"></span><br><span class="line">2018-04-12T13:48:38.412+0800: 15590.327: [CMS-concurrent-sweep: 8.193/8.284 secs] [Times: user=30.34 sys=16.44, real=8.28 secs]</span><br><span class="line"></span><br><span class="line">2018-04-12T13:48:38.419+0800: 15590.334: [CMS-concurrent-reset-start]</span><br><span class="line"></span><br><span class="line">2018-04-12T13:48:38.462+0800: 15590.377: [CMS-concurrent-reset: 0.044/0.044 secs] [Times: user=0.15 sys=0.10, real=0.04 secs]</span><br></pre></td></tr></table></figure>
+<p>CMS Full GC 拆分开来，涉及的阶段比较多，下面分别来介绍各个阶段的情况。</p>
+<h4 id="阶段1：Initial-Mark"><a href="#阶段1：Initial-Mark" class="headerlink" title="阶段1：Initial Mark"></a>阶段1：Initial Mark</h4><p>这个是 CMS 两次 stop-the-wolrd 事件的其中一次，这个阶段的目标是：标记那些直接被 GC root 引用或者被年轻代存活对象所引用的所有对象，标记后示例如下所示（插图来自：GC Algorithms：Implementations —— Concurrent Mark and Sweep —— Full GC）：</p>
+<p><img src="/images/jvm-log-cms-init.png" alt="CMS初始标记阶段"></p>
+<p>上述例子对应的日志信息为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2018-04-12T13:48:26.233+0800: 15578.148: [GC [1 CMS-initial-mark: 6294851K(20971520K)] 6354687K(24746432K), 0.0466580 secs] [Times: user=0.04 sys=0.00, real=0.04 secs]</span><br></pre></td></tr></table></figure>
+<p>逐行介绍上面日志的含义：</p>
+<ol>
+<li>2018-04-12T13:48:26.233+0800: 15578.148：GC 开始的时间，以及相对于 JVM 启动的相对时间（单位是秒，这里大概是4.33h），与前面 ParNew 类似，下面的分析中就直接跳过这个了；</li>
+<li>CMS-initial-mark：初始标记阶段，它会收集所有 GC Roots 以及其直接引用的对象；</li>
+<li>6294851K：当前老年代使用的容量，这里是 6G；</li>
+<li>(20971520K)：老年代可用的最大容量，这里是 20G；</li>
+<li>6354687K：整个堆目前使用的容量，这里是 6.06G；</li>
+<li>(24746432K)：堆可用的容量，这里是 23.6G；</li>
+<li>0.0466580 secs：这个阶段的持续时间；</li>
+<li>[Times: user=0.04 sys=0.00, real=0.04 secs]：与前面的类似，这里是相应 user、system and real 的时间统计。</li>
+</ol>
+<h4 id="阶段2"><a href="#阶段2" class="headerlink" title="阶段2"></a>阶段2</h4><p>并发标记在这个阶段 Garbage Collector 会遍历老年代，然后标记所有存活的对象，它会根据上个阶段找到的 GC Roots 遍历查找。并发标记阶段，它会与用户的应用程序并发运行。并不是老年代所有的存活对象都会被标记，因为在标记期间用户的程序可能会改变一些引用，如下图所示（插图来自：GC Algorithms：Implementations —— Concurrent Mark and Sweep —— Full GC）：</p>
+<p><img src="/images/jvm-log-cms-mark-sweep.png" alt="CMS并发标记阶段"></p>
+<p>在上面的图中，与阶段1的图进行对比，就会发现有一个对象的引用已经发生了变化，这个阶段相应的日志信息如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2018-04-12T13:48:26.280+0800: 15578.195: [CMS-concurrent-mark-start]</span><br><span class="line"></span><br><span class="line">2018-04-12T13:48:26.418+0800: 15578.333: [CMS-concurrent-mark: 0.138/0.138 secs] [Times: user=1.01 sys=0.21, real=0.14 secs]</span><br></pre></td></tr></table></figure>
+<p>这里详细对上面的日志解释，如下所示：</p>
+<ol>
+<li>CMS-concurrent-mark：并发收集阶段，这个阶段会遍历老年代，并标记所有存活的对象；</li>
+<li>0.138/0.138 secs：这个阶段的持续时间与时钟时间；</li>
+<li>[Times: user=1.01 sys=0.21, real=0.14 secs]：如前面所示，但是这部的时间，其实意义不大，因为它是从并发标记的开始时间开始计算，这期间因为是并发进行，不仅仅包含 GC 线程的工作。</li>
+</ol>
+<h4 id="阶段3：Concurrent-Preclean"><a href="#阶段3：Concurrent-Preclean" class="headerlink" title="阶段3：Concurrent Preclean"></a>阶段3：Concurrent Preclean</h4><p>Concurrent Preclean：这也是一个并发阶段，与应用的线程并发运行，并不会 stop 应用的线程。在并发运行的过程中，一些对象的引用可能会发生变化，但是这种情况发生时，JVM 会将包含这个对象的区域（Card）标记为 Dirty，这也就是 Card Marking。如下图所示（插图来自：GC Algorithms：Implementations —— Concurrent Mark and Sweep —— Full GC：</p>
+<p><img src="/images/jvm-log-cms-concurrent-clean.png" alt="Concurrent preclean 1"></p>
+<p>在pre-clean阶段，那些能够从 Dirty 对象到达的对象也会被标记，这个标记做完之后，dirty card 标记就会被清除了，如下（插图来自：GC Algorithms：Implementations —— Concurrent Mark and Sweep —— Full GC)</p>
+<p><img src="/images/jvm-log-cms-concurrent-clean2.png" alt="Concurrent preclean 2"></p>
+<p>这个阶段相应的日志信息如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2018-04-12T13:48:26.418+0800: 15578.334: [CMS-concurrent-preclean-start]</span><br><span class="line"></span><br><span class="line">2018-04-12T13:48:26.476+0800: 15578.391: [CMS-concurrent-preclean: 0.056/0.057 secs] [Times: user=0.20 sys=0.12, real=0.06 secs]</span><br></pre></td></tr></table></figure>
+<p>其含义为：</p>
+<ol>
+<li>CMS-concurrent-preclean：Concurrent Preclean 阶段，对在前面并发标记阶段中引用发生变化的对象进行标记；</li>
+<li>0.056/0.057 secs：这个阶段的持续时间与时钟时间；</li>
+<li>[Times: user=0.20 sys=0.12, real=0.06 secs]：同并发标记阶段中的含义。</li>
+</ol>
+<h4 id="阶段4：Concurrent-Abortable-Preclean"><a href="#阶段4：Concurrent-Abortable-Preclean" class="headerlink" title="阶段4：Concurrent Abortable Preclean"></a>阶段4：Concurrent Abortable Preclean</h4><p>这也是一个并发阶段，但是同样不会影响影响用户的应用线程，这个阶段是为了尽量承担 STW（stop-the-world）中最终标记阶段的工作。这个阶段持续时间依赖于很多的因素，由于这个阶段是在重复做很多相同的工作，直接满足一些条件（比如：重复迭代的次数、完成的工作量或者时钟时间等）。这个阶段的日志信息如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2018-04-12T13:48:26.476+0800: 15578.391: [CMS-concurrent-abortable-preclean-start]</span><br><span class="line"></span><br><span class="line">2018-04-12T13:48:29.989+0800: 15581.905: [CMS-concurrent-abortable-preclean: 3.506/3.514 secs] [Times: user=11.93 sys=6.77, real=3.51 secs]</span><br></pre></td></tr></table></figure>
+<ol>
+<li>CMS-concurrent-abortable-preclean：Concurrent Abortable Preclean 阶段；</li>
+<li>3.506/3.514 secs：这个阶段的持续时间与时钟时间，本质上，这里的 gc 线程会在 STW 之前做更多的工作，通常会持续 5s 左右；</li>
+<li>[Times: user=11.93 sys=6.77, real=3.51 secs]：同前面。</li>
+</ol>
+<h4 id="阶段5：Final-Remark"><a href="#阶段5：Final-Remark" class="headerlink" title="阶段5：Final Remark"></a>阶段5：Final Remark</h4><p>这是第二个STW阶段，也是CMS中的最后一个，这个阶段的目标是标记所有老年代所有的存活对象，由于之前的阶段是并发执行的，gc 线程可能跟不上应用程序的变化，为了完成标记老年代所有存活对象的目标，STW 就非常有必要了。通常 CMS 的 Final Remark 阶段会在年轻代尽可能干净的时候运行，目的是为了减少连续 STW 发生的可能性（年轻代存活对象过多的话，也会导致老年代涉及的存活对象会很多）。这个阶段会比前面的几个阶段更复杂一些，相关日志如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">2018-04-12T13:48:29.991+0800: 15581.906: [GC[YG occupancy: 1805641 K (3774912 K)]2018-04-12T13:48:29.991+0800: 15581.906: [GC2018-04-12T13:48:29.991+0800: 15581.906:</span><br><span class="line">[ParNew: 1805641K-&gt;48395K(3774912K), 0.0826620 secs] 8100493K-&gt;6348225K(24746432K), 0.0829480 secs]</span><br><span class="line">[Times: user=0.81 sys=0.00, real=0.09 secs]2018-04-12T13:48:30.074+0800: 15581.989: [Rescan (parallel) , 0.0429390 secs]</span><br><span class="line"></span><br><span class="line">2018-04-12T13:48:30.117+0800: 15582.032: [weak refs processing, 0.0027800 secs]2018-04-12T13:48:30.119+0800: 15582.035: [class unloading, 0.0033120 secs]</span><br><span class="line"></span><br><span class="line">2018-04-12T13:48:30.123+0800: 15582.038: [scrub symbol table, 0.0016780 secs]2018-04-12T13:48:30.124+0800: 15582.040: [scrub string table, 0.0004780 secs]</span><br><span class="line">[1 CMS-remark: 6299829K(20971520K)] 6348225K(24746432K), 0.1365130 secs] [Times: user=1.24 sys=0.00, real=0.14 secs]</span><br></pre></td></tr></table></figure>
+<p>对上面的日志进行分析：</p>
+<ol>
+<li>YG occupancy: 1805641 K (3774912 K)：年轻代当前占用量及容量，这里分别是 1.71G 和 3.6G；</li>
+<li>ParNew:…：触发了一次 young GC，这里触发的原因是为了减少年轻代的存活对象，尽量使年轻代更干净一些；</li>
+<li>[Rescan (parallel) , 0.0429390 secs]：这个 Rescan 是当应用暂停的情况下完成对所有存活对象的标记，这个阶段是并行处理的，这里花费了 0.0429390s；</li>
+<li>[weak refs processing, 0.0027800 secs]：第一个子阶段，它的工作是处理弱引用；</li>
+<li>[class unloading, 0.0033120 secs]：第二个子阶段，它的工作是：unloading the unused classes；</li>
+<li>[scrub symbol table, 0.0016780 secs] … [scrub string table, 0.0004780 secs]：最后一个子阶段，它的目的是：cleaning up symbol and string tables which hold class-level metadata and internalized string respectively，时钟的暂停也包含在这里；</li>
+<li>6299829K(20971520K)：这个阶段之后，老年代的使用量与总量，这里分别是 6G 和 20G；</li>
+<li>6348225K(24746432K)：这个阶段之后，堆的使用量与总量（包括年轻代，年轻代在前面发生过 GC），这里分别是 6.05G 和 23.6G；</li>
+<li>0.1365130 secs：这个阶段的持续时间；</li>
+<li>[Times: user=1.24 sys=0.00, real=0.14 secs]：对应的时间信息。</li>
+</ol>
+<p>经历过这五个阶段之后，老年代所有存活的对象都被标记过了，现在可以通过清除算法去清理那些老年代不再使用的对象。</p>
+<h4 id="阶段6：Concurrent-Sweep"><a href="#阶段6：Concurrent-Sweep" class="headerlink" title="阶段6：Concurrent Sweep"></a>阶段6：Concurrent Sweep</h4><p>这里不需要 STW，它是与用户的应用程序并发运行，这个阶段是：清除那些不再使用的对象，回收它们的占用空间为将来使用。如下图所示（插图来自：GC Algorithms：Implementations —— Concurrent Mark and Sweep —— Full GC)</p>
+<p><img src="/images/jvm-log-cms-concurrent-clean.png" alt="CMS Concurrent Sweep阶段"></p>
+<p>这个阶段对应的日志信息如下（这中间又发生了一次 Young GC）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">2018-04-12T13:48:30.128+0800: 15582.043: [CMS-concurrent-sweep-start]</span><br><span class="line"></span><br><span class="line">2018-04-12T13:48:36.638+0800: 15588.553: [GC2018-04-12T13:48:36.638+0800: 15588.554: [ParNew: 3403915K-&gt;52142K(3774912K), 0.0874610 secs] 4836483K-&gt;1489601K(24746432K), 0.0877490 secs] [Times: user=0.84 sys=0.00, real=0.09 secs]</span><br><span class="line"></span><br><span class="line">2018-04-12T13:48:38.412+0800: 15590.327: [CMS-concurrent-sweep: 8.193/8.284 secs] [Times: user=30.34 sys=16.44, real=8.28 secs]</span><br></pre></td></tr></table></figure>
+<p>分别介绍一下：</p>
+<ol>
+<li>CMS-concurrent-sweep：这个阶段主要是清除那些没有被标记的对象，回收它们的占用空间；</li>
+<li>8.193/8.284 secs：这个阶段的持续时间与时钟时间；</li>
+<li>[Times: user=30.34 sys=16.44, real=8.28 secs]：同前面；</li>
+</ol>
+<h4 id="阶段7：Concurrent-Reset"><a href="#阶段7：Concurrent-Reset" class="headerlink" title="阶段7：Concurrent Reset"></a>阶段7：Concurrent Reset</h4><p>这个阶段也是并发执行的，它会重设 CMS 内部的数据结构，为下次的 GC 做准备，对应的日志信息如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2018-04-12T13:48:38.419+0800: 15590.334: [CMS-concurrent-reset-start]</span><br><span class="line"></span><br><span class="line">2018-04-12T13:48:38.462+0800: 15590.377: [CMS-concurrent-reset: 0.044/0.044 secs] [Times: user=0.15 sys=0.10, real=0.04 secs]</span><br></pre></td></tr></table></figure>
+<p>日志详情分别如下：</p>
+<ol>
+<li>CMS-concurrent-reset：这个阶段的开始，目的如前面所述；</li>
+<li>0.044/0.044 secs：这个阶段的持续时间与时钟时间；</li>
+<li>[Times: user=0.15 sys=0.10, real=0.04 secs]：同前面。</li>
+</ol>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>CMS 通过将大量工作分散到并发处理阶段来在减少 STW 时间，在这块做得非常优秀，但是 CMS 也有一些其他的问题：</p>
+<ol>
+<li>CMS 收集器无法处理浮动垃圾（ Floating Garbage），可能出现 “Concurrnet Mode Failure” 失败而导致另一次 Full GC 的产生，可能引发串行 Full GC；</li>
+<li>空间碎片，导致无法分配大对象，CMS 收集器提供了一个 -XX:+UseCMSCompactAtFullCollection 开关参数（默认就是开启的），用于在 CMS 收集器顶不住要进行 Full GC 时开启内存碎片的合并整理过程，内存整理的过程是无法并发的，空间碎片问题没有了，但停顿时间不得不变长；</li>
+<li>对于堆比较大的应用上，GC 的时间难以预估。</li>
+</ol>
+<p>CMS 的一些缺陷也是 G1 收集器兴起的原因。关于G1收集器的日志可以查看这里<a href="https://tech.meituan.com/g1.html" target="_blank" rel="noopener">https://tech.meituan.com/g1.html</a></p>
+<h3 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h3><ol>
+<li><a href="https://plumbr.io/handbook/garbage-collection-algorithms-implementations#concurrent-mark-and-sweep" target="_blank" rel="noopener">https://plumbr.io/handbook/garbage-collection-algorithms-implementations#concurrent-mark-and-sweep</a></li>
+<li><a href="http://matt33.com/2018/07/28/jvm-cms/" target="_blank" rel="noopener">http://matt33.com/2018/07/28/jvm-cms/</a></li>
+</ol>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+            <a href="/tags/jvm/" rel="tag"># jvm</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/04/garbage-collection/" rel="next" title="Java中的垃圾回收算法以及垃圾回收器">
+                <i class="fa fa-chevron-left"></i> Java中的垃圾回收算法以及垃圾回收器
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/24/hbase-basic/" rel="prev" title="深入浅出Hbase">
+                深入浅出Hbase <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Zhu.Yang">
+            
+              <p class="site-author-name" itemprop="name">Zhu.Yang</p>
+              <p class="site-description motion-element" itemprop="description">面朝大海，去他妈的。</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">30</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">分类</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#GC日志格式"><span class="nav-number">1.</span> <span class="nav-text">GC日志格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ParNew收集器日志分析"><span class="nav-number">2.</span> <span class="nav-text">ParNew收集器日志分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CMS收集器日志分析"><span class="nav-number">3.</span> <span class="nav-text">CMS收集器日志分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#阶段1：Initial-Mark"><span class="nav-number">3.1.</span> <span class="nav-text">阶段1：Initial Mark</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阶段2"><span class="nav-number">3.2.</span> <span class="nav-text">阶段2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阶段3：Concurrent-Preclean"><span class="nav-number">3.3.</span> <span class="nav-text">阶段3：Concurrent Preclean</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阶段4：Concurrent-Abortable-Preclean"><span class="nav-number">3.4.</span> <span class="nav-text">阶段4：Concurrent Abortable Preclean</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阶段5：Final-Remark"><span class="nav-number">3.5.</span> <span class="nav-text">阶段5：Final Remark</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阶段6：Concurrent-Sweep"><span class="nav-number">3.6.</span> <span class="nav-text">阶段6：Concurrent Sweep</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阶段7：Concurrent-Reset"><span class="nav-number">3.7.</span> <span class="nav-text">阶段7：Concurrent Reset</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考文档"><span class="nav-number">5.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhu.Yang</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">160k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">2:26</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.6.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  
+    <script src="https://cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script src="https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script src="https://cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script src="https://cdn.bootcss.com/velocity/1.2.1/velocity.min.js"></script>
+  
+
+  
+  
+    <script src="https://cdn.bootcss.com/velocity/1.2.1/velocity.ui.min.js"></script>
+  
+
+  
+  
+    <script src="https://cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.js"></script>
+  
+
+  
+  
+    <script src="/lib/reading_progress/reading_progress.js"></script>
+  
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+  
+  <script src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'manual') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script>
+    
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+
+      Counter('get', '/classes/Counter', { where: JSON.stringify({ url }) })
+        .done(function ({ results }) {
+          if (results.length > 0) {
+            var counter = results[0];
+            
+            Counter('put', `/classes/Counter/${counter.objectId}`, JSON.stringify({ time: { "__op":"Increment", "amount":1 } }))
+            
+            .done(function () {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(counter.time + 1);
+            })
+            
+            .fail(function ({ responseJSON }) {
+                console.log('Failed to save Visitor num, with error message: ' + responseJSON.error);
+            })
+          } else {
+            
+              Counter('post', '/classes/Counter', JSON.stringify({ title: title, url: url, time: 1}))
+                .done(function () {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(1);
+                })
+                .fail(function () {
+                  console.log('Failed to create');
+                });
+            
+          }
+        })
+      .fail(function ({ responseJSON }) {
+        console.log('LeanCloud Counter Error:' + responseJSON.code + " " + responseJSON.error);
+      });
+    }
+    
+
+    $(function() {
+      $.get('https://app-router.leancloud.cn/2/route?appId=' + "meJ1FaNUdSGteWwG1EBwj4iw-gzGzoHsz")
+        .done(function ({ api_server }) {
+          var Counter = function (method, url, data) {
+            return $.ajax({
+              method: method,
+              url: `https://${api_server}/1.1${url}`,
+              headers: {
+                'X-LC-Id': "meJ1FaNUdSGteWwG1EBwj4iw-gzGzoHsz",
+                'X-LC-Key': "L5qaJWameLbFdhr25xbPS0fB",
+                'Content-Type': 'application/json',
+              },
+              data: data,
+            });
+          };
+          
+          addCount(Counter);
+          
+        })
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+  
+    
+  
+  <script src="https://cdn.bootcss.com/pangu/3.3.0/pangu.min.js"></script>
+  <script>pangu.spacingPage();</script>
+
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+  
+
+</body>
+</html>
