@@ -1,5 +1,5 @@
 ---
-title: hbase的常用基础命令
+title: HBase的常用基础命令
 date: 2018-12-17 13:25:41
 tags:
 	- HBase

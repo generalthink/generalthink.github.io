@@ -1,5 +1,5 @@
 ---
-title: Hbase备份容灾常用命令
+title: HBase备份容灾常用命令
 date: 2018-12-17 14:32:50
 tags:
 	- HBase
