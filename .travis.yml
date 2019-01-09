@@ -1,0 +1,35 @@
+language: node_js
+
+sudo: required
+
+node_js: stable
+
+install:
+  - npm install
+
+branches:
+  only:
+    - source
+
+before_install: 
+  - export TZ='Asia/Shanghai'
+  - npm install hexo-cli -g
+
+install:
+  - npm install
+
+script:
+  - hexo clean
+  - hexo generate
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  local_dir: public
+  name: $GIT_NAME
+  email: $GIT_EMAIL
+  keep-history: true
+  target-branch: master
+  on:
+    branch: source
