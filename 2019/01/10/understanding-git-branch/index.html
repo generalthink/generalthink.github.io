@@ -127,13 +127,13 @@
 
 
 
-  <meta name="description" content="在开发软件的时候,可能很多人会同时为同一个软件开发功能或者修复bug,但是如果都在主分支来进行开发,引起冲突的概率将会大大增加,而且也不利于维护,如果你同时修改多个bug该怎么办?所幸,git的分支功能很好的帮助我们解决了这个问题,它可以帮助我们同时进行多个功能的开发和版本管理.请在阅读这篇文章之前,务必先阅读认识git的数据模型,这样才能更好的帮助你理解git中的分支.想知道为什么git中新建一">
+  <meta name="description" content="在开发软件的时候,可能很多人会同时为同一个软件开发功能或者修复bug,但是如果都在主分支来进行开发,引起冲突的概率将会大大增加,而且也不利于维护,如果你同时修改多个bug该怎么办?所幸,git的分支功能很好的帮助我们解决了这个问题,它可以帮助我们同时进行多个功能的开发和版本管理.请在阅读这篇文章之前,务必先阅读深入浅出git——数据模型,这样才能更好的帮助你理解git中的分支.想知道为什么git中">
 <meta name="keywords" content="git branch">
 <meta property="og:type" content="article">
-<meta property="og:title" content="认识git中的分支">
+<meta property="og:title" content="深入浅出git——分支">
 <meta property="og:url" content="http://yoursite.com/2019/01/10/understanding-git-branch/index.html">
 <meta property="og:site_name" content="Zhu.Yang">
-<meta property="og:description" content="在开发软件的时候,可能很多人会同时为同一个软件开发功能或者修复bug,但是如果都在主分支来进行开发,引起冲突的概率将会大大增加,而且也不利于维护,如果你同时修改多个bug该怎么办?所幸,git的分支功能很好的帮助我们解决了这个问题,它可以帮助我们同时进行多个功能的开发和版本管理.请在阅读这篇文章之前,务必先阅读认识git的数据模型,这样才能更好的帮助你理解git中的分支.想知道为什么git中新建一">
+<meta property="og:description" content="在开发软件的时候,可能很多人会同时为同一个软件开发功能或者修复bug,但是如果都在主分支来进行开发,引起冲突的概率将会大大增加,而且也不利于维护,如果你同时修改多个bug该怎么办?所幸,git的分支功能很好的帮助我们解决了这个问题,它可以帮助我们同时进行多个功能的开发和版本管理.请在阅读这篇文章之前,务必先阅读深入浅出git——数据模型,这样才能更好的帮助你理解git中的分支.想知道为什么git中">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/understanding-git/branch-graph.png">
 <meta property="og:image" content="http://yoursite.com/images/understanding-git/branch-three-branchs.png">
@@ -142,10 +142,10 @@
 <meta property="og:image" content="http://yoursite.com/images/understanding-git/branch-branch-feature.png">
 <meta property="og:image" content="http://yoursite.com/images/understanding-git/branch-HEAD.png">
 <meta property="og:image" content="http://yoursite.com/images/understanding-git/branch-HEAD-to-master.png">
-<meta property="og:updated_time" content="2019-01-10T03:03:53.136Z">
+<meta property="og:updated_time" content="2019-01-10T03:17:48.008Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="认识git中的分支">
-<meta name="twitter:description" content="在开发软件的时候,可能很多人会同时为同一个软件开发功能或者修复bug,但是如果都在主分支来进行开发,引起冲突的概率将会大大增加,而且也不利于维护,如果你同时修改多个bug该怎么办?所幸,git的分支功能很好的帮助我们解决了这个问题,它可以帮助我们同时进行多个功能的开发和版本管理.请在阅读这篇文章之前,务必先阅读认识git的数据模型,这样才能更好的帮助你理解git中的分支.想知道为什么git中新建一">
+<meta name="twitter:title" content="深入浅出git——分支">
+<meta name="twitter:description" content="在开发软件的时候,可能很多人会同时为同一个软件开发功能或者修复bug,但是如果都在主分支来进行开发,引起冲突的概率将会大大增加,而且也不利于维护,如果你同时修改多个bug该怎么办?所幸,git的分支功能很好的帮助我们解决了这个问题,它可以帮助我们同时进行多个功能的开发和版本管理.请在阅读这篇文章之前,务必先阅读深入浅出git——数据模型,这样才能更好的帮助你理解git中的分支.想知道为什么git中">
 <meta name="twitter:image" content="http://yoursite.com/images/understanding-git/branch-graph.png">
 
 
@@ -163,7 +163,7 @@
   };
 </script>
 
-  <title>认识git中的分支 | Zhu.Yang</title>
+  <title>深入浅出git——分支 | Zhu.Yang</title>
   
 
 
@@ -413,7 +413,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">认识git中的分支
+          <h2 class="post-title" itemprop="name headline">深入浅出git——分支
 
               
             
@@ -439,7 +439,7 @@
                 
               
 
-              <time title="创建时间：2019-01-10 10:00:11 / 修改时间：11:03:53" itemprop="dateCreated datePublished" datetime="2019-01-10T10:00:11+08:00">2019-01-10</time>
+              <time title="创建时间：2019-01-10 10:00:11 / 修改时间：11:17:48" itemprop="dateCreated datePublished" datetime="2019-01-10T10:00:11+08:00">2019-01-10</time>
             
 
             
@@ -457,7 +457,7 @@
 
           
           
-             <span id="/2019/01/10/understanding-git-branch/" class="leancloud_visitors" data-flag-title="认识git中的分支">
+             <span id="/2019/01/10/understanding-git-branch/" class="leancloud_visitors" data-flag-title="深入浅出git——分支">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -516,7 +516,7 @@
       
 
       
-        <p>在开发软件的时候,可能很多人会同时为同一个软件开发功能或者修复bug,但是如果都在主分支来进行开发,引起冲突的概率将会大大增加,而且也不利于维护,如果你同时修改多个bug该怎么办?所幸,git的分支功能很好的帮助我们解决了这个问题,它可以帮助我们同时进行多个功能的开发和版本管理.<br>请在阅读这篇文章之前,务必先阅读<a href="http://generalthink.github.io/2019/01/09/understanding-git-data-model/" target="_blank" rel="noopener">认识git的数据模型</a>,这样才能更好的帮助你理解git中的分支.想知道为什么git中新建一个分支那么快,代价那么小吗?接下来我们就来揭开分支神秘的面纱.<br><a id="more"></a></p>
+        <p>在开发软件的时候,可能很多人会同时为同一个软件开发功能或者修复bug,但是如果都在主分支来进行开发,引起冲突的概率将会大大增加,而且也不利于维护,如果你同时修改多个bug该怎么办?所幸,git的分支功能很好的帮助我们解决了这个问题,它可以帮助我们同时进行多个功能的开发和版本管理.<br>请在阅读这篇文章之前,务必先阅读<a href="http://generalthink.github.io/2019/01/09/understanding-git-data-model/" target="_blank" rel="noopener">深入浅出git——数据模型</a>,这样才能更好的帮助你理解git中的分支.想知道为什么git中新建一个分支那么快,代价那么小吗?接下来我们就来揭开分支神秘的面纱.<br><a id="more"></a></p>
 <p>这次我会只显示commit objects来简化它,并且为了让它更容易理解我会给他们取个别名来代替原本的检验和.所以对于提交记录,我们会得到一个像下面这样的图.<br><img src="/images/understanding-git/branch-graph.png" alt="commit objects"></p>
 <p>熟悉图论的应该注意到了上面的是一个有向无环图(DAG),这意味着从一个节点开始沿着边的方向不会经过相同的节点.<br>在我们的例图中可以清晰的发现存在三个不同的分支,我们分别用红色(包含A,B,C,D,E),蓝色(A,B,F,G),以及绿色(A,B,H,I,J)来标记它们</p>
 <p><img src="/images/understanding-git/branch-three-branchs.png" alt="三个分支"></p>
@@ -577,8 +577,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/01/09/understanding-git-data-model/" rel="next" title="认识git的数据模型">
-                <i class="fa fa-chevron-left"></i> 认识git的数据模型
+              <a href="/2019/01/09/understanding-git-data-model/" rel="next" title="深入浅出git——数据模型">
+                <i class="fa fa-chevron-left"></i> 深入浅出git——数据模型
               </a>
             
           </div>
