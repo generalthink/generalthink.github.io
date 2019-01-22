@@ -65,7 +65,7 @@ git 首先会更新index文件中Main.java的工作目录的版本
 
 ![index中变化](/images/understanding-git/index-find-workspace-change.png)
 
-然后我们看到index.php在工作目录和暂存区有不同的版本
+然后我们看到Main.java在工作目录和暂存区有不同的版本
 
 ![index中变化](/images/understanding-git/index-find-stage-change.png)
 
@@ -79,14 +79,14 @@ modified:   Main.java
 no changes added to commit (use "git add" and/or "git commit -a")
 
 ```
-这就表明工作目录的修改不在暂存区中(那么下一次的提交就不会包含index.php的修改).
+这就表明工作目录的修改不在暂存区中(那么下一次的提交就不会包含Main.java的修改).
 
 所以,执行以下命令将Main.java加入到暂存区
 ```
 git add Main.java
 ```
 
-执行了上面这条命令,就又会发生两件事儿,第一,git会为index.php创建一个blob object然后存储在.git/objects目录下,第二,会再次更新index文件
+执行了上面这条命令,就又会发生两件事儿,第一,git会为Main.java创建一个blob object然后存储在.git/objects目录下,第二,会再次更新index文件
 
 ![执行git add命令之后](/images/understanding-git/index-sync-stage.png)
 
@@ -94,7 +94,7 @@ git add Main.java
 ```
 git status
 ```
-git会发现index.php的暂存区的版本和工作目录版本一致,但是和仓库的版本不一致
+git会发现Main.java的暂存区的版本和工作目录版本一致,但是和仓库的版本不一致
 
 ![index中变化](/images/understanding-git/index-find-respo-change.png)
 
@@ -105,7 +105,7 @@ Changes to be committed:
   (use "git reset HEAD <file>..." to unstage)
 modified:   Main.java
 ```
-证明index.php已经在暂存区,但是还没有提交到仓库.现在我们就可以提交我们的修改了
+证明Main.java已经在暂存区,但是还没有提交到仓库.现在我们就可以提交我们的修改了
 ```
 git commit -m "add some code to Main.java"
 ```
