@@ -5,6 +5,8 @@ tags: Git
 keywords: Git,index
 ---
 
+### 暂存区
+
 从git的角度来看,文件的修改涉及到以下三个区域:工作目录,stage区(暂存区)以及本地仓库.
 ![git区域](/images/understanding-git/git-area-when-update.png)
 
@@ -18,6 +20,8 @@ keywords: Git,index
 把暂存区认为是一个存储修改的真实区域并不准确,git没有专门的stage目录来存放这些文件的修改(blobs),git有一个名为index的文件来跟踪这三个区域的修改:工作目录,暂存区以及本地仓库
 
 当我们添加修改到暂存区的时候,git会更新index文件中的信息,并且创建一个新的blob object,然后将它们放到与之前提交的记录所产生的其他blob相同的.git/objects目录中.
+
+### index的变化
 
 接下来我们就通过一个正常的git流程来演示下git如何使用的index
 
@@ -35,11 +39,11 @@ git checkout feature
 ![添加到索引](/images/understanding-git/index-when-checkout.png)
 
 我们注意到index是一个文件而不是目录,所以git是没有往其中存储内容的,git只是存储我们仓库中每个文件的信息而已,类似于上面这样
-	+ mtime : 上次更新时间
-	+ file : 文件名称
-	+ wdir : 工作目录中文件版本
-	+ stage : index中文件版本
-	+ repo : 仓库中的文件版本
++ mtime : 上次更新时间
++ file : 文件名称
++ wdir : 工作目录中文件版本
++ stage : index中文件版本
++ repo : 仓库中的文件版本
 
 
 文件版本以校验和来标识,如果两个文件有相同的校验和,那么它们就有一样的内容以及版本.
