@@ -144,7 +144,7 @@
 <meta property="og:image" content="http://yoursite.com/images/understanding-git/move-and-delete/git-cherry-pick.gif">
 <meta property="og:image" content="http://yoursite.com/images/understanding-git/move-and-delete/git-reset.gif">
 <meta property="og:image" content="http://yoursite.com/images/understanding-git/move-and-delete/git-revert.gif">
-<meta property="og:updated_time" content="2019-01-25T09:59:43.794Z">
+<meta property="og:updated_time" content="2019-01-25T10:08:02.318Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入浅出git——自由的修改提交记录">
 <meta name="twitter:description" content="上篇文章讲了merge和rebase,我们已经可以在commit object构成的图(当然我更愿意把它看成一棵树)上面进行分支的合并了,在图上我们可以新增节点(git commit),合并节点(merge或者rebase),这篇我们就来讲解下移动和删除节点。 在讲移动和删除之前，我们先来认识下HEAD的分离。 分离的HEAD我们都知道,HEAD是指向当前分支的,而分离的HEAD就是让其指向了某个">
@@ -441,7 +441,7 @@
                 
               
 
-              <time title="创建时间：2019-01-25 16:15:59 / 修改时间：17:59:43" itemprop="dateCreated datePublished" datetime="2019-01-25T16:15:59+08:00">2019-01-25</time>
+              <time title="创建时间：2019-01-25 16:15:59 / 修改时间：18:08:02" itemprop="dateCreated datePublished" datetime="2019-01-25T16:15:59+08:00">2019-01-25</time>
             
 
             
@@ -539,7 +539,7 @@
 <p><img src="/images/understanding-git/move-and-delete/git-move-branch.gif" alt="移动分支到指定节点"></p>
 <p>现在master分支就指向了第一个提交，需要注意的是不能在当前分支操作当前分支的移动，否则你会有这样的错误<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fatal: Cannot force update the current branch.</span><br></pre></td></tr></table></figure></p>
 <p>完成移动之后并不会切换分支，仍然处于之前的分支。</p>
-<h3 id="任意移动"><a href="#任意移动" class="headerlink" title="任意移动"></a>任意移动</h3><p>如何能将提交树的commit object任意的移动?让我们的修改可以更加的随意，<code>git cherry-pick</code>就能做到。<br>现在我们想把bugFix分支上C2,C4的提交记录移动到master分支上，只需要执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git cherry-pick C2 C4</span><br></pre></td></tr></table></figure></p>
+<h4 id="任意移动"><a href="#任意移动" class="headerlink" title="任意移动"></a>任意移动</h4><p>如何能将提交树的commit object任意的移动?让我们的修改可以更加的随意，<code>git cherry-pick</code>就能做到。<br>现在我们想把bugFix分支上C2,C4的提交记录移动到master分支上，只需要执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git cherry-pick C2 C4</span><br></pre></td></tr></table></figure></p>
 <p>这个命令可以”复制”提交节点并在当前分支做一次完全一样的新提交</p>
 <p><img src="/images/understanding-git/move-and-delete/git-cherry-pick.gif" alt="git cherry-pick"></p>
 <h3 id="回退代码"><a href="#回退代码" class="headerlink" title="回退代码"></a>回退代码</h3><p>有的时候我们的代码提交错了，但是已经提交到git上去了，我想要回退怎么办？还好git提供了两种方法用来撤销变更—-<code>git reset</code>以及<code>git revert</code>。</p>
@@ -788,7 +788,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#分离的HEAD"><span class="nav-number">1.</span> <span class="nav-text">分离的HEAD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#移动节点"><span class="nav-number">2.</span> <span class="nav-text">移动节点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#相对引用"><span class="nav-number">2.1.</span> <span class="nav-text">相对引用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#任意移动"><span class="nav-number">3.</span> <span class="nav-text">任意移动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#回退代码"><span class="nav-number">4.</span> <span class="nav-text">回退代码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#git-reset"><span class="nav-number">4.1.</span> <span class="nav-text">git reset</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#git-revert"><span class="nav-number">4.2.</span> <span class="nav-text">git revert</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#分离的HEAD"><span class="nav-number">1.</span> <span class="nav-text">分离的HEAD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#移动节点"><span class="nav-number">2.</span> <span class="nav-text">移动节点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#相对引用"><span class="nav-number">2.1.</span> <span class="nav-text">相对引用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#任意移动"><span class="nav-number">2.2.</span> <span class="nav-text">任意移动</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#回退代码"><span class="nav-number">3.</span> <span class="nav-text">回退代码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#git-reset"><span class="nav-number">3.1.</span> <span class="nav-text">git reset</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#git-revert"><span class="nav-number">3.2.</span> <span class="nav-text">git revert</span></a></li></ol></li></ol></div>
             
 
           </div>
