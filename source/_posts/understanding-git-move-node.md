@@ -54,7 +54,7 @@ fatal: Cannot force update the current branch.
 ```
 完成移动之后并不会切换分支，仍然处于之前的分支。
 
-### 任意移动
+#### 任意移动
 
 如何能将提交树的commit object任意的移动?让我们的修改可以更加的随意，`git cherry-pick`就能做到。
 现在我们想把bugFix分支上C2,C4的提交记录移动到master分支上，只需要执行
