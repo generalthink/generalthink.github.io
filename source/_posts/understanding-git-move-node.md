@@ -24,6 +24,7 @@ keywords: Git,HEAD,分离式HEAD,revert,reset,cherry-pick
 
 ![分离HEAD](/images/understanding-git/move-and-delete/git-detached-head-structure.gif)
 
+<!--more-->
 
 ### 移动节点
 
@@ -79,7 +80,7 @@ git cherry-pick C2 C4
 
 ![git revert](/images/understanding-git/move-and-delete/git-revert.gif)
 
-我们本来是要撤销C2提交的，但是为什么还多了一个C2'提交呢？这是因为新提交记录C2'引入了更改--这个更改又是用来撤销C2这个提交的，也就是说C2'的状态于C1时相同的。
+我们本来是要撤销C2提交的，但是为什么还多了一个C2'提交呢？这是因为新提交记录C2'引入了更改--这个更改又是用来撤销C2这个提交的，也就是说C2'的状态于C1是相同的。
 revert之后就可以把更改push到远程仓库与别人分享了。
 
 
