@@ -144,7 +144,7 @@
 <meta property="og:image" content="http://yoursite.com/images/understanding-git/move-and-delete/git-cherry-pick.gif">
 <meta property="og:image" content="http://yoursite.com/images/understanding-git/move-and-delete/git-reset.gif">
 <meta property="og:image" content="http://yoursite.com/images/understanding-git/move-and-delete/git-revert.gif">
-<meta property="og:updated_time" content="2019-01-28T07:40:19.460Z">
+<meta property="og:updated_time" content="2019-01-29T09:26:43.425Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入浅出git——自由的修改提交记录">
 <meta name="twitter:description" content="上篇文章讲了merge和rebase,我们已经可以在commit object构成的图(当然我更愿意把它看成一棵树)上面进行分支的合并了,在图上我们可以新增节点(git commit),合并节点(merge或者rebase),这篇我们就来讲解下移动和删除节点。 在讲移动和删除之前，我们先来认识下HEAD的分离。 分离的HEAD我们都知道,HEAD是指向当前分支的,而分离的HEAD就是让其指向了某个">
@@ -458,7 +458,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-01-28 15:40:19" itemprop="dateModified" datetime="2019-01-28T15:40:19+08:00">2019-01-28</time>
+                <time title="修改时间：2019-01-29 17:26:43" itemprop="dateModified" datetime="2019-01-29T17:26:43+08:00">2019-01-29</time>
               
             
           </span>
@@ -538,6 +538,7 @@
 <p>当我们执行<code>git checkout  062704b1c3a814dfd95695aba3684c22e3f3fa85</code>之后HEAD就处于分离状态。</p>
 <p><img src="/images/understanding-git/move-and-delete/git-detached-head.gif" alt="分离HEAD"></p>
 <p><img src="/images/understanding-git/move-and-delete/git-detached-head-structure.gif" alt="分离HEAD"></p>
+<a id="more"></a>
 <h3 id="移动节点"><a href="#移动节点" class="headerlink" title="移动节点"></a>移动节点</h3><p>我们可以通过指定提交记录hash的方式移动指针的位置(无论是分支还是HEAD),然而实际中并没有那么直观的图给我们看，就不得不使用<code>git log</code>来查看提交记录的hash，然而hash又比较长，幸好git对hash的处理比较智能，我们只需要提供唯一标识提交记录的前几个字符就可以了，因此我们可以只输入<code>git checkout 0627</code>就可以检出提交记录了。</p>
 <p>通过hash值来移动节点显然并不方便，所以git提供了相对引用，这样我们就可以从一个易于记忆的地方(比如bugFix分支或者HEAD)开始计算。</p>
 <h4 id="相对引用"><a href="#相对引用" class="headerlink" title="相对引用"></a>相对引用</h4><p>相对引用很给力，常用的两种用法</p>
@@ -558,7 +559,7 @@
 <h4 id="git-reset"><a href="#git-reset" class="headerlink" title="git reset"></a>git reset</h4><p><code>git reset</code>通过把分支记录回退几个提交记录来实现撤销 改动，其实就是移动在图上的指针。</p>
 <p><img src="/images/understanding-git/move-and-delete/git-reset.gif" alt="git reset"></p>
 <h4 id="git-revert"><a href="#git-revert" class="headerlink" title="git revert"></a>git revert</h4><p><img src="/images/understanding-git/move-and-delete/git-revert.gif" alt="git revert"></p>
-<p>我们本来是要撤销C2提交的，但是为什么还多了一个C2’提交呢？这是因为新提交记录C2’引入了更改–这个更改又是用来撤销C2这个提交的，也就是说C2’的状态于C1时相同的。<br>revert之后就可以把更改push到远程仓库与别人分享了。</p>
+<p>我们本来是要撤销C2提交的，但是为什么还多了一个C2’提交呢？这是因为新提交记录C2’引入了更改–这个更改又是用来撤销C2这个提交的，也就是说C2’的状态于C1是相同的。<br>revert之后就可以把更改push到远程仓库与别人分享了。</p>
 
       
     </div>
@@ -604,6 +605,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/01/29/understanding-git-remote-cmd/" rel="prev" title="深入浅出git——远端命令">
+                深入浅出git——远端命令 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -675,7 +680,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">38</span>
+                    <span class="site-state-item-count">39</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -832,7 +837,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">181k</span>
+    <span title="站点总字数">187k</span>
   
 
   
@@ -841,7 +846,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">2:44</span>
+    <span title="站点阅读时长">2:50</span>
   
 </div>
 
