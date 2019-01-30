@@ -228,3 +228,9 @@ git pull origin bugFix ====  git fetch orign master; git merge origin/bugFix
 ![get pull](/images/understanding-git/remote-cmd/git-pull-structure.gif)
 
 上图可以看到当前分支是bugFix，执行pull命令之后origin/master的指向改变了，bugFix分支的内容和远端master分支的内容进行了合并，把这条命令拆解为2条来记忆我相信更容易让人理解。
+
+### 总结
+
+git系列写到现在已经结束了，总共写了6篇文章，三篇理论，三篇实际运用。理论是实战的基础，弄明白了理论理解起来更加容易，git将再也不难，当然我也不可能将每个命令都进行细致的讲解，
+但是2-8理论在git中同样适用,如果想看更加详细的命令，我相信官方文档才是最好的。
+
