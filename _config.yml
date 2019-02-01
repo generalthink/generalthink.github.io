@@ -88,6 +88,15 @@ leancloud_counter_security:
   username: generalthink # Will be asked while deploying if is left blank
   password: Naver@01 # Recommmended to be left blank. Will be asked while deploying if is left blank
 
+feed:
+  type: atom
+  path: atom.xml
+  limit: 20
+  content_limit: 140
+  content_limit_delim: ' '
+  order_by: -date
+  icon: icon.png
+
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
