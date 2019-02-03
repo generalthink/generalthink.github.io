@@ -1,5 +1,5 @@
 ---
-title: 深入浅出git——自由的修改提交记录
+title: 深入浅出git(五)——自由的修改提交记录
 date: 2019-01-25 16:15:59
 tags: Git
 keywords: Git,HEAD,分离式HEAD,revert,reset,cherry-pick

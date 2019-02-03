@@ -1,5 +1,5 @@
 ---
-title: 深入浅出git——远端命令
+title: 深入浅出git(六)——远端命令
 date: 2019-01-29 11:21:02
 tags: Git
 keywords: Git,fetech,pull,push

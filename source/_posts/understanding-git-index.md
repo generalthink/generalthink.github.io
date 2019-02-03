@@ -1,5 +1,5 @@
 ---
-title: 深入简出git--索引
+title: 深入简出git(三)——索引
 date: 2019-01-21 14:28:42
 tags: Git
 keywords: Git,index

@@ -1,5 +1,5 @@
 ---
-title: 深入浅出git——分支
+title: 深入浅出git(二)——分支
 date: 2019-01-10 10:00:11
 tags: Git
 keywords: git branch

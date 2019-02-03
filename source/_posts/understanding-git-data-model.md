@@ -1,5 +1,5 @@
 ---
-title: 深入浅出git——数据模型
+title: 深入浅出git(一)——数据模型
 date: 2019-01-09 14:07:59
 tags: Git
 keywords: Git,Git数据模型,blob object,tree object,commit object

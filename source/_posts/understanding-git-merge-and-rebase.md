@@ -1,5 +1,5 @@
 ---
-title: 深入浅出git——merge和rebase
+title: 深入浅出git(四)——merge和rebase
 date: 2019-01-23 17:47:11
 tags: Git
 keywords: Git,merge,rebase,merge vs rebase,mrege和rebase的区别
