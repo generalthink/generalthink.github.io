@@ -388,6 +388,304 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/07/18/primitive-type-in-java/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhu.Yang">
+      <meta itemprop="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhu.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2016/07/18/primitive-type-in-java/" class="post-title-link" itemprop="http://yoursite.com/page/4/index.html">谈谈Java中的基本数据类型</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2016-07-18 08:19:16" itemprop="dateCreated datePublished" datetime="2016-07-18T08:19:16+08:00">2016-07-18</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-02-28 16:25:42" itemprop="dateModified" datetime="2019-02-28T16:25:42+08:00">2019-02-28</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2016/07/18/primitive-type-in-java/" class="leancloud_visitors" data-flag-title="谈谈Java中的基本数据类型">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">4.1k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">4 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="认识Java中的基本数据类型"><a href="#认识Java中的基本数据类型" class="headerlink" title="认识Java中的基本数据类型"></a>认识Java中的基本数据类型</h3><p>Java中有8大基本数据类型,它的对应包装类型以及数据范围如下:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">基本数据类型名称</th>
+<th style="text-align:left">封装数据类型名称</th>
+<th style="text-align:left">所占字节数</th>
+<th style="text-align:left">取值范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">boolean</td>
+<td style="text-align:left">Boolean</td>
+<td style="text-align:left">1</td>
+<td style="text-align:left">true/false</td>
+</tr>
+<tr>
+<td style="text-align:left">byte</td>
+<td style="text-align:left">Byte</td>
+<td style="text-align:left">1</td>
+<td style="text-align:left">-128~127</td>
+</tr>
+<tr>
+<td style="text-align:left">char</td>
+<td style="text-align:left">Character</td>
+<td style="text-align:left">2</td>
+<td style="text-align:left">0~65535</td>
+</tr>
+<tr>
+<td style="text-align:left">short</td>
+<td style="text-align:left">Short</td>
+<td style="text-align:left">2</td>
+<td style="text-align:left">-32768~32767</td>
+</tr>
+<tr>
+<td style="text-align:left">int</td>
+<td style="text-align:left">Integer</td>
+<td style="text-align:left">4</td>
+<td style="text-align:left">-2的31次方到2的31次方-1</td>
+</tr>
+<tr>
+<td style="text-align:left">long</td>
+<td style="text-align:left">Long</td>
+<td style="text-align:left">8</td>
+<td style="text-align:left">2的63次方到2的63次方-1</td>
+</tr>
+<tr>
+<td style="text-align:left">float</td>
+<td style="text-align:left">Float</td>
+<td style="text-align:left">4</td>
+<td style="text-align:left">3.402823e+38 ~ 1.401298e-45</td>
+</tr>
+<tr>
+<td style="text-align:left">double</td>
+<td style="text-align:left">Double</td>
+<td style="text-align:left">8</td>
+<td style="text-align:left">1.797693e+308~ 4.9000000e-324</td>
+</tr>
+</tbody>
+</table>
+<p><strong>具体的字节数可以通过Character.SIZE,Double.SIZE等方法进行查看所占bit位,除以8就是所占字节数。</strong></p>
+<p>值得一提的是Float.MIN_VALUE以及Double.MIN_VALUE以表示的是Float以及Double所能表示的最小正数，也就是说存在这样一种情况，0到±Float.MIN_VALUE之间的值float类型无法表示，0 到±Double.MIN_VALUE之间的值double类型无法表示。这并没有什么好奇怪的，因为这些范围内的数值超出了它们的精度范围。</p>
+<h3 id="装箱和拆箱"><a href="#装箱和拆箱" class="headerlink" title="装箱和拆箱"></a>装箱和拆箱</h3><p>在编译阶段，若将原始类型int赋值给Integer类型，就会将原始类型自动编译为Integer.valueOf(int)，这种叫做装箱；如果将Integer类型赋值给int类型，则会自动转换调用intValue()方法，这种叫做拆箱。</p>
+<p>我们来看一段代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Integer i = <span class="keyword">new</span>  Integer(<span class="number">42</span>);</span><br><span class="line">Integer j = <span class="keyword">new</span>  Integer(<span class="number">42</span>);</span><br><span class="line">System.out.println(i &gt; j ? <span class="number">1</span> : i == j ? <span class="number">0</span> : -<span class="number">1</span>);<span class="comment">//-1</span></span><br></pre></td></tr></table></figure>
+<p>返回的是-1这是为什么呢? 执行i&gt;j的时候会导致自动拆箱,也就是说直接比较它们的基本类型值,比较的结果肯定是否定的,那么接下来就会比较i==j,这里比较的是对象的引用,返回当然为false,所以最终结果为-1.</p>
+<p>修改方案1:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int i2 = i;</span><br><span class="line">int j2 = j;</span><br><span class="line">System.out.println(i2 &gt; j2 ? 1 : i2 == j2 ? 0 : -1);</span><br></pre></td></tr></table></figure>
+<p>修改方案2：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(i &gt; j ? 1 : i.intValue() == j.intValue() ? 0 : -1);</span><br></pre></td></tr></table></figure>
+<h3 id="基本数据类型和封装类型的比较"><a href="#基本数据类型和封装类型的比较" class="headerlink" title="基本数据类型和封装类型的比较"></a>基本数据类型和封装类型的比较</h3><p>先来看一段代码,关于基本数据类型和封装类型之间的比较</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">    Integer i = 127;</span><br><span class="line">    Integer i2 = 127;</span><br><span class="line">    </span><br><span class="line">    int i3 = 127;</span><br><span class="line">    </span><br><span class="line">    Integer j = 128;</span><br><span class="line">    Integer j2 = 128;</span><br><span class="line">    int j3 = 128;</span><br><span class="line">    </span><br><span class="line">    Integer k = new Integer(127);</span><br><span class="line">    Integer k2 = 127;</span><br><span class="line">    </span><br><span class="line">    Integer m = -128;</span><br><span class="line">    int m2 = -128;</span><br><span class="line">    </span><br><span class="line">    Integer q = -129;</span><br><span class="line">    Integer q2 = -129;</span><br><span class="line">    int q3 = -129;</span><br><span class="line">    Integer q4 = q3;</span><br><span class="line"></span><br><span class="line">    System.out.println(i == i2);//true</span><br><span class="line">    System.out.println(i == i3);//true</span><br><span class="line">    System.out.println(j == j2);//false</span><br><span class="line">    System.out.println(j == j3);//true</span><br><span class="line">    System.out.println(k == k2);//false</span><br><span class="line">    System.out.println(k == i3);//true</span><br><span class="line">    System.out.println(m == m2);//true</span><br><span class="line">    System.out.println(q == q2);//false</span><br><span class="line">    System.out.println(q == q3);//true</span><br><span class="line">    System.out.println(q == q4);//false</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>从上面的结果可以看出了当Integer和int比较的时候，实际上是在做拆箱操作,当Integer和<br>Integer进行比较的时候会发现当值的范围在-128到127之间比较的时候总是为true(k==k2这种比较特殊,因为k是new的一个对象),那么为什么会出现当值在-128在127之间的时候比较总会相等呢？是因为Integer这个类对这个区间的数据做了一个缓存，具体可以查看JDK源码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">private static class IntegerCache &#123;</span><br><span class="line">	static final int low = -128;</span><br><span class="line">	static final int high;</span><br><span class="line">	static final Integer cache[];</span><br><span class="line"></span><br><span class="line">	static &#123;</span><br><span class="line">		// high value may be configured by property</span><br><span class="line">		int h = 127;</span><br><span class="line">		String integerCacheHighPropValue =</span><br><span class="line">		sun.misc.VM.getSavedProperty(&quot;java.lang.Integer.IntegerCache.high&quot;);</span><br><span class="line">		if (integerCacheHighPropValue != null) &#123;</span><br><span class="line">			int i = parseInt(integerCacheHighPropValue);</span><br><span class="line">			i = Math.max(i, 127);</span><br><span class="line">			// Maximum array size is Integer.MAX_VALUE</span><br><span class="line">			h = Math.min(i, Integer.MAX_VALUE - (-low));</span><br><span class="line">		&#125;</span><br><span class="line">		high = h;</span><br><span class="line"></span><br><span class="line">		cache = new Integer[(high - low) + 1];</span><br><span class="line">		int j = low;</span><br><span class="line">		for(int k = 0; k &lt; cache.length; k++)</span><br><span class="line">		cache[k] = new Integer(j++);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	private IntegerCache() &#123;&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">public static Integer valueOf(int i) &#123;</span><br><span class="line">	assert IntegerCache.high &gt;= 127;</span><br><span class="line">	if (i &gt;= IntegerCache.low &amp;&amp; i &lt;= IntegerCache.high)</span><br><span class="line">	  return IntegerCache.cache[i + (-IntegerCache.low)];</span><br><span class="line">	return new Integer(i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从上面的代码可以看出Integer缓存的结果区间,不错我们可以通过VM参数来修改缓存的High值。</p>
+<p>查看源码可以看到Byte缓存了(byte)(-128~127)之间的值,Character缓存了(char)(0-127)之间的值,Short缓存了(short)(-128~127)之间的值,Long缓存了(long)(-128~127)之间的值</p>
+<h3 id="类型之间的强制转换"><a href="#类型之间的强制转换" class="headerlink" title="类型之间的强制转换"></a>类型之间的强制转换</h3><p>关于强制转换，我们同样先看一段代码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int s = 32768;</span><br><span class="line">    </span><br><span class="line">System.out.println((short)s);//-32768</span><br></pre></td></tr></table></figure>
+<p>结果为什么会这样呢？因为int是4个字节，也就是32位,而short是2个字节也就是16位，其最高位需要用来表示是正数还是负数，所以其最大值只有32767。当int转换为short的时候高位就被截断了.</p>
+<p>当一个小数据向大数据转换的时候，系统会自动将其转换而不用我们手动添加转换，这些类型由”小”到”大”分别为 (byte，short，char)–int–long–float—double。这里我们所说的”大”与”小”,并不是指占用字节的多少,而是指表示值的范围的大小。</p>
+<p>比如以下的代码都是编译通过的</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">byte</span> b = <span class="number">12</span>;</span><br><span class="line">   <span class="keyword">int</span> i = b;</span><br><span class="line">   <span class="keyword">long</span> lon = i;</span><br><span class="line">   <span class="keyword">float</span> f = lon;</span><br><span class="line">   <span class="keyword">double</span> d = f;</span><br></pre></td></tr></table></figure>
+<p>如果低级类型为char型，向高级类型（整型）转换时，会转换为对应ASCII码值，例如</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> c=<span class="string">'c'</span>; <span class="keyword">int</span> i=c;</span><br><span class="line"></span><br><span class="line">System.out.println(<span class="string">"output:"</span>+i);<span class="comment">//output:99</span></span><br></pre></td></tr></table></figure>
+<p>对于byte,short,char三种类型而言,他们是平级的,因此不能相互自动转换,可以使用下述的强制类型转换。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">short i=99 ; char c=(char)i; </span><br><span class="line">System.out.println(&quot;output:&quot;+c);//output:c</span><br></pre></td></tr></table></figure>
+<p><strong>所以，高等级的数据类型转换为低等级的数据类型的时候一定要慎重，尽量不去做这种操作</strong></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/06/09/infobright-use/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -450,7 +748,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-02-03 10:40:33" itemprop="dateModified" datetime="2019-02-03T10:40:33+08:00">2019-02-03</time>
+                <time title="修改时间：2019-02-28 16:25:42" itemprop="dateModified" datetime="2019-02-28T16:25:42+08:00">2019-02-28</time>
               
             
           </span>
@@ -667,7 +965,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-02-03 10:40:33" itemprop="dateModified" datetime="2019-02-03T10:40:33+08:00">2019-02-03</time>
+                <time title="修改时间：2019-02-28 16:25:42" itemprop="dateModified" datetime="2019-02-28T16:25:42+08:00">2019-02-28</time>
               
             
           </span>
@@ -884,7 +1182,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-02-03 10:40:33" itemprop="dateModified" datetime="2019-02-03T10:40:33+08:00">2019-02-03</time>
+                <time title="修改时间：2019-02-28 16:25:42" itemprop="dateModified" datetime="2019-02-28T16:25:42+08:00">2019-02-28</time>
               
             
           </span>
@@ -1120,7 +1418,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-02-03 10:40:33" itemprop="dateModified" datetime="2019-02-03T10:40:33+08:00">2019-02-03</time>
+                <time title="修改时间：2019-02-28 16:25:42" itemprop="dateModified" datetime="2019-02-28T16:25:42+08:00">2019-02-28</time>
               
             
           </span>
@@ -1463,7 +1761,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-02-03 10:40:33" itemprop="dateModified" datetime="2019-02-03T10:40:33+08:00">2019-02-03</time>
+                <time title="修改时间：2019-02-28 16:25:42" itemprop="dateModified" datetime="2019-02-28T16:25:42+08:00">2019-02-28</time>
               
             
           </span>
@@ -1680,7 +1978,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-02-03 10:40:33" itemprop="dateModified" datetime="2019-02-03T10:40:33+08:00">2019-02-03</time>
+                <time title="修改时间：2019-02-28 16:25:42" itemprop="dateModified" datetime="2019-02-28T16:25:42+08:00">2019-02-28</time>
               
             
           </span>
@@ -1897,7 +2195,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-02-03 10:40:33" itemprop="dateModified" datetime="2019-02-03T10:40:33+08:00">2019-02-03</time>
+                <time title="修改时间：2019-02-28 16:25:42" itemprop="dateModified" datetime="2019-02-28T16:25:42+08:00">2019-02-28</time>
               
             
           </span>
@@ -2114,7 +2412,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-02-03 10:40:33" itemprop="dateModified" datetime="2019-02-03T10:40:33+08:00">2019-02-03</time>
+                <time title="修改时间：2019-02-28 16:25:42" itemprop="dateModified" datetime="2019-02-28T16:25:42+08:00">2019-02-28</time>
               
             
           </span>
@@ -2331,7 +2629,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-02-03 10:40:33" itemprop="dateModified" datetime="2019-02-03T10:40:33+08:00">2019-02-03</time>
+                <time title="修改时间：2019-02-28 16:25:42" itemprop="dateModified" datetime="2019-02-28T16:25:42+08:00">2019-02-28</time>
               
             
           </span>
@@ -2520,7 +2818,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">39</span>
+                    <span class="site-state-item-count">40</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2610,7 +2908,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">18</span>
+                      
+                    
+                    <span class="site-state-item-count">19</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -2682,7 +2982,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">188k</span>
+    <span title="站点总字数">193k</span>
   
 
   
@@ -2691,7 +2991,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">2:50</span>
+    <span title="站点阅读时长">2:56</span>
   
 </div>
 
