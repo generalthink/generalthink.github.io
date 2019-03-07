@@ -44,7 +44,7 @@ kafka也是分布式的，因为它在不同的节点(又被称为broker)上存�
 
 提交日志(也被称为预写日志或者事物日志)是仅支持附加的持久有序数据结构，你无法修改或者删除记录，它从左往右读并且保证日志的顺序。
 
-![commint log](/images/introduction-kafka/commint_log.png)
+![commit log](/images/introduction-kafka/commint_log.png)
 
 是不是觉得kafka的数据结构如此简单?
 
@@ -108,7 +108,7 @@ kafka遵守着愚蠢的broker和聪明的consumer的准则。这意味着kafka�
 
 Zookeeper是一个分布式键值存储。它针对读取进行了高度优化，但写入速度较慢。它最常用于存储元数据和处理群集的机制(心跳，分发更新/配置等)。
 
-它允许服务的客户(Kafka broker)订阅并在发生变更后发送给他们,这就是Kafka如何知道何时切换分区领导者。ZooKeeper本身维护了一个集权，所以它就有很高的容错性，当然它也应该具有，毕竟Kafka很大程度上是依赖于它的。
+它允许服务的客户(Kafka broker)订阅并在发生变更后发送给他们,这就是Kafka如何知道何时切换分区领导者。ZooKeeper本身维护了一个集群，所以它就有很高的容错性，当然它也应该具有，毕竟Kafka很大程度上是依赖于它的。
 
 zookeeper用于存储所有的元数据信息，包括但不限于如下几项:
 * 消费者组每个分区的偏移量(现在客户端在单独的kafka topic上存储偏移量)
