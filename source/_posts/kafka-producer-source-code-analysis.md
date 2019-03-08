@@ -10,56 +10,56 @@ talk is easy,show me the code,先来看一段创建producer的代码
 ```java
 public class KafkaProducerDemo {
 
-    public static void main(String[] args) {
+  public static void main(String[] args) {
 
-        KafkaProducer<String,String> producer = createProducer();
+    KafkaProducer<String,String> producer = createProducer();
 
-        //指定topic,key,value
-        ProducerRecord<String,String> record = new ProducerRecord<>("test1","newkey1","newvalue1");
+    //指定topic,key,value
+    ProducerRecord<String,String> record = new ProducerRecord<>("test1","newkey1","newvalue1");
 
-        //异步发送
-        producer.send(record);
-        producer.close();
+    //异步发送
+    producer.send(record);
+    producer.close();
 
-        System.out.println("发送完成");
+    System.out.println("发送完成");
 
-    }
+  }
 
-    public static KafkaProducer<String,String> createProducer() {
-	    Properties props = new Properties();
+  public static KafkaProducer<String,String> createProducer() {
+    Properties props = new Properties();
 
-	    //bootstrap.servers 必须设置
-	    props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "192.168.239.131:9092");
+    //bootstrap.servers 必须设置
+    props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "192.168.239.131:9092");
 
-	    // key.serializer   必须设置
-	    props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+    // key.serializer   必须设置
+    props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
 
-	    // value.serializer  必须设置
-	    props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+    // value.serializer  必须设置
+    props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
 
-	    //client.id
-	    props.put(ProducerConfig.CLIENT_ID_CONFIG, "client-0");
+    //client.id
+    props.put(ProducerConfig.CLIENT_ID_CONFIG, "client-0");
 
-	    //retries
-	    props.put(ProducerConfig.RETRIES_CONFIG, 3);
+    //retries
+    props.put(ProducerConfig.RETRIES_CONFIG, 3);
 
-	    //acks
-	    props.put(ProducerConfig.ACKS_CONFIG, "all");
+    //acks
+    props.put(ProducerConfig.ACKS_CONFIG, "all");
 
-	    //max.in.flight.requests.per.connection
-	    props.put(ProducerConfig.MAX_IN_FLIGHT_REQUESTS_PER_CONNECTION, 1);
-	    
-	    //linger.ms
-	    props.put(ProducerConfig.LINGER_MS_CONFIG, 100);
+    //max.in.flight.requests.per.connection
+    props.put(ProducerConfig.MAX_IN_FLIGHT_REQUESTS_PER_CONNECTION, 1);
+    
+    //linger.ms
+    props.put(ProducerConfig.LINGER_MS_CONFIG, 100);
 
-	    //batch.size
-	    props.put(ProducerConfig.BATCH_SIZE_CONFIG, 10240);
+    //batch.size
+    props.put(ProducerConfig.BATCH_SIZE_CONFIG, 10240);
 
-	    //buffer.memory
-	    props.put(ProducerConfig.BUFFER_MEMORY_CONFIG, 10240);
+    //buffer.memory
+    props.put(ProducerConfig.BUFFER_MEMORY_CONFIG, 10240);
 
-	    return new KafkaProducer<>(props);
-	}
+    return new KafkaProducer<>(props);
+  }
 }
 ```
 <!--more-->
@@ -96,15 +96,15 @@ this.ioThread.start();
 #### 发送消息(缓存消息)
 
 ```java
-	KafkaProducer<String,String> producer = createProducer();
+KafkaProducer<String,String> producer = createProducer();
 
-    //指定topic,key,value
-    ProducerRecord<String,String> record = new ProducerRecord<>("test1","newkey1","newvalue1");
+//指定topic,key,value
+ProducerRecord<String,String> record = new ProducerRecord<>("test1","newkey1","newvalue1");
 
-    //异步发送,可以设置回调函数
-    producer.send(record);
-    //同步发送
-    //producer.send(record).get();
+//异步发送,可以设置回调函数
+producer.send(record);
+//同步发送
+//producer.send(record).get();
 ```
 
 发送消息有同步发送以及异步发送两种方式，我们一般不使用同步发送，毕竟太过于耗时，使用异步发送的时候可以指定回调函数，当消息发送完成的时候(成功或者失败)会通过回调通知生产者。
@@ -112,8 +112,8 @@ this.ioThread.start();
 发送消息实际上是将消息缓存起来，核心代码如下：
 
 ```java
-RecordAccumulator.RecordAppendResult result = accumulator.append(tp, timestamp, serializedKey,
-        serializedValue, headers, interceptCallback, remainingWaitMs);
+RecordAccumulator.RecordAppendResult result = accumulator.append(tp, timestamp, 
+  serializedKey,serializedValue, headers, interceptCallback, remainingWaitMs);
 
 ```
 
@@ -132,15 +132,15 @@ int size = Math.max(this.batchSize, AbstractRecords.estimateSizeInBytesUpperBoun
 //那么会阻塞maxTimeToBlock(max.block.ms参数)这么长时间
 ByteBuffer buffer = free.allocate(size, maxTimeToBlock);
 synchronized (dq) {
-    //创建MemoryRecordBuilder,通过buffer初始化appendStream(DataOutputStream)属性
-    MemoryRecordsBuilder recordsBuilder = recordsBuilder(buffer, maxUsableMagic);
-    ProducerBatch batch = new ProducerBatch(tp, recordsBuilder, time.milliseconds());
+  //创建MemoryRecordBuilder,通过buffer初始化appendStream(DataOutputStream)属性
+  MemoryRecordsBuilder recordsBuilder = recordsBuilder(buffer, maxUsableMagic);
+  ProducerBatch batch = new ProducerBatch(tp, recordsBuilder, time.milliseconds());
 
-    //将key,value写入到MemoryRecordsBuilder中的appendStream(DataOutputStream)中
-    batch.tryAppend(timestamp, key, value, headers, callback, time.milliseconds());
+  //将key,value写入到MemoryRecordsBuilder中的appendStream(DataOutputStream)中
+  batch.tryAppend(timestamp, key, value, headers, callback, time.milliseconds());
 
-    //将需要发送的消息放入到队列中
-    dq.addLast(batch);
+  //将需要发送的消息放入到队列中
+  dq.addLast(batch);
 }
 
 ```
@@ -156,26 +156,26 @@ synchronized (dq) {
 */
 public class Sender implements Runnable {
 
-	public void run() {
+  public void run() {
 
-	    // 一直运行直到kafkaProducer.close()方法被调用
-	    while (running) {
-	       run(time.milliseconds());
-	    }
-	    
-	    //从日志上看是开始处理KafkaProducer被关闭后的逻辑
-	    log.debug("Beginning shutdown of Kafka producer I/O thread, sending remaining records.");
+    // 一直运行直到kafkaProducer.close()方法被调用
+    while (running) {
+       run(time.milliseconds());
+    }
+    
+    //从日志上看是开始处理KafkaProducer被关闭后的逻辑
+    log.debug("Beginning shutdown of Kafka producer I/O thread, sending remaining records.");
 
-	    //当非强制关闭的时候，可能还仍然有请求并且accumulator中还仍然存在数据，此时我们需要将请求处理完成
-	    while (!forceClose && (this.accumulator.hasUndrained() || this.client.inFlightRequestCount() > 0)) {
-	       run(time.milliseconds());
-	    }
-	    if (forceClose) {
-	        //如果是强制关闭,且还有未发送完毕的消息，则取消发送并抛出一个异常new KafkaException("Producer is closed forcefully.")
-	        this.accumulator.abortIncompleteBatches();
-	    }
-	    ...
-	}
+    //当非强制关闭的时候，可能还仍然有请求并且accumulator中还仍然存在数据，此时我们需要将请求处理完成
+    while (!forceClose && (this.accumulator.hasUndrained() || this.client.inFlightRequestCount() > 0)) {
+       run(time.milliseconds());
+    }
+    if (forceClose) {
+        //如果是强制关闭,且还有未发送完毕的消息，则取消发送并抛出一个异常new KafkaException("Producer is closed forcefully.")
+        this.accumulator.abortIncompleteBatches();
+    }
+    ...
+  }
 }
 
 ```
@@ -213,7 +213,6 @@ RequestCompletionHandler callback = new RequestCompletionHandler() {
         handleProduceResponse(response, recordsByPartition, time.milliseconds());
     }
 };
-...
 
 //根据参数构造ClientRequest,此时需要发送的消息在requestBuilder中
 ClientRequest clientRequest = client.newClientRequest(nodeId, requestBuilder, now, acks != 0,
@@ -240,33 +239,33 @@ if (channel.ready() && key.isWritable()) {
 
 ```java
 private void handleProduceResponse(ClientResponse response, Map<TopicPartition, ProducerBatch> batches, long now) {
-    RequestHeader requestHeader = response.requestHeader();
+  RequestHeader requestHeader = response.requestHeader();
+
+  if (response.wasDisconnected()) {
+    //如果是网络断开则构造Errors.NETWORK_EXCEPTION的响应
+    for (ProducerBatch batch : batches.values())
+        completeBatch(batch, new ProduceResponse.PartitionResponse(Errors.NETWORK_EXCEPTION), correlationId, now, 0L);
+
+  } else if (response.versionMismatch() != null) {
+
+   //如果是版本不匹配，则构造Errors.UNSUPPORTED_VERSION的响应
+    for (ProducerBatch batch : batches.values())
+        completeBatch(batch, new ProduceResponse.PartitionResponse(Errors.UNSUPPORTED_VERSION), correlationId, now, 0L);
+
+  } else {
     
-    if (response.wasDisconnected()) {
-        //如果是网络断开则构造Errors.NETWORK_EXCEPTION的响应
-        for (ProducerBatch batch : batches.values())
-            completeBatch(batch, new ProduceResponse.PartitionResponse(Errors.NETWORK_EXCEPTION), correlationId, now, 0L);
-
-    } else if (response.versionMismatch() != null) {
-
-       //如果是版本不匹配，则构造Errors.UNSUPPORTED_VERSION的响应
-        for (ProducerBatch batch : batches.values())
-            completeBatch(batch, new ProduceResponse.PartitionResponse(Errors.UNSUPPORTED_VERSION), correlationId, now, 0L);
-
+    if (response.hasResponse()) {
+        //如果存在response就返回正常的response
+           ...
+        }
     } else {
-        
-        if (response.hasResponse()) {
-            //如果存在response就返回正常的response
-               ...
-            }
-        } else {
 
-            //如果acks=0，那么则构造Errors.NONE的响应，因为这种情况只需要发送不需要响应结果
-            for (ProducerBatch batch : batches.values()) {
-                completeBatch(batch, new ProduceResponse.PartitionResponse(Errors.NONE), correlationId, now, 0L);
-            }
+        //如果acks=0，那么则构造Errors.NONE的响应，因为这种情况只需要发送不需要响应结果
+        for (ProducerBatch batch : batches.values()) {
+            completeBatch(batch, new ProduceResponse.PartitionResponse(Errors.NONE), correlationId, now, 0L);
         }
     }
+  }
 }
 ```
 
@@ -276,25 +275,25 @@ private void handleProduceResponse(ClientResponse response, Map<TopicPartition, 
 ```java
 private void completeBatch(ProducerBatch batch, ProduceResponse.PartitionResponse response, long correlationId,
                            long now, long throttleUntilTimeMs) {
-    Errors error = response.error;
+  Errors error = response.error;
 
-    //如果发送的消息太大，需要重新进行分割发送
-    if (error == Errors.MESSAGE_TOO_LARGE && batch.recordCount > 1 &&
-            (batch.magic() >= RecordBatch.MAGIC_VALUE_V2 || batch.isCompressed())) {
+  //如果发送的消息太大，需要重新进行分割发送
+  if (error == Errors.MESSAGE_TOO_LARGE && batch.recordCount > 1 &&
+        (batch.magic() >= RecordBatch.MAGIC_VALUE_V2 || batch.isCompressed())) {
 
-        this.accumulator.splitAndReenqueue(batch);
-        this.accumulator.deallocate(batch);
-        this.sensors.recordBatchSplit();
+    this.accumulator.splitAndReenqueue(batch);
+    this.accumulator.deallocate(batch);
+    this.sensors.recordBatchSplit();
 
-    } else if (error != Errors.NONE) {
+  } else if (error != Errors.NONE) {
 
-        //发生了错误，如果此时可以retry(retry次数未达到限制以及产生异常是RetriableException)
-        if (canRetry(batch, response)) {
-            if (transactionManager == null) {
-                //把需要重试的消息放入队列中，等待重试，实际就是调用deque.addFirst(batch)
-                reenqueueBatch(batch, now);
-            } 
+    //发生了错误，如果此时可以retry(retry次数未达到限制以及产生异常是RetriableException)
+    if (canRetry(batch, response)) {
+        if (transactionManager == null) {
+            //把需要重试的消息放入队列中，等待重试，实际就是调用deque.addFirst(batch)
+            reenqueueBatch(batch, now);
         } 
+    } 
 }
 ```
 
