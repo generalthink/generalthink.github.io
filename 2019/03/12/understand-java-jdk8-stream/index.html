@@ -127,18 +127,20 @@
 
 
 
-  <meta name="description" content="fastjson快速入门以及基本使用">
-<meta name="keywords" content="java json fastjson">
+  <meta name="description" content="之前看了许多介绍Java8 Stream的文章,但是初次接触真的是难以理解(我悟性比较低),没办法只能”死记硬背”,但是昨天我打王者荣耀(那一局我赢了,牛魔全场MVP)的时候,突然迸发了灵感,感觉之前没有理解透彻的一下子就理解透彻了。所以决定用简单的方式来回忆下我认为的java8 Stream. lambda表达式语法lambda表达式是Stream API的基石，所以想要学会Stream API">
+<meta name="keywords" content="Java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="fastjson使用">
-<meta property="og:url" content="http://yoursite.com/2015/10/02/how-to-use-fastjson/index.html">
+<meta property="og:title" content="我是如何理解Java8 Stream">
+<meta property="og:url" content="http://yoursite.com/2019/03/12/understand-java-jdk8-stream/index.html">
 <meta property="og:site_name" content="Zhu.Yang">
-<meta property="og:description" content="fastjson快速入门以及基本使用">
+<meta property="og:description" content="之前看了许多介绍Java8 Stream的文章,但是初次接触真的是难以理解(我悟性比较低),没办法只能”死记硬背”,但是昨天我打王者荣耀(那一局我赢了,牛魔全场MVP)的时候,突然迸发了灵感,感觉之前没有理解透彻的一下子就理解透彻了。所以决定用简单的方式来回忆下我认为的java8 Stream. lambda表达式语法lambda表达式是Stream API的基石，所以想要学会Stream API">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/java8-stream/stream.png">
 <meta property="og:updated_time" content="2019-03-14T02:19:47.378Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="fastjson使用">
-<meta name="twitter:description" content="fastjson快速入门以及基本使用">
+<meta name="twitter:title" content="我是如何理解Java8 Stream">
+<meta name="twitter:description" content="之前看了许多介绍Java8 Stream的文章,但是初次接触真的是难以理解(我悟性比较低),没办法只能”死记硬背”,但是昨天我打王者荣耀(那一局我赢了,牛魔全场MVP)的时候,突然迸发了灵感,感觉之前没有理解透彻的一下子就理解透彻了。所以决定用简单的方式来回忆下我认为的java8 Stream. lambda表达式语法lambda表达式是Stream API的基石，所以想要学会Stream API">
+<meta name="twitter:image" content="http://yoursite.com/images/java8-stream/stream.png">
 
 
 
@@ -147,7 +149,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2015/10/02/how-to-use-fastjson/">
+  <link rel="canonical" href="http://yoursite.com/2019/03/12/understand-java-jdk8-stream/">
 
 
 
@@ -157,7 +159,7 @@
   };
 </script>
 
-  <title>fastjson使用 | Zhu.Yang</title>
+  <title>我是如何理解Java8 Stream | Zhu.Yang</title>
   
 
 
@@ -390,7 +392,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2015/10/02/how-to-use-fastjson/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/12/understand-java-jdk8-stream/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Zhu.Yang">
@@ -407,7 +409,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">fastjson使用
+          <h2 class="post-title" itemprop="name headline">我是如何理解Java8 Stream
 
               
             
@@ -433,7 +435,7 @@
                 
               
 
-              <time title="创建时间：2015-10-02 12:49:50" itemprop="dateCreated datePublished" datetime="2015-10-02T12:49:50+08:00">2015-10-02</time>
+              <time title="创建时间：2019-03-12 14:40:07" itemprop="dateCreated datePublished" datetime="2019-03-12T14:40:07+08:00">2019-03-12</time>
             
 
             
@@ -456,24 +458,6 @@
           </span>
 
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a></span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -481,7 +465,7 @@
 
           
           
-             <span id="/2015/10/02/how-to-use-fastjson/" class="leancloud_visitors" data-flag-title="fastjson使用">
+             <span id="/2019/03/12/understand-java-jdk8-stream/" class="leancloud_visitors" data-flag-title="我是如何理解Java8 Stream">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -506,7 +490,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">4.6k</span>
+                <span title="本文字数">7.1k</span>
               
 
               
@@ -520,13 +504,11 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">4 分钟</span>
+                <span title="阅读时长">6 分钟</span>
               
             </div>
           
 
-          
-              <div class="post-description">fastjson快速入门以及基本使用</div>
           
 
         </div>
@@ -542,29 +524,167 @@
       
 
       
-        <h4 id="1-fastjson的主要API"><a href="#1-fastjson的主要API" class="headerlink" title="1. fastjson的主要API"></a>1. fastjson的主要API</h4><p>  <strong>fastjson入口类是com.alibaba.fastjson.JSON,主要的API是JSON.toJSONString,和parseObject</strong></p>
-  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.alibaba.fastjson;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">JSON</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String <span class="title">toJSONString</span><span class="params">(Object object)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> &lt;T&gt; <span class="function">T <span class="title">parseObject</span><span class="params">(String text, Class&lt;T&gt; clazz, Feature... features)</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>  <strong>序列化:</strong><br>  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String jsonString = JSON.toJSONString(obj);</span><br></pre></td></tr></table></figure></p>
-<p>  <strong>反序列化:</strong></p>
-  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">VO vo = JSON.parseObject(<span class="string">"..."</span>, VO.class);</span><br></pre></td></tr></table></figure>
-<p>  <strong>泛型反序列化:</strong></p>
-  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.TypeReference;</span><br><span class="line"></span><br><span class="line">List&lt;VO&gt; list = JSON.parseObject(<span class="string">"..."</span>, <span class="keyword">new</span> TypeReference&lt;List&lt;VO&gt;&gt;() &#123;&#125;);</span><br></pre></td></tr></table></figure>
-<h4 id="2-JSON、JSONObject、JSONArray三者之间的关系"><a href="#2-JSON、JSONObject、JSONArray三者之间的关系" class="headerlink" title="2. JSON、JSONObject、JSONArray三者之间的关系"></a>2. JSON、JSONObject、JSONArray三者之间的关系</h4>  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JSONObject</span> <span class="keyword">extends</span> <span class="title">JSON</span> <span class="keyword">implements</span> <span class="title">Map</span>&lt;<span class="title">String</span>, <span class="title">Object</span>&gt;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JSONArray</span> <span class="keyword">extends</span> <span class="title">JSON</span> <span class="keyword">implements</span> <span class="title">List</span>&lt;<span class="title">Object</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>  也就是说,JSONObject实际上就是一个Map,其处理方式和Map类似,而JSONArray实质上是一个List,其处理方式和List类似。</p>
-<h4 id="3-实例讲解"><a href="#3-实例讲解" class="headerlink" title="3. 实例讲解"></a>3. 实例讲解</h4><p>  <strong>涉及到的实体Bean:</strong></p>
-  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">   <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">     <span class="keyword">int</span> id,</span><br><span class="line">     <span class="keyword">int</span> name;</span><br><span class="line">     Date birthday;</span><br><span class="line">     List&lt;Phone&gt; phones;</span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="title">User</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line">   	<span class="comment">//省略get,set方法</span></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Phone</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> phoneNum;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Phone</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">  &#125;</span><br><span class="line">	<span class="comment">//省略get,set方法</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>  <strong>测试:</strong></p>
-  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testObject</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  User user = <span class="keyword">new</span> User();</span><br><span class="line">  user.setId(<span class="number">1</span>);</span><br><span class="line">  user.setName(<span class="string">"abc"</span>);</span><br><span class="line">  user.setBirthday(<span class="keyword">new</span> Date());</span><br><span class="line">  List&lt;Phone&gt; phones = <span class="keyword">new</span> ArrayList&lt;Phone&gt;();</span><br><span class="line">  Phone p1 = <span class="keyword">new</span> Phone();</span><br><span class="line">  p1.setPhoneNum(<span class="number">12123123</span>);</span><br><span class="line">		</span><br><span class="line">  Phone p2 = <span class="keyword">new</span> Phone();</span><br><span class="line">  p2.setPhoneNum(<span class="number">23423423</span>);</span><br><span class="line">  phones.add(p1);</span><br><span class="line">  phones.add(p2);</span><br><span class="line">		</span><br><span class="line">  user.setPhones(phones);</span><br><span class="line">		</span><br><span class="line">  JSON.DEFFAULT_DATE_FORMAT = <span class="string">"yyyy-MM-dd hh:mm:ss"</span>;</span><br><span class="line">  System.out.println(<span class="string">"JSON:"</span>+JSON.toJSONString(user,SerializerFeature.WriteDateUseDateFormat));</span><br><span class="line">  <span class="comment">//该注释的代码和上面两行的代码效果一致</span></span><br><span class="line">  <span class="comment">//System.out.println(JSON.toJSONStringWithDateFormat(user, "yyyy-MM-dd hh:mm:ss"));</span></span><br><span class="line">		</span><br><span class="line"></span><br><span class="line">  JSONObject jobj = <span class="keyword">new</span> JSONObject();</span><br><span class="line">  jobj.put(<span class="string">"user"</span>, user);</span><br><span class="line">  System.out.println(<span class="string">"JSONObject:"</span>+jobj.toJSONString());</span><br><span class="line">		</span><br><span class="line"></span><br><span class="line">  JSONArray jArray = <span class="keyword">new</span> JSONArray();</span><br><span class="line">  jArray.add(user);</span><br><span class="line">  System.out.println(<span class="string">"JSONArray:"</span>+jArray.toJSONString());		</span><br><span class="line">		</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>  <strong>输出:</strong></p>
-  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">JSON</span>:</span><br><span class="line">&#123;</span><br><span class="line">	<span class="string">"birthday"</span>:<span class="string">"2015-09-30 03:06:36"</span>,</span><br><span class="line">	<span class="string">"id"</span>:<span class="number">1</span>,</span><br><span class="line">	<span class="string">"name"</span>:<span class="string">"abc"</span>,</span><br><span class="line">	<span class="string">"phones"</span>:[</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="string">"phoneNum"</span>:<span class="number">12123123</span></span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="string">"phoneNum"</span>:<span class="number">23423423</span></span><br><span class="line">		&#125;</span><br><span class="line">	]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">JSONObject:</span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"user"</span>: &#123;</span><br><span class="line">    <span class="string">"birthday"</span>: <span class="number">1443597247350</span>,</span><br><span class="line">    <span class="string">"id"</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="string">"name"</span>: <span class="string">"abc"</span>,</span><br><span class="line">    <span class="string">"phones"</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="string">"phoneNum"</span>: <span class="number">12123123</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="string">"phoneNum"</span>: <span class="number">23423423</span></span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">JSONArray:</span><br><span class="line">[</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="string">"birthday"</span>: <span class="number">1443597247350</span>,</span><br><span class="line">    <span class="string">"id"</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="string">"name"</span>: <span class="string">"abc"</span>,</span><br><span class="line">    <span class="string">"phones"</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="string">"phoneNum"</span>: <span class="number">12123123</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="string">"phoneNum"</span>: <span class="number">23423423</span></span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-<p>  <strong>测试:</strong></p>
-  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testList</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	  List&lt;User&gt; list = <span class="keyword">new</span> ArrayList&lt;User&gt;();</span><br><span class="line">	  User u1 = <span class="keyword">new</span> User();</span><br><span class="line">	  u1.setId(<span class="number">2</span>);</span><br><span class="line">	  u1.setName(<span class="string">"abc"</span>);</span><br><span class="line">	  u1.setBirthday(<span class="keyword">new</span> Date());</span><br><span class="line">	  User u2 = <span class="keyword">new</span> User();</span><br><span class="line">	  u2.setId(<span class="number">3</span>);</span><br><span class="line">	  u2.setName(<span class="string">"cde"</span>);</span><br><span class="line">	  list.add(u1);list.add(u2);</span><br><span class="line">		</span><br><span class="line">	  String result = JSON.toJSONStringWithDateFormat(list, <span class="string">"yyyy-MM-dd hh:mm:ss"</span>);</span><br><span class="line">	  System.out.println(result);</span><br><span class="line">	  <span class="comment">//[&#123;"birthday":"2015-09-30 03:34:38","id":2,"name":"abc"&#125;,&#123;"id":3,"name":"cde"&#125;]</span></span><br><span class="line">		</span><br><span class="line">	  <span class="comment">//List&lt;User&gt; refList = JSON.parseObject(result, new ArrayList&lt;User&gt;().getClass());和下面的代码效果一致</span></span><br><span class="line">	  List&lt;User&gt; refList2 = JSON.parseObject(result, <span class="keyword">new</span> TypeReference&lt;List&lt;User&gt;&gt;()&#123;&#125;);</span><br><span class="line">	  System.out.println(refList2.size());</span><br><span class="line">	  <span class="comment">//输出:2</span></span><br><span class="line">	  List&lt;User&gt; users = JSON.parseArray(result, User.class);</span><br><span class="line">	  System.out.println(users.size());</span><br><span class="line">	  <span class="comment">//输出:2</span></span><br><span class="line">		</span><br><span class="line">	  JSONObject obj = <span class="keyword">new</span> JSONObject();</span><br><span class="line">	  obj.put(<span class="string">"abc"</span>, <span class="number">123</span>);</span><br><span class="line">	  Boolean b = obj.getBoolean(<span class="string">"ccc"</span>);</span><br><span class="line">	  System.out.println(b);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="4-控制哪些值序列化"><a href="#4-控制哪些值序列化" class="headerlink" title="4. 控制哪些值序列化"></a>4. 控制哪些值序列化</h4><p>  <strong>可以通过扩展实现根据object或者属性名称或者属性值进行判断是否需要序列化。例如:</strong></p>
-  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">PropertyFilter filter = <span class="keyword">new</span> PropertyFilter() &#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">apply</span><span class="params">(Object source, String name, Object value)</span> </span>&#123;</span><br><span class="line">	    <span class="keyword">if</span> (<span class="string">"id"</span>.equals(name)) &#123;</span><br><span class="line">	        <span class="keyword">int</span> id = ((Integer) value).intValue();</span><br><span class="line">	        <span class="keyword">return</span> id &gt;= <span class="number">100</span>;</span><br><span class="line">	    &#125;</span><br><span class="line">	    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line">JSON.toJSONString(obj, filter); <span class="comment">// 序列化的时候传入filter</span></span><br></pre></td></tr></table></figure>
-<p>  <strong>同样可以通过SimplePropertyPreFilter来决定哪些值可以序列化:</strong></p>
-  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">User vo = <span class="keyword">new</span> User();</span><br><span class="line"></span><br><span class="line">vo.setId(<span class="number">123</span>);</span><br><span class="line">vo.setName(<span class="string">"flym"</span>);</span><br><span class="line"></span><br><span class="line">SimplePropertyPreFilter filter = <span class="keyword">new</span> SimplePropertyPreFilter(VO.class, <span class="string">"name"</span>);</span><br><span class="line">Assert.assertEquals(<span class="string">"&#123;\"name\":\"flym\"&#125;"</span>, JSON.toJSONString(vo, filter));</span><br></pre></td></tr></table></figure>
-<p>  <strong>同样可以通过注解的方式来判断哪些只需要序列化,详细请查看fastjson的官方文档</strong></p>
-<h4 id="5-参考文档"><a href="#5-参考文档" class="headerlink" title="5. 参考文档"></a>5. 参考文档</h4><p>  <a href="https://github.com/alibaba/fastjson" target="_blank" rel="noopener">fastjson下载以及文档参考</a></p>
+        <p>之前看了许多介绍Java8 Stream的文章,但是初次接触真的是难以理解(我悟性比较低),没办法只能”死记硬背”,但是昨天我打王者荣耀(那一局我赢了,牛魔全场MVP)的时候,突然迸发了灵感,感觉之前没有理解透彻的一下子就理解透彻了。所以决定用简单的方式来回忆下我认为的java8 Stream.</p>
+<h2 id="lambda表达式"><a href="#lambda表达式" class="headerlink" title="lambda表达式"></a>lambda表达式</h2><h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><p>lambda表达式是Stream API的基石，所以想要学会Stream API的使用，必须先要理解lambda表达式,这里对lambda做一个简单回顾。</p>
+<p>我们常常会看到这样的代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Arrays.sort(<span class="keyword">new</span> Integer[]&#123;<span class="number">1</span>, <span class="number">8</span>, <span class="number">7</span>, <span class="number">4</span>&#125;, <span class="keyword">new</span> Comparator&lt;Integer&gt;() &#123;</span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(Integer first, Integer second)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">return</span> first.compareTo(second);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>上面这种写法就是使用了匿名类，我们经常会使用匿名类的方式，因为我们只运行一次，不想它一直存在。虽然说lambda表达式是为了什么所谓的函数式编程，也是大家在社区千呼万唤才出来的，但是在我看来就是为了方(偷)便(懒)。</p>
+<p>上面的代码写着麻烦，但是转换成下面这样的呢？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Arrays.sort(<span class="keyword">new</span> Integer[]&#123;<span class="number">1</span>, <span class="number">8</span>, <span class="number">7</span>, <span class="number">4</span>&#125;,</span><br><span class="line">	(first,second) -&gt; first.compareTo(second));</span><br></pre></td></tr></table></figure>
+<p>这样看着多清爽，而且把一些不必要的细节都屏蔽了。对于这种只包含一个抽象方法的接口，你可以通过lambda接口来创建该接口的对象，这种接口被称为函数式接口。</p>
+<p>lambda表达式引入了一个新的操作符：<strong>-&gt;</strong>,它把lambda表达式分为了2部分</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(n) -&gt; n*n</span><br></pre></td></tr></table></figure>
+<p>左侧指定表达式所需的参数，如果不需要参数，也可以为空。右侧是lambda代码块,它指定lambda表达式的动作。</p>
+<p>需要注意的是如果方法中只有一个返回的时候不用声明，默认会返回。如果有分支返回的时候需要都进行声明。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(n) -&gt; &#123;</span><br><span class="line">	if( n &lt;= 10) </span><br><span class="line">		return n*n;</span><br><span class="line">	return n * 10;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="方法引用以及构造器引用"><a href="#方法引用以及构造器引用" class="headerlink" title="方法引用以及构造器引用"></a>方法引用以及构造器引用</h3><h4 id="方法引用"><a href="#方法引用" class="headerlink" title="方法引用"></a>方法引用</h4><p>有些时候，先要传递给其他代码的操作已经有实现的方法了。比如GUI中先要在按钮被点击时打印event对象，那么可以这样调用<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">button.setOnAction(event -&gt; System.out.println(event));</span><br></pre></td></tr></table></figure></p>
+<p>这个时候我想偷懒，我不想写event参数，因为只有一个参数，jvm不能帮帮我吗?下面是修改好的代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">button.setOnAction(System.out::println);</span><br></pre></td></tr></table></figure>
+<p>表达式<code>System.out::println</code>是一个方法引用，等同于lambda表达式<code>x -&gt; System.out.println(x)</code>。<strong>::</strong>操作符将方法名和对象或类的名字分割开来，以下是三种主要的使用情况:</p>
+<ol>
+<li>对象::实例方法</li>
+<li>类::静态方法</li>
+<li>类::实例方法</li>
+</ol>
+<p>前两种情况，方法引用等同于提供方法参数的lambda表达式。比如<code>Math::pow  ====  (x,y) -&gt; Math.pow(x,y)</code>。</p>
+<p>第三种情况，第一个参数会称为执行方法的对象。比如<code>String::compareToIgnoreCase ==== (x,y) -&gt; x.compareToIgnoreCase(y)</code>。</p>
+<p>还有<code>this::equals ==== x -&gt; this.equals(x)</code>,<code>super::equals ==== super.equals(x)</code>。</p>
+<h4 id="构造器引用"><a href="#构造器引用" class="headerlink" title="构造器引用"></a>构造器引用</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; strList = Arrays.asList(<span class="string">"1"</span>,<span class="string">"2"</span>,<span class="string">"3"</span>);</span><br><span class="line">Stream&lt;Integer&gt; stream =  strList.stream().map(Integer::<span class="keyword">new</span>);</span><br></pre></td></tr></table></figure>
+<p>上面代码的<code>Integer::new</code>就是构造器引用，不同的是在构造器引用中方法名是new。如果存在多个构造器，编译器会从上下文推断并找出合适的那一个。</p>
+<h2 id="StreamAPI"><a href="#StreamAPI" class="headerlink" title="StreamAPI"></a>StreamAPI</h2><p>Stream这个单词翻译过来就是流的意思，溪流的流，水流的流。</p>
+<p><img src="/images/java8-stream/stream.png" alt="Stream"></p>
+<p>在我看来stream就像是上面的图一样，最开始的数据就是小水滴，它经过各种”拦截器”的处理之后,有的小水滴被丢弃，有的变大了，有的加上了颜色，有的变成了三角形。最后它们都变成了带有颜色的圆。最后被我们放到结果集中。我们很多时候写的代码是这样的：遍历一个集合,然后对集合的元素进行判断或者转换，满足条件的加入到新的集合里面去,这种处理方式就和上面的图是一样的。先来看一段代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String,Map&lt;String,Integer&gt;&gt; resultMap = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">Map&lt;String,Integer&gt; maleMap = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">Map&lt;String,Integer&gt; femaleMap = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">resultMap.put(<span class="string">"male"</span>, maleMap);</span><br><span class="line">resultMap.put(<span class="string">"female"</span>,femaleMap);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; list.size(); i++) &#123;</span><br><span class="line">    Person person = list.get(i);</span><br><span class="line">    String gender = person.getGender();</span><br><span class="line">    String level = person.getLevel();</span><br><span class="line">    <span class="keyword">switch</span> (gender) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">"male"</span>:</span><br><span class="line">            Integer maleCount;</span><br><span class="line">            <span class="keyword">if</span>(<span class="string">"gold"</span>.equals(level)) &#123;</span><br><span class="line">                maleCount = maleMap.get(<span class="string">"gold"</span>);</span><br><span class="line">                maleMap.put(<span class="string">"gold"</span>, <span class="keyword">null</span> != maleCount ? maleCount + <span class="number">1</span> : <span class="number">1</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span>(<span class="string">"soliver"</span>.equals(level))&#123;</span><br><span class="line">                maleCount = maleMap.get(<span class="string">"soliver"</span>);</span><br><span class="line">                maleMap.put(<span class="string">"soliver"</span>, <span class="keyword">null</span> != maleCount ? maleCount + <span class="number">1</span> : <span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">case</span> <span class="string">"female"</span>:</span><br><span class="line">            Integer femaleCount;</span><br><span class="line">            <span class="keyword">if</span>(<span class="string">"gold"</span>.equals(level)) &#123;</span><br><span class="line">                femaleCount = femaleMap.get(<span class="string">"gold"</span>);</span><br><span class="line">                femaleMap.put(<span class="string">"gold"</span>, <span class="keyword">null</span> != femaleCount ? femaleCount + <span class="number">1</span> : <span class="number">1</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span>(<span class="string">"soliver"</span>.equals(level))&#123;</span><br><span class="line">                femaleCount = femaleMap.get(<span class="string">"soliver"</span>);</span><br><span class="line">                femaleMap.put(<span class="string">"soliver"</span>, <span class="keyword">null</span> != femaleCount ? femaleCount + <span class="number">1</span> : <span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的代码作用是统计不同性别的工程师职级的人数,在Java StreamAPI出来之前，这样类似的业务代码在系统中应该是随处可见的,手打上面的代码我大概花了两分钟,有了Stream之后，我偷了个懒<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String,Map&lt;String,Integer&gt;&gt; result = list.stream().collect(</span><br><span class="line">    Collectors.toMap(</span><br><span class="line">	    person -&gt; person.getGender(),</span><br><span class="line">	    person -&gt; Collections.singletonMap(person.getLevel(), <span class="number">1</span>),</span><br><span class="line">	    (existValue,newValue) -&gt; &#123;</span><br><span class="line">	        HashMap&lt;String,Integer&gt; newMap = <span class="keyword">new</span> HashMap&lt;&gt;(existValue);</span><br><span class="line">	        newValue.forEach((key,value) -&gt;&#123;</span><br><span class="line">	            <span class="keyword">if</span>(newMap.containsKey(key)) &#123;</span><br><span class="line">	                newMap.put(key, newMap.get(key) + <span class="number">1</span>);</span><br><span class="line">	            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">	                newMap.put(key, value);</span><br><span class="line">	            &#125;</span><br><span class="line">	        &#125;);</span><br><span class="line">	        <span class="keyword">return</span> newMap;</span><br><span class="line">	    &#125;)</span><br><span class="line">);</span><br></pre></td></tr></table></figure></p>
+<p>或者改成这样的代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String,Map&lt;String,Integer&gt;&gt; result =  stream.collect(</span><br><span class="line">    Collectors.groupingBy(</span><br><span class="line">        Person::getGender, </span><br><span class="line">        Collectors.toMap(</span><br><span class="line">            person-&gt;person.getLevel(), </span><br><span class="line">            person -&gt; <span class="number">1</span>,</span><br><span class="line">            (existValue,newValue) -&gt; existValue + newValue</span><br><span class="line">        )</span><br><span class="line">    )</span><br><span class="line">);</span><br></pre></td></tr></table></figure></p>
+<p>不仅代码块减少了许多，甚至逻辑也更清晰了。真的是用stream一时爽，一直用一直爽呀。</p>
+<p>Stream作为流，它可以是有限的可以是无限的，当然我们用得最多的还是有限的流(for循环就是有限的流),如上面那张图一样，我们可以对流中的元素做各种各样常见的处理。比如求和，过滤，分组，最大值，最小值等常见处理，所以现在就开始使用Stream吧</p>
+<h3 id="Stream的特性"><a href="#Stream的特性" class="headerlink" title="Stream的特性"></a>Stream的特性</h3><ol>
+<li>Stream自己不会存储元素,元素可能被存储在底层集合中，或者被生产出来。</li>
+<li>Stream操作符不会改变源对象,相反，他们会返回一个持有新对象的stream</li>
+<li>Stream操作符是延迟执行的，可能会等到需要结果的时候才去执行。</li>
+</ol>
+<h3 id="Stream-API"><a href="#Stream-API" class="headerlink" title="Stream API"></a>Stream API</h3><table>
+<thead>
+<tr>
+<th>函数式接口</th>
+<th>参数类型</th>
+<th>返回类型</th>
+<th>抽象方法名</th>
+<th>描述</th>
+<th>其他方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Runnable</td>
+<td>无</td>
+<td>void</td>
+<td>run</td>
+<td>执行一个没有参数和返回值的操作</td>
+<td>无</td>
+</tr>
+<tr>
+<td>Supplier&lt;T&gt;</td>
+<td>无</td>
+<td>T</td>
+<td>get</td>
+<td>提供一个T类型的值</td>
+<td></td>
+</tr>
+<tr>
+<td>Counsumer&lt;T&gt;</td>
+<td>T</td>
+<td>void</td>
+<td>accept</td>
+<td>处理一个T类型的值</td>
+<td>chain</td>
+</tr>
+<tr>
+<td>BiConsumer&lt;T,U&gt;</td>
+<td>T,U</td>
+<td>void</td>
+<td>accept</td>
+<td>处理T类型和U类型的值</td>
+<td>chain</td>
+</tr>
+<tr>
+<td>Function&lt;T,R&gt;</td>
+<td>T</td>
+<td>R</td>
+<td>apply</td>
+<td>一个参数类型为T的函数</td>
+<td>compose,andThen,identity</td>
+</tr>
+<tr>
+<td>BiFunction&lt;T,U,R&gt;</td>
+<td>T,U</td>
+<td>R</td>
+<td>apply</td>
+<td>一个参数类型为T和U的函数</td>
+<td>andThen</td>
+</tr>
+<tr>
+<td>UnaryOperator&lt;T&gt;</td>
+<td>T</td>
+<td>T</td>
+<td>apply</td>
+<td>对类型T进行的一元操作</td>
+<td>compose,andThen,identity</td>
+</tr>
+<tr>
+<td>BinaryOperator&lt;T&gt;</td>
+<td>T,T</td>
+<td>T</td>
+<td>apply</td>
+<td>对类型T进行二元操作</td>
+<td>andThen</td>
+</tr>
+<tr>
+<td>Predicate&lt;T&gt;</td>
+<td>T</td>
+<td>boolean</td>
+<td>test</td>
+<td>一个计算boolean值的函数</td>
+<td>And,or,negate,isEqual</td>
+</tr>
+<tr>
+<td>BiPredicate&lt;T,U&gt;</td>
+<td>T,U</td>
+<td>boolean</td>
+<td>test</td>
+<td>一个含有两个参数，计算boolean值的函数</td>
+<td>and,or,negate</td>
+</tr>
+</tbody>
+</table>
+<h4 id="map-和flatMap-的区别"><a href="#map-和flatMap-的区别" class="headerlink" title="map()和flatMap()的区别"></a>map()和flatMap()的区别</h4><p>使用map方法的时候，相当于对每个元素应用一个函数，并将返回的值收集到新的Stream中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Stream&lt;String[]&gt;	-&gt; flatMap -&gt;	Stream&lt;String&gt;</span><br><span class="line">Stream&lt;Set&lt;String&gt;&gt;	-&gt; flatMap -&gt;	Stream&lt;String&gt;</span><br><span class="line">Stream&lt;List&lt;String&gt;&gt;	-&gt; flatMap -&gt;	Stream&lt;String&gt;</span><br><span class="line">Stream&lt;List&lt;Object&gt;&gt;	-&gt; flatMap -&gt;	Stream&lt;Object&gt;</span><br><span class="line"></span><br><span class="line">&#123;&#123;1,2&#125;, &#123;3,4&#125;, &#123;5,6&#125; &#125; -&gt; flatMap -&gt; &#123;1,2,3,4,5,6&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="中间操作以及结束操作"><a href="#中间操作以及结束操作" class="headerlink" title="中间操作以及结束操作"></a>中间操作以及结束操作</h4><p>Stream上的所有操作分为两类：中间操作和结束操作，中间操作只是一种标记(调用到这类方法，并没有真正开始流的遍历。)，只有结束操作才会触发实际计算。简单的说就是API返回值仍然是Stream的就是中间操作，否则就是结束操作。</p>
+<h4 id="如何debug"><a href="#如何debug" class="headerlink" title="如何debug"></a>如何debug</h4><ol>
+<li>请使用代码段,比如<code>IntStream.of(1,2,3,4,5).fiter(i -&gt; {return i%2 == 0;})</code>将断点打在代码段上即可。</li>
+<li>引用方法也可以进行调试，在isDouble中打上断点比如<code>IntStream.of(1,2,3,4,5).fiter(MyMath::isDouble)</code></li>
+</ol>
+<h3 id="那些不好理解的API"><a href="#那些不好理解的API" class="headerlink" title="那些不好理解的API"></a>那些不好理解的API</h3><ol>
+<li>reduce()<br>我们以前做累加是如何完成的呢？<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> value in values) &#123;</span><br><span class="line">	sum = sum + value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>现在改成stream的方式来实现</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">values.stream().reduce(Integer::sum);</span><br></pre></td></tr></table></figure>
+<p>这个reduce()方法就是一个二元函数:从流的前两个元素开始，不断将它应用到流中的其他元素上。</p>
+<h4 id="如何写好Stream代码"><a href="#如何写好Stream代码" class="headerlink" title="如何写好Stream代码"></a>如何写好Stream代码</h4><p>stream API就是为了方便而设计的,在sql层面并不方便处理的数据可以通过stream来实现分组，聚合，最大值，最小值，排序，求和等等操作。所以不要把它想得太复杂，只管写就好了。总有那么一天你熟练了就可以写出简洁得代码。或者从现在开始把你项目中的大量for循环改造成stream方式。</p>
+<h4 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h4><p>本来想写大段代码来样式到stream API的转换，但是想了想完全没有必要,github上找了hutool工具类的部分代码来完成转换示例。(可以通过这种方式来提高stream api的能力)</p>
+<ol>
+<li><p>计算每个元素出现的次数(请先想象下jdk7怎么实现)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">代码效果：[a,b,c,c,c]  -&gt; a:<span class="number">1</span>,b:<span class="number">1</span>,c:<span class="number">3</span></span><br><span class="line"></span><br><span class="line">Arrays.asList(<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>,<span class="string">"c"</span>,<span class="string">"c"</span>).stream().collect(Collectors.groupingBy(str-&gt;str, Collectors.counting()));</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>以特定分隔符将集合转换为字符串，并添加前缀和后缀(请先想象下jdk7怎么实现)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; myList = Arrays.asList(<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>,<span class="string">"c"</span>,<span class="string">"c"</span>);</span><br><span class="line">myList.stream().collect(Collectors.joining(<span class="string">","</span>,<span class="string">"&#123;"</span>,<span class="string">"&#125;"</span>));</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>判断列表不全为空(请先想象下jdk7怎么实现)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">myList.stream().anyMatch(s -&gt; !s.isEmpty());</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
 
       
     </div>
@@ -588,9 +708,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/java/" rel="tag"># java</a>
-          
-            <a href="/tags/json/" rel="tag"># json</a>
+            <a href="/tags/Java/" rel="tag"># Java</a>
           
         </div>
       
@@ -603,8 +721,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/09/20/hexo-for-github-blog/" rel="next" title="使用hexo搭建github博客">
-                <i class="fa fa-chevron-left"></i> 使用hexo搭建github博客
+              <a href="/2019/03/07/kafka-producer-source-code-analysis/" rel="next" title="我花了一周读了Kafka Producer的源码">
+                <i class="fa fa-chevron-left"></i> 我花了一周读了Kafka Producer的源码
               </a>
             
           </div>
@@ -612,10 +730,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/10/26/fastjson-use/" rel="prev" title="fastjson定制序列化以及反序列化">
-                fastjson定制序列化以及反序列化 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -837,7 +951,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-fastjson的主要API"><span class="nav-number">1.</span> <span class="nav-text">1. fastjson的主要API</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-JSON、JSONObject、JSONArray三者之间的关系"><span class="nav-number">2.</span> <span class="nav-text">2. JSON、JSONObject、JSONArray三者之间的关系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-实例讲解"><span class="nav-number">3.</span> <span class="nav-text">3. 实例讲解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-控制哪些值序列化"><span class="nav-number">4.</span> <span class="nav-text">4. 控制哪些值序列化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-参考文档"><span class="nav-number">5.</span> <span class="nav-text">5. 参考文档</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#lambda表达式"><span class="nav-number">1.</span> <span class="nav-text">lambda表达式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#语法"><span class="nav-number">1.1.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法引用以及构造器引用"><span class="nav-number">1.2.</span> <span class="nav-text">方法引用以及构造器引用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#方法引用"><span class="nav-number">1.2.1.</span> <span class="nav-text">方法引用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#构造器引用"><span class="nav-number">1.2.2.</span> <span class="nav-text">构造器引用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#StreamAPI"><span class="nav-number">2.</span> <span class="nav-text">StreamAPI</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Stream的特性"><span class="nav-number">2.1.</span> <span class="nav-text">Stream的特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Stream-API"><span class="nav-number">2.2.</span> <span class="nav-text">Stream API</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#map-和flatMap-的区别"><span class="nav-number">2.2.1.</span> <span class="nav-text">map()和flatMap()的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#中间操作以及结束操作"><span class="nav-number">2.2.2.</span> <span class="nav-text">中间操作以及结束操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何debug"><span class="nav-number">2.2.3.</span> <span class="nav-text">如何debug</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#那些不好理解的API"><span class="nav-number">2.3.</span> <span class="nav-text">那些不好理解的API</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#如何写好Stream代码"><span class="nav-number">2.3.1.</span> <span class="nav-text">如何写好Stream代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码示例"><span class="nav-number">2.3.2.</span> <span class="nav-text">代码示例</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
