@@ -5,7 +5,7 @@ tags: Kafka
 keywords: KafkaProducer,Kafka producer源码分析,Kafka 生产者源码分析,Kafka网络层源码解析,Kafka metadata request,Kafaka NIO,nio
 ---
 
-上一篇讲了Kafka Producer发送消息的主体流程，这一篇我们关注下Kafka的网络层是如何实现的。
+[上一篇](https://generalthink.github.io/2019/03/07/kafka-producer-source-code-analysis/)讲了Kafka Producer发送消息的主体流程，这一篇我们关注下Kafka的网络层是如何实现的。
 对于发送消息而言，Producer是客户端，Broker是服务器端。
 Kafka使用了JavaNIO向服务器发送消息，所以在这之前需要了解java nio的基本知识。这次网络层源码分析从metadata request切入。
 
@@ -39,7 +39,7 @@ KafkaClient client = kafkaClient != null ? kafkaClient : new NetworkClient(
 
 #### 等待metadata更新
 
-我们都知道Kafka读写消息都是通过leader的，只有知道了leader才能发送消息到kafka，在我们的认识kafka一文中，我们讲了首先会发起metadata request,从中就可以获取到集群元信息(leader,partiton,ISR列表等),那么是在哪里发起metadata request的呢？
+我们都知道Kafka读写消息都是通过leader的，只有知道了leader才能发送消息到kafka，在我们的[大家好,我是Kafka](https://generalthink.github.io/2019/02/27/introduction-of-kafka/)一文中，我们讲了首先会发起metadata request,从中就可以获取到集群元信息(leader,partiton,ISR列表等),那么是在哪里发起metadata request的呢？
 
 调用KafkaProducer的doSend()(send()-->doSend())方法时，第一步就是通过**waitOnMetadata**等待集群元数据(topic,partition,node等)可用。
 
