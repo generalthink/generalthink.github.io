@@ -136,7 +136,7 @@
 <meta property="og:description" content="上一篇讲了Kafka Producer发送消息的主体流程，这一篇我们关注下Kafka的网络层是如何实现的。对于发送消息而言，Producer是客户端，Broker是服务器端。Kafka使用了JavaNIO向服务器发送消息，所以在这之前需要了解java nio的基本知识。这次网络层源码分析从metadata request切入。 开局一张图">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/introduction-kafka/kafka_producer_network.png">
-<meta property="og:updated_time" content="2019-04-10T06:40:09.174Z">
+<meta property="og:updated_time" content="2019-04-10T07:20:48.122Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kafka Producer网络层源码解析">
 <meta name="twitter:description" content="上一篇讲了Kafka Producer发送消息的主体流程，这一篇我们关注下Kafka的网络层是如何实现的。对于发送消息而言，Producer是客户端，Broker是服务器端。Kafka使用了JavaNIO向服务器发送消息，所以在这之前需要了解java nio的基本知识。这次网络层源码分析从metadata request切入。 开局一张图">
@@ -452,7 +452,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-10 14:40:09" itemprop="dateModified" datetime="2019-04-10T14:40:09+08:00">2019-04-10</time>
+                <time title="修改时间：2019-04-10 15:20:48" itemprop="dateModified" datetime="2019-04-10T15:20:48+08:00">2019-04-10</time>
               
             
           </span>
@@ -524,7 +524,7 @@
       
 
       
-        <p>上一篇讲了Kafka Producer发送消息的主体流程，这一篇我们关注下Kafka的网络层是如何实现的。<br>对于发送消息而言，Producer是客户端，Broker是服务器端。<br>Kafka使用了JavaNIO向服务器发送消息，所以在这之前需要了解java nio的基本知识。这次网络层源码分析从metadata request切入。</p>
+        <p><a href="https://generalthink.github.io/2019/03/07/kafka-producer-source-code-analysis/" target="_blank" rel="noopener">上一篇</a>讲了Kafka Producer发送消息的主体流程，这一篇我们关注下Kafka的网络层是如何实现的。<br>对于发送消息而言，Producer是客户端，Broker是服务器端。<br>Kafka使用了JavaNIO向服务器发送消息，所以在这之前需要了解java nio的基本知识。这次网络层源码分析从metadata request切入。</p>
 <h3 id="开局一张图"><a href="#开局一张图" class="headerlink" title="开局一张图"></a>开局一张图</h3><p><img src="/images/introduction-kafka/kafka_producer_network.png" alt=""><br><a id="more"></a></p>
 <p>上面是Kafka producer网络层的主体流程，先看下有一个大体印象。</p>
 <p>Kafka的底层使用的是Java NIO,Kafka中针对NIO的Selector的封装类也叫Selector，对Channel的封装类叫做KafkaChannel。后面如果没有特殊说明，Selector都是指Kafka中的Selector。</p>
@@ -532,7 +532,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">KafkaProducer&lt;String,String&gt; producer = createProducer();</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>;i++) &#123;</span><br><span class="line">  producer.send(<span class="keyword">new</span> ProducerRecord&lt;&gt;(<span class="string">"codeTest"</span>,<span class="string">"key"</span> + (i+<span class="number">1</span>),<span class="string">"value"</span> + (i+<span class="number">1</span>)));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>上面的代码中首先会初始化KafkaProducer，在初始化KafkaProducer的时候，同时我们也会初始化Kafka发送消息的客户端<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">KafkaClient client = kafkaClient != <span class="keyword">null</span> ? kafkaClient : <span class="keyword">new</span> NetworkClient(</span><br><span class="line">        <span class="keyword">new</span> Selector(config.getLong(ProducerConfig.CONNECTIONS_MAX_IDLE_MS_CONFIG),</span><br><span class="line">                <span class="keyword">this</span>.metrics, time, <span class="string">"producer"</span>, channelBuilder, logContext),</span><br><span class="line">        ...);</span><br></pre></td></tr></table></figure></p>
 <p>创建NetworkClient(implements KafkaClient)的同时会创建一个Selector，这个是对java.nio.Selector的封装，发送请求，接收响应，处理连接完成以及现有的断开连接都是通过它的poll()方法调用完成的。</p>
-<h4 id="等待metadata更新"><a href="#等待metadata更新" class="headerlink" title="等待metadata更新"></a>等待metadata更新</h4><p>我们都知道Kafka读写消息都是通过leader的，只有知道了leader才能发送消息到kafka，在我们的认识kafka一文中，我们讲了首先会发起metadata request,从中就可以获取到集群元信息(leader,partiton,ISR列表等),那么是在哪里发起metadata request的呢？</p>
+<h4 id="等待metadata更新"><a href="#等待metadata更新" class="headerlink" title="等待metadata更新"></a>等待metadata更新</h4><p>我们都知道Kafka读写消息都是通过leader的，只有知道了leader才能发送消息到kafka，在我们的<a href="https://generalthink.github.io/2019/02/27/introduction-of-kafka/" target="_blank" rel="noopener">大家好,我是Kafka</a>一文中，我们讲了首先会发起metadata request,从中就可以获取到集群元信息(leader,partiton,ISR列表等),那么是在哪里发起metadata request的呢？</p>
 <p>调用KafkaProducer的doSend()(send()–&gt;doSend())方法时，第一步就是通过<strong>waitOnMetadata</strong>等待集群元数据(topic,partition,node等)可用。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Cluster cluster = metadata.fetch();</span><br><span class="line">Integer partitionsCount = cluster.partitionCountForTopic(topic);</span><br><span class="line"><span class="comment">//如果此时已经有partition的信息了</span></span><br><span class="line"><span class="keyword">if</span> (partitionsCount != <span class="keyword">null</span> &amp;&amp; (partition == <span class="keyword">null</span> || partition &lt; partitionsCount))</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> ClusterAndWaitTime(cluster, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">do</span> &#123;</span><br><span class="line">  <span class="keyword">int</span> version = metadata.requestUpdate();</span><br><span class="line">  <span class="comment">//唤醒Sender()线程,Sender会被poll阻塞(参见java.nio.Channels.Selector.poll())</span></span><br><span class="line">  sender.wakeup();</span><br><span class="line">  <span class="comment">//等待metadata的更新,会一直阻塞直到当前版本大于最近一次版本</span></span><br><span class="line">  metadata.awaitUpdate(version, remainingWaitMs);</span><br><span class="line">  cluster = metadata.fetch();</span><br><span class="line">  elapsed = time.milliseconds() - begin;</span><br><span class="line">  remainingWaitMs = maxWaitMs - elapsed;</span><br><span class="line">  partitionsCount = cluster.partitionCountForTopic(topic);</span><br><span class="line">&#125; <span class="keyword">while</span> (partitionsCount == <span class="keyword">null</span>);</span><br></pre></td></tr></table></figure>
 <p>如果metadata中不包含对应topic的metadata信息,那么就请求更新metadata,如果没有更新则一直会在这个while循环中，这个循环主要做了以下几件事</p>
