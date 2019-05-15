@@ -145,7 +145,7 @@ public boolean poll(final long timeoutMs) {
  }
 
 ```
-poll方法中，具体实现可以分为三个步骤
+poll方法中，具体实现可以分为四个步骤
 
 1. 检测心跳线程运行是否正常(需要定时向GroupCoordinator发送心跳,在建立连接之后,建立连接之前不会做任何事情)
 
@@ -241,7 +241,7 @@ private class FindCoordinatorResponseHandler extends RequestFutureAdapter<Client
   }
 ```
 
-上面代码主要作用就是往一个负载最小的节点发起FindCoordinator请求,Kafka在走到这个请求后会根据group_id查找对应的GroupCoordinator节点，如果找到对应的则会返回其对应的node_id,host和port信息
+上面代码主要作用就是往一个负载最小的节点发起FindCoordinator请求(client.send()方法底层使用的是java NIO,在上一篇文章中分析过),Kafka在走到这个请求后会根据group_id查找对应的GroupCoordinator节点，如果找到对应的则会返回其对应的node_id,host和port信息
 
 >这里的GroupCoordinator节点的确定在文章开头提到过,是通过group.id和partitionCount来确定的
 
