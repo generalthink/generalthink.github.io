@@ -127,27 +127,20 @@
 
 
 
-  <meta name="description" content="Java中垃圾回收不用我们操心,但是知道有哪些垃圾回收算法,以及各种垃圾回收器的组合应用对于JVM调优有着巨大的帮助,这篇博客就是为了总结一下垃圾回收算法以及垃圾回收器。">
-<meta name="keywords" content="垃圾回收,JVM,垃圾收集器,回收算法">
+  <meta name="description" content="上一篇讲了consumer如何加入consumer group的,现在加入组成功之后,就要准备开始消费,但是我们需要知道consumer从offset为多少的位置开始消费。 consumer中关于如何消费有2种策略： 1. 手动指定调用consumer.seek(TopicPartition, offset),然后开始poll 2. 自动指定poll之前给集群发送请求，让集群告知客户端，当前该To">
+<meta name="keywords" content="Kafka">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java中的垃圾回收算法以及垃圾回收器">
-<meta property="og:url" content="http://yoursite.com/2018/11/04/garbage-collection/index.html">
+<meta property="og:title" content="Kafka Consumer源码之Offset以及Fetcher分析">
+<meta property="og:url" content="http://yoursite.com/2019/05/31/kafka-consumer-offset/index.html">
 <meta property="og:site_name" content="Zhu.Yang">
-<meta property="og:description" content="Java中垃圾回收不用我们操心,但是知道有哪些垃圾回收算法,以及各种垃圾回收器的组合应用对于JVM调优有着巨大的帮助,这篇博客就是为了总结一下垃圾回收算法以及垃圾回收器。">
+<meta property="og:description" content="上一篇讲了consumer如何加入consumer group的,现在加入组成功之后,就要准备开始消费,但是我们需要知道consumer从offset为多少的位置开始消费。 consumer中关于如何消费有2种策略： 1. 手动指定调用consumer.seek(TopicPartition, offset),然后开始poll 2. 自动指定poll之前给集群发送请求，让集群告知客户端，当前该To">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/images/thread-java-running-data-area.png">
-<meta property="og:image" content="http://yoursite.com/images/garbage-collection-mark-sweep.jpg">
-<meta property="og:image" content="http://yoursite.com/images/garbage-collection-copy.jpg">
-<meta property="og:image" content="http://yoursite.com/images/garbage-collection-mark-tidy.jpg">
-<meta property="og:image" content="http://yoursite.com/images/garbage-collection-heap-generation.jpg">
-<meta property="og:image" content="http://yoursite.com/images/garbage-collection-collector.jpg">
-<meta property="og:image" content="http://yoursite.com/images/garbage-collection-g1.png">
-<meta property="og:image" content="http://yoursite.com/images/garbase-collection-g1-safepoint.jpg">
+<meta property="og:image" content="http://yoursite.com/images/introduction-kafka/kafka-partition-analysis.png">
 <meta property="og:updated_time" content="2019-05-31T06:51:40.735Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java中的垃圾回收算法以及垃圾回收器">
-<meta name="twitter:description" content="Java中垃圾回收不用我们操心,但是知道有哪些垃圾回收算法,以及各种垃圾回收器的组合应用对于JVM调优有着巨大的帮助,这篇博客就是为了总结一下垃圾回收算法以及垃圾回收器。">
-<meta name="twitter:image" content="http://yoursite.com/images/thread-java-running-data-area.png">
+<meta name="twitter:title" content="Kafka Consumer源码之Offset以及Fetcher分析">
+<meta name="twitter:description" content="上一篇讲了consumer如何加入consumer group的,现在加入组成功之后,就要准备开始消费,但是我们需要知道consumer从offset为多少的位置开始消费。 consumer中关于如何消费有2种策略： 1. 手动指定调用consumer.seek(TopicPartition, offset),然后开始poll 2. 自动指定poll之前给集群发送请求，让集群告知客户端，当前该To">
+<meta name="twitter:image" content="http://yoursite.com/images/introduction-kafka/kafka-partition-analysis.png">
 
 
 
@@ -156,7 +149,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/11/04/garbage-collection/">
+  <link rel="canonical" href="http://yoursite.com/2019/05/31/kafka-consumer-offset/">
 
 
 
@@ -166,7 +159,7 @@
   };
 </script>
 
-  <title>Java中的垃圾回收算法以及垃圾回收器 | Zhu.Yang</title>
+  <title>Kafka Consumer源码之Offset以及Fetcher分析 | Zhu.Yang</title>
   
 
 
@@ -399,7 +392,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/04/garbage-collection/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/31/kafka-consumer-offset/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Zhu.Yang">
@@ -416,7 +409,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Java中的垃圾回收算法以及垃圾回收器
+          <h2 class="post-title" itemprop="name headline">Kafka Consumer源码之Offset以及Fetcher分析
 
               
             
@@ -442,47 +435,17 @@
                 
               
 
-              <time title="创建时间：2018-11-04 14:45:40" itemprop="dateCreated datePublished" datetime="2018-11-04T14:45:40+08:00">2018-11-04</time>
+              <time title="创建时间：2019-05-31 10:19:44 / 修改时间：14:51:40" itemprop="dateCreated datePublished" datetime="2019-05-31T10:19:44+08:00">2019-05-31</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-05-31 14:51:40" itemprop="dateModified" datetime="2019-05-31T14:51:40+08:00">2019-05-31</time>
               
             
           </span>
 
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/jvm/" itemprop="url" rel="index"><span itemprop="name">jvm</span></a></span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -490,7 +453,7 @@
 
           
           
-             <span id="/2018/11/04/garbage-collection/" class="leancloud_visitors" data-flag-title="Java中的垃圾回收算法以及垃圾回收器">
+             <span id="/2019/05/31/kafka-consumer-offset/" class="leancloud_visitors" data-flag-title="Kafka Consumer源码之Offset以及Fetcher分析">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -515,7 +478,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">5.9k</span>
+                <span title="本文字数">8.9k</span>
               
 
               
@@ -529,13 +492,11 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">5 分钟</span>
+                <span title="阅读时长">8 分钟</span>
               
             </div>
           
 
-          
-              <div class="post-description">Java中垃圾回收不用我们操心,但是知道有哪些垃圾回收算法,以及各种垃圾回收器的组合应用对于JVM调优有着巨大的帮助,这篇博客就是为了总结一下垃圾回收算法以及垃圾回收器。</div>
           
 
         </div>
@@ -551,57 +512,55 @@
       
 
       
-        <p>最新出来的ZGC对JVM的垃圾回收有了一个很大的颠覆,那就是内存不在分区了，直接一个大堆搞定，而且还能保证回收速率，虽然现在还是实验版本但是可以遇见，以后升级JDK,ZGC就是一个巨大的诱惑。</p>
-<p>我们都知道,JVM将内存在逻辑上划分为了以下几个区域,而新创建的对象都是在堆上分配内存，所以我们的垃圾收集也是在堆上面。</p>
-<p><img src="/images/thread-java-running-data-area.png" alt="JVM内存区域"></p>
-<p>现在大量的应用使用JDK6-JDK8仍然是主流,了解垃圾回收可以帮助我们调优JVM，遇到JVM方面的问题不至于束手无策.所以研究JVM的垃圾回收很有必要，我们先介绍下垃圾搜集算法.</p>
-<h2 id="收集算法"><a href="#收集算法" class="headerlink" title="收集算法"></a>收集算法</h2><h3 id="标记-清除算法"><a href="#标记-清除算法" class="headerlink" title="标记-清除算法"></a>标记-清除算法</h3><p>这是最基本的收集算法，分为“标记”和”清除“两个阶段，首先标记出所有需要回收的对象，在标记完成后统一回收所有被标记的对象,标记是通过”可达性分析算法“，这里不做过多展开。<br>这个算法存在两个问题,一个是效率问题，标记和清除两个过程的效率都不高;另一个是标记清除之后会产生大量的内存碎片，经过几次的GC之后这些碎片可能已经小到不足以分配任何对象了。</p>
-<p><img src="/images/garbage-collection-mark-sweep.jpg" alt="标记清除算法"></p>
-<h3 id="复制算法"><a href="#复制算法" class="headerlink" title="复制算法"></a>复制算法</h3><p>为了解决效率问题,复制算法出现了，它是将可用内存按照容量划分为大小相等的两块，每次只使用其中的一块，当这一块的内存使用完了,就将还存活着的对象复制到另一块上面,然后在将使用过的内存空间清理掉。</p>
-<p>这种算法不要考虑内存碎片等复杂情况,只需要按照顺序分配即可，实现简单，运行高效。但是代价就是将内存缩小为了原来的一半，代价太高了。</p>
-<p>现在的商业虚拟机都采用这种收集算法来回收新生代,我们使用的HotSpot也是。IBM公司的专门研究发现，98%的对象基本上都是朝生夕死的,所以不需要按照1:1的比例来划分内存空间,而是将内存划分为一块较大的Eden空间和两块较小的Survivor空间，每次使用Eden和一块Survivor,当回收的时候将Eden和Survivor中还存活着的对象一次性复制到另一块空间上,最后清理Eden和刚才Survivor用过的空间。HotSpot虚拟机默认Eden和两块Survivor的分配比例是8:1:1.当然我们没有办法保证每次回收都只有不多于10%的对象存活,当Survivor空间不够时，这个时候会进行担保分配,直接将对象放到老年代。</p>
-<p><img src="/images/garbage-collection-copy.jpg" alt="复制算法"></p>
-<h3 id="标记整理算法"><a href="#标记整理算法" class="headerlink" title="标记整理算法"></a>标记整理算法</h3><p>标记整理算法于“标记-清除”算法一样，但是后续步骤不是直接对可回收对象进行清理，而是让所有存活的对象都向一端移动，然后直接清理掉边界以外的内存。</p>
-<p><img src="/images/garbage-collection-mark-tidy.jpg" alt="标记整理算法"></p>
-<h3 id="分代收集算法"><a href="#分代收集算法" class="headerlink" title="分代收集算法"></a>分代收集算法</h3><p>现在商业虚拟机的垃圾收集都采用“分代收集”算法，这种算法只是根据对象存活周期的不同将内存划分为几块，一般是把对内存分为新生代和老年代，这样就可以根据各个年代的特点采用最适当的收集算法。在新生代中每次垃圾收集时都有大量对象死去，只有少量存活。那就选用复制算法，只需要付出少量存活对象的复制成本就可以完成收集。<br>而老年代因为对象存活率高，没有额外空间对他进行担保分配，则必须使用“标记-清除”或者“标记-整理”算法来进行回收。<br>而老年代因为对象存活率高，没有额外空间对他进行担保分配，则必须使用“标记-清除”或者“标记-整理”算法来进行回收。</p>
-<h2 id="堆的分代"><a href="#堆的分代" class="headerlink" title="堆的分代"></a>堆的分代</h2><p><img src="/images/garbage-collection-heap-generation.jpg" alt="堆的分代"></p>
-<p>Perm区被称为永久代,其实它只是方法区的一种实现，JVM规范中这一块被称为方法区，只是对于HotSpot虚拟机上开发者来说是这样的，实际上其他虚拟机(BEA JRockit,IBM J9)来说是不存在永久代概念的。</p>
-<p>JDK8之后方法区被MetaSpace取代了,对应的JVM配置参数也修改了(-XX:MetaspaceSize,-XX:MaxMetaspaceSize).</p>
-<p>Minor GC又被称为Young GC,只收集young gen的GC<br>Major GC(old gc)主要指对老年代的回收,只有CMS的concurrent collection是这个模式<br>Full GC 收集整个堆，包含young gen,old gen,perm gen(metaspace)等所有部分的模式。<br>Mixed GC: 收集真个young gen以及部分old gen 的GC，只有G1又这种模式</p>
-<h2 id="垃圾收集器"><a href="#垃圾收集器" class="headerlink" title="垃圾收集器"></a>垃圾收集器</h2><p><img src="/images/garbage-collection-collector.jpg" alt="垃圾收集器"></p>
-<p>以上是 HotSpot 虚拟机中的 7 个垃圾收集器，连线表示垃圾收集器可以配合使用。</p>
-<ul>
-<li>单线程与多线程：单线程指的是垃圾收集器只使用一个线程进行收集，而多线程使用多个线程；</li>
-<li>串行与并行：串行指的是垃圾收集器与用户程序交替执行，这意味着在执行垃圾收集的时候需要停顿用户程序；并行指的是垃圾收集器和用户程序同时执行。除了 CMS 和 G1 之外，其它垃圾收集器都是以串行的方式执行。<h3 id="年轻代垃圾收集器"><a href="#年轻代垃圾收集器" class="headerlink" title="年轻代垃圾收集器"></a>年轻代垃圾收集器</h3></li>
-</ul>
-<h4 id="Serial收集器"><a href="#Serial收集器" class="headerlink" title="Serial收集器"></a>Serial收集器</h4><p>单线程收集器,只会使用一个CPU或一条收集线程去完成垃圾收集工作,在进行垃圾收集时必须暂停其他工作线程。采用了复制算法来进行垃圾收集，它是虚拟机运行在Client模式下的默认新生代收集器</p>
-<h4 id="ParNew收集器"><a href="#ParNew收集器" class="headerlink" title="ParNew收集器"></a>ParNew收集器</h4><p>ParNew收集器是Serial收集器的多线程版本，除了使用 多条线程进行垃圾收集之外，其余行为(JVM参数、收集算法、对象分配规则、回收策略、Stop The World等)和Serial收集器完全一样。但是它是许多运行在Server模式下的虚拟机中首选的新生代收集器，因为只有它能与CMS收集器配合工作。默认开启的线程数量与 CPU 数量相同，可以使用 -XX:ParallelGCThreads 参数来设置线程数。</p>
-<h4 id="Parallel-Scavenge收集器"><a href="#Parallel-Scavenge收集器" class="headerlink" title="Parallel Scavenge收集器"></a>Parallel Scavenge收集器</h4><p>使用了复制算法，该收集器的关注点是在吞吐量上面,主要适合在后台运算而不需要太多交互的任务。因此也被常称为“吞吐量优先“收集器。它有一个参数-XX:UseAdaptiveSizePolicy参数值得关注,当这个参数打开后，就不需要手工指定新生代的大小(-Xmn)、Eden与Survivor区的比例(-XX:SurvivorRatio)、晋升老年代对象年龄(-XX:PretenureSizeThreshold)等细节参数了。系统会动态调整这些参数以提供最合适的停顿事件或者最大的吞吐量,这种调节方式被成为GC的自适应调节策略。</p>
-<p>吞吐量 = 运行用户代码时间 / (运行用户代码时间 + 垃圾收集时间),垃圾收集时间越短,吞吐量就越高。</p>
-<h3 id="老年代垃圾收集器"><a href="#老年代垃圾收集器" class="headerlink" title="老年代垃圾收集器"></a>老年代垃圾收集器</h3><h4 id="Serial-Old收集器"><a href="#Serial-Old收集器" class="headerlink" title="Serial Old收集器"></a>Serial Old收集器</h4><p>Serial Old是Serial收集器的老年代版本,它同样是一个单线程收集器使用”标记-整理“算法。主要也是在client模式下使用，除此之外还有两大用途。一种是在JDK1.5以及之前的版本中于Parallel Scavenge收集器搭配使用(现在很少JDK1.5之前的版本，所以这个作用就基本废弃了）,另外一种是作为CMS收集器的后备预案，在并发收集发成Concurrent Mode Failure时使用。</p>
-<h4 id="Parallel-Old收集器"><a href="#Parallel-Old收集器" class="headerlink" title="Parallel Old收集器"></a>Parallel Old收集器</h4><p>Parallel Old是Parallel Scavenge收集器的老年代版本,使用多线程的”标记-整理“算法。该收集器是在JDK6及之后才出现的，也就是说如果之前年轻代选怎了Parallel Scavenge，那么老年代只能选择Serial Old.但是现在终于有了对应的应用组合了，在注重吞吐量以及CPU资源敏感的场合，都可以优先考虑Parallel Scavenge + Parallel Old收集器。</p>
-<h4 id="CMS收集器"><a href="#CMS收集器" class="headerlink" title="CMS收集器"></a>CMS收集器</h4><p>CMS(Concurrent Mark Sweep)收集器是一种以获取最短回收停顿时间为目标的收集器。是基于”标记-清除“算法实现的。<br>CMS收集器分为四个步骤：</p>
+        <p>上一篇讲了consumer如何加入consumer group的,现在加入组成功之后,就要准备开始消费,但是我们需要知道consumer从offset为多少的位置开始消费。</p>
+<p>consumer中关于如何消费有2种策略：</p>
+<p><strong>1. 手动指定</strong><br>调用consumer.seek(TopicPartition, offset),然后开始poll</p>
+<p><strong>2. 自动指定</strong><br>poll之前给集群发送请求，让集群告知客户端，当前该TopicPartition的offset是多少,这也是我们此次分析的重点.</p>
+<a id="more"></a>
+<p>在讲如何拉取offset之前,先认识下下面这个类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">TopicPartitionState</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> Long position; <span class="comment">// last consumed position</span></span><br><span class="line">  <span class="keyword">private</span> Long highWatermark; <span class="comment">// the high watermark from last fetch</span></span><br><span class="line">  <span class="keyword">private</span> Long logStartOffset; <span class="comment">// the log start offset</span></span><br><span class="line">  <span class="keyword">private</span> Long lastStableOffset;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">boolean</span> paused;  <span class="comment">// whether this partition has been paused by the user</span></span><br><span class="line">  <span class="keyword">private</span> OffsetResetStrategy resetStrategy;  <span class="comment">// the strategy to use if the offset needs resetting</span></span><br><span class="line">  <span class="keyword">private</span> Long nextAllowedRetryTimeMs;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>consumer实例订阅的每个 topic-partition 都会有一个对应的 TopicPartitionState 对象，在这个对象中会记录上面内容,最需要关注的就是position这个属性,它表示上一次消费的位置。其中通过consumer.seek方式指定消费offset的时候,其实设置的就是这个position值。</p>
+<p>加入group之后，就得去获取offset了,下面的方式就是开始更新position(offset)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">updateFetchPositions</span><span class="params">(<span class="keyword">final</span> <span class="keyword">long</span> timeoutMs)</span> </span>&#123;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 1. 查看TopicPartitionState的position是否为空,第一次消费肯定为空</span></span><br><span class="line">  cachedSubscriptionHashAllFetchPositions = subscriptions.hasAllFetchPositions();</span><br><span class="line">  <span class="keyword">if</span> (cachedSubscriptionHashAllFetchPositions) <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 2. 如果没有有效的offset,那么需要从group coordinator中获取</span></span><br><span class="line">  <span class="keyword">if</span> (!coordinator.refreshCommittedOffsetsIfNeeded(timeoutMs)) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 3. 如果还存在partition不知道position,并且设置了offsetreset策略,那么就等待重置，不然就抛出异常</span></span><br><span class="line">  subscriptions.resetMissingPositions();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 4. 向PartitionLeader(GroupCoordinator所在机器)发送ListOffsetRequest重置position</span></span><br><span class="line">  fetcher.resetOffsetsIfNeeded();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的代码主要分为4个步骤,具体如下:</p>
 <ol>
-<li>初始标记(CMS initial mark):仅仅只是标记一下 GC Roots 能直接关联到的对象，速度很快，会stop the world</li>
-<li>并发标记(CMS concurrent mark):进行 GC Roots Tracing 的过程，它在整个回收过程中耗时最长，不需要停顿</li>
-<li>重新标记(CMS remark):为了修正并发标记期间因用户程序继续运作而导致标记产生变动的那一部分对象的标记记录,会stop the world</li>
-<li>并发清除(CMS concurrent sweep):不需要停顿</li>
+<li><p>首先查看当前TopicPartition的position是否为空，如果不为空，表示知道下次fetch position(拉取数据从哪个位置开始拉取),<br>但是第一次消费这个 TopicPartitionState.position肯定为空。</p>
+</li>
+<li><p>通过coordinator为缺少fetch position的partition拉取position(last committed offset)</p>
+</li>
+<li><p>仍不知道partition的position(_consumer_offsets中未保存位移信息),且设置了offsetreset策略,那么就等待重置，<br>如果没有设置重置策略，然就抛出NoOffsetForPartitionException异常。</p>
+</li>
+<li><p>为那些需要重置fetch position的partition发送ListOffsetRequest重置position(consumer.beginningOffsets(),consumer.endOffsets(),consumer.offsetsForTimes(),consumer.seek()<br>都会发送ListOffRequest请求)</p>
+<blockquote>
+<p>上面说的几个方法相当于都是用户自己自定义消费的offset,所以可能出现越界(消费位置无法在实际分区中查到)的情况，所以也是也是会发送ListOffsetRequest请求的，即触发auto.offset.reset参数的执行<br>比如现在某个partitiion的可拉取offset最大值为100,如果你指定消费offset=200的位置,那肯定拉取不到，此时就会根据auto.offset.reset策略将拉取位置重置为100(默认为latest)</p>
+</blockquote>
+</li>
 </ol>
-<p>CMS中中的初始标记和重新标记都会产生stop the world的行外,但是并发标记和并发清除收集器线程都可以和用户线程一起运行，所以从总体上来说，CMS收集器的内存回收过程是与用户线程一起并发执行的。</p>
-<p>CMS默认启动的回收线程数是(CPU数量+3)/4,也就是当CPU在四个以上时，并发回收时垃圾收集线程不少于25%的CPU资源，并且随着CPU数量的增加而下降。但是当CPU不足4个(譬如2个)时，对用户程序的影响就比较大了，此时回收线程数为1,本来CPU负载就比较大，还分出一半的运算能力去执行收集器线程，就可能导致用户的执行速度降低了50%,令人难以接受，所以如果CPU数量过少,就不太适合使用CMS收集器。</p>
-<p>CMS收集器无法处理浮动垃圾，可能会出现“Concurrent Mode Failure（并发模式故障）”失败而导致Full GC产生。<br>浮动垃圾：由于CMS并发清理阶段用户线程还在运行着，伴随着程序运行自然就会有新的垃圾不断产生，这部分垃圾出现的标记过程之后，CMS无法在当次收集中处理掉它们，只好留待下一次GC中再清理。这些垃圾就是“浮动垃圾”。</p>
-<p>由于垃圾收集阶段用户线程还需要运行，就需要有足够的内存空间给用户线程使用，因此CMS收集器不能像其他收集器那样等到老年代几乎完全被填满了在进行收集，需要预留一部分空间提供并发收集时的程序运作使用，所以CMS的运行时机就需要好好把握。JDK1.5中当老年代使用了68%的空间之后CMS收集器会被激活，而这个值在JDK6中是92%，当然可以通过参数参数-XX:CMSInitiatingOccupancyFraction的值来设置触发百分比。<br>要是CMS运行期间预留的内存无法满足程序需要，就会出现一次”Concurrent Mode Failure”失败，这时虚拟机将启动后预案：临时使用Serial Old收集器来重新进行老年代的垃圾收集，这样停顿时间就更长了。所以-XX:CMSInitiatingOccupancyFraction参数要是设置得太高很容易导致大量“Concurrent Mode Failure”失败，性能反而降低。</p>
-<p>上面也提到了CMS采用得算法是”标记-清除“，那么也意味者收集结束时会有大量空间碎片产生，当空间碎片过多，将会给大对象分配带来很大的麻烦，往往会出现老年代还有很大空间剩余，但是无法找到足够大的连续空间来分配当前对象，不得不提前触发一次Full GC。为了解决这个问题，CMS收集器提供了一个-XX:+UseCMSCompactAtFullCollection开关参数(默认开启)用于在CMS收集器顶不住要进行FullGC时开启内存碎片的合并整理过程，内存整理的过程是无法并发执行的,空间碎片问题没有了，但是停顿时间不得不变长。虚拟机设计者还提供了另外一个参数-XX:CMSFullGCsBeforeCompaction,这个参数是用于设置执行多少次不压缩的Full GC后，跟着来一次带压缩的(默认为0,表示每次进入Full GC时都进行碎片整理)，这也算是一个折中方案了。</p>
-<p>CMS收集器由于并发收集、低停顿,在现在大量的应用中还是处理主流地位的。</p>
-<h4 id="G1收集器"><a href="#G1收集器" class="headerlink" title="G1收集器"></a>G1收集器</h4><p>G1（Garbage-First），它是一款面向服务端应用的垃圾收集器，在多 CPU 和大内存的场景下有很好的性能。HotSpot 开发团队赋予它的使命是未来可以替换掉 CMS 收集器。<br>堆被分为新生代和老年代，其它收集器进行收集的范围都是整个新生代或者老年代，而 G1 可以直接对新生代和老年代一起回收。<br>G1 把堆划分成多个大小相等的独立区域（Region），新生代和老年代不再物理隔离。</p>
-<p><img src="/images/garbage-collection-g1.png" alt="G1收集器划分"></p>
-<p>通过引入 Region 的概念，从而将原来的一整块内存空间划分成多个的小空间，使得每个小空间可以单独进行垃圾回收。这种划分方法带来了很大的灵活性，使得可预测的停顿时间模型成为可能。通过记录每个 Region 垃圾回收时间以及回收所获得的空间（这两个值是通过过去回收的经验获得），并维护一个优先列表，每次根据允许的收集时间，优先回收价值最大的 Region。<br>每个 Region 都有一个 Remembered Set，用来记录该 Region 对象的引用对象所在的 Region。通过使用 Remembered Set，在做可达性分析的时候就可以避免全堆扫描。<br><img src="/images/garbase-collection-g1-safepoint.jpg" alt="g1-safepoint"></p>
-<p>如果不计算维护 Remembered Set 的操作，G1 收集器的运作大致可划分为以下几个步骤：<em> 初始标记</em> 并发标记<em> 最终标记：为了修正在并发标记期间因用户程序继续运作而导致标记产生变动的那一部分标记记录，虚拟机将这段时间对象变化记录在线程的 Remembered Set Logs 里面，最终标记阶段需要把 Remembered Set Logs 的数据合并到 Remembered Set 中。这阶段需要停顿线程，但是可并行执行。</em> 筛选回收：首先对各个 Region 中的回收价值和成本进行排序，根据用户所期望的 GC 停顿时间来制定回收计划。此阶段其实也可以做到与用户程序一起并发执行，但是因为只回收一部分 Region，时间是用户可控制的，而且停顿用户线程将大幅度提高收集效率。具备如下特点：<em> 空间整合：整体来看是基于“标记 - 整理”算法实现的收集器，从局部（两个 Region 之间）上来看是基于“复制”算法实现的，这意味着运行期间不会产生内存空间碎片。</em> 可预测的停顿：能让使用者明确指定在一个长度为 M 毫秒的时间片段内，消耗在 GC 上的时间不得超过 N 毫秒。<br>关于G1收集器的其他参考文章：<a href="https://tech.meituan.com/g1.html" target="_blank" rel="noopener">G1收集器</a></p>
-<h2 id="回收方式的选择"><a href="#回收方式的选择" class="headerlink" title="回收方式的选择"></a>回收方式的选择</h2><p>jvm有client和server两种模式，这两种模式的gc默认方式是不同的：</p>
-<p>client模式下，新生代选择的是串行gc，旧生代选择的是串行gc</p>
-<p>server模式下，新生代选择的是并行回收gc，旧生代选择的是并行gc</p>
-<p>一般来说我们系统应用选择有两种方式：吞吐量优先和暂停时间优先，对于吞吐量优先的采用server默认的并行gc方式，对于暂停时间优先的选用并发gc（CMS）方式。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>记住各个收集器之间如何搭配有助于查看线上GC日志的时候帮助定位问题，也是对JVM的一次深入了解。了解各个收集器的特性以及使用场景更有助于优化JVM。</p>
+<p>我们先看下第二个步骤是如何fetch position的</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">public</span> Map&lt;TopicPartition, OffsetAndMetadata&gt; <span class="title">fetchCommittedOffsets</span><span class="params">(<span class="keyword">final</span> Set&lt;TopicPartition&gt; partitions,</span></span></span><br><span class="line"><span class="function"><span class="params">                                                                        <span class="keyword">final</span> <span class="keyword">long</span> timeoutMs)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">while</span> (<span class="keyword">true</span>) &#123; </span><br><span class="line">    <span class="comment">// 1. 封装FetchRequest请求</span></span><br><span class="line">    future = sendOffsetFetchRequest(partitions);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 2. 通过KafkaClient发送</span></span><br><span class="line">    client.poll(future, remainingTimeAtLeastZero(timeoutMs, elapsedTime));</span><br><span class="line">    <span class="keyword">final</span> RequestFuture&lt;Map&lt;TopicPartition, OffsetAndMetadata&gt;&gt; future;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 3. 获取请求的响应数据</span></span><br><span class="line">    <span class="keyword">if</span> (future.succeeded()) &#123;</span><br><span class="line">      <span class="keyword">return</span> future.value();</span><br><span class="line">    &#125; </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的步骤和我们之前提到的发送其他请求毫无区别,基本就是这三个套路，在获取到响应之后，会设置TopicPartition的position值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">refreshCommittedOffsetsIfNeeded</span><span class="params">(<span class="keyword">final</span> <span class="keyword">long</span> timeoutMs)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">final</span> Set&lt;TopicPartition&gt; missingFetchPositions = subscriptions.missingFetchPositions();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">final</span> Map&lt;TopicPartition, OffsetAndMetadata&gt; offsets = fetchCommittedOffsets(missingFetchPositions, timeoutMs);</span><br><span class="line">  <span class="keyword">if</span> (offsets == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">final</span> Map.Entry&lt;TopicPartition, OffsetAndMetadata&gt; entry : offsets.entrySet()) &#123;</span><br><span class="line">      <span class="keyword">final</span> TopicPartition tp = entry.getKey();</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 获取response中的offset</span></span><br><span class="line">      <span class="keyword">final</span> <span class="keyword">long</span> offset = entry.getValue().offset();</span><br><span class="line">      log.debug(<span class="string">"Setting offset for partition &#123;&#125; to the committed offset &#123;&#125;"</span>, tp, offset);</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 实际就是设置SubscriptionState的position值</span></span><br><span class="line">      <span class="keyword">this</span>.subscriptions.seek(tp, offset);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过subscriptions.seek()方法为每个TopicPartition设置position值后,到了这里就知道从哪里开发消费订阅topic下的partition了。</p>
+<p>第三个步骤什么时候发起FetchRequest拿不到position呢?</p>
+<p>我们知道消费位移(consume offset)是保存在_consumer_offsets这个topic里面的,当我们进行消费的时候需要知道上次消费到了什么位置。<br>那么就会发起请求去看上次消费到了topic的partition的哪个位置，但是这个消费位移是有保存时长的,默认为7天(broker端通过<br>offsets.retention.minutes)。</p>
+<p>之后隔了一段时间进行消费，这个这个间隔时间超过参数的配置值，那么原先的位移信息就会丢失，最后只能通过客户端参数auto.offset.reset来确定开始消费的位置。</p>
+<p>如果我们第一次消费topic,那么在_consumer_offsets中也是找不到消费位移的，所以就会执行第四个步骤，发起ListOffsetRequest请求根据配置的reset策略(auto.offset.reset)来决定开始消费的位置。</p>
+<p>发起这个请求和之前的请求没有什么特殊之处,都是组装请求体，然后调用poll发起请求，最后处理response,处理response的核心代码如下:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">future.addListener(<span class="keyword">new</span> RequestFutureListener&lt;ListOffsetResult&gt;() &#123;</span><br><span class="line"> <span class="meta">@Override</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">(ListOffsetResult result)</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">     <span class="keyword">for</span> (Map.Entry&lt;TopicPartition, OffsetData&gt; fetchedOffset : result.fetchedOffsets.entrySet()) &#123;</span><br><span class="line">         TopicPartition partition = fetchedOffset.getKey();</span><br><span class="line">         OffsetData offsetData = fetchedOffset.getValue();</span><br><span class="line">         Long requestedResetTimestamp = resetTimestamps.get(partition);</span><br><span class="line">         resetOffsetIfNeeded(partition, requestedResetTimestamp, offsetData);</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">resetOffsetIfNeeded</span><span class="params">(TopicPartition partition, Long requestedResetTimestamp, OffsetData offsetData)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!subscriptions.isAssigned(partition)) &#123;</span><br><span class="line">      log.debug(<span class="string">"Skipping reset of partition &#123;&#125; since it is no longer assigned"</span>, partition);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!subscriptions.isOffsetResetNeeded(partition)) &#123;</span><br><span class="line">      log.debug(<span class="string">"Skipping reset of partition &#123;&#125; since reset is no longer needed"</span>, partition);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!requestedResetTimestamp.equals(offsetResetStrategyTimestamp(partition))) &#123;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 如果reset策略设置的是latest，那么requestedResetTimestamp = -1，如果是earliest,requestedResetTimestamp = -2</span></span><br><span class="line">      log.debug(<span class="string">"Skipping reset of partition &#123;&#125; since an alternative reset has been requested"</span>, partition);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      log.info(<span class="string">"Resetting offset for partition &#123;&#125; to offset &#123;&#125;."</span>, partition, offsetData.offset);</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 设置对应的TopicPartition fetch的position</span></span><br><span class="line">      subscriptions.seek(partition, offsetData.offset);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里解释下auto.offset.reset的两个值(latest,earliest)的区别,假设我们现在要消费MyConsumerTopic的数据,它有3个分区,生产者往这个topic发送了10条数据,然后分区数据按照MyConsumerTopic-0(3条数据),MyConsumerTopic-1(3条数据),MyConsumerTopic-2(4条数据)这样分配。</p>
+<p>当设置为latest的时候,返回的offset具体到每个partition就是HW值(partition0就是3,partition1也是3,partition2是4)</p>
+<p>当设置为earliest的时候,就会从起始处(LogStartOffset,不是LSO)开始消费，这里就是从0开始</p>
+<p><img src="/images/introduction-kafka/kafka-partition-analysis.png" alt="名词解析"></p>
+<ol>
+<li><strong>LogStartOffset:</strong>表示partition的起始位置,初始值为0,由于消息的增加以及日志清除策略影响，这个值会阶段性增大。尤其注意这个不能缩写未LSO,LSO代表的是LastStableOffset,和事务有关。</li>
+<li><strong>ConsumerOffset:</strong>消费位移，表示partition的某个消费者消费到的位移位置。</li>
+<li><strong>HighWatermark</strong>: 简称HW,代表消费端能看到的partition的最高日志位移,HW大于等于ConsumerOffset的值。</li>
+<li><strong>LogEndOffset</strong>: 简称LEO,代表partition的最高日志位移，第消费者不可见,HW到LEO这之间的数据未被follwer完全同步。</li>
+</ol>
+<p>现在万事俱备只欠东风了,加入组，也确定了拉取的offset,那么现在就应该去拉取数据了,其核心源码如下:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> Map&lt;TopicPartition, List&lt;ConsumerRecord&lt;K, V&gt;&gt;&gt; pollForFetches(<span class="keyword">final</span> <span class="keyword">long</span> timeoutMs) &#123;</span><br><span class="line">   ...</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 获取fetcher已经拉取到的数据</span></span><br><span class="line">  <span class="keyword">final</span> Map&lt;TopicPartition, List&lt;ConsumerRecord&lt;K, V&gt;&gt;&gt; records = fetcher.fetchedRecords();</span><br><span class="line">  <span class="keyword">if</span> (!records.isEmpty()) &#123;</span><br><span class="line">      <span class="keyword">return</span> records;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 上次fetch到的数据已经全部拉取了,需要再次发送fetch请求,从broker拉取数据</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 组装请求,将发往同一个节点的请求放到一起</span></span><br><span class="line">  fetcher.sendFetches();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 真正开始发送,底层同样使用NIO</span></span><br><span class="line">  client.poll(pollTimeout, startMs, () -&gt; &#123;</span><br><span class="line">     <span class="keyword">return</span> !fetcher.hasCompletedFetches();</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 如果 group 需要 rebalance,直接返回空数据,这样更快地让 group 进行稳定状态</span></span><br><span class="line">  <span class="keyword">if</span> (coordinator.rejoinNeededOrPending()) &#123;</span><br><span class="line">     <span class="keyword">return</span> Collections.emptyMap();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 获取拉取到的数据</span></span><br><span class="line">  <span class="keyword">return</span> fetcher.fetchedRecords();</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>这里需要注意的是fetcher.sendFetches(),在发送请求的同时会注册回调函数，当有response的时候，会解析response，讲返回的数据放到Fetcher的成员变量中</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">client.send(fetchTarget, request)</span><br><span class="line">  .addListener(<span class="keyword">new</span> RequestFutureListener&lt;ClientResponse&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">(ClientResponse resp)</span> </span>&#123;</span><br><span class="line">        FetchResponse&lt;Records&gt; response = (FetchResponse&lt;Records&gt;) resp.responseBody();</span><br><span class="line">        </span><br><span class="line">        Set&lt;TopicPartition&gt; partitions = <span class="keyword">new</span> HashSet&lt;&gt;(response.responseData().keySet());</span><br><span class="line">        FetchResponseMetricAggregator metricAggregator = <span class="keyword">new</span> FetchResponseMetricAggregator(sensors, partitions);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (Map.Entry&lt;TopicPartition, FetchResponse.PartitionData&lt;Records&gt;&gt; entry : response.responseData().entrySet()) &#123;</span><br><span class="line">            TopicPartition partition = entry.getKey();</span><br><span class="line">            <span class="keyword">long</span> fetchOffset = data.sessionPartitions().get(partition).fetchOffset;</span><br><span class="line">            FetchResponse.PartitionData fetchData = entry.getValue();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 将返回的数据放到ConcurrentLinkedQueue&lt;CompletedFetch&gt;</span></span><br><span class="line">            completedFetches.add(<span class="keyword">new</span> CompletedFetch(partition, fetchOffset, fetchData, metricAggregator,</span><br><span class="line">                    resp.requestHeader().apiVersion()));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>剩下的获取拉取到的数据我就不做过多分析了,以免有凑字数嫌疑,至此Kafka Consumer中如何拉取消息的整体流程分析完毕,接下来的文章会分析partition的分配以及offset的提交，敬请期待。</p>
 
       
     </div>
@@ -625,7 +584,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/jvm/" rel="tag"># jvm</a>
+            <a href="/tags/Kafka/" rel="tag"># Kafka</a>
           
         </div>
       
@@ -638,8 +597,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/10/30/how-to-use-graphql2/" rel="next" title="Graphql在项目中的使用(二)">
-                <i class="fa fa-chevron-left"></i> Graphql在项目中的使用(二)
+              <a href="/2019/05/15/how-to-join-kafka-consumer-group/" rel="next" title="Kafka consumer如何加入consumer group">
+                <i class="fa fa-chevron-left"></i> Kafka consumer如何加入consumer group
               </a>
             
           </div>
@@ -647,10 +606,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/11/13/jvm-log-analysis/" rel="prev" title="JVM日志分析">
-                JVM日志分析 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -695,17 +650,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <div class="site-overview-wrap sidebar-panel">
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -866,22 +812,6 @@
         </div>
       </div>
 
-      
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#收集算法"><span class="nav-number">1.</span> <span class="nav-text">收集算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#标记-清除算法"><span class="nav-number">1.1.</span> <span class="nav-text">标记-清除算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复制算法"><span class="nav-number">1.2.</span> <span class="nav-text">复制算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标记整理算法"><span class="nav-number">1.3.</span> <span class="nav-text">标记整理算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分代收集算法"><span class="nav-number">1.4.</span> <span class="nav-text">分代收集算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#堆的分代"><span class="nav-number">2.</span> <span class="nav-text">堆的分代</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#垃圾收集器"><span class="nav-number">3.</span> <span class="nav-text">垃圾收集器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#年轻代垃圾收集器"><span class="nav-number">3.1.</span> <span class="nav-text">年轻代垃圾收集器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Serial收集器"><span class="nav-number">3.1.1.</span> <span class="nav-text">Serial收集器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ParNew收集器"><span class="nav-number">3.1.2.</span> <span class="nav-text">ParNew收集器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Parallel-Scavenge收集器"><span class="nav-number">3.1.3.</span> <span class="nav-text">Parallel Scavenge收集器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#老年代垃圾收集器"><span class="nav-number">3.2.</span> <span class="nav-text">老年代垃圾收集器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Serial-Old收集器"><span class="nav-number">3.2.1.</span> <span class="nav-text">Serial Old收集器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Parallel-Old收集器"><span class="nav-number">3.2.2.</span> <span class="nav-text">Parallel Old收集器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CMS收集器"><span class="nav-number">3.2.3.</span> <span class="nav-text">CMS收集器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#G1收集器"><span class="nav-number">3.2.4.</span> <span class="nav-text">G1收集器</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#回收方式的选择"><span class="nav-number">4.</span> <span class="nav-text">回收方式的选择</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
       
 
       
