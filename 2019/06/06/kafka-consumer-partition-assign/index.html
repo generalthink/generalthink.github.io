@@ -1,0 +1,1627 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+    
+      
+    
+    
+  <script src="https://cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+  
+  
+    
+  
+  <link rel="stylesheet" media="all" href="https://cdn.bootcss.com/Han/3.3.0/han.min.js">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="https://cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+  
+
+<link href="https://cdn.jsdelivr.net/npm/font-awesome@4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    fastclick: true,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="consumer提供三种不同的分区策略，可以通过partition.assignment.strategy参数进行配置,默认使用的策略是org.apache.kafka.clients.consumer.RangeAssignor,还存在org.apache.kafka.clients.consumer.RoundRobinAssignor和org.apache.kafka.clients.con">
+<meta name="keywords" content="Kafka">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kafka Consumer源码分析之分区方案">
+<meta property="og:url" content="http://yoursite.com/2019/06/06/kafka-consumer-partition-assign/index.html">
+<meta property="og:site_name" content="Zhu.Yang">
+<meta property="og:description" content="consumer提供三种不同的分区策略，可以通过partition.assignment.strategy参数进行配置,默认使用的策略是org.apache.kafka.clients.consumer.RangeAssignor,还存在org.apache.kafka.clients.consumer.RoundRobinAssignor和org.apache.kafka.clients.con">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/introduction-kafka/kafka-partition-assignor.png">
+<meta property="og:updated_time" content="2019-06-06T08:43:09.184Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Kafka Consumer源码分析之分区方案">
+<meta name="twitter:description" content="consumer提供三种不同的分区策略，可以通过partition.assignment.strategy参数进行配置,默认使用的策略是org.apache.kafka.clients.consumer.RangeAssignor,还存在org.apache.kafka.clients.consumer.RoundRobinAssignor和org.apache.kafka.clients.con">
+<meta name="twitter:image" content="http://yoursite.com/images/introduction-kafka/kafka-partition-assignor.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Zhu.Yang" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/06/06/kafka-consumer-partition-assign/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Kafka Consumer源码分析之分区方案 | Zhu.Yang</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion .logo-line-before i { left: initial; }
+    .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zhu.Yang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">朱阳的个人博客</h1>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/06/kafka-consumer-partition-assign/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhu.Yang">
+      <meta itemprop="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhu.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Kafka Consumer源码分析之分区方案
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-06-06 14:39:56 / 修改时间：16:43:09" itemprop="dateCreated datePublished" datetime="2019-06-06T14:39:56+08:00">2019-06-06</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/06/06/kafka-consumer-partition-assign/" class="leancloud_visitors" data-flag-title="Kafka Consumer源码分析之分区方案">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">6.1k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">6 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>consumer提供三种不同的分区策略，可以通过<code>partition.assignment.strategy</code>参数进行配置,默认使用的策略是<code>org.apache.kafka.clients.consumer.RangeAssignor</code>,还存在<code>org.apache.kafka.clients.consumer.RoundRobinAssignor</code>和<code>org.apache.kafka.clients.consumer.StickyAssignor</code>这两种，它们的关系图如下所示。</p>
+<p><img src="/images/introduction-kafka/kafka-partition-assignor.png" alt="partition分配机制"></p>
+<a id="more"></a>
+<p>当我们想要自定义partition分配策略的时候只需要继承<code>AbstractPartitionAssignor</code>这个类就行了。</p>
+<h3 id="AbstractPartitionAssignor"><a href="#AbstractPartitionAssignor" class="headerlink" title="AbstractPartitionAssignor"></a>AbstractPartitionAssignor</h3><p>这个抽象类有一个抽象方法，其他子类都是通过复写它的抽象方法来实现分区分配的<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> Map&lt;String, List&lt;TopicPartition&gt;&gt; assign(Map&lt;String, Integer&gt; partitionsPerTopic,</span><br><span class="line">                                                             Map&lt;String, Subscription&gt; subscriptions);</span><br></pre></td></tr></table></figure></p>
+<p>assign() 这个方法，有两个参数：</p>
+<ol>
+<li>partitionsPerTopic：所订阅的每个 topic 与其 partition 数的对应关系，metadata 没有的 topic 将会被移除</li>
+<li>subscriptions：每个 consumerId 与其所订阅的 topic 列表的关系。</li>
+</ol>
+<h3 id="RangeAssignor-分区分配"><a href="#RangeAssignor-分区分配" class="headerlink" title="RangeAssignor 分区分配"></a>RangeAssignor 分区分配</h3><p>先看下这个策略的分区代码实现：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> Map&lt;String, List&lt;TopicPartition&gt;&gt; assign(Map&lt;String, Integer&gt; partitionsPerTopic,</span><br><span class="line">                                             Map&lt;String, Subscription&gt; subscriptions) &#123;</span><br><span class="line">  <span class="comment">// 1. 获取每个topic被多少个consumer订阅了</span></span><br><span class="line"> Map&lt;String, List&lt;String&gt;&gt; consumersPerTopic = consumersPerTopic(subscriptions);</span><br><span class="line">  <span class="comment">// 2. 存储最终的分配方案</span></span><br><span class="line"> Map&lt;String, List&lt;TopicPartition&gt;&gt; assignment = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"> <span class="keyword">for</span> (String memberId : subscriptions.keySet())</span><br><span class="line">     assignment.put(memberId, <span class="keyword">new</span> ArrayList&lt;TopicPartition&gt;());</span><br><span class="line"></span><br><span class="line"> <span class="keyword">for</span> (Map.Entry&lt;String, List&lt;String&gt;&gt; topicEntry : consumersPerTopic.entrySet()) &#123;</span><br><span class="line">     String topic = topicEntry.getKey();</span><br><span class="line">     List&lt;String&gt; consumersForTopic = topicEntry.getValue();</span><br><span class="line"></span><br><span class="line">     <span class="comment">// 3. 每个topic的partition数量</span></span><br><span class="line">     Integer numPartitionsForTopic = partitionsPerTopic.get(topic);</span><br><span class="line">     <span class="keyword">if</span> (numPartitionsForTopic == <span class="keyword">null</span>)</span><br><span class="line">         <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">     Collections.sort(consumersForTopic);</span><br><span class="line"></span><br><span class="line">     <span class="comment">// 4. 表示平均每个consumer会分配到多少个partition</span></span><br><span class="line">     <span class="keyword">int</span> numPartitionsPerConsumer = numPartitionsForTopic / consumersForTopic.size();</span><br><span class="line">     <span class="comment">// 5. 平均分配后还剩下多少个partition未被分配</span></span><br><span class="line">     <span class="keyword">int</span> consumersWithExtraPartition = numPartitionsForTopic % consumersForTopic.size();</span><br><span class="line"></span><br><span class="line">     List&lt;TopicPartition&gt; partitions = AbstractPartitionAssignor.partitions(topic, numPartitionsForTopic);</span><br><span class="line"></span><br><span class="line">     <span class="comment">// 6. 这里是关键点,分配原则是将未能被平均分配的partition分配到前consumersWithExtraPartition个consumer</span></span><br><span class="line">     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>, n = consumersForTopic.size(); i &lt; n; i++) &#123;</span><br><span class="line">         <span class="keyword">int</span> start = numPartitionsPerConsumer * i + Math.min(i, consumersWithExtraPartition);</span><br><span class="line">         <span class="keyword">int</span> length = numPartitionsPerConsumer + (i + <span class="number">1</span> &gt; consumersWithExtraPartition ? <span class="number">0</span> : <span class="number">1</span>);</span><br><span class="line">         assignment.get(consumersForTopic.get(i)).addAll(partitions.subList(start, start + length));</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="keyword">return</span> assignment;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面最重要的就是第六步，它决定了如何分配的具体方案，其分配规则是:先将分区数平均分配给consumer，对于剩下不能被平均分配的partition，会将其分配到前 consumersWithExtraPartition 个 consumer 上，也就是前 consumersWithExtraPartition 个 consumer 获得 topic-partition 列表会比后面多一个。</p>
+<p>举个例子,假设一个topic有5个partiton,然后一个group中有3个consumer都订阅了这个topic,那么range的分配方式如下</p>
+<ul>
+<li>consumer 0: start–&gt;0, length–&gt;2, topic-partition–&gt;p0,p1</li>
+<li>consumer 1: start–&gt;2, length–&gt;2, topic-partition–&gt;p2,p3</li>
+<li>consumer 2: start–&gt;4, length–&gt;1, topic-partition–&gt;p4</li>
+</ul>
+<p>如果group中有consumer没有订阅这个topic，那么就不会参与分配，对于多个topic的分配方案,和单个topic的分配是一样的,同样的再举个例子。</p>
+<p>现在有2个topic,一个partition有3个,一个partition有5个,group中有3个consumer，但是只有前面2个consumer订阅了第一个topic,而另外一个topic则被所有consumer都订阅了，那么其分配方案取下：</p>
+<table>
+<thead>
+<tr>
+<th>consumer</th>
+<th>订阅topic1</th>
+<th>订阅topci2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>consumer0</td>
+<td>t1-p0, t1-p1</td>
+<td>t2-p0, t2-p1</td>
+</tr>
+<tr>
+<td>consumer1</td>
+<td>t1-p2</td>
+<td>t2-p2, t2-p3</td>
+</tr>
+<tr>
+<td>consumer2</td>
+<td></td>
+<td>t2-p4</td>
+</tr>
+</tbody>
+</table>
+<p>其实也可以看到，随着分区数的变化,这种方式的分配并不均匀，类似的情况如果扩大，则部分消费者可能会消费很多partition，而部分消费者又会闲置。</p>
+<h3 id="RoundRobinAssignor-分区分配"><a href="#RoundRobinAssignor-分区分配" class="headerlink" title="RoundRobinAssignor 分区分配"></a>RoundRobinAssignor 分区分配</h3><p>同样的还是想来看下它的源代码:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> Map&lt;String, List&lt;TopicPartition&gt;&gt; assign(Map&lt;String, Integer&gt; partitionsPerTopic,</span><br><span class="line">                                                    Map&lt;String, Subscription&gt; subscriptions) &#123;</span><br><span class="line">  Map&lt;String, List&lt;TopicPartition&gt;&gt; assignment = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">  <span class="keyword">for</span> (String memberId : subscriptions.keySet())</span><br><span class="line">      assignment.put(memberId, <span class="keyword">new</span> ArrayList&lt;TopicPartition&gt;());</span><br><span class="line">  <span class="comment">// 1. 环状链表,存储所有的consumer,一次迭代完之后又会回到原点</span></span><br><span class="line">  CircularIterator&lt;String&gt; assigner = <span class="keyword">new</span> CircularIterator&lt;&gt;(Utils.sorted(subscriptions.keySet()));</span><br><span class="line">  <span class="comment">// 2. 获取所有订阅的topic的partition总数</span></span><br><span class="line">  <span class="keyword">for</span> (TopicPartition partition : allPartitionsSorted(partitionsPerTopic, subscriptions)) &#123;</span><br><span class="line">      <span class="keyword">final</span> String topic = partition.topic();</span><br><span class="line">      <span class="keyword">while</span> (!subscriptions.get(assigner.peek()).topics().contains(topic))</span><br><span class="line">          assigner.next();</span><br><span class="line">      assignment.get(assigner.next()).add(partition);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> assignment;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>其分配规则很简单列出所有的topic-partition以及所有的consumer,然后开始分配,先每个consumer都分配一轮,一轮分配完成之后接着下一轮继续分配，直到分配完为止。<br>同样的举个例子,假设一个topic有5个partiton,然后一个group中有3个consumer都订阅了这个topic,那么roundrobin的分配方式如下；</p>
+<ul>
+<li>consuemr 0: topic-partition–&gt;p0,p3</li>
+<li>consumer 1: topic-partition–&gt;p1,p4</li>
+<li>consumer 2: topic-partition–&gt;p2</li>
+</ul>
+<p>对于多个consumer订阅多个topic的情况，这里也举一个例子说明</p>
+<p>现在有3个topic,一个有2个partition,一个有3个partition,另外一个有4个partition,group中有3个consumer,第一个consumer订阅了第一个topic,第二个consumer订阅了前两个topic,第三个consumer订阅了三个topic，那么它们的分配方案如下：</p>
+<table>
+<thead>
+<tr>
+<th>consumer</th>
+<th>topic1</th>
+<th>topic2</th>
+<th>topic3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>consumer1</td>
+<td>t1-p0</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>consumer2</td>
+<td>t1-p1</td>
+<td>t2-p0, t2-p3</td>
+<td></td>
+</tr>
+<tr>
+<td>consumer3</td>
+<td></td>
+<td>t2-p1</td>
+<td>t3-p0, t3-p1, t3-p2, t3-p3</td>
+</tr>
+</tbody>
+</table>
+<p>很明显consumer3要是把t2-p1也分配给consumer2就会显得更加均匀一些了。</p>
+<h3 id="StickyAssignor-分区分配"><a href="#StickyAssignor-分区分配" class="headerlink" title="StickyAssignor 分区分配"></a>StickyAssignor 分区分配</h3><p>sticky这样的分区策略是从0.11版本才开始引入的，它主要有两个目的</p>
+<ol>
+<li>分区的分配要尽可能均匀</li>
+<li>分区的分配要尽可能与上次分配的保持相同</li>
+</ol>
+<p>当两者冲突的时候，第一个目标优先于第二个目标。</p>
+<p>源码我就不贴出来了，因为这个类的源码是上面两个类的源码的10倍。</p>
+<p>sticky这样的分区方式作用发生分区重分配的时候，尽可能地让前后两次分配相同，进而减少系统资源的损耗及其他异常情况的发生。以上面那个例子举例，如果采用这种分配方式那么其分配结果如下：</p>
+<table>
+<thead>
+<tr>
+<th>consumer</th>
+<th>topic1</th>
+<th>topic2</th>
+<th>topic3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>consumer1</td>
+<td>t1-p0</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>consumer2</td>
+<td>t1-p1, t2-p1</td>
+<td>t2-p0, t2-p3</td>
+<td></td>
+</tr>
+<tr>
+<td>consumer3</td>
+<td></td>
+<td></td>
+<td>t3-p0, t3-p1, t3-p2, t3-p3</td>
+</tr>
+</tbody>
+</table>
+<p>上面三个分区策略有着不同的分配方式，在实际使用过程中，需要根据自己的需求选择合适的策略，但是如果你只有一个consumer,那么选择哪个方式都是一样的，但是如果是多个consumer不在同一台设备上进行消费，那么sticky方式应该更加合适。</p>
+<h4 id="自定义分区策略"><a href="#自定义分区策略" class="headerlink" title="自定义分区策略"></a>自定义分区策略</h4><p>如之前所说，只需要继承AbstractPartitionAssignor并复写其中方法即可(当然也可以直接实现PartitionAssignor接口),其中有两个方法需要复写</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">name</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Map&lt;String, List&lt;TopicPartition&gt;&gt; <span class="title">assign</span><span class="params">(Map&lt;String, Integer&gt; partitionsPerTopic,Map&lt;String, Subscription&gt; subscriptions)</span></span></span><br></pre></td></tr></table></figure>
+<p>其中assign()方法表示的是分区分配方案的实现，而name()方法则表示了这个分配策略的唯一名称，比如之前提到的range,roundrobin和sticky,这个名字会在和GroupCoordinator的通信中返回，通过它consumer leader来确定整个group的分区方案(分区策略是由group中的consumer共同投票决定的，谁使用的多,就是用哪个策略),对于加入group的分析可以参考之前的<a href="https://generalthink.github.io/2019/05/15/how-to-join-kafka-consumer-group" target="_blank" rel="noopener">文章</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Kafka/" rel="tag"># Kafka</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/04/kafka-consumer-offset-commit/" rel="next" title="Kafka consumer的offset的提交方式">
+                <i class="fa fa-chevron-left"></i> Kafka consumer的offset的提交方式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Zhu.Yang">
+            
+              <p class="site-author-name" itemprop="name">Zhu.Yang</p>
+              <p class="site-description motion-element" itemprop="description">面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">52</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">分类</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://wmdpd.com/" title="https://wmdpd.com/" rel="noopener" target="_blank">完美的胖达</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#AbstractPartitionAssignor"><span class="nav-number">1.</span> <span class="nav-text">AbstractPartitionAssignor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RangeAssignor-分区分配"><span class="nav-number">2.</span> <span class="nav-text">RangeAssignor 分区分配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RoundRobinAssignor-分区分配"><span class="nav-number">3.</span> <span class="nav-text">RoundRobinAssignor 分区分配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#StickyAssignor-分区分配"><span class="nav-number">4.</span> <span class="nav-text">StickyAssignor 分区分配</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#自定义分区策略"><span class="nav-number">4.1.</span> <span class="nav-text">自定义分区策略</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhu.Yang</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">286k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">4:20</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.6.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  
+    <script src="https://cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script src="https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script src="https://cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script src="https://cdn.bootcss.com/velocity/1.2.1/velocity.min.js"></script>
+  
+
+  
+  
+    <script src="https://cdn.bootcss.com/velocity/1.2.1/velocity.ui.min.js"></script>
+  
+
+  
+  
+    <script src="https://cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.js"></script>
+  
+
+  
+  
+    <script src="/lib/reading_progress/reading_progress.js"></script>
+  
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+  
+  <script src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'manual') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script>
+    
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+
+      Counter('get', '/classes/Counter', { where: JSON.stringify({ url }) })
+        .done(function ({ results }) {
+          if (results.length > 0) {
+            var counter = results[0];
+            
+            Counter('put', `/classes/Counter/${counter.objectId}`, JSON.stringify({ time: { "__op":"Increment", "amount":1 } }))
+            
+            .done(function () {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(counter.time + 1);
+            })
+            
+            .fail(function ({ responseJSON }) {
+                console.log('Failed to save Visitor num, with error message: ' + responseJSON.error);
+            })
+          } else {
+            
+              Counter('post', '/classes/Counter', JSON.stringify({ title: title, url: url, time: 1}))
+                .done(function () {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(1);
+                })
+                .fail(function () {
+                  console.log('Failed to create');
+                });
+            
+          }
+        })
+      .fail(function ({ responseJSON }) {
+        console.log('LeanCloud Counter Error:' + responseJSON.code + " " + responseJSON.error);
+      });
+    }
+    
+
+    $(function() {
+      $.get('https://app-router.leancloud.cn/2/route?appId=' + "meJ1FaNUdSGteWwG1EBwj4iw-gzGzoHsz")
+        .done(function ({ api_server }) {
+          var Counter = function (method, url, data) {
+            return $.ajax({
+              method: method,
+              url: `https://${api_server}/1.1${url}`,
+              headers: {
+                'X-LC-Id': "meJ1FaNUdSGteWwG1EBwj4iw-gzGzoHsz",
+                'X-LC-Key': "L5qaJWameLbFdhr25xbPS0fB",
+                'Content-Type': 'application/json',
+              },
+              data: data,
+            });
+          };
+          
+          addCount(Counter);
+          
+        })
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+  
+    
+  
+  <script src="https://cdn.bootcss.com/pangu/3.3.0/pangu.min.js"></script>
+  <script>pangu.spacingPage();</script>
+
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+  
+
+</body>
+</html>
