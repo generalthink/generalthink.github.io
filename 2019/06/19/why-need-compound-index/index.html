@@ -127,17 +127,18 @@
 
 
 
-  <meta name="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
-<meta name="keywords" content="Java,JVM,HBase,MongoDB,大数据,设计模式,数据结构">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Zhu.Yang">
-<meta property="og:url" content="http://yoursite.com/tags/json，java/index.html">
+  <meta name="description" content="什么是索引要理解索引,你需要在脑中有个画面,这里建议想象一本食谱,不是普通食谱，而是5000页的厚重食谱，包含各种场合、菜肴和季节的食谱。虽然这个食谱很全,但是它有个缺点就是它是乱序的，第一页可能是鱼香茄子，第3000页是红烧茄子。 这还不是很要紧,关键问题是这本食谱没有索引！ 下面是你要问自己的第一个问题：如果没有索引如何在食谱中找到糖醋排骨?唯一的选择是一页一页翻过去，如果它在3892页，你得">
+<meta name="keywords" content="MongoDB,Mysql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="为什么要有复合索引?">
+<meta property="og:url" content="http://yoursite.com/2019/06/19/why-need-compound-index/index.html">
 <meta property="og:site_name" content="Zhu.Yang">
-<meta property="og:description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
+<meta property="og:description" content="什么是索引要理解索引,你需要在脑中有个画面,这里建议想象一本食谱,不是普通食谱，而是5000页的厚重食谱，包含各种场合、菜肴和季节的食谱。虽然这个食谱很全,但是它有个缺点就是它是乱序的，第一页可能是鱼香茄子，第3000页是红烧茄子。 这还不是很要紧,关键问题是这本食谱没有索引！ 下面是你要问自己的第一个问题：如果没有索引如何在食谱中找到糖醋排骨?唯一的选择是一页一页翻过去，如果它在3892页，你得">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-06-19T07:07:50.080Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Zhu.Yang">
-<meta name="twitter:description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
+<meta name="twitter:title" content="为什么要有复合索引?">
+<meta name="twitter:description" content="什么是索引要理解索引,你需要在脑中有个画面,这里建议想象一本食谱,不是普通食谱，而是5000页的厚重食谱，包含各种场合、菜肴和季节的食谱。虽然这个食谱很全,但是它有个缺点就是它是乱序的，第一页可能是鱼香茄子，第3000页是红烧茄子。 这还不是很要紧,关键问题是这本食谱没有索引！ 下面是你要问自己的第一个问题：如果没有索引如何在食谱中找到糖醋排骨?唯一的选择是一页一页翻过去，如果它在3892页，你得">
 
 
 
@@ -146,7 +147,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/json，java/">
+  <link rel="canonical" href="http://yoursite.com/2019/06/19/why-need-compound-index/">
 
 
 
@@ -156,7 +157,7 @@
   };
 </script>
 
-  <title>标签: json，java | Zhu.Yang</title>
+  <title>为什么要有复合索引? | Zhu.Yang</title>
   
 
 
@@ -204,7 +205,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -262,7 +263,7 @@
         
         
           
-          <li class="menu-item menu-item-tags menu-item-active">
+          <li class="menu-item menu-item-tags">
 
     
     
@@ -326,25 +327,6 @@
   
     
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
   
 
   
@@ -390,56 +372,251 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h2>json，java<small>标签</small>
-        </h2>
-      </div>
+  
 
-      
-        
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/19/why-need-compound-index/">
 
-      <h3 class="post-title">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhu.Yang">
+      <meta itemprop="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhu.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2015/11/15/fastjson-serializerFeature/" itemprop="url">
-              
-                <span itemprop="name">fastjson中SerializerFeature解析</span>
-              
-            </a>
         
-      </h3>
+          <h2 class="post-title" itemprop="name headline">为什么要有复合索引?
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2015-11-15T12:49:01+08:00" content="2015-11-15">
-          11-15
-        </time>
-      </div>
+              
+            
+          </h2>
+        
 
-    </header>
-  </article>
+        <div class="post-meta">
+          <span class="post-time">
 
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-06-19 14:33:25 / 修改时间：15:07:50" itemprop="dateCreated datePublished" datetime="2019-06-19T14:33:25+08:00">2019-06-19</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/06/19/why-need-compound-index/" class="leancloud_visitors" data-flag-title="为什么要有复合索引?">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">2.4k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">2 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="什么是索引"><a href="#什么是索引" class="headerlink" title="什么是索引"></a>什么是索引</h3><p>要理解索引,你需要在脑中有个画面,这里建议想象一本食谱,不是普通食谱，而是5000页的厚重食谱，包含各种场合、菜肴和季节的食谱。虽然这个食谱很全,但是它有个缺点就是它是乱序的，第一页可能是鱼香茄子，第3000页是红烧茄子。</p>
+<p>这还不是很要紧,关键问题是这本食谱没有索引！</p>
+<p>下面是你要问自己的第一个问题：如果没有索引如何在食谱中找到糖醋排骨?唯一的选择是一页一页翻过去，如果它在3892页，你得要翻多少页呀，最坏的情况是它在最后一页，你就得把整本书都翻一遍。</p>
+<p>解决办法就是构建一个索引。</p>
+<a id="more"></a>
+<p>我们可以想到多种查找方法，其中食谱名称可以作为一个起点。如果建立一个按食谱名称排列列表，随后是其所在页码，那么就是按食谱名称对书建立索引了。其中的条目可能是这样的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">红烧排骨 : 45</span><br><span class="line">猪肉饺子 : 320</span><br><span class="line">酱萝卜 : 199</span><br></pre></td></tr></table></figure></p>
+<p>现在只要知道食谱的名称就能通过该索引快速找到书中的任意食谱了,如果你只希望通过这种方式来检索食谱，那就已经完事儿了。</p>
+<p>但这是不现实的，比方说,你还会希望根据你冰箱里面的食材查找食谱，或者是根据菜肴来进行查找。针对这种情况，你需要更多的索引。</p>
+<p>这就产生了第二个问题，只有一个基于<code>食谱名称</code>的索引，如何能找到所有的排骨相关的食谱呢？缺少合适的索引，你仍然需要翻阅整本食谱–5000页。在根据食材或者菜肴进行检索时都是如此。</p>
+<p>为此我们需要构建另一个索引，这次是对食材进行索引，在这个索引里面按照字母顺序排列食材，每个食材都指向所有包含它的食谱所在的页码。最基本的<code>食材索引</code>是这样的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">牛肉 : 301, 342, 785, 2310, 2456, 4310 ...</span><br><span class="line">山药 : 8, 20, 45, 78, 287, 1295, 4587 ...</span><br><span class="line">猪肉 : 12, 124, 320, 890, 3719, ...</span><br></pre></td></tr></table></figure>
+<p>这是你希望的索引吗？是不是很有用？</p>
+<p>如果只是需要知道指定食材的食谱清单，这个索引就够用了，但如果还希望在查找时包含任何任意其他与与食谱相关的信息，还是需要进行“扫描”–一旦知道牛肉的页码，你要翻到每一页找到食谱的名字以及确定菜肴类型，虽然这比我们翻阅整本书要好，但是还远远不够。</p>
+<p>例如，一周前，你无意间在这本食谱里面发现了一个很棒的鸡肉料理食谱，但是却忘了它的名字，你很想找到它然后做给你心仪的漂亮小姐姐吃。目前为止，有两个索引，一个时食谱名称的索引，另一个是食材的索引。是否能将两者结合起来，找到遗忘的鸡肉食谱呢？</p>
+<p>实际上，这是不可能的。如果从食谱名称索引入手，但是却不记得名字，检索这个索引只比翻阅全书好一点点。从食材入手，则要检查一系列页码，但是这些页码无法插入基于食谱名称的索引。因此这种情况下只能使用一个索引，本例中食材的索引要更有用一点。</p>
+<blockquote>
+<p>通常认为一个查询里面要查找两个字段，可以针对它们分离索引。有一个现成的算法：查找每个索引里匹配项的页码，针对同时匹配两个索引的名单扫面它们页码的交集。这样可以减少扫描的总数。一些数据库实现了这个算法，但MongoDB中没有。就算它实现了，使用复合索引来查找两个字段总是会比我刚才描述的算法效率高。请记住每个查询中数据库只会使用一个索引，如果要对多个字段进行查询，请确保有这些字段的符合索引。</p>
+</blockquote>
+<p>那该怎么办？幸好我们有复合索引。</p>
+<h3 id="复合索引"><a href="#复合索引" class="headerlink" title="复合索引"></a>复合索引</h3><p><strong>目前为止你建立的都是单键索引：它们只是对食谱的一个键进行索引。现在要为整本食谱构建一个新的索引，不同之处这次是要使用两个键。类似的使用多个键的索引成为复合索引(compound index)。</strong></p>
+<p>该复合索引依次使用了食材和食谱名称，可以这样来标记它: 材料-食谱，其中的部分内容如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">猪肉：</span><br><span class="line">  猪肉白菜炖粉条： 320</span><br><span class="line">  猪肉蛋卷： 3719</span><br><span class="line">  猪肉脯： 890</span><br><span class="line"></span><br><span class="line">鸡腿：</span><br><span class="line">  红烧鸡腿： 82</span><br><span class="line">  可乐鸡腿： 3710</span><br><span class="line">  土豆焖鸡腿： 2578</span><br><span class="line"></span><br><span class="line">西红柿</span><br><span class="line">  西红柿炒鸡蛋： 4827</span><br><span class="line">  西红柿鸡蛋汤： 2478</span><br><span class="line">  西红柿牛腩： 489</span><br></pre></td></tr></table></figure>
+<p>这个索引的值对人是显而易见的，现在可以根据食材进行查找，大致定位要找的食谱，哪怕只是记得名称的开头部分。对机器而言同样很有价值，不用扫描该食材的全部食谱名称了。</p>
+<p>需要注意的是复合索引的的顺序是很有讲究的，假设将上述索引翻转为 食谱-材料，它能替代我们之前的索引吗？</p>
+<p>明显不能!使用新索引，只要知道名称，搜索就一定会定位到一个食谱，书中的一页。如果是要查找含有香蕉食材的猪肉食谱，那就可以确定不存在这个食谱。如果进行翻转之后，我们就必须要知道食谱的名称，在去找食材，但是现实情况往往是我们知道食材却不知道食谱名称。</p>
+<p>现在整本食谱有三个索引： <code>食谱</code>、<code>食材</code>和<code>食材-食谱</code>，也就是说我们可以安全地去掉食材这个索引了。为什么呢？<br>因为对某一食材的索引可以使用食材-食谱索引，如果你知道食材，可以便利该复合索引，获得包含它的食谱的页码列表。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>本文只是为更进一步认识索引提供一个隐喻，从中可以认识到一些简单的经验法则，如下：</p>
+<ol>
+<li>索引能够显著减少获取文档所需的工作量。没有合适的索引，实现查询的唯一途径就是线性扫描整个文档，直到满足查询条件为止。这通常就是扫描整个集合。</li>
+<li>解析查询时只会使用一个单键索引(or是例外),对于包含多个键(比如食材和食谱)的查询，包含这些键的复合索引能更好地解析查询。<blockquote>
+<p>比如student表,对age和name都建立了索引，如果你查询name=”zhangsan” and age = 20,也只是会使用其中一个索引</p>
+</blockquote>
+</li>
+<li>如果有食材-菜谱索引,可以去掉食材索引，也应该这么做。更抽象一点，如果有一个a-b的复合索引，那么仅针对a的索引就是冗余的。但是如果b本身就是一个复合索引(b=c-d),那么同时拥有a-b和a还是很有意义的。</li>
+<li>符合索引里键的顺序也是很重要的。</li>
+</ol>
 
       
     </div>
 
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MongoDB/" rel="tag"># MongoDB</a>
+          
+            <a href="/tags/Mysql/" rel="tag"># Mysql</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/06/kafka-consumer-partition-assign/" rel="next" title="Kafka Consumer源码分析之分区方案">
+                <i class="fa fa-chevron-left"></i> Kafka Consumer源码分析之分区方案
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+  </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -460,8 +637,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -626,6 +812,22 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是索引"><span class="nav-number">1.</span> <span class="nav-text">什么是索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复合索引"><span class="nav-number">2.</span> <span class="nav-text">复合索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
@@ -796,6 +998,10 @@
   
 
   
+  <script src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script src="/js/src/post-details.js?v=6.6.0"></script>
+
+
 
   
 
@@ -1151,43 +1357,42 @@
   
   <script>
     
-    function showTime(Counter) {
-      var entries = [];
+    function addCount(Counter) {
       var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
 
-      $visitors.each(function () {
-        entries.push( $(this).attr("id").trim() );
-      });
-
-      Counter('get', '/classes/Counter', { where: JSON.stringify({ url: { "$in": entries } }) })
+      Counter('get', '/classes/Counter', { where: JSON.stringify({ url }) })
         .done(function ({ results }) {
-          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
-
-          if (results.length === 0) {
-            $visitors.find(COUNT_CONTAINER_REF).text(0);
-            return;
-          }
-
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.url;
-            var time = item.time;
-            var element = document.getElementById(url);
-
-            $(element).find(COUNT_CONTAINER_REF).text(time);
-          }
-          for(var i = 0; i < entries.length; i++) {
-            var url = entries[i];
-            var element = document.getElementById(url);
-            var countSpan = $(element).find(COUNT_CONTAINER_REF);
-            if( countSpan.text() == '') {
-              countSpan.text(0);
-            }
+          if (results.length > 0) {
+            var counter = results[0];
+            
+            Counter('put', `/classes/Counter/${counter.objectId}`, JSON.stringify({ time: { "__op":"Increment", "amount":1 } }))
+            
+            .done(function () {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(counter.time + 1);
+            })
+            
+            .fail(function ({ responseJSON }) {
+                console.log('Failed to save Visitor num, with error message: ' + responseJSON.error);
+            })
+          } else {
+            
+              Counter('post', '/classes/Counter', JSON.stringify({ title: title, url: url, time: 1}))
+                .done(function () {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(1);
+                })
+                .fail(function () {
+                  console.log('Failed to create');
+                });
+            
           }
         })
-        .fail(function ({ responseJSON }) {
-          console.log("LeanCloud Counter Error: " + responseJSON.code + " " + responseJSON.error);
-        });
+      .fail(function ({ responseJSON }) {
+        console.log('LeanCloud Counter Error:' + responseJSON.code + " " + responseJSON.error);
+      });
     }
     
 
@@ -1207,9 +1412,7 @@
             });
           };
           
-          if ($('.post-title-link').length >= 1) {
-            showTime(Counter);
-          }
+          addCount(Counter);
           
         })
     });
