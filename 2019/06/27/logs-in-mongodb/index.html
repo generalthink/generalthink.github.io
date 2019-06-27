@@ -127,18 +127,20 @@
 
 
 
-  <meta name="description" content="在涉及到临界区的时候，就不得到谈到synchronized,又不得不谈到notify,这个也是对锁的优化那一章的一些补充说明。">
-<meta name="keywords" content="synchronized,jvm,多线程,临界区">
+  <meta name="description" content="任何一种数据库都有各种各样的日志，MongoDB也不例外。MongoDB中有4种日志，分别是系统日志、Journal日志、oplog主从日志、慢查询日志等。这些日志记录着MongoDB数据库不同方面的踪迹。下面分别介绍这几种日志。">
+<meta name="keywords" content="MongoDB">
 <meta property="og:type" content="article">
-<meta property="og:title" content="关于锁使用的补充说明">
-<meta property="og:url" content="http://yoursite.com/2018/07/24/something-about-synchronized/index.html">
+<meta property="og:title" content="MongoDB中有几种日志?">
+<meta property="og:url" content="http://yoursite.com/2019/06/27/logs-in-mongodb/index.html">
 <meta property="og:site_name" content="Zhu.Yang">
-<meta property="og:description" content="在涉及到临界区的时候，就不得到谈到synchronized,又不得不谈到notify,这个也是对锁的优化那一章的一些补充说明。">
+<meta property="og:description" content="任何一种数据库都有各种各样的日志，MongoDB也不例外。MongoDB中有4种日志，分别是系统日志、Journal日志、oplog主从日志、慢查询日志等。这些日志记录着MongoDB数据库不同方面的踪迹。下面分别介绍这几种日志。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/mongodb/oplog-copy.png">
 <meta property="og:updated_time" content="2019-06-27T08:24:56.780Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于锁使用的补充说明">
-<meta name="twitter:description" content="在涉及到临界区的时候，就不得到谈到synchronized,又不得不谈到notify,这个也是对锁的优化那一章的一些补充说明。">
+<meta name="twitter:title" content="MongoDB中有几种日志?">
+<meta name="twitter:description" content="任何一种数据库都有各种各样的日志，MongoDB也不例外。MongoDB中有4种日志，分别是系统日志、Journal日志、oplog主从日志、慢查询日志等。这些日志记录着MongoDB数据库不同方面的踪迹。下面分别介绍这几种日志。">
+<meta name="twitter:image" content="http://yoursite.com/images/mongodb/oplog-copy.png">
 
 
 
@@ -147,7 +149,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/07/24/something-about-synchronized/">
+  <link rel="canonical" href="http://yoursite.com/2019/06/27/logs-in-mongodb/">
 
 
 
@@ -157,7 +159,7 @@
   };
 </script>
 
-  <title>关于锁使用的补充说明 | Zhu.Yang</title>
+  <title>MongoDB中有几种日志? | Zhu.Yang</title>
   
 
 
@@ -390,7 +392,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/24/something-about-synchronized/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/27/logs-in-mongodb/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Zhu.Yang">
@@ -407,7 +409,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">关于锁使用的补充说明
+          <h2 class="post-title" itemprop="name headline">MongoDB中有几种日志?
 
               
             
@@ -433,47 +435,17 @@
                 
               
 
-              <time title="创建时间：2018-07-24 21:26:25" itemprop="dateCreated datePublished" datetime="2018-07-24T21:26:25+08:00">2018-07-24</time>
+              <time title="创建时间：2019-06-27 16:07:20 / 修改时间：16:24:56" itemprop="dateCreated datePublished" datetime="2019-06-27T16:07:20+08:00">2019-06-27</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-06-27 16:24:56" itemprop="dateModified" datetime="2019-06-27T16:24:56+08:00">2019-06-27</time>
               
             
           </span>
 
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/多线程/" itemprop="url" rel="index"><span itemprop="name">多线程</span></a></span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -481,7 +453,7 @@
 
           
           
-             <span id="/2018/07/24/something-about-synchronized/" class="leancloud_visitors" data-flag-title="关于锁使用的补充说明">
+             <span id="/2019/06/27/logs-in-mongodb/" class="leancloud_visitors" data-flag-title="MongoDB中有几种日志?">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -506,7 +478,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">2.7k</span>
+                <span title="本文字数">4k</span>
               
 
               
@@ -520,13 +492,11 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">2 分钟</span>
+                <span title="阅读时长">4 分钟</span>
               
             </div>
           
 
-          
-              <div class="post-description">在涉及到临界区的时候，就不得到谈到synchronized,又不得不谈到notify,这个也是对锁的优化那一章的一些补充说明。</div>
           
 
         </div>
@@ -542,22 +512,52 @@
       
 
       
-        <p>上一篇文章我讲了下synchronized关于锁优化的问题，但是还是有人不太清楚临界区到底是什么，也对notify的机制有点疑惑，这篇文章就来分析一下。</p>
-<h3 id="什么是临界区"><a href="#什么是临界区" class="headerlink" title="什么是临界区"></a>什么是临界区</h3><p>我们都知道Synchroinzed可以修饰代码块，实例方法,静态方法，区别只是持有的对象锁不一样罢了，持有了这把锁你就可以为所欲为了，就好比很多人去抢厕所，如果大家都在一个厕所里面上，那么很明显会发生很多不可描述的事儿,所以就需要去抢厕所的使用，你抢到了然后你进去厕所把门反锁了，这个时候别人进不来，厕所里面的公共资源你想怎样用就怎样用，只有等你出来之后这个时候其他人才能去抢厕所。如果在你准备上厕所的时候你发现没有厕纸了，这个时候你得要先去拿纸，让别人先用厕所了。</p>
-<p>上面的例子也很好的说明了临界区(上面故事的厕所，也就是公共资源),当多个线程去竞争的时候获取锁的这个线程就可以安全的执行，可以保证原子性，一致性，顺序性(JMM)。获取锁这个操作是通过monitorenter,退出临界区的时候是执行monitorexit指令,此时会释放持有的锁。这个时候线程可以继续去竞争,至于是谁竞争上就取决于操作系统了,线程的优先级并不一定能起作用，因为调度是取决于操作系统，不同的操作系统的优先级不一样，可能操作系统总共只有三个级别，但是java中是从1到10的，那么必然会导致有重复，所以调度不要完全依赖优先级。</p>
-<p>当遇到没有带厕纸的时候，其实这也对应了一个问题，就是在执行某些操作的时候可能需要等待其他条件先满足在执行，这个时候你就会让出这把锁，让其他线程去执行，等到条件满足了之后你在去运行。</p>
-<p>需要注意的是当操作系统分配给我们的时间片用完了的时候这个时候并不会让出锁(Thread.sleep)，而是会等待操作系统的调度，等到下一次执行。</p>
-<h3 id="调用了notify-All-后谁会被唤醒？"><a href="#调用了notify-All-后谁会被唤醒？" class="headerlink" title="调用了notify(All)后谁会被唤醒？"></a>调用了notify(All)后谁会被唤醒？</h3><p>这里存在<strong>两种情况</strong></p>
+        <p>任何一种数据库都有各种各样的日志，MongoDB也不例外。MongoDB中有4种日志，分别是系统日志、Journal日志、oplog主从日志、慢查询日志等。这些日志记录着MongoDB数据库不同方面的踪迹。下面分别介绍这几种日志。</p>
+<a id="more"></a>
+<h3 id="系统日志"><a href="#系统日志" class="headerlink" title="系统日志"></a>系统日志</h3><p>系统日志在MongoDB数据库中很重要，它记录着MongoDB启动和停止的操作，以及服务器在运行过程中发生的任何异常信息。</p>
+<p>配置系统日志的方法比较简单，在启动mongod时指定logpath参数即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongod -logpath=/data/log/mongodb/serverlog.log -logappend</span><br></pre></td></tr></table></figure>
+<p>系统日志会向logpath指定的文件持续追加。</p>
+<h3 id="Journal日志"><a href="#Journal日志" class="headerlink" title="Journal日志"></a>Journal日志</h3><p>journaling(日记) 日志功能则是 MongoDB 里面非常重要的一个功能 ， 它保证了数据库服务器在意外断电 、 自然灾害等情况下数据的完整性。它通过预写式的redo日志为MongoDB增加了额外的可靠性保障。开启该功能时,MongoDB会在进行写入时建立一条Journal日志,其中包含了此次写入操作具体更改的磁盘地址和字节。因此一旦服务器突然停机，可在启动时对日记进行重放，从而重新执行那些停机前没能够刷新到磁盘的写入操作。</p>
+<p>MongoDB配置WiredTiger引擎使用内存缓冲区来保存journal记录,WiredTiger根据以下间隔或条件将缓冲的日志记录同步到磁盘</p>
 <ol>
-<li>如果是通过notify来唤起的线程，那先进入wait的线程会先被唤起来</li>
-<li>如果是通过nootifyAll唤起的线程，默认情况是最后进入的会先被唤起来，即LIFO的策略</li>
+<li>从MongoDB 3.2版本开始每隔50ms将缓冲的journal数据同步到磁盘</li>
+<li>如果写入操作设置了j:true，则WiredTiger强制同步日志文件</li>
+<li>由于MongoDB使用的journal文件大小限制为100MB,因此WiredTiger大约每100MB数据创建一个新的日志文件。当WiredTiger创建新的journal文件时，WiredTiger会同步以前journal文件</li>
 </ol>
-<p>验证这个问题很简单，看看下面这段代码</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NotifyTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Object lock  = <span class="keyword">new</span> Object();</span><br><span class="line">        Thread p = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Producer(lock));</span><br><span class="line">        Thread con = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Consumer(lock));</span><br><span class="line"></span><br><span class="line">        p.start();</span><br><span class="line">        con.start();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Producer</span> <span class="keyword">implements</span>  <span class="title">Runnable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    Object lock;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Producer</span><span class="params">(Object obj)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.lock = obj;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">synchronized</span> (lock) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                System.out.println(<span class="string">"producer will wait"</span>);</span><br><span class="line">                lock.wait();</span><br><span class="line">                System.out.println(<span class="string">"producer wait over"</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Consumer</span> <span class="keyword">implements</span>  <span class="title">Runnable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    Object lock;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Consumer</span><span class="params">(Object obj)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.lock = obj;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//模拟producer先执行</span></span><br><span class="line">            Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">synchronized</span> (lock) &#123;</span><br><span class="line">            System.out.println(<span class="string">"consumer will notify"</span>);</span><br><span class="line">            lock.notify();</span><br><span class="line">            System.out.println(<span class="string">"producer notify over"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出结果如下:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">producer will wait</span><br><span class="line">consumer will notify</span><br><span class="line">producer notify over</span><br><span class="line">producer wait over</span><br></pre></td></tr></table></figure>
-<p>这个结果证明了我刚才说的，只有在退出同步代码块之后才会释放锁，而不是在调用了notify(All)方法就马上去唤醒，但是这只是一个默认策略，也是可以修改的。</p>
-<h3 id="wait的线程是否会占用cpu"><a href="#wait的线程是否会占用cpu" class="headerlink" title="wait的线程是否会占用cpu?"></a>wait的线程是否会占用cpu?</h3><p>wait/nofity是通过jvm里的park/unpark机制<a href="https://github.com/openjdk-mirror/jdk7u-hotspot/blob/50bdefc3afe944ca74c3093e7448d6b889cd20d1/src/share/vm/runtime/objectMonitor.cpp#L1507" target="_blank" rel="noopener">wait/notify底层原理</a><br>来实现的，在linux下这种机制又是通过pthread_cond_wait/pthread_cond_signal来完成的，pthread_cond_wait其思想就是先释放锁，让其他线程可以执行，然后进入睡眠，等待被唤醒，被唤醒之后重新加锁。<br>因此当线程进入到wait状态的时候其实是会放弃cpu的，也就是说这类线程是不会占用cpu资源。</p>
+<p>MongoDB达到上面的提交，便会将更新操作写入日志。这意味着MongoDB会批量地提交更改，即每次写入不会立即刷新到磁盘。不过在默认设置下，系统发生崩溃时，不可能丢失超过50ms的写入数据。</p>
+<p>数据文件默认每60秒刷新到磁盘一次，因此Journal文件只需记录约60s的写入数据。日志系统为此预先分配了若干个空文件，这些文件存放在/data/db/journal目录中，目录名为_j.0、_j.1等<br>长时间运行MongoDB后，日志目录中会出现类似_j.6217、_j.6218的文件，这些是当前的日志文件，文件中的数值会随着MongoDB运行时间的增长而增大。数据库正常关闭后，日记文件会被清除(因为正常关闭后就不在需要这些文件了).</p>
+<blockquote>
+<p>向mongodb中写入数据是先写入内存，然后每隔60s在刷盘，同样写入journal,也是先写入对应的buffer，然后每隔50ms在刷盘到磁盘的journal文件<br>使用WiredTiger，即使没有journal功能，MongoDB也可以从最后一个检查点(checkpoint,可以想成镜像)恢复;但是，要恢复在上一个检查点之后所做的更改，还是需要使用Journal</p>
+</blockquote>
+<p>如发生系统崩溃或使用kill -9命令强制终止数据库的运行，mongod会在启动时重放journal文件，同时会显示出大量的校验信息。</p>
+<blockquote>
+<p>上面说的都是针对WiredTiger引擎,对于MMAPv1引擎来说有一点不一样，首先它是每100ms进行刷盘，其次它是通过private view写入journal文件,通过shared view写入数据文件。这里就不过多讲解了，因为MongoDB 4.0已经不推荐使用这个存储引擎了。<br>从MongoDB 3.2版本开始WiredTiger是MongoDB推荐的默认存储引擎</p>
+</blockquote>
+<p>需要注意的是如果客户端的写入速度超过了日记的刷新速度，mongod则会限制写入操作，直到日记完成磁盘的写入。这是mongod会限制写入的唯一情况。</p>
+<h3 id="固定集合-Capped-Collection"><a href="#固定集合-Capped-Collection" class="headerlink" title="固定集合(Capped Collection)"></a>固定集合(Capped Collection)</h3><p>在讲下面两种日志之前先来认识下capped collection。</p>
+<p>MongoDB中的普通集合是动态创建的，而且可以自动增长以容纳更多的数据。MongoDB中还有另一种不同类型的集合，叫做固定集合。固定集合需要事先创建好，而且它的大小是固定的。固定集合的行为类型与循环队列一样。如果没有空间了，最老的文档会被删除以释放空间，新插入的文档会占据这块空间。</p>
+<p>创建固定集合：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.createCollection(&quot;collectionName&quot;,&#123;&quot;capped&quot;:true, &quot;size&quot;:100000, &quot;max&quot;:100&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>创建了一个大小为100000字节的固定大小集合,文档数量为100.不管先到达哪个限制，之后插入的新文档就会把最老的文档挤出集合：<strong>固定集合的文档数量不能超过文档数量限制，也不能超过大小限制。</strong></p>
+<p>固定集合创建之后就不能改变,无法将固定集合转换为非固定集合,但是可以将常规集合转换为固定集合。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.runCommand(&#123;&quot;convertToCapped&quot;: &quot;test&quot;, &quot;size&quot; : 10000&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>固定集合可以进行一种特殊的排序，称为自然排序(natural sort),自然排序返回结果集中文档的顺序就是文档在磁盘的顺序。自然顺序就是文档的插入顺序，因此自然排序得到的文档是从旧到新排列的。当然也可以按照从新到旧：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.my_capped_collection.find().sort(&#123;&quot;$natural&quot;: -1&#125;);</span><br></pre></td></tr></table></figure></p>
+<h3 id="oplog主从日志"><a href="#oplog主从日志" class="headerlink" title="oplog主从日志"></a>oplog主从日志</h3><p>Replica Sets复制集用于在多台服务器之间备份数据。MongoDB的复制功能是使用操作日志oplog实现的，操作日志包含了主节点的每一次写操作。oplog是主节点的local数据库中的一个固定集合。备份节点通过查询这个集合就可以知道需要进行复制的操作。</p>
+<blockquote>
+<p>一个mongod实例中的所有数据库都使用同一个oplog，也就是所有数据库的操作日志(插入，删除，修改)都会记录到oplog中</p>
+</blockquote>
+<p>每个备份节点都维护着自己的oplog,记录着每一次从主节点复制数据的操作。这样，每个成员都可以作为同步源给其他成员使用。<br>如图所示，备份节点从当前使用的同步源中获取需要执行的操作，然后在自己的数据集上执行这些操作，最后再将这些操作写入自己的oplog,如果遇到某个操作失败的情况(只有当同步源的数据损坏或者数据与主节点不一致时才可能发生),那么备份节点就会停止从当前的同步源复制数据。</p>
+<p><img src="/images/mongodb/oplog-copy.png" alt="复制数据"></p>
+<p>oplog中按顺序保存着所有执行过的写操作，replica sets中每个成员都维护者一份自己的oplog，每个成员的oplog都应该跟主节点的oplog完全一致(可能会有一些延迟)</p>
+<p>如果某个备份节点由于某些原因挂了，但它重新启动后，就会自动从oplog中最后一个操作开始进行同步。由于复制操作的过程是想复制数据在写入oplog,所以备份节点可能会在已经同步过的数据上再次执行复制操作。MongoDB在设计之初就考虑到了这种情况:将oplog中的同一个操作执行多次，与只执行一次的效果是一样的。</p>
+<p>由于oplog大小是固定的，它只能保持特定数量的操作日志。通常，oplog使用空间的增长速度与系统处理写请求的速率几乎相同：如果主节点上每分钟处理了1KB的写入请求，那么oplog很可能也会在一分钟内写入1KB条操作日志。</p>
+<p>但是，有一些例外：如果单次请求能够影响到多个文档(比如删除多个文档或者多文档更新),oplog中就会出现多条操作日志。如果单个操作会影响多个文档，那么每个受影响的文档都会对应oplog的一条日志。因此，如果执行db.student.remove()删除了10w个文档，那么oplog中也就会有10w条操作日志，每个日志对应一个被删除的文档。如果执行大量的批量操作，oplog很快就会被填满。</p>
+<h3 id="慢查询日志"><a href="#慢查询日志" class="headerlink" title="慢查询日志"></a>慢查询日志</h3><p>MongoDB中使用系统分析器(system profiler)来查找耗时过长的操作。系统分析器记录固定集合system.profile中的操作，并提供大量有关耗时过长的操作信息，但相应的mongod的整体性能也会有所下降。因此我们一般定期打开分析器来获取信息。</p>
+<p>默认情况下，系统分析器处于关闭状态，不会进行任何记录。可以在shell中运行<code>db.setProfilingLevel()</code>开启分析器<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.setProfilingLevel(level,&lt;slowms&gt;) 0=off 1=slow 2=all</span><br></pre></td></tr></table></figure></p>
+<p>第一个参数是指定级别，不同的级别代表不同的意义，0表示关闭，1表示默认记录耗时大于100毫秒的操作，2表示记录所有操作。第二个参数则是自定义“耗时过长”标准，比如记录所有耗时操作500ms的操作<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.setProfilingLevel(1,500);</span><br></pre></td></tr></table></figure></p>
+<p>如果开启了分析器而system.profile集合并不存在，MongoDB会为其建立一个大小为若干MB的固定集合(capped collection)。如希望分析器运行更长时间，可能需要更大的空间记录更多的操作。此时可以关闭分析器，删除并重新建立一个新的名为system.profile的固定集合，并令其容量符合要求。然后在数据库上重新启用分析器。</p>
+<blockquote>
+<p>可以通过db.system.profile.stats()查看集合的最大容量</p>
+</blockquote>
 
       
     </div>
@@ -581,9 +581,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/jvm/" rel="tag"># jvm</a>
-          
-            <a href="/tags/多线程/" rel="tag"># 多线程</a>
+            <a href="/tags/MongoDB/" rel="tag"># MongoDB</a>
           
         </div>
       
@@ -596,8 +594,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/07/19/lock-optimization-about-java/" rel="next" title="java中锁的优化">
-                <i class="fa fa-chevron-left"></i> java中锁的优化
+              <a href="/2019/06/19/why-need-compound-index/" rel="next" title="为什么要有复合索引?">
+                <i class="fa fa-chevron-left"></i> 为什么要有复合索引?
               </a>
             
           </div>
@@ -605,10 +603,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/08/05/you-should-know-from-mysql-to-mongodb/" rel="prev" title="从mysql到mongodb你应该快速了解的内容">
-                从mysql到mongodb你应该快速了解的内容 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -838,7 +832,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是临界区"><span class="nav-number">1.</span> <span class="nav-text">什么是临界区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#调用了notify-All-后谁会被唤醒？"><span class="nav-number">2.</span> <span class="nav-text">调用了notify(All)后谁会被唤醒？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wait的线程是否会占用cpu"><span class="nav-number">3.</span> <span class="nav-text">wait的线程是否会占用cpu?</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#系统日志"><span class="nav-number">1.</span> <span class="nav-text">系统日志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Journal日志"><span class="nav-number">2.</span> <span class="nav-text">Journal日志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#固定集合-Capped-Collection"><span class="nav-number">3.</span> <span class="nav-text">固定集合(Capped Collection)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#oplog主从日志"><span class="nav-number">4.</span> <span class="nav-text">oplog主从日志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#慢查询日志"><span class="nav-number">5.</span> <span class="nav-text">慢查询日志</span></a></li></ol></div>
             
 
           </div>
