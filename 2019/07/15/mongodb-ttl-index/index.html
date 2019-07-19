@@ -127,17 +127,18 @@
 
 
 
-  <meta name="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
-<meta name="keywords" content="Java,JVM,HBase,MongoDB,大数据,设计模式,数据结构">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Zhu.Yang">
-<meta property="og:url" content="http://yoursite.com/archives/2019/01/index.html">
+  <meta name="description" content="MongoDB中存在一种索引,叫做TTL索引(time-to-live index,具有生命周期的索引)，这种索引允许为每一个文档设置一个超时时间。一个文档达到预设置的老化程度后就会被删除。数据到期对于某些类型的信息非常有用，例如机器生成的事件数据，日志和会话信息，这些信息只需要在数据库中保存有限的时间。 在createIndex中指定expireAfterSeconds选项就可以创建一个TTL索">
+<meta name="keywords" content="MongoDB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MongoDB中的定时索引">
+<meta property="og:url" content="http://yoursite.com/2019/07/15/mongodb-ttl-index/index.html">
 <meta property="og:site_name" content="Zhu.Yang">
-<meta property="og:description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
+<meta property="og:description" content="MongoDB中存在一种索引,叫做TTL索引(time-to-live index,具有生命周期的索引)，这种索引允许为每一个文档设置一个超时时间。一个文档达到预设置的老化程度后就会被删除。数据到期对于某些类型的信息非常有用，例如机器生成的事件数据，日志和会话信息，这些信息只需要在数据库中保存有限的时间。 在createIndex中指定expireAfterSeconds选项就可以创建一个TTL索">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-07-19T05:26:43.663Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Zhu.Yang">
-<meta name="twitter:description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
+<meta name="twitter:title" content="MongoDB中的定时索引">
+<meta name="twitter:description" content="MongoDB中存在一种索引,叫做TTL索引(time-to-live index,具有生命周期的索引)，这种索引允许为每一个文档设置一个超时时间。一个文档达到预设置的老化程度后就会被删除。数据到期对于某些类型的信息非常有用，例如机器生成的事件数据，日志和会话信息，这些信息只需要在数据库中保存有限的时间。 在createIndex中指定expireAfterSeconds选项就可以创建一个TTL索">
 
 
 
@@ -146,7 +147,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/2019/01/">
+  <link rel="canonical" href="http://yoursite.com/2019/07/15/mongodb-ttl-index/">
 
 
 
@@ -156,7 +157,7 @@
   };
 </script>
 
-  <title>归档 | Zhu.Yang</title>
+  <title>MongoDB中的定时索引 | Zhu.Yang</title>
   
 
 
@@ -204,7 +205,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -296,7 +297,7 @@
         
         
           
-          <li class="menu-item menu-item-archives menu-item-active">
+          <li class="menu-item menu-item-archives">
 
     
     
@@ -325,25 +326,6 @@
 
   
     
-
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
 
   
 
@@ -390,252 +372,244 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/15/mongodb-ttl-index/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhu.Yang">
+      <meta itemprop="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhu.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
-         
+          <h2 class="post-title" itemprop="name headline">MongoDB中的定时索引
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-07-15 15:31:23" itemprop="dateCreated datePublished" datetime="2019-07-15T15:31:23+08:00">2019-07-15</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-07-19 13:26:43" itemprop="dateModified" datetime="2019-07-19T13:26:43+08:00">2019-07-19</time>
+              
+            
+          </span>
+
           
-        不错! 目前共计 56 篇日志。 继续努力。
-      </span>
-      
 
-      
-
-        
-        
-        
-
-        
           
-          <div class="collection-title">
-            <h2 class="archive-year" id="archive-year-2019">2019</h2>
-          </div>
-        
-        
+            
+          
 
-        
+          
+          
+             <span id="/2019/07/15/mongodb-ttl-index/" class="leancloud_visitors" data-flag-title="MongoDB中的定时索引">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
 
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2019/01/29/understanding-git-remote-cmd/" itemprop="url">
+          
+            <div class="post-symbolscount">
               
-                <span itemprop="name">深入浅出git(六)——远端命令</span>
+
               
-            </a>
-        
-      </h3>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">1.7k</span>
+              
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-01-29T11:21:02+08:00" content="2019-01-29">
-          01-29
-        </time>
-      </div>
+              
+                <span class="post-meta-divider">|</span>
+              
 
-    </header>
-  </article>
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">2 分钟</span>
+              
+            </div>
+          
 
+          
 
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2019/01/25/understanding-git-move-node/" itemprop="url">
-              
-                <span itemprop="name">深入浅出git(五)——自由的修改提交记录</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-01-25T16:15:59+08:00" content="2019-01-25">
-          01-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2019/01/23/understanding-git-merge-and-rebase/" itemprop="url">
-              
-                <span itemprop="name">深入浅出git(四)——merge和rebase</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-01-23T17:47:11+08:00" content="2019-01-23">
-          01-23
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <p>MongoDB中存在一种索引,叫做TTL索引(time-to-live index,具有生命周期的索引)，这种索引允许为每一个文档设置一个超时时间。一个文档达到预设置的老化程度后就会被删除。<br>数据到期对于某些类型的信息非常有用，例如机器生成的事件数据，日志和会话信息，这些信息只需要在数据库中保存有限的时间。</p>
+<p>在createIndex中指定expireAfterSeconds选项就可以创建一个TTL索引：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 超时时间为24小时,默认是前台运行，可以通过background:true设置为后台模式</span><br><span class="line">db.user_session.createIndex(&#123;&quot;updated&quot;:1&#125;,&#123;expireAfterSeconds:60*60*24&#125;);</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>这样在updated字段上创建了一个TTL索引。如果一个文档的updated字段存在并且它的值是日期类型，当服务器时间比文档的updated字段的时间晚expireAfterSeconds秒时，文档就会被删除。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">db.getCollection(&apos;user_session&apos;).insert(</span><br><span class="line">  &#123;</span><br><span class="line">    _id: NumberInt(1),</span><br><span class="line">    &quot;updated&quot;:new Date(),</span><br><span class="line">     username:&apos;lisi&apos;</span><br><span class="line">  &#125;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>mongodb保存时间使用的UTC时间，在查询出来的结果的时候会转换为GMT时间，所以你看到保存的时间和电脑时间相差8个小时(GMT+8)<br>db.getCollection(‘user_session’).find({updated:{$gt: new Date(“2019-07-12 14:00:00”)}})  在查询的时候可以使用new Date()直接进行时间的比较，new Date传入的参数是GMT时间</p>
+</blockquote>
+<p>为了防止活跃的会话被删除，可以在会话上有活动发生时将updated字段的值更新为当前时间。只要updated的时间距离当前时间达到24小时。相应的文档就会被删除。</p>
+<p>MongoDB的TTL功能依赖于mongodb中的后台线程，该线程读取索引中的日期类型值并从集合中删除过期的文档。<br>MongoDB每分钟对TTL索引进行一次清理，所以不应该依赖以秒为单位的时间保证索引的存活状态。而且TTL索引不保证在到期时立即删除过期数据。文档到期的时间与MongoDB从数据库中删除文档的时间之间可能存在延迟。由于删除过期文档的后台任务每60秒运行一次。所以，文档可能在文档到期和后台任务运行之间的期间保留在集合中。</p>
+<blockquote>
+<p>源码在 <a href="https://github.com/mongodb/mongo/blob/master/src/mongo/db/ttl.cpp" target="_blank" rel="noopener">https://github.com/mongodb/mongo/blob/master/src/mongo/db/ttl.cpp</a></p>
+</blockquote>
+<p>mongodb不支持使用createIndex来重新设置过期时间，只可以使用collMod命令修改expireAfterSeconds的值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.runCommand(&#123;collMod:&quot;user_session&quot;,index: &#123;name:&quot;updated_1&quot;,expireAfterSeconds: 120&#125;&#125;);</span><br></pre></td></tr></table></figure>
+<p>修改成功后，你会收到这样的消息(之前的过期时间是一分钟,现在修改为2分钟)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;expireAfterSeconds_old&quot; : 60.0,</span><br><span class="line">    &quot;expireAfterSeconds_new&quot; : 120.0,</span><br><span class="line">    &quot;ok&quot; : 1.0</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在一个给定的集合上可以有多个TTL索引，你可以在created和updated字段分别建立ttl索引,但是不能同时使用两个字段建立复合ttl索引,也不能在同一个字段上又是创建TTL索引，又是创建普通索引，但是可以像“普通索引”一样用来优化排序和查询。</p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2019/01/21/understanding-git-index/" itemprop="url">
-              
-                <span itemprop="name">深入简出git(三)——索引</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-01-21T14:28:42+08:00" content="2019-01-21">
-          01-21
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2019/01/10/understanding-git-branch/" itemprop="url">
-              
-                <span itemprop="name">深入浅出git(二)——分支</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-01-10T10:00:11+08:00" content="2019-01-10">
-          01-10
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2019/01/09/understanding-git-data-model/" itemprop="url">
-              
-                <span itemprop="name">深入浅出git(一)——数据模型</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-01-09T14:07:59+08:00" content="2019-01-09">
-          01-09
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MongoDB/" rel="tag"># MongoDB</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/05/mongodb-locks/" rel="next" title="MongoDB的锁事">
+                <i class="fa fa-chevron-left"></i> MongoDB的锁事
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+  </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -992,6 +966,10 @@
   
 
   
+  <script src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script src="/js/src/post-details.js?v=6.6.0"></script>
+
+
 
   
 
@@ -1347,43 +1325,42 @@
   
   <script>
     
-    function showTime(Counter) {
-      var entries = [];
+    function addCount(Counter) {
       var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
 
-      $visitors.each(function () {
-        entries.push( $(this).attr("id").trim() );
-      });
-
-      Counter('get', '/classes/Counter', { where: JSON.stringify({ url: { "$in": entries } }) })
+      Counter('get', '/classes/Counter', { where: JSON.stringify({ url }) })
         .done(function ({ results }) {
-          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
-
-          if (results.length === 0) {
-            $visitors.find(COUNT_CONTAINER_REF).text(0);
-            return;
-          }
-
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.url;
-            var time = item.time;
-            var element = document.getElementById(url);
-
-            $(element).find(COUNT_CONTAINER_REF).text(time);
-          }
-          for(var i = 0; i < entries.length; i++) {
-            var url = entries[i];
-            var element = document.getElementById(url);
-            var countSpan = $(element).find(COUNT_CONTAINER_REF);
-            if( countSpan.text() == '') {
-              countSpan.text(0);
-            }
+          if (results.length > 0) {
+            var counter = results[0];
+            
+            Counter('put', `/classes/Counter/${counter.objectId}`, JSON.stringify({ time: { "__op":"Increment", "amount":1 } }))
+            
+            .done(function () {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(counter.time + 1);
+            })
+            
+            .fail(function ({ responseJSON }) {
+                console.log('Failed to save Visitor num, with error message: ' + responseJSON.error);
+            })
+          } else {
+            
+              Counter('post', '/classes/Counter', JSON.stringify({ title: title, url: url, time: 1}))
+                .done(function () {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(1);
+                })
+                .fail(function () {
+                  console.log('Failed to create');
+                });
+            
           }
         })
-        .fail(function ({ responseJSON }) {
-          console.log("LeanCloud Counter Error: " + responseJSON.code + " " + responseJSON.error);
-        });
+      .fail(function ({ responseJSON }) {
+        console.log('LeanCloud Counter Error:' + responseJSON.code + " " + responseJSON.error);
+      });
     }
     
 
@@ -1403,9 +1380,7 @@
             });
           };
           
-          if ($('.post-title-link').length >= 1) {
-            showTime(Counter);
-          }
+          addCount(Counter);
           
         })
     });
