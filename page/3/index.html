@@ -388,6 +388,415 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/25/understanding-git-move-node/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhu.Yang">
+      <meta itemprop="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhu.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/01/25/understanding-git-move-node/" class="post-title-link" itemprop="http://yoursite.com/page/3/index.html">深入浅出git(五)——自由的修改提交记录</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-01-25 16:15:59" itemprop="dateCreated datePublished" datetime="2019-01-25T16:15:59+08:00">2019-01-25</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-07-26 16:41:43" itemprop="dateModified" datetime="2019-07-26T16:41:43+08:00">2019-07-26</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/01/25/understanding-git-move-node/" class="leancloud_visitors" data-flag-title="深入浅出git(五)——自由的修改提交记录">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">1.3k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">1 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p><a href="https://generalthink.github.io/2019/01/23/understanding-git-merge-and-rebase/" target="_blank" rel="noopener">上篇文章</a>讲了merge和rebase,我们已经可以在commit object构成的图(当然我更愿意把它看成一棵树)上面进行分支的合并了,在图上我们可以新增节点(git commit),合并节点(merge或者rebase),这篇我们就来讲解下移动和删除节点。</p>
+<p>在讲移动和删除之前，我们先来认识下HEAD的分离。</p>
+<h3 id="分离的HEAD"><a href="#分离的HEAD" class="headerlink" title="分离的HEAD"></a>分离的HEAD</h3><p>我们都知道,HEAD是指向当前分支的,而分离的HEAD就是让其指向了某个具体的提交记录而不是分支名。</p>
+<p>现在我本地的提交记录是这样的</p>
+<p><img src="/images/understanding-git/move-and-delete/git-log-status.gif" alt="git log"></p>
+<p>当我们执行<code>git checkout  062704b1c3a814dfd95695aba3684c22e3f3fa85</code>之后HEAD就处于分离状态。</p>
+<p><img src="/images/understanding-git/move-and-delete/git-detached-head.gif" alt="分离HEAD"></p>
+<p><img src="/images/understanding-git/move-and-delete/git-detached-head-structure.gif" alt="分离HEAD"></p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/01/25/understanding-git-move-node/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/23/understanding-git-merge-and-rebase/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhu.Yang">
+      <meta itemprop="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhu.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/01/23/understanding-git-merge-and-rebase/" class="post-title-link" itemprop="http://yoursite.com/page/3/index.html">深入浅出git(四)——merge和rebase</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-01-23 17:47:11" itemprop="dateCreated datePublished" datetime="2019-01-23T17:47:11+08:00">2019-01-23</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-07-26 16:41:43" itemprop="dateModified" datetime="2019-07-26T16:41:43+08:00">2019-07-26</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/01/23/understanding-git-merge-and-rebase/" class="leancloud_visitors" data-flag-title="深入浅出git(四)——merge和rebase">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">1.7k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">2 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>经过前面理论的学习,相信对git的模型已经有了一个比较深入的认识,在讲解常用开发命令之前,先看下git整体操作流程</p>
+<p><img src="/images/understanding-git/merge-and-rebase/git-process.png" alt="git流程"></p>
+<p>我们按照一个正常的开发流程来学习,我们现在要开始开发了,首先我们需要把远程仓库同步到本地</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/generalthink/git_learn.git</span><br></pre></td></tr></table></figure>
+<p>运行完上面的命令,在我们的当前工作目录就会有一个git_learn的文件夹,其中存在.git目录(git维护仓库的基本)以及和远程仓库一样的文件,现在我们的代码环境就和远程仓库一致了,我们就可以开始我们的开发流程了。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/01/23/understanding-git-merge-and-rebase/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/21/understanding-git-index/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -450,7 +859,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-19 13:26:43" itemprop="dateModified" datetime="2019-07-19T13:26:43+08:00">2019-07-19</time>
+                <time title="修改时间：2019-07-26 16:41:43" itemprop="dateModified" datetime="2019-07-26T16:41:43+08:00">2019-07-26</time>
               
             
           </span>
@@ -650,7 +1059,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-19 13:26:43" itemprop="dateModified" datetime="2019-07-19T13:26:43+08:00">2019-07-19</time>
+                <time title="修改时间：2019-07-26 16:41:43" itemprop="dateModified" datetime="2019-07-26T16:41:43+08:00">2019-07-26</time>
               
             
           </span>
@@ -849,7 +1258,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-19 13:26:43" itemprop="dateModified" datetime="2019-07-19T13:26:43+08:00">2019-07-19</time>
+                <time title="修改时间：2019-07-26 16:41:43" itemprop="dateModified" datetime="2019-07-26T16:41:43+08:00">2019-07-26</time>
               
             
           </span>
@@ -1050,7 +1459,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-19 13:26:43" itemprop="dateModified" datetime="2019-07-19T13:26:43+08:00">2019-07-19</time>
+                <time title="修改时间：2019-07-26 16:41:43" itemprop="dateModified" datetime="2019-07-26T16:41:43+08:00">2019-07-26</time>
               
             
           </span>
@@ -1268,7 +1677,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-19 13:26:43" itemprop="dateModified" datetime="2019-07-19T13:26:43+08:00">2019-07-19</time>
+                <time title="修改时间：2019-07-26 16:41:43" itemprop="dateModified" datetime="2019-07-26T16:41:43+08:00">2019-07-26</time>
               
             
           </span>
@@ -1485,7 +1894,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-19 13:26:43" itemprop="dateModified" datetime="2019-07-19T13:26:43+08:00">2019-07-19</time>
+                <time title="修改时间：2019-07-26 16:41:43" itemprop="dateModified" datetime="2019-07-26T16:41:43+08:00">2019-07-26</time>
               
             
           </span>
@@ -1702,7 +2111,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-19 13:26:43" itemprop="dateModified" datetime="2019-07-19T13:26:43+08:00">2019-07-19</time>
+                <time title="修改时间：2019-07-26 16:41:43" itemprop="dateModified" datetime="2019-07-26T16:41:43+08:00">2019-07-26</time>
               
             
           </span>
@@ -1919,7 +2328,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-19 13:26:43" itemprop="dateModified" datetime="2019-07-19T13:26:43+08:00">2019-07-19</time>
+                <time title="修改时间：2019-07-26 16:41:43" itemprop="dateModified" datetime="2019-07-26T16:41:43+08:00">2019-07-26</time>
               
             
           </span>
@@ -2059,440 +2468,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/13/jvm-log-analysis/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zhu.Yang">
-      <meta itemprop="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhu.Yang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/11/13/jvm-log-analysis/" class="post-title-link" itemprop="http://yoursite.com/page/3/index.html">JVM日志分析</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-11-13 21:39:44" itemprop="dateCreated datePublished" datetime="2018-11-13T21:39:44+08:00">2018-11-13</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-07-19 13:26:43" itemprop="dateModified" datetime="2019-07-19T13:26:43+08:00">2019-07-19</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/jvm/" itemprop="url" rel="index"><span itemprop="name">jvm</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/11/13/jvm-log-analysis/" class="leancloud_visitors" data-flag-title="JVM日志分析">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数：</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">本文字数：</span>
-                
-                <span title="本文字数">11k</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">10 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          线上经常会遇到服务器繁忙,请求响应缓慢，这个时候大多是在进行大量的gc或者full gc，为了排查这方面的问题我们就要清楚的知道
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2018/11/13/jvm-log-analysis/">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/04/garbage-collection/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zhu.Yang">
-      <meta itemprop="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhu.Yang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/11/04/garbage-collection/" class="post-title-link" itemprop="http://yoursite.com/page/3/index.html">Java中的垃圾回收算法以及垃圾回收器</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-11-04 14:45:40" itemprop="dateCreated datePublished" datetime="2018-11-04T14:45:40+08:00">2018-11-04</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-07-19 13:26:43" itemprop="dateModified" datetime="2019-07-19T13:26:43+08:00">2019-07-19</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/jvm/" itemprop="url" rel="index"><span itemprop="name">jvm</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/11/04/garbage-collection/" class="leancloud_visitors" data-flag-title="Java中的垃圾回收算法以及垃圾回收器">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数：</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">本文字数：</span>
-                
-                <span title="本文字数">5.9k</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">5 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          Java中垃圾回收不用我们操心,但是知道有哪些垃圾回收算法,以及各种垃圾回收器的组合应用对于JVM调优有着巨大的帮助,这篇博客就是为了总结一下垃圾回收算法以及垃圾回收器。
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2018/11/04/garbage-collection/">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2542,7 +2517,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">56</span>
+                    <span class="site-state-item-count">58</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2716,7 +2691,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">296k</span>
+    <span title="站点总字数">306k</span>
   
 
   
@@ -2725,7 +2700,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">4:29</span>
+    <span title="站点阅读时长">4:38</span>
   
 </div>
 
