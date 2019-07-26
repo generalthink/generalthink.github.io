@@ -137,7 +137,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/introduction-kafka/computer-layer.png">
 <meta property="og:image" content="http://yoursite.com/images/introduction-kafka/os-message-flow.png">
-<meta property="og:updated_time" content="2019-07-26T08:41:43.038Z">
+<meta property="og:updated_time" content="2019-07-26T08:42:54.668Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="为什么零拷贝可以提升Kafka性能?">
 <meta name="twitter:description" content="从操作系统说起计算机系统是由“硬件”和“软件”两大部分组成，计算机硬件包括一个或多个处理器(CPU)、内存、键盘、显示器、磁盘、I/O接口以及其他一些外围设备比如打印机，绘图仪等等。总之，计算机硬件部分是一个由多种点击和机械设备组成的硬件系统。 为了让人方便正确使用这些设备，就需要编写若干程序来管理这些设备，正是这些程序组成了计算机的软件系统。软件也可以分为两大类：系统软件和应用软件。人们首先直接">
@@ -453,7 +453,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-26 16:41:43" itemprop="dateModified" datetime="2019-07-26T16:41:43+08:00">2019-07-26</time>
+                <time title="修改时间：2019-07-26 16:42:54" itemprop="dateModified" datetime="2019-07-26T16:42:54+08:00">2019-07-26</time>
               
             
           </span>
@@ -528,6 +528,7 @@
         <h3 id="从操作系统说起"><a href="#从操作系统说起" class="headerlink" title="从操作系统说起"></a>从操作系统说起</h3><p>计算机系统是由“硬件”和“软件”两大部分组成，计算机硬件包括一个或多个处理器(CPU)、内存、键盘、显示器、磁盘、I/O接口以及其他一些外围设备比如打印机，绘图仪等等。<br>总之，计算机硬件部分是一个由多种点击和机械设备组成的硬件系统。</p>
 <p>为了让人方便正确使用这些设备，就需要编写若干程序来管理这些设备，正是这些程序组成了计算机的软件系统。软件也可以分为两大类：系统软件和应用软件。人们首先直接在硬件上加载一层程序，用它来管理整个计算机硬件设备以及一些软件信息资源，同时还为用户提供开发应用程序的环境，这就是操作系统软件和实用软件。应用软件是在操作系统支持下，为实现用户要求而编制的各种应用程序。</p>
 <p><img src="/images/introduction-kafka/computer-layer.png" alt="操作系统层次结构图"></p>
+<a id="more"></a>
 <p>CPU、内存和I/O接口组成的主设备通常称为主机，把没有加载操作系统的主机叫做裸机。裸机与操作系统软件的接口是由CPU的指令系统和厂商提供的系统BIOS组成。</p>
 <p>由于操作系统向用户隐藏了系统使用的硬件设备，因此操作系统要为它上面的应用系统软件提供一组命令或系统调用接口供用户程序使用。比如我们需要使用磁盘，可以通过系统命名或系统调用来间接完成，而不需要亲自手动编写一个磁盘设备驱动程序。因此对于用户来说，当计算机加载操作系统后，用户不直接与计算机硬件打交道，而是利用操作系统提供的命令和功能区使用计算机。</p>
 <p>由于操作系统处于硬件和软件的中央位置，因此很早就有人把操作系统成为计算机系统软件的核心，简称<strong>核心</strong>或<strong>内核</strong>。</p>
