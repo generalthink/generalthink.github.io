@@ -98,7 +98,7 @@ static class ThreadLocalMap {
 ```
 
 从ThreadLocalMap的定义可以看出Entry的key就是ThreadLocal，而value就是值。同时，Entry也继承WeakReference，所以说Entry所对应key（ThreadLocal实例）的引用为一个弱引用。
-而且定义了装载因子为三分之二。
+而且定义了装载因子为数组长度的三分之二。
 
 
 #### set()方法
@@ -130,7 +130,10 @@ private void set(ThreadLocal<?> key, Object value) {
   int sz = ++size;
   // 清除旧的槽(entry不为空，但是ThreadLocal为空)，并且当数组中元素大于阈值就rehash
   if (!cleanSomeSlots(i, sz) && sz >= threshold)
-      rehash();
+    expungeStaleEntries();
+    // 扩容
+    if (size >= threshold - threshold / 4)
+      resize();
 }
 
 ```
@@ -138,10 +141,10 @@ private void set(ThreadLocal<?> key, Object value) {
 上面源码的主要步骤如下:
 1. 采用线性探测法,寻找合适的插入位置。首先判断key是否存在,存在则直接覆盖。如果key不存在证明被垃圾回收了此时需要用新的元素替换旧的元素
 2. 不存在对应的元素,需要创建一个新的元素
-3. 清除entry不为空，但是ThreadLocal(entry的key被回收了)的元素，防止内存泄露,同时根据当数据中元素大于阈值就rehash(阈值: tableLenth*2/3)
+3. 清除entry不为空，但是ThreadLocal(entry的key被回收了)的元素，防止内存泄露
+4. 如果满足条件:size >= threshold - threshold / 4就将数组扩大为之前的两倍，同时会重新计算数组元素所处的位置并进行移动(rehash)。比如最开始数组初始大小为16,当size >= (16*2/3=10) - (10/4) = 8的时候就会扩容,将数组大小扩容至32.
 
-
-无论是replaceStaleEntry()方法还是cleanSomeSlots()或者是rehash()方法，最重要的方法调用是expungeStaleEntry(),你可以在ThreadLocalMap中的get,set,remove都能发现调用它的身影。
+无论是replaceStaleEntry()方法还是cleanSomeSlots()方法，最重要的方法调用是expungeStaleEntry(),你可以在ThreadLocalMap中的get,set,remove都能发现调用它的身影。
 
 ```java
 private int expungeStaleEntry(int staleSlot) {
