@@ -127,20 +127,20 @@
 
 
 
-  <meta name="description" content="从操作系统说起计算机系统是由“硬件”和“软件”两大部分组成，计算机硬件包括一个或多个处理器(CPU)、内存、键盘、显示器、磁盘、I/O接口以及其他一些外围设备比如打印机，绘图仪等等。总之，计算机硬件部分是一个由多种点击和机械设备组成的硬件系统。 为了让人方便正确使用这些设备，就需要编写若干程序来管理这些设备，正是这些程序组成了计算机的软件系统。软件也可以分为两大类：系统软件和应用软件。人们首先直接">
+  <meta name="description" content="从操作系统说起计算机系统是由“硬件”和“软件”两大部分组成，计算机硬件包括一个或多个处理器(CPU)、内存、键盘、显示器、磁盘、I/O接口以及其他一些外围设备比如打印机，绘图仪等等。总之，计算机硬件部分是一个由多种电子和机械设备组成的硬件系统。 为了让人方便正确使用这些设备，就需要编写若干程序来管理这些设备，正是这些程序组成了计算机的软件系统。软件也可以分为两大类：系统软件和应用软件。人们首先直接">
 <meta name="keywords" content="Kafka">
 <meta property="og:type" content="article">
 <meta property="og:title" content="为什么零拷贝可以提升Kafka性能?">
 <meta property="og:url" content="http://yoursite.com/2019/07/19/kafka-zerocopy/index.html">
 <meta property="og:site_name" content="Zhu.Yang">
-<meta property="og:description" content="从操作系统说起计算机系统是由“硬件”和“软件”两大部分组成，计算机硬件包括一个或多个处理器(CPU)、内存、键盘、显示器、磁盘、I/O接口以及其他一些外围设备比如打印机，绘图仪等等。总之，计算机硬件部分是一个由多种点击和机械设备组成的硬件系统。 为了让人方便正确使用这些设备，就需要编写若干程序来管理这些设备，正是这些程序组成了计算机的软件系统。软件也可以分为两大类：系统软件和应用软件。人们首先直接">
+<meta property="og:description" content="从操作系统说起计算机系统是由“硬件”和“软件”两大部分组成，计算机硬件包括一个或多个处理器(CPU)、内存、键盘、显示器、磁盘、I/O接口以及其他一些外围设备比如打印机，绘图仪等等。总之，计算机硬件部分是一个由多种电子和机械设备组成的硬件系统。 为了让人方便正确使用这些设备，就需要编写若干程序来管理这些设备，正是这些程序组成了计算机的软件系统。软件也可以分为两大类：系统软件和应用软件。人们首先直接">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/introduction-kafka/computer-layer.png">
 <meta property="og:image" content="http://yoursite.com/images/introduction-kafka/os-message-flow.png">
-<meta property="og:updated_time" content="2019-07-26T08:42:54.668Z">
+<meta property="og:updated_time" content="2019-07-26T08:51:33.508Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="为什么零拷贝可以提升Kafka性能?">
-<meta name="twitter:description" content="从操作系统说起计算机系统是由“硬件”和“软件”两大部分组成，计算机硬件包括一个或多个处理器(CPU)、内存、键盘、显示器、磁盘、I/O接口以及其他一些外围设备比如打印机，绘图仪等等。总之，计算机硬件部分是一个由多种点击和机械设备组成的硬件系统。 为了让人方便正确使用这些设备，就需要编写若干程序来管理这些设备，正是这些程序组成了计算机的软件系统。软件也可以分为两大类：系统软件和应用软件。人们首先直接">
+<meta name="twitter:description" content="从操作系统说起计算机系统是由“硬件”和“软件”两大部分组成，计算机硬件包括一个或多个处理器(CPU)、内存、键盘、显示器、磁盘、I/O接口以及其他一些外围设备比如打印机，绘图仪等等。总之，计算机硬件部分是一个由多种电子和机械设备组成的硬件系统。 为了让人方便正确使用这些设备，就需要编写若干程序来管理这些设备，正是这些程序组成了计算机的软件系统。软件也可以分为两大类：系统软件和应用软件。人们首先直接">
 <meta name="twitter:image" content="http://yoursite.com/images/introduction-kafka/computer-layer.png">
 
 
@@ -453,7 +453,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-26 16:42:54" itemprop="dateModified" datetime="2019-07-26T16:42:54+08:00">2019-07-26</time>
+                <time title="修改时间：2019-07-26 16:51:33" itemprop="dateModified" datetime="2019-07-26T16:51:33+08:00">2019-07-26</time>
               
             
           </span>
@@ -525,7 +525,7 @@
       
 
       
-        <h3 id="从操作系统说起"><a href="#从操作系统说起" class="headerlink" title="从操作系统说起"></a>从操作系统说起</h3><p>计算机系统是由“硬件”和“软件”两大部分组成，计算机硬件包括一个或多个处理器(CPU)、内存、键盘、显示器、磁盘、I/O接口以及其他一些外围设备比如打印机，绘图仪等等。<br>总之，计算机硬件部分是一个由多种点击和机械设备组成的硬件系统。</p>
+        <h3 id="从操作系统说起"><a href="#从操作系统说起" class="headerlink" title="从操作系统说起"></a>从操作系统说起</h3><p>计算机系统是由“硬件”和“软件”两大部分组成，计算机硬件包括一个或多个处理器(CPU)、内存、键盘、显示器、磁盘、I/O接口以及其他一些外围设备比如打印机，绘图仪等等。<br>总之，计算机硬件部分是一个由多种电子和机械设备组成的硬件系统。</p>
 <p>为了让人方便正确使用这些设备，就需要编写若干程序来管理这些设备，正是这些程序组成了计算机的软件系统。软件也可以分为两大类：系统软件和应用软件。人们首先直接在硬件上加载一层程序，用它来管理整个计算机硬件设备以及一些软件信息资源，同时还为用户提供开发应用程序的环境，这就是操作系统软件和实用软件。应用软件是在操作系统支持下，为实现用户要求而编制的各种应用程序。</p>
 <p><img src="/images/introduction-kafka/computer-layer.png" alt="操作系统层次结构图"></p>
 <a id="more"></a>
@@ -542,7 +542,7 @@
 <p>客户端在游览器中发起请求获取内容，到看到具体内容经历了什么?</p>
 <p><img src="/images/introduction-kafka/os-message-flow.png" alt="消息发送"></p>
 <p>首先，该请求经过解析后，通过系统调用由用户态转为核心态执行，在核心态由操作系统中的TCP/IP协议代码和网卡驱动程序控制网卡把请求发送到相应的网络上，<br>等待Web服务器相应。当服务器返回时，由网卡接受，并通过内核传送给客户程序。</p>
-<p>在服务器端，内核通过网卡从网络上接受Web请求，并通过系统调用传递给Web服务器。Web服务器根据此服务请求执行相应的服务进程，并由内核把结果反到网络上传送给用户。</p>
+<p>在服务器端，内核通过网卡从网络上接受Web请求，并通过系统调用传递给Web服务器。Web服务器根据此服务请求执行相应的服务进程，并由内核把结果发送到网络上传送给用户。</p>
 <p>从上图中可以看到如果服务器从准备数据到发送数据经历了下面4个过程。</p>
 <ol>
 <li>调用read()时，将文件中的内容复制到内核模式下的Read Buffer中</li>
