@@ -139,7 +139,7 @@
 <meta property="og:image" content="http://yoursite.com/images/java/hashmap-unresize.png">
 <meta property="og:image" content="http://yoursite.com/images/java/hashmap-resize-threadA.png">
 <meta property="og:image" content="http://yoursite.com/images/java/hashmap-resize.png">
-<meta property="og:updated_time" content="2019-08-07T06:41:49.564Z">
+<meta property="og:updated_time" content="2019-08-07T06:45:27.999Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="请别再问我Jdk8 HashMap了，好吗？">
 <meta name="twitter:description" content="上一篇文章中提到了ThreadLocalMap是使用开放地址法来解决冲突问题的，而我们今天的主角HashMap是采用了链表法来处理冲突的,什么是链表法呢?  在散列表中，每个 “ 桶(bucket)” 或者 “ 槽(slot)” 会对应一条链表，所有散列值相同的元素我们都放到相同槽位对应的链表中。 jdk8和jdk7不一样，jdk7中没有红黑树,数组中只挂载链表。而jdk8中在桶容量大于等于64且">
@@ -455,7 +455,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-08-07 14:41:49" itemprop="dateModified" datetime="2019-08-07T14:41:49+08:00">2019-08-07</time>
+                <time title="修改时间：2019-08-07 14:45:27" itemprop="dateModified" datetime="2019-08-07T14:45:27+08:00">2019-08-07</time>
               
             
           </span>
@@ -564,7 +564,7 @@
 <ol>
 <li>如果旧数组中不存在数据碰撞(未挂载链表或者红黑树),那么直接将元素赋值到新数组中，其中<code>index=e.hash &amp; (newCap - 1)</code>。</li>
 <li>如果存在碰撞，且节点类型是树节点，则进行树节点拆分(挂载到扩容后的数组中或者转为链表)</li>
-<li>如果存在碰撞，且节点是链表，则处理链表的情况,但会保留节点原始顺序(JDK7中不会保留，这也是导致jdk7中多线程出现死循环的原因)</li>
+<li>如果存在碰撞，且节点是链表，则处理链表的情况,<strong>rehash过程会保留节点原始顺序(JDK7中不会保留，这也是导致jdk7中多线程出现死循环的原因)</strong></li>
 <li>判断元素在扩容后是否还处于原有的位置，这里通过<code>(e.hash &amp; oldCap) == 0</code>判断,oldCap表示扩容前数组的大小。</li>
 <li>发现元素不是在原有位置，更新hiTail和hiHead的指向关系</li>
 <li>将扩容后未改变index的元素复制到新数组</li>
@@ -591,7 +591,7 @@
 <h3 id="JDK7扩容时导致的死循环问题"><a href="#JDK7扩容时导致的死循环问题" class="headerlink" title="JDK7扩容时导致的死循环问题"></a>JDK7扩容时导致的死循环问题</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* Transfers all entries from current table to newTable.</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">transfer</span><span class="params">(Entry[] newTable)</span> </span>&#123;</span><br><span class="line"> Entry[] src = table;</span><br><span class="line"> <span class="keyword">int</span> newCapacity = newTable.length;</span><br><span class="line"> <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; src.length; j++) &#123;</span><br><span class="line">   Entry&lt;K,V&gt; e = src[j];</span><br><span class="line">   <span class="keyword">if</span> (e != <span class="keyword">null</span>) &#123;</span><br><span class="line">       src[j] = <span class="keyword">null</span>;</span><br><span class="line">       <span class="keyword">do</span> &#123;</span><br><span class="line">           <span class="comment">// B线程执行到这里之后就暂停了</span></span><br><span class="line">           Entry&lt;K,V&gt; next = e.next;</span><br><span class="line">           <span class="keyword">int</span> i = indexFor(e.hash, newCapacity);</span><br><span class="line">           e.next = newTable[i];</span><br><span class="line">           newTable[i] = e;</span><br><span class="line">           e = next;</span><br><span class="line">       &#125; <span class="keyword">while</span> (e != <span class="keyword">null</span>);</span><br><span class="line">   &#125;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>扩容时上面的代码容易导致死循环,是怎样导致的呢？假设有两个线程A和B都在执行这一段代码，数组大小由2扩容到4,在扩容前tab[1]=1–&gt;5–&gt;9。<br><img src="/images/java/hashmap-unresize.png" alt="扩容前"></p>
 <p>当B线程执行到 next = e.next时让出时间片,A线程执行完整段代码但是还没有将内部的table设置为新的newTable时，线程B继续执行。</p>
-<p>此时A线程执行完成之后，挂载在tab[1]的元素是9–&gt;5–&gt;1,注意这里的顺序被颠倒了。此时e = 1, next = 5;</p>
+<p>此时A线程执行完成之后，挂载在tab[1]的元素是9–&gt;5–&gt;1,注意这里的<strong>顺序被颠倒了</strong>。此时e = 1, next = 5;</p>
 <blockquote>
 <p>tab[i]的按照循环次数变更顺序, 1. tab[i]=1, 2. tab[i]=5–&gt;1, 3. tab[i]=9–&gt;5–&gt;1</p>
 </blockquote>
