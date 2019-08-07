@@ -4,9 +4,6 @@ date: 2019-07-29 18:08:35
 tags: java
 ---
 
-JDK8 HashMap源码分析
-
-
 上一篇文章中提到了ThreadLocalMap是使用开放地址法来解决冲突问题的，而我们今天的主角HashMap是采用了链表法来处理冲突的,什么是链表法呢?
 
 ![jdk8链表法](/images/java/hashmap-structure.png)
@@ -14,6 +11,8 @@ JDK8 HashMap源码分析
 在散列表中，每个 “ 桶(bucket)” 或者 “ 槽(slot)” 会对应一条链表，所有散列值相同的元素我们都放到相同槽位对应的链表中。
 
 jdk8和jdk7不一样，jdk7中没有红黑树,数组中只挂载链表。而jdk8中在桶容量大于等于64且链表节点数大于等于8的时候转换为红黑树。当红黑树节点数量小于6时又会转换为链表。
+
+<!--more-->
 
 ### 插入
 
@@ -23,7 +22,7 @@ jdk8和jdk7不一样，jdk7中没有红黑树,数组中只挂载链表。而jdk8
 
 通过散列函数计算出对应的槽，然后遍历链表或者删除
 
-### 链表为什么会转为红黑树
+### 链表为什么会转为红黑树?
 
 上一篇文章有提到过通过装载因子来判定空闲槽位还有多少，如果超过装载因子的值就会动态扩容,HashMap会扩容为原来的两倍大小(初始容量为16,即槽(数组)的大小为16)。但是无论负载因子和散列函数设得再合理，也避免不了链表过长的情况，一旦链表过长查找和删除元素就比较耗时，影响HashMap性能,所以JDK8中对其进行了优化，当链表长度大于等于8的时候将链表转换为红黑树，利用红黑树的特点(查找、插入、删除的时间复杂度最坏为O(logn))，可以提高HashMap的性能。当节点个数少于6个的时候，又会将红黑树转化为链表。因为在数据量较小的情况下，红黑树要维持平衡，比起链表来，性能上的优势并不明显，而且编码难度比链表要大上不少。
 
@@ -95,15 +94,15 @@ int hash = (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
 int index = hash & (tab.length-1);
 ```
 
-从上面可以看出,key为null是时候放到数组中的第一个位置的,我们一般定位key应当存放在数组哪个位置的时候一般是这样做的 `key.hashCode() % tab.length`。但是当tab.length是2的n次幂的时候，就可以转换为 A % B = A & (B-1);所以 index = hash & (tab.length-1)就可以理解了。
->这里是使用了除留余数法的理念来设计的,可以可能减少hash冲突,可以参考http://www.nowamagic.net/academy/detail/3008040
+从上面可以看出,key为null是时候放到数组中的第一个位置的,我们一般定位key应当存放在数组哪个位置的时候一般是这样做的 `key.hashCode() % tab.length`。但是当tab.length是2的n次幂的时候，就可以转换为 `A % B = A & (B-1)`;所以 `index = hash & (tab.length-1)`就可以理解了。
+>这里是使用了除留余数法的理念来设计的,可以可能减少hash冲突
 >除留余数法 : 用关键字K除以某个不大于hash表长度m的数p,将所得余数作为hash表地址
 >比如x/8=x>>3,即把x右移3位，得到了x/8的商，被移掉的部分(后三位)，则是x%8，也就是余数。
 
-而对于hash值的运算为什么是(h = key.hashCode()) ^ (h >>> 16)呢？也就是为什么要向右移16位呢?直接使用 key.hashCode() & (tab.length -1)不好吗？
+而对于hash值的运算为什么是`(h = key.hashCode()) ^ (h >>> 16)`呢？也就是为什么要向右移16位呢?直接使用 `key.hashCode() & (tab.length -1)`不好吗？
 如果这样做，由于tab.length肯定是远远小于hash值的,所以位运算的时候只有低位才参与运算，而高位毫无作为，会带来hash冲突的风险。
 
-而hashcode本身是一个32位整形值，向右移位16位之后再进行异或运行计算出来的整形将具有高位和低位的性质，就可以得到一个非常随机的hash值，在通过除留余数法，得到的index就更低概率的减少了冲突。
+**而hashcode本身是一个32位整形值，向右移位16位之后再进行异或运行计算出来的整形将具有高位和低位的性质，就可以得到一个非常随机的hash值，在通过除留余数法，得到的index就更低概率的减少了冲突。**
 
 
 ### 插入数据
@@ -116,44 +115,44 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
 
  // 1. 如果数组未初始化,则初始化数组
  if ((tab = table) == null || (n = tab.length) == 0)
-     n = (tab = resize()).length;
+    n = (tab = resize()).length;
 
  // 2. 如果当前节点未被插入数据(未碰撞),则直接new一个节点进行插入
  if ((p = tab[i = (n - 1) & hash]) == null)
-     tab[i] = newNode(hash, key, value, null);
+    tab[i] = newNode(hash, key, value, null);
  else {
-     Node<K,V> e; K k;
+    Node<K,V> e; K k;
 
-     // 3. 碰撞了,已存在相同的key,则进行覆盖
-     if (p.hash == hash &&
-         ((k = p.key) == key || (key != null && key.equals(k))))
-         e = p;
-     else if (p instanceof TreeNode)
-          // 4. 碰撞后发现为树结构，则挂载在树上
-         e = ((TreeNode<K,V>)p).putTreeVal(this, tab, hash, key, value);
-     else {
-         for (int binCount = 0; ; ++binCount) {
-              // 5. 进行尾插入,如果链表节点数达到上线则转换为红黑树
-             if ((e = p.next) == null) {
-                 p.next = newNode(hash, key, value, null);
-                 if (binCount >= TREEIFY_THRESHOLD - 1) // -1 for 1st
-                     treeifyBin(tab, hash);
-                 break;
-             }
-             // 6. 链表中碰撞了
-             if (e.hash == hash &&
-                 ((k = e.key) == key || (key != null && key.equals(k))))
-                 break;
-             p = e;
-         }
+    // 3. 碰撞了,已存在相同的key,则进行覆盖
+   if (p.hash == hash &&
+       ((k = p.key) == key || (key != null && key.equals(k))))
+       e = p;
+   else if (p instanceof TreeNode)
+        // 4. 碰撞后发现为树结构，则挂载在树上
+       e = ((TreeNode<K,V>)p).putTreeVal(this, tab, hash, key, value);
+   else {
+       for (int binCount = 0; ; ++binCount) {
+            // 5. 进行尾插入,如果链表节点数达到上线则转换为红黑树
+           if ((e = p.next) == null) {
+               p.next = newNode(hash, key, value, null);
+               if (binCount >= TREEIFY_THRESHOLD - 1) // -1 for 1st
+                   treeifyBin(tab, hash);
+               break;
+           }
+           // 6. 链表中碰撞了
+           if (e.hash == hash &&
+               ((k = e.key) == key || (key != null && key.equals(k))))
+               break;
+           p = e;
+       }
      }
      // 7. 用新value替换旧的value
      if (e != null) { // existing mapping for key
-         V oldValue = e.value;
-         if (!onlyIfAbsent || oldValue == null)
-             e.value = value;
-         afterNodeAccess(e);
-         return oldValue;
+       V oldValue = e.value;
+       if (!onlyIfAbsent || oldValue == null)
+           e.value = value;
+       afterNodeAccess(e);
+       return oldValue;
      }
  }
  ++modCount;
@@ -248,13 +247,13 @@ if (oldTab != null) {
 ```
 上面的代码中展现了整个rehash的过程，先遍历旧数组中的元素，接着做下面的事情
 
-1. 如果旧数组中不存在数据碰撞(未挂载链表或者红黑树),那么直接将元素赋值到新数组中，其中index的确定在上面有讲到过。
+1. 如果旧数组中不存在数据碰撞(未挂载链表或者红黑树),那么直接将元素赋值到新数组中，其中`index=e.hash & (newCap - 1)`。
 2. 如果存在碰撞，且节点类型是树节点，则进行树节点拆分(挂载到扩容后的数组中或者转为链表)
 3. 如果存在碰撞，且节点是链表，则处理链表的情况,但会保留节点原始顺序(JDK7中不会保留，这也是导致jdk7中多线程出现死循环的原因)
-4. 判断元素在扩容后是否还处于原有的位置，这里通过(e.hash & oldCap) == 0判断,oldCap表示扩容前数组的大小。
+4. 判断元素在扩容后是否还处于原有的位置，这里通过`(e.hash & oldCap) == 0`判断,oldCap表示扩容前数组的大小。
 5. 发现元素不是在原有位置，更新hiTail和hiHead的指向关系
 6. 将扩容后未改变index的元素复制到新数组
-7. 将扩容后改变了index位置的元素复制到型数组，新数组的下标是 j + oldCap。
+7. 将扩容后改变了index位置的元素复制到型数组，新数组的下标是 `j + oldCap`。
 
 其中第4点和第5点中将链表的元素分为两部分(do..while部分)，一部分是rehash后index未改变的元素，一部分是index被改变的元素。分别用两个指针来指向头尾节点。
 >比如当oldCap=8时,1-->9-->17都挂载在tab[1]上,而扩容后，1-->17挂载在tab[1]上,9挂载在tab[9]上。
@@ -281,11 +280,11 @@ e.hashCode = x       x x x x x
 
 ```
 
-扩容后，index的位置由低四位来决定。也就是说扩容后index的位置是否改变是由高字节来决定的,也就是说我们只需要将hashCode和高位进行运算即可得到index是否改变。
+扩容后，index的位置由低四位来决定,而低三位和扩容前一致。也就是说扩容后index的位置是否改变是由高字节来决定的,也就是说我们只需要将hashCode和高位进行运算即可得到index是否改变。
 
 而刚好扩容之后的高位和oldCap的高位一样。如上面的15二进制是1111,而8的二进制是1000,他们的高位都是一样的。所以我们通过e.hash & oldCap运算的结果即可判断index是否改变。
 
-同理，如果扩容后index该变了。新的index和旧的index的值也是高位不同，我们发现其新值刚好是 oldIndex + oldCap的值。所以当index改变后,新的index是 j + oldCap。
+同理，如果扩容后index该变了。新的index和旧的index的值也是高位不同，其新值刚好是 oldIndex + oldCap的值。所以当index改变后,新的index是 j + oldCap。
 
 
 至此,resize方法结束,元素被插入到了该有的位置。
@@ -386,11 +385,15 @@ void transfer(Entry[] newTable) {
 
 ![线程A执行完成后](/images/java/hashmap-resize-threadA.png)
 
-同样B线程第一次循环执行完成后,tab[i]=1, 第二次循环完成后: tab[i]=5-->1，此时变量e指向1。 开始第三次循环1没有next,所以next指向null。当执行e.next = newTable[i]的时候,就形成了newTable[i]=1-->5-->1的指向，此时就形成了环。当在数组该位置get寻找对应的key的时候，就发生了死循环,引起CPU 100%问题。
+同样B线程我们也按照循环次数来分析
+1. 第一次循环执行完成后,newTable[i]=1, e = 5
+2. 第二次循环完成后: newTable[i]=5-->1, e = 1。 
+3. 第三次循环,e没有next,所以next指向null。当执行e.next = newTable[i]\(1-->5)的时候,就形成了 1-->5-->1的环,再执行newTable[i]=e,此时newTable[i] = 1-->5-->1。
+
+当在数组该位置get寻找对应的key的时候，就发生了死循环,引起CPU 100%问题。
 
 ![线程B执行扩容过程](/images/java/hashmap-resize.png)
 
 
 而JDK8就不会出现这个问题,它在这里就有一个优化，它使用了两个指针来分别指向头结点和尾节点，而且还保证了元素原本的顺序。
-当然HashMap仍然是不安全地,所以在多线程并发条件性推荐使用ConcurrentHashMap。
-
+当然HashMap仍然是不安全地,所以在多线程并发条件下推荐使用ConcurrentHashMap。
