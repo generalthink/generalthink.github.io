@@ -1,6 +1,6 @@
 ---
 title: LinkedHashMap源码解析
-date: 2019-08-07 16:13:36
+date: 2019-08-16 16:13:36
 tags: java
 ---
 
@@ -9,6 +9,8 @@ tags: java
 LinkedHashMap是HashMap的子类,在原有HashMap数据结构的基础上,它还维护着一个双向链表链接所有entry,这个链表定义了迭代顺序，通常是数据插入的顺序。
 
 ![LinkedHashMap结构](/images/java/LinkedHashMap_structure.png)
+
+<!--more-->
 
 上图我只画了链表，其实红黑树节点也是一样的，只是节点类型不一样而已
 
@@ -39,8 +41,7 @@ public class LinkedHashMap<K,V> extends HashMap<K,V> implements Map<K,V>
 ```
 从LinkedHashMap的定义里面可以看到它单独维护了一个双向链表，用于记录元素插入的顺序。这也是为什么我们打印LinkedHashMap的时候可以按照插入顺序打印的支撑。而accessOrder属性则指明了进行遍历时是按照什么顺序进行访问,我们可以通过它的构造方法自己指定顺序。
 ```java
-public LinkedHashMap(int initialCapacity,
-                   float loadFactor,
+public LinkedHashMap(int initialCapacity,float loadFactor,
                    boolean accessOrder) {
   super(initialCapacity, loadFactor);
   this.accessOrder = accessOrder;
@@ -80,7 +81,7 @@ afterNodeAccess()方法中如果accessOrder=true时会移动节点到双向链�
 // evict如果为false，则表处于创建模式,当我们new HashMap(Map map)的时候就处于创建模式
 void afterNodeInsertion(boolean evict) { // possibly remove eldest
   LinkedHashMap.Entry<K,V> first;
-  
+
   // removeEldestEntry 总是返回false,所以下面的代码不会执行。
   if (evict && (first = head) != null && removeEldestEntry(first)) {
       K key = first.key;
