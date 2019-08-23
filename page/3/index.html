@@ -388,6 +388,206 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/07/kafka-producer-source-code-analysis/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhu.Yang">
+      <meta itemprop="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhu.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/03/07/kafka-producer-source-code-analysis/" class="post-title-link" itemprop="http://yoursite.com/page/3/index.html">我花了一周读了Kafka Producer的源码</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-07 16:29:16" itemprop="dateCreated datePublished" datetime="2019-03-07T16:29:16+08:00">2019-03-07</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-08-23 13:11:32" itemprop="dateModified" datetime="2019-08-23T13:11:32+08:00">2019-08-23</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/03/07/kafka-producer-source-code-analysis/" class="leancloud_visitors" data-flag-title="我花了一周读了Kafka Producer的源码">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">13k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">12 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>talk is easy,show me the code,先来看一段创建producer的代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">KafkaProducerDemo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    KafkaProducer&lt;String,String&gt; producer = createProducer();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//指定topic,key,value</span></span><br><span class="line">    ProducerRecord&lt;String,String&gt; record = <span class="keyword">new</span> ProducerRecord&lt;&gt;(<span class="string">"test1"</span>,<span class="string">"newkey1"</span>,<span class="string">"newvalue1"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//异步发送</span></span><br><span class="line">    producer.send(record);</span><br><span class="line">    producer.close();</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">"发送完成"</span>);</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> KafkaProducer&lt;String,String&gt; <span class="title">createProducer</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Properties props = <span class="keyword">new</span> Properties();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//bootstrap.servers 必须设置</span></span><br><span class="line">    props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, <span class="string">"192.168.239.131:9092"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// key.serializer   必须设置</span></span><br><span class="line">    props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());</span><br><span class="line"></span><br><span class="line">    <span class="comment">// value.serializer  必须设置</span></span><br><span class="line">    props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());</span><br><span class="line"></span><br><span class="line">    <span class="comment">//client.id</span></span><br><span class="line">    props.put(ProducerConfig.CLIENT_ID_CONFIG, <span class="string">"client-0"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//retries</span></span><br><span class="line">    props.put(ProducerConfig.RETRIES_CONFIG, <span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//acks</span></span><br><span class="line">    props.put(ProducerConfig.ACKS_CONFIG, <span class="string">"all"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//max.in.flight.requests.per.connection</span></span><br><span class="line">    props.put(ProducerConfig.MAX_IN_FLIGHT_REQUESTS_PER_CONNECTION, <span class="number">1</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//linger.ms</span></span><br><span class="line">    props.put(ProducerConfig.LINGER_MS_CONFIG, <span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//batch.size</span></span><br><span class="line">    props.put(ProducerConfig.BATCH_SIZE_CONFIG, <span class="number">10240</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//buffer.memory</span></span><br><span class="line">    props.put(ProducerConfig.BUFFER_MEMORY_CONFIG, <span class="number">10240</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> KafkaProducer&lt;&gt;(props);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/03/07/kafka-producer-source-code-analysis/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/27/introduction-of-kafka/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -450,7 +650,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-08-19 09:34:00" itemprop="dateModified" datetime="2019-08-19T09:34:00+08:00">2019-08-19</time>
+                <time title="修改时间：2019-08-23 13:11:32" itemprop="dateModified" datetime="2019-08-23T13:11:32+08:00">2019-08-23</time>
               
             
           </span>
@@ -652,7 +852,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-08-19 09:34:00" itemprop="dateModified" datetime="2019-08-19T09:34:00+08:00">2019-08-19</time>
+                <time title="修改时间：2019-08-23 13:11:32" itemprop="dateModified" datetime="2019-08-23T13:11:32+08:00">2019-08-23</time>
               
             
           </span>
@@ -854,7 +1054,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-08-19 09:34:00" itemprop="dateModified" datetime="2019-08-19T09:34:00+08:00">2019-08-19</time>
+                <time title="修改时间：2019-08-23 13:11:32" itemprop="dateModified" datetime="2019-08-23T13:11:32+08:00">2019-08-23</time>
               
             
           </span>
@@ -1060,7 +1260,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-08-19 09:34:00" itemprop="dateModified" datetime="2019-08-19T09:34:00+08:00">2019-08-19</time>
+                <time title="修改时间：2019-08-23 13:11:32" itemprop="dateModified" datetime="2019-08-23T13:11:32+08:00">2019-08-23</time>
               
             
           </span>
@@ -1263,7 +1463,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-08-19 09:34:00" itemprop="dateModified" datetime="2019-08-19T09:34:00+08:00">2019-08-19</time>
+                <time title="修改时间：2019-08-23 13:11:32" itemprop="dateModified" datetime="2019-08-23T13:11:32+08:00">2019-08-23</time>
               
             
           </span>
@@ -1463,7 +1663,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-08-19 09:34:00" itemprop="dateModified" datetime="2019-08-19T09:34:00+08:00">2019-08-19</time>
+                <time title="修改时间：2019-08-23 13:11:32" itemprop="dateModified" datetime="2019-08-23T13:11:32+08:00">2019-08-23</time>
               
             
           </span>
@@ -1662,7 +1862,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-08-19 09:34:00" itemprop="dateModified" datetime="2019-08-19T09:34:00+08:00">2019-08-19</time>
+                <time title="修改时间：2019-08-23 13:11:32" itemprop="dateModified" datetime="2019-08-23T13:11:32+08:00">2019-08-23</time>
               
             
           </span>
@@ -1863,7 +2063,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-08-19 09:34:00" itemprop="dateModified" datetime="2019-08-19T09:34:00+08:00">2019-08-19</time>
+                <time title="修改时间：2019-08-23 13:11:32" itemprop="dateModified" datetime="2019-08-23T13:11:32+08:00">2019-08-23</time>
               
             
           </span>
@@ -2081,7 +2281,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-08-19 09:34:00" itemprop="dateModified" datetime="2019-08-19T09:34:00+08:00">2019-08-19</time>
+                <time title="修改时间：2019-08-23 13:11:32" itemprop="dateModified" datetime="2019-08-23T13:11:32+08:00">2019-08-23</time>
               
             
           </span>
@@ -2221,228 +2421,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/17/hbase-basic-command/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zhu.Yang">
-      <meta itemprop="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhu.Yang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/12/17/hbase-basic-command/" class="post-title-link" itemprop="http://yoursite.com/page/3/index.html">HBase的常用基础命令</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-12-17 13:25:41" itemprop="dateCreated datePublished" datetime="2018-12-17T13:25:41+08:00">2018-12-17</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-08-19 09:34:00" itemprop="dateModified" datetime="2019-08-19T09:34:00+08:00">2019-08-19</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/HBase/" itemprop="url" rel="index"><span itemprop="name">HBase</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/12/17/hbase-basic-command/" class="leancloud_visitors" data-flag-title="HBase的常用基础命令">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数：</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">本文字数：</span>
-                
-                <span title="本文字数">1.1k</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">1 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="/images/hbase-command/hbase-logo.png" alt="hbase"><br>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2018/12/17/hbase-basic-command/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-         
-          <!--/noindex-->
-        
-      
-    </p></div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -2487,7 +2470,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">60</span>
+                    <span class="site-state-item-count">61</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2589,7 +2572,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">24</span>
+                      
+                    
+                    <span class="site-state-item-count">25</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -2661,7 +2646,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">319k</span>
+    <span title="站点总字数">326k</span>
   
 
   
@@ -2670,7 +2655,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">4:50</span>
+    <span title="站点阅读时长">4:56</span>
   
 </div>
 
