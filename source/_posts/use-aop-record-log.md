@@ -52,13 +52,13 @@ public @interface OpLog {
 @RequestMapping("/user")
 public class CpGroupController {
 
-    // 注意这里的userParam和@RequestBody的userParam名字必需要要一致
-    @OpLog(module = "用户管理", opType = "新增", key = "userParam.name")
-    @PostMapping("/add")
-    public BaseResponse<Boolean> add(@RequestBody UserParam userParam) {
-        
-        return ResponseUtil.success(userService.add(userParam));
-    }
+  // 注意这里的userParam和@RequestBody的userParam名字必需要要一致
+  @OpLog(module = "用户管理", opType = "新增", key = "userParam.name")
+  @PostMapping("/add")
+  public BaseResponse<Boolean> add(@RequestBody UserParam userParam) {
+      
+      return ResponseUtil.success(userService.add(userParam));
+  }
 }
 ```
 
@@ -71,146 +71,146 @@ public class CpGroupController {
 @Slf4j
 public class OpLogAspect {
 
-    @Autowired
-    private OperateLogService operateLogService;
+  @Autowired
+  private OperateLogService operateLogService;
 
-    int paramNameIndex = 0;
-    int propertyIndexFrom = 1;
+  int paramNameIndex = 0;
+  int propertyIndexFrom = 1;
 
-    @Pointcut("execution(public * com.generalthink.springboot.web.controller..*.*(..))")
-    public void webLogPointcut() {
+  @Pointcut("execution(public * com.generalthink.springboot.web.controller..*.*(..))")
+  public void webLogPointcut() {
+  }
+
+  @Around(value = "webLogPointcut() && @annotation(opLog)", argNames = "joinPoint,opLog")
+  public Object around(ProceedingJoinPoint joinPoint, OpLog opLog) throws Throwable {
+
+    Object objReturn = joinPoint.proceed();
+
+    try {
+        OperateLog operationLog = generateOperateLog(joinPoint, opLog);
+
+        operateLogService.save(operationLog);
+    } catch (Exception e) {
+        log.error("operateLog record error", e);
     }
 
-    @Around(value = "webLogPointcut() && @annotation(opLog)", argNames = "joinPoint,opLog")
-    public Object around(ProceedingJoinPoint joinPoint, OpLog opLog) throws Throwable {
+    return objReturn;
+  }
 
-        Object objReturn = joinPoint.proceed();
+  private OperateLog generateOperateLog(ProceedingJoinPoint joinPoint, OpLog opLog) {
 
+    String requestUrl = extractRequestUrl();
+
+    Object recordKey = getOpLogRecordKey(joinPoint, opLog);
+
+    return OperateLog.builder()
+            .module(opLog.module())
+            .opType(opLog.opType())
+            .level(opLog.level())
+            .operateTimeUnix(CommonUtils.getNowTimeUnix())
+            .recordKey(recordKey != null ? recordKey.toString() : null)
+            .url(requestUrl)
+            .operator(getCurrentUser())
+            .build();
+  }
+
+  // 获取当前用户
+  private String getCurrentUser() {
+    Subject subject = SecurityUtils.getSubject();
+    return (String) subject.getPrincipal();
+  }
+
+  // 获取想要记录的key
+  private Object getOpLogRecordKey(ProceedingJoinPoint joinPoint, OpLog opLog) {
+    String key = opLog.key();
+
+    if(StringUtils.isEmpty(key)) {
+        return null;
+    }
+
+    String[] keys = key.split("\\.");
+
+    //入参  value
+    Object[] args = joinPoint.getArgs();
+
+    CodeSignature codeSignature = (CodeSignature) joinPoint.getSignature();
+
+    // 获取Controller方法上的参数名称
+    String[] paramNames = codeSignature.getParameterNames();
+
+    Object paramArg = null;
+
+    for (int i = 0; i < paramNames.length; i++) {
+        String paramName = paramNames[i];
+        if (paramName.equals(keys[paramNameIndex])) {
+            paramArg = args[i];
+            break;
+        }
+    }
+
+    if(keys.length == 1) {
+        return paramArg;
+    }
+
+    // 获取参数的值
+    Object paramValue = null;
+    if(null != paramArg) {
         try {
-            OperateLog operationLog = generateOperateLog(joinPoint, opLog);
-
-            operateLogService.save(operationLog);
-        } catch (Exception e) {
-            log.error("operateLog record error", e);
+            paramValue = getParamValue(paramArg, keys, propertyIndexFrom);
+        } catch (IllegalAccessException e) {
+            log.error("parse field error", e);
         }
-
-        return objReturn;
     }
 
-    private OperateLog generateOperateLog(ProceedingJoinPoint joinPoint, OpLog opLog) {
+    return paramValue;
+  }
 
-        String requestUrl = extractRequestUrl();
+  public Object getParamValue(Object param, String[] keys, int idx)
+          throws IllegalAccessException {
+    Optional<Field> fieldOptional = getAllFields(new ArrayList<>(), param.getClass())
+            .stream()
+            .filter(field -> field.getName().equalsIgnoreCase(keys[idx]))
+            .findFirst();
 
-        Object recordKey = getOpLogRecordKey(joinPoint, opLog);
-
-        return OperateLog.builder()
-                .module(opLog.module())
-                .opType(opLog.opType())
-                .level(opLog.level())
-                .operateTimeUnix(CommonUtils.getNowTimeUnix())
-                .recordKey(recordKey != null ? recordKey.toString() : null)
-                .url(requestUrl)
-                .operator(getCurrentUser())
-                .build();
-    }
-
-    // 获取当前用户
-    private String getCurrentUser() {
-        Subject subject = SecurityUtils.getSubject();
-        return (String) subject.getPrincipal();
-    }
-
-    // 获取想要记录的key
-    private Object getOpLogRecordKey(ProceedingJoinPoint joinPoint, OpLog opLog) {
-        String key = opLog.key();
-
-        if(StringUtils.isEmpty(key)) {
-            return null;
-        }
-
-        String[] keys = key.split("\\.");
-
-        //入参  value
-        Object[] args = joinPoint.getArgs();
-
-        CodeSignature codeSignature = (CodeSignature) joinPoint.getSignature();
-
-        // 获取Controller方法上的参数名称
-        String[] paramNames = codeSignature.getParameterNames();
-
-        Object paramArg = null;
-
-        for (int i = 0; i < paramNames.length; i++) {
-            String paramName = paramNames[i];
-            if (paramName.equals(keys[paramNameIndex])) {
-                paramArg = args[i];
-                break;
-            }
-        }
-
-        if(keys.length == 1) {
-            return paramArg;
-        }
-
-        // 获取参数的值
-        Object paramValue = null;
-        if(null != paramArg) {
-            try {
-                paramValue = getParamValue(paramArg, keys, propertyIndexFrom);
-            } catch (IllegalAccessException e) {
-                log.error("parse field error", e);
-            }
-        }
-
-        return paramValue;
-    }
-
-    public Object getParamValue(Object param, String[] keys, int idx)
-            throws IllegalAccessException {
-        Optional<Field> fieldOptional = getAllFields(new ArrayList<>(), param.getClass())
-                .stream()
-                .filter(field -> field.getName().equalsIgnoreCase(keys[idx]))
-                .findFirst();
-
-        if(!fieldOptional.isPresent()) {
-            return null;
-        }
-        
-        // 设置属性可访问,因为bean当中属性一般都是private
-        Field field = fieldOptional.get();
-        field.setAccessible(true);
-
-
-        if(idx + 1 == keys.length) {
-            return field.get(param);
-        }
-
-        return getParamValue(field.get(param), keys, idx + 1);
-    }
-
-    // 递归获取所有Field
-    public List<Field> getAllFields(List<Field> fieldList, Class<?> type) {
-
-        // 获取当前类的所有Field
-        fieldList.addAll(Arrays.asList(type.getDeclaredFields()));
-        
-        // 获取父类的所有Field
-        Class<?> superClass = type.getSuperclass();
-        if(superClass != null && superClass != Object.class) {
-            getAllFields(fieldList,superClass);
-        }
-
-        return fieldList;
+    if(!fieldOptional.isPresent()) {
+        return null;
     }
     
-    // 获取访问URL
-    private String extractRequestUrl() {
-        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder
-                .getRequestAttributes();
-        HttpServletRequest request = attributes.getRequest();
+    // 设置属性可访问,因为bean当中属性一般都是private
+    Field field = fieldOptional.get();
+    field.setAccessible(true);
 
-        return request.getRequestURL().toString();
+
+    if(idx + 1 == keys.length) {
+        return field.get(param);
     }
+
+    return getParamValue(field.get(param), keys, idx + 1);
+  }
+
+  // 递归获取所有Field
+  public List<Field> getAllFields(List<Field> fieldList, Class<?> type) {
+
+    // 获取当前类的所有Field
+    fieldList.addAll(Arrays.asList(type.getDeclaredFields()));
+    
+    // 获取父类的所有Field
+    Class<?> superClass = type.getSuperclass();
+    if(superClass != null && superClass != Object.class) {
+        getAllFields(fieldList,superClass);
+    }
+
+    return fieldList;
+  }
+  
+  // 获取访问URL
+  private String extractRequestUrl() {
+    ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder
+            .getRequestAttributes();
+    HttpServletRequest request = attributes.getRequest();
+
+    return request.getRequestURL().toString();
+  }
 }
 
 ```
