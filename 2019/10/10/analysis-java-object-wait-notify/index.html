@@ -127,18 +127,20 @@
 
 
 
-  <meta name="description" content="1. 登录mongodb以下命令可以用于登录mongodb数据库，但是需要保证用户你声明的数据库中存在对应的用户和密码123mongo --host &amp;lt;hostName&amp;gt; --port &amp;lt;port&amp;gt; -u &amp;lt;username&amp;gt; -p &amp;lt;password&amp;gt; --authenticationDatabase &amp;lt;dbname&amp;gt;mongo --h">
-<meta name="keywords" content="mongodb">
+  <meta name="description" content="在Java的Object类中有2个我们不怎么常用(框架中用的更多)的方法：wait()与notify()或notfiyAll()，这两个方法主要用于多线程间的协同处理，即控制线程之间的等待、通知、切换及唤醒。 首先了解下线程有哪几种状态,Java的Thread.State中定义了线程的6种状态,分别如下：  NEW    未启动的,不会出现在dump文件中(可以通过jstack命令查看线程堆栈)">
+<meta name="keywords" content="Java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MongoDB初学者最常用的10个命令">
-<meta property="og:url" content="http://yoursite.com/2019/09/26/top-10-common-mongodb-commands-for-beginners/index.html">
+<meta property="og:title" content="分析Java Object中的wait&#x2F;notify">
+<meta property="og:url" content="http://yoursite.com/2019/10/10/analysis-java-object-wait-notify/index.html">
 <meta property="og:site_name" content="Zhu.Yang">
-<meta property="og:description" content="1. 登录mongodb以下命令可以用于登录mongodb数据库，但是需要保证用户你声明的数据库中存在对应的用户和密码123mongo --host &amp;lt;hostName&amp;gt; --port &amp;lt;port&amp;gt; -u &amp;lt;username&amp;gt; -p &amp;lt;password&amp;gt; --authenticationDatabase &amp;lt;dbname&amp;gt;mongo --h">
+<meta property="og:description" content="在Java的Object类中有2个我们不怎么常用(框架中用的更多)的方法：wait()与notify()或notfiyAll()，这两个方法主要用于多线程间的协同处理，即控制线程之间的等待、通知、切换及唤醒。 首先了解下线程有哪几种状态,Java的Thread.State中定义了线程的6种状态,分别如下：  NEW    未启动的,不会出现在dump文件中(可以通过jstack命令查看线程堆栈)">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-10-11T05:38:25.630Z">
+<meta property="og:image" content="http://yoursite.com/images/java_monitor.bmp">
+<meta property="og:updated_time" content="2019-10-11T05:38:25.626Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MongoDB初学者最常用的10个命令">
-<meta name="twitter:description" content="1. 登录mongodb以下命令可以用于登录mongodb数据库，但是需要保证用户你声明的数据库中存在对应的用户和密码123mongo --host &amp;lt;hostName&amp;gt; --port &amp;lt;port&amp;gt; -u &amp;lt;username&amp;gt; -p &amp;lt;password&amp;gt; --authenticationDatabase &amp;lt;dbname&amp;gt;mongo --h">
+<meta name="twitter:title" content="分析Java Object中的wait&#x2F;notify">
+<meta name="twitter:description" content="在Java的Object类中有2个我们不怎么常用(框架中用的更多)的方法：wait()与notify()或notfiyAll()，这两个方法主要用于多线程间的协同处理，即控制线程之间的等待、通知、切换及唤醒。 首先了解下线程有哪几种状态,Java的Thread.State中定义了线程的6种状态,分别如下：  NEW    未启动的,不会出现在dump文件中(可以通过jstack命令查看线程堆栈)">
+<meta name="twitter:image" content="http://yoursite.com/images/java_monitor.bmp">
 
 
 
@@ -147,7 +149,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/09/26/top-10-common-mongodb-commands-for-beginners/">
+  <link rel="canonical" href="http://yoursite.com/2019/10/10/analysis-java-object-wait-notify/">
 
 
 
@@ -157,7 +159,7 @@
   };
 </script>
 
-  <title>MongoDB初学者最常用的10个命令 | Zhu.Yang</title>
+  <title>分析Java Object中的wait/notify | Zhu.Yang</title>
   
 
 
@@ -390,7 +392,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/26/top-10-common-mongodb-commands-for-beginners/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/10/analysis-java-object-wait-notify/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Zhu.Yang">
@@ -407,7 +409,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">MongoDB初学者最常用的10个命令
+          <h2 class="post-title" itemprop="name headline">分析Java Object中的wait/notify
 
               
             
@@ -433,7 +435,7 @@
                 
               
 
-              <time title="创建时间：2019-09-26 14:23:03" itemprop="dateCreated datePublished" datetime="2019-09-26T14:23:03+08:00">2019-09-26</time>
+              <time title="创建时间：2019-10-10 11:11:59" itemprop="dateCreated datePublished" datetime="2019-10-10T11:11:59+08:00">2019-10-10</time>
             
 
             
@@ -456,24 +458,6 @@
           </span>
 
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/mongodb/" itemprop="url" rel="index"><span itemprop="name">mongodb</span></a></span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -481,7 +465,7 @@
 
           
           
-             <span id="/2019/09/26/top-10-common-mongodb-commands-for-beginners/" class="leancloud_visitors" data-flag-title="MongoDB初学者最常用的10个命令">
+             <span id="/2019/10/10/analysis-java-object-wait-notify/" class="leancloud_visitors" data-flag-title="分析Java Object中的wait/notify">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -506,7 +490,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">2.8k</span>
+                <span title="本文字数">5.7k</span>
               
 
               
@@ -520,7 +504,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">3 分钟</span>
+                <span title="阅读时长">5 分钟</span>
               
             </div>
           
@@ -540,25 +524,70 @@
       
 
       
-        <h4 id="1-登录mongodb"><a href="#1-登录mongodb" class="headerlink" title="1. 登录mongodb"></a>1. 登录mongodb</h4><p>以下命令可以用于登录mongodb数据库，但是需要保证用户你声明的数据库中存在对应的用户和密码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mongo --host &lt;hostName&gt; --port &lt;port&gt; -u &lt;username&gt; -p &lt;password&gt; --authenticationDatabase &lt;dbname&gt;</span><br><span class="line"></span><br><span class="line">mongo --host 192.168.140.11 -u test -p 123456 --authenticationDatabase test_db</span><br></pre></td></tr></table></figure></p>
+        <p>在Java的Object类中有2个我们不怎么常用(框架中用的更多)的方法：wait()与notify()或notfiyAll()，这两个方法主要用于多线程间的协同处理，即控制线程之间的等待、通知、切换及唤醒。</p>
+<p>首先了解下线程有哪几种状态,Java的<a href="https://docs.oracle.com/javase/7/docs/api/java/lang/Thread.State.html" target="_blank" rel="noopener">Thread.State</a>中定义了线程的6种状态,分别如下：</p>
+<ol>
+<li>NEW    未启动的,不会出现在dump文件中(可以通过jstack命令查看线程堆栈)</li>
+<li>RUNNABLE    正在JVM中执行的</li>
+<li>BLOCKED    被阻塞,等待获取监视器锁进入synchronized代码块或者在调用Object.wait之后重新进入synchronized代码块</li>
+<li>WAITING    无限期等待另一个线程执行特定动作后唤醒它,也就是调用Object.wait后会等待拥有同一个监视器锁的线程调用notify/notifyAll来进行唤醒</li>
+<li>TIMED_WAITING    有时限的等待另一个线程执行特定动作</li>
+<li>TERMINATED    已经完成了执行</li>
+</ol>
 <a id="more"></a>
-<h4 id="2-列出所有的数据库"><a href="#2-列出所有的数据库" class="headerlink" title="2. 列出所有的数据库"></a>2. 列出所有的数据库</h4><p>  当你以适当角色的用户身份登录后，可以使用以下命令查看所有数据库</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show dbs</span><br></pre></td></tr></table></figure>
-<h4 id="3-选择要使用的数据库"><a href="#3-选择要使用的数据库" class="headerlink" title="3. 选择要使用的数据库"></a>3. 选择要使用的数据库</h4><p>要开始使用特定的数据库，可以用以下命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">use &lt;databaseName&gt;</span><br></pre></td></tr></table></figure>
-<h4 id="4-创建用户"><a href="#4-创建用户" class="headerlink" title="4. 创建用户"></a>4. 创建用户</h4><p>  当你想让不同的用户拥有不同的权限的时候可以使用以下命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">use &lt;databaseName&gt;</span><br><span class="line">db.createUser(&#123; user: &apos;&lt;username&gt;&apos;, pwd: &apos;&lt;password&gt;&apos;, roles: [ &#123; role: &quot;readWrite&quot;, db: &quot;&lt;databaseName&gt;&quot; &#125; ] &#125;);</span><br><span class="line"></span><br><span class="line">例子:</span><br><span class="line">use admin</span><br><span class="line">db.createUser(&#123; user: &apos;admin&apos;, pwd: &apos;123456&apos;, roles: [ &#123; role: &quot;userAdminAnyDatabase&quot;, db: &quot;admin&quot; &#125; ] &#125;);</span><br></pre></td></tr></table></figure>
-<h4 id="5-列出所有的集合，用户以及角色"><a href="#5-列出所有的集合，用户以及角色" class="headerlink" title="5. 列出所有的集合，用户以及角色"></a>5. 列出所有的集合，用户以及角色</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// 列出当前database下所有的集合:</span><br><span class="line">show collections;</span><br><span class="line">db.getCollectionNames();</span><br><span class="line"></span><br><span class="line">// 列出当前database下所有的用户</span><br><span class="line">show users;</span><br><span class="line">db.getUsers();</span><br><span class="line"></span><br><span class="line">// 列出当前dababase下所有角色</span><br><span class="line">show roles;</span><br></pre></td></tr></table></figure>
-<p>不同的角色对应的权限，最直接之处就在于没有权限有些命令就无法执行</p>
-<h4 id="6-创建集合"><a href="#6-创建集合" class="headerlink" title="6. 创建集合"></a>6. 创建集合</h4><p>  下面的命令用户创建集合，更详细命令可以查看<a href="https://docs.mongodb.com/manual/reference/method/db.createCollection/" target="_blank" rel="noopener">官方文档</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.createCollection(&quot;collectionName&quot;);</span><br></pre></td></tr></table></figure>
-<h4 id="7-将文档插入到集合中"><a href="#7-将文档插入到集合中" class="headerlink" title="7. 将文档插入到集合中"></a>7. 将文档插入到集合中</h4><p>  集合一旦创建之后，下一步就是创建一个或多个文档插入到集合中</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 插入单个文档</span><br><span class="line">db.&lt;collectionName&gt;.insert(&#123;field1: &quot;value&quot;, field2: &quot;value&quot;&#125;)</span><br><span class="line"></span><br><span class="line">// 插入多个文档</span><br><span class="line">db.&lt;collectionName&gt;.insert([&#123;field1: &quot;value1&quot;&#125;, &#123;field1: &quot;value2&quot;&#125;])</span><br><span class="line">db.&lt;collectionName&gt;.insertMany([&#123;field1: &quot;value1&quot;&#125;, &#123;field1: &quot;value2&quot;&#125;])</span><br></pre></td></tr></table></figure>
-<h4 id="8-保存或者更新文档"><a href="#8-保存或者更新文档" class="headerlink" title="8. 保存或者更新文档"></a>8. 保存或者更新文档</h4><p>  保存命令可用于更新现有文档或根据传递给它的文档参数插入新文档。如果传递的_id与现有文档匹配，则文档将更新。否则，将创建一个新文档。在内部，保存方法使用插入或更新命令。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.&lt;collectionName&gt;.save(&#123;&quot;_id&quot;: new ObjectId(&quot;123456&quot;), field1: &quot;value&quot;, field2: &quot;value&quot;&#125;);</span><br></pre></td></tr></table></figure>
-<h4 id="9-显示集合记录"><a href="#9-显示集合记录" class="headerlink" title="9. 显示集合记录"></a>9. 显示集合记录</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// 获取所有记录</span><br><span class="line">db.&lt;collectionName&gt;.find();</span><br><span class="line"></span><br><span class="line">// 获取指定数量的记录</span><br><span class="line">db.&lt;collectionName&gt;.find().limit(10);</span><br><span class="line"></span><br><span class="line">// 根据id获取记录</span><br><span class="line">db.&lt;collectionName&gt;.find(&#123;&quot;_id&quot;: yourId&#125;)</span><br><span class="line"></span><br><span class="line">// 返回记录中特定field的值</span><br><span class="line">// 类似返回select field1,field2 from table</span><br><span class="line">db.&lt;collectionName&gt;.find(&#123;&quot;_id&quot;: ObjectId(&quot;someid&quot;)&#125;, &#123;field1: 1, field2: 1&#125;);</span><br><span class="line">// 不返回field1的数据</span><br><span class="line">db.&lt;collectionName&gt;.find(&#123;&quot;_id&quot;: ObjectId(&quot;someid&quot;)&#125;, &#123;field1: 0&#125;);</span><br><span class="line"></span><br><span class="line">// 文档记录数</span><br><span class="line">db.&lt;collectionName&gt;.count();</span><br></pre></td></tr></table></figure>
-<h4 id="10-管理命令"><a href="#10-管理命令" class="headerlink" title="10. 管理命令"></a>10. 管理命令</h4><p>以下是一些管理命令，这些命令可能有助于查找集合详细信息，例如存储大小，总大小和总体统计信息</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// 获取集合的统计信息,比如空间占用，总大小，引擎信息等</span><br><span class="line">db.&lt;collectionName&gt;.stats()</span><br><span class="line">db.printCollectionStats()</span><br><span class="line"></span><br><span class="line">//获取集合的延迟统计信息,比如读写的次数,时间等等</span><br><span class="line">db.&lt;collectionName&gt;.latencyStats()</span><br><span class="line"></span><br><span class="line">// 获取数据和索引的集合大小</span><br><span class="line">// 集合的大小</span><br><span class="line">db.&lt;collectionName&gt;.dataSize()</span><br><span class="line">// 集合中存储文档的总大小</span><br><span class="line">db.&lt;collectionName&gt;.storageSize()</span><br><span class="line">// 集合数据和索引的总大小(以字节为单位)</span><br><span class="line">db.&lt;collectionName&gt;.totalSize()</span><br><span class="line">// 集合中所有索引的总大小</span><br><span class="line">db.&lt;collectionName&gt;.totalIndexSize()</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>从操作系统层面上来讲，一个进程从创建到消亡期间，最常见的进程状态有以下几种<br>新建态 ： 从程序映像到进程映像的转变，还没有加入到就绪队列中<br>就绪态 : 进程运行已万事俱备，正等待调度执行<br>运行态 : 进程指令正在被执行<br>阻塞态 : 进程正在等待一个时间操作完成，例如I/O操作<br>完成态 : 进程运行结束，它的资源已经被释放，供其他活动进程使用</p>
+</blockquote>
+<p>接下来我们分析下面的代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WaitNotify</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    Object lock = <span class="keyword">new</span> Object();</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// thread1</span></span><br><span class="line">    <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"thread1 is ready"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">synchronized</span> (lock) &#123;</span><br><span class="line">            lock.notify();</span><br><span class="line">            System.out.println(<span class="string">"thread1 is notify,but not exit synchronized"</span>);</span><br><span class="line">            System.out.println(<span class="string">"thread1 is exit synchronized"</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;).start();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// thread2</span></span><br><span class="line">    <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">        System.out.println(<span class="string">"thread2 is ready"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">synchronized</span> (lock) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                System.out.println(<span class="string">"thread2 is waiting"</span>);</span><br><span class="line">                lock.wait();</span><br><span class="line">                System.out.println(<span class="string">"thread2 is awake"</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;).start();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的代码运行结果如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">thread1 is ready</span><br><span class="line">thread2 is ready</span><br><span class="line">thread2 is waiting</span><br><span class="line">thread1 is notify,but not exit synchronized</span><br><span class="line">thread 1 is exit synchronized</span><br><span class="line">thread2 is awake</span><br></pre></td></tr></table></figure>
+<p>看到这里你会发现平平无奇，好像也没什么特殊的事情,但是如果深入分析下，就会发现以下的问题</p>
+<ol>
+<li>为何调用wait或者notify一定要加synchronized，不加行不行？</li>
+<li>thread2中调用了wait后，当前线程还未退出同步代码块，其他线程(thread1)能进入同步块吗？</li>
+<li>为何调用wait()有可能抛出InterruptedException异常</li>
+<li>调用notify/notifyAll后等待中的线程会立刻唤醒吗？</li>
+<li>调用notify/notifyAll是随机从等待线程队列中取一个或者按某种规律取一个来执行？</li>
+<li>wait的线程是否会影响系统性能？</li>
+</ol>
+<p>针对上面的问题，我们逐个分析下</p>
+<h4 id="为何调用wait或者notify一定要加synchronized，不加行不行？"><a href="#为何调用wait或者notify一定要加synchronized，不加行不行？" class="headerlink" title="为何调用wait或者notify一定要加synchronized，不加行不行？"></a>为何调用wait或者notify一定要加synchronized，不加行不行？</h4><p>如果你不加，你会得到下面的异常</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Exception in thread <span class="string">"main"</span> java.lang.IllegalMonitorStateException</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在<a href="https://github.com/unofficial-openjdk/openjdk/blob/jdk8u%2Fjdk8u/hotspot/src/share/vm/runtime/objectMonitor.cpp#L1425" target="_blank" rel="noopener">JVM源代码中</a>首先会检查当前线程是否持有锁,如果没有持有则抛出异常</p>
+</blockquote>
+<p>其次为什么要加,也有比较广泛的讨论，首先wait/notify是为了线程间通信的，为了这个通信过程不被打断，需要保证wait/notify这个整体代码块的原子性，所以需要通过synchronized来加锁。</p>
+<h4 id="thread2中调用了wait后，当前线程还未退出同步代码块，其他线程-thread1-能进入同步块吗？"><a href="#thread2中调用了wait后，当前线程还未退出同步代码块，其他线程-thread1-能进入同步块吗？" class="headerlink" title="thread2中调用了wait后，当前线程还未退出同步代码块，其他线程(thread1)能进入同步块吗？"></a>thread2中调用了wait后，当前线程还未退出同步代码块，其他线程(thread1)能进入同步块吗？</h4><p>wait在处理过程中会临时释放同步锁(如果不释放其他线程没有机会抢)，不过需要注意的是当其他线程调用notify唤起这个线程的时候，在wait方法退出之前会重新获取这把锁，只有获取了这把锁才会继续执行,这也和我们的结果相符合,输出了<code>thread2 is awake</code>,<br>其实想想也容易理解,synchronized的代码实际上是被被monitorenter和monitorexit包围起来的。当我们调用wait的时候，会释放锁,调用monitorexit的时候也会释放锁,那么当thread2被唤醒的时候必然重新获取到了锁(objectMonitor::enter)。</p>
+<p>其实从jdk源代码的<a href="https://github.com/unofficial-openjdk/openjdk/blob/jdk8u%2Fjdk8u/hotspot/src/share/vm/runtime/objectMonitor.cpp#L1463" target="_blank" rel="noopener">ObjectMonitor::wait方法</a>可以一窥究竟，首先会放弃已经抢到的锁(exit(self)),而放弃锁的前提是获取到锁</p>
+<p>而在notify方法中会选取一个线程获得cpu执行权，在去竞争锁，如果没有竞争到则会进入休眠。</p>
+<p>如果调用的wait(200)这种代码,那么会在200ms后将线程从waiting set中移除并允许其重新竞争锁，需要注意的是notify方法并不会释放所持有的monitor</p>
+<h4 id="为何调用wait-有可能抛出InterruptedException异常"><a href="#为何调用wait-有可能抛出InterruptedException异常" class="headerlink" title="为何调用wait()有可能抛出InterruptedException异常"></a>为何调用wait()有可能抛出InterruptedException异常</h4><p>当我们调用了某个线程的interrupt方法，对应的线程会抛出这个异常，wait方法也不希望去破坏这种规则，因此就算当前线程因为wait一直在阻塞。当某个线程希望它起来继续执行的时候，它还是得从阻塞态恢复过来，因此wait方法被唤醒起来的时候会去检测这个状态，当有线程interrupt了它的时候，它就会抛出这个异常从阻塞状态恢复过来。</p>
+<p>这里有两点要注意：</p>
+<ol>
+<li>如果被interrupt的线程只是创建了，并没有start，那等他start之后进入wait态之后也是不能会恢复的</li>
+<li>如果被interrupt的线程已经start了，在进入wait之前，如果有线程调用了其interrupt方法，那这个wait等于什么都没做，会直接跳出来，不会阻塞,下面的代码演示了这种情况</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">Thread thread2 = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">    System.out.println(<span class="string">"thread2 is ready"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">synchronized</span> (lock) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">"thread2 is waiting"</span>);</span><br><span class="line">            lock.wait();</span><br><span class="line">            System.out.println(<span class="string">"thread2 is awake"</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            System.out.println(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// main</span></span><br><span class="line">  thread2.start();</span><br><span class="line"></span><br><span class="line">  Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">  thread2.interrupt();</span><br></pre></td></tr></table></figure>
+<p>上面的代码输出结果如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">thread2 is ready</span><br><span class="line">thread2 is waiting</span><br><span class="line">java.lang.InterruptedException</span><br></pre></td></tr></table></figure>
+<h4 id="调用notify-notifyAll后等待中的线程会立刻唤醒吗？"><a href="#调用notify-notifyAll后等待中的线程会立刻唤醒吗？" class="headerlink" title="调用notify/notifyAll后等待中的线程会立刻唤醒吗？"></a>调用notify/notifyAll后等待中的线程会立刻唤醒吗？</h4><p>hotspot真正的实现是退出同步代码块的时候才会去真正唤醒对应的线程，不过这个也是个默认策略，也可以改的，在notify之后立马唤醒相关线程。<br>这个也可从jdk源代码的objectMonitor类objectMonitor::notify方法中看到.在调用notify时的默认策略是Policy == 2（这个值是源码中的初值，可以通过-XX:SyncKnobs来设置）</p>
+<p>其实对于Policy(1、2、3、4)都是将objectMonitor的ObjectWaiter集合中取出一个等待线程，放入到_EntryList（blocked线程集合，可以参与下次抢锁），只是放入_EntryList的策略不一样，体现为唤醒wait线程的规则不一样。</p>
+<p>对于默认策略notify在将一个等待线程放入阻塞线程集合之后就退出，因为同步块还没有执行完monitorexit，锁其实还未释放，所以在打印出“thread1 is exit synchronized!”的时候，thread2线程还是blocked状态（因为thread1还没有退出同步块）。</p>
+<p>这里可以发现，对于不在Policy中的情况，会直接将一个ObjectWaiter进行unpark唤醒操作，但是被唤醒的线程是否立即获取到了锁呢？答案是否定的。</p>
+<h4 id="调用notify-notifyAll是随机从等待线程队列中取一个或者按某种规律取一个来执行？"><a href="#调用notify-notifyAll是随机从等待线程队列中取一个或者按某种规律取一个来执行？" class="headerlink" title="调用notify/notifyAll是随机从等待线程队列中取一个或者按某种规律取一个来执行？"></a>调用notify/notifyAll是随机从等待线程队列中取一个或者按某种规律取一个来执行？</h4><p>我们自己实现可能一个for循环就搞定了，不过在jvm里实现没这么简单，而是借助了monitor_exit，上面我提到了当某个线程从wait状态恢复出来的时候，要先获取锁，然后再退出同步块，所以notifyAll的实现是调用notify的线程在退出其同步块的时候唤醒起最后一个进入wait状态的线程，然后这个线程退出同步块的时候继续唤醒其倒数第二个进入wait状态的线程，依次类推，同样这是一个策略的问题，jvm里提供了挨个直接唤醒线程的参数,这里要分情况：</p>
+<ol>
+<li>如果是通过notify来唤起的线程，那先进入wait的线程会先被唤起来</li>
+<li>如果是通过nootifyAll唤起的线程，默认情况是最后进入的会先被唤起来，即LIFO的策略</li>
+</ol>
+<h4 id="wait的线程是否会影响系统性能？"><a href="#wait的线程是否会影响系统性能？" class="headerlink" title="wait的线程是否会影响系统性能？"></a>wait的线程是否会影响系统性能？</h4><p>这个或许是大家比较关心的话题，因为关乎系统性能问题，wait/nofity是通过jvm里的park/unpark机制来实现的，在linux下这种机制又是通过pthread_cond_wait/pthread_cond_signal来玩的，因此当线程进入到wait状态的时候其实是会放弃cpu的，也就是说这类线程是不会占用cpu资源，也不会影响系统加载。</p>
+<h4 id="什么是监视器-monitor"><a href="#什么是监视器-monitor" class="headerlink" title="什么是监视器(monitor)"></a>什么是监视器(monitor)</h4><p>Java中每一个对象都可以成为一个监视器（Monitor）, 该Monitor由一个锁（lock）, 一个等待队列（waiting queue ）, 一个入口队列( entry queue)组成.<br>对于一个对象的方法， 如果没有synchonized关键字， 该方法可以被任意数量的线程，在任意时刻调用。<br>对于添加了synchronized关键字的方法，任意时刻只能被唯一的一个获得了对象实例锁的线程调用。</p>
+<p><img src="/images/java_monitor.bmp" alt="java监视器"></p>
+<p><strong>进入区(Entry Set):</strong> 表示线程通过 synchronized要求获得对象锁，如果获取到了，则成为拥有者，如果没有获取到在在进入区等待，直到其他线程释放锁之后再去竞争(谁获取到则根据)</p>
+<p><strong>拥有者(Owner):</strong> 表示线程获取到了对象锁，可以执行synchronized包围的代码了</p>
+<p><strong>等待区(Wait Set):</strong> 表示线程调用了wait方法,此时释放了持有的对象锁，等待被唤醒(谁被唤醒取得监视器锁由jvm决定)</p>
+<h4 id="关于sleep"><a href="#关于sleep" class="headerlink" title="关于sleep"></a>关于sleep</h4><p>它是一个静态方法，一般的调用方式是Thread.sleep(2000),表示让当前线程休眠2000ms,并不会让出监视器，这一点需要注意。</p>
+
       
     </div>
 
@@ -581,7 +610,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/mongodb/" rel="tag"># mongodb</a>
+            <a href="/tags/Java/" rel="tag"># Java</a>
           
         </div>
       
@@ -594,8 +623,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/09/20/restful-resource-naming-practise/" rel="next" title="RESTful资源命名最佳实践">
-                <i class="fa fa-chevron-left"></i> RESTful资源命名最佳实践
+              <a href="/2019/09/26/top-10-common-mongodb-commands-for-beginners/" rel="next" title="MongoDB初学者最常用的10个命令">
+                <i class="fa fa-chevron-left"></i> MongoDB初学者最常用的10个命令
               </a>
             
           </div>
@@ -603,10 +632,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/10/10/analysis-java-object-wait-notify/" rel="prev" title="分析Java Object中的wait/notify">
-                分析Java Object中的wait/notify <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -844,7 +869,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-登录mongodb"><span class="nav-number">1.</span> <span class="nav-text">1. 登录mongodb</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-列出所有的数据库"><span class="nav-number">2.</span> <span class="nav-text">2. 列出所有的数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-选择要使用的数据库"><span class="nav-number">3.</span> <span class="nav-text">3. 选择要使用的数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-创建用户"><span class="nav-number">4.</span> <span class="nav-text">4. 创建用户</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-列出所有的集合，用户以及角色"><span class="nav-number">5.</span> <span class="nav-text">5. 列出所有的集合，用户以及角色</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-创建集合"><span class="nav-number">6.</span> <span class="nav-text">6. 创建集合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-将文档插入到集合中"><span class="nav-number">7.</span> <span class="nav-text">7. 将文档插入到集合中</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-保存或者更新文档"><span class="nav-number">8.</span> <span class="nav-text">8. 保存或者更新文档</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-显示集合记录"><span class="nav-number">9.</span> <span class="nav-text">9. 显示集合记录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-管理命令"><span class="nav-number">10.</span> <span class="nav-text">10. 管理命令</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#为何调用wait或者notify一定要加synchronized，不加行不行？"><span class="nav-number">1.</span> <span class="nav-text">为何调用wait或者notify一定要加synchronized，不加行不行？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#thread2中调用了wait后，当前线程还未退出同步代码块，其他线程-thread1-能进入同步块吗？"><span class="nav-number">2.</span> <span class="nav-text">thread2中调用了wait后，当前线程还未退出同步代码块，其他线程(thread1)能进入同步块吗？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#为何调用wait-有可能抛出InterruptedException异常"><span class="nav-number">3.</span> <span class="nav-text">为何调用wait()有可能抛出InterruptedException异常</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#调用notify-notifyAll后等待中的线程会立刻唤醒吗？"><span class="nav-number">4.</span> <span class="nav-text">调用notify/notifyAll后等待中的线程会立刻唤醒吗？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#调用notify-notifyAll是随机从等待线程队列中取一个或者按某种规律取一个来执行？"><span class="nav-number">5.</span> <span class="nav-text">调用notify/notifyAll是随机从等待线程队列中取一个或者按某种规律取一个来执行？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#wait的线程是否会影响系统性能？"><span class="nav-number">6.</span> <span class="nav-text">wait的线程是否会影响系统性能？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是监视器-monitor"><span class="nav-number">7.</span> <span class="nav-text">什么是监视器(monitor)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关于sleep"><span class="nav-number">8.</span> <span class="nav-text">关于sleep</span></a></li></ol></div>
             
 
           </div>
