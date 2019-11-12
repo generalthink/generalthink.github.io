@@ -1,0 +1,1708 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+    
+      
+    
+    
+  <script src="https://cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+  
+  
+    
+  
+  <link rel="stylesheet" media="all" href="https://cdn.bootcss.com/Han/3.3.0/han.min.js">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="https://cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+  
+
+<link href="https://cdn.jsdelivr.net/npm/font-awesome@4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    fastclick: true,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="何以高可用?我们以前用Mysql的时候，经常是一台服务器走天下，如果只是用于学习，是没有问题的，但是在生产环境中，这样的风险是很大的，如果服务器因为网络原因或者崩溃了，就会导致数据库一段时间了不可用，这样的体验很不好。 那么应该怎么办呢？既然一台机器不行，我就多上几台机器总可以了吧，比如我上个两台，让他们互为主备，相互同步数据。想到这里我就只想说一个字，稳。  其实redis,mongodb,ka">
+<meta name="keywords" content="MongoDB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MongoDB 复制集那点事儿">
+<meta property="og:url" content="http://yoursite.com/2019/10/30/mongodb-replica-set/index.html">
+<meta property="og:site_name" content="Zhu.Yang">
+<meta property="og:description" content="何以高可用?我们以前用Mysql的时候，经常是一台服务器走天下，如果只是用于学习，是没有问题的，但是在生产环境中，这样的风险是很大的，如果服务器因为网络原因或者崩溃了，就会导致数据库一段时间了不可用，这样的体验很不好。 那么应该怎么办呢？既然一台机器不行，我就多上几台机器总可以了吧，比如我上个两台，让他们互为主备，相互同步数据。想到这里我就只想说一个字，稳。  其实redis,mongodb,ka">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/mongodb/1-primary-2-secondary.png">
+<meta property="og:image" content="http://yoursite.com/images/mongodb/arbiter.png">
+<meta property="og:updated_time" content="2019-11-12T07:54:48.809Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MongoDB 复制集那点事儿">
+<meta name="twitter:description" content="何以高可用?我们以前用Mysql的时候，经常是一台服务器走天下，如果只是用于学习，是没有问题的，但是在生产环境中，这样的风险是很大的，如果服务器因为网络原因或者崩溃了，就会导致数据库一段时间了不可用，这样的体验很不好。 那么应该怎么办呢？既然一台机器不行，我就多上几台机器总可以了吧，比如我上个两台，让他们互为主备，相互同步数据。想到这里我就只想说一个字，稳。  其实redis,mongodb,ka">
+<meta name="twitter:image" content="http://yoursite.com/images/mongodb/1-primary-2-secondary.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Zhu.Yang" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/10/30/mongodb-replica-set/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>MongoDB 复制集那点事儿 | Zhu.Yang</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion .logo-line-before i { left: initial; }
+    .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zhu.Yang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">朱阳的个人博客</h1>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/30/mongodb-replica-set/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhu.Yang">
+      <meta itemprop="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhu.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">MongoDB 复制集那点事儿
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-10-30 11:16:52" itemprop="dateCreated datePublished" datetime="2019-10-30T11:16:52+08:00">2019-10-30</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-11-12 15:54:48" itemprop="dateModified" datetime="2019-11-12T15:54:48+08:00">2019-11-12</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/10/30/mongodb-replica-set/" class="leancloud_visitors" data-flag-title="MongoDB 复制集那点事儿">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">7.8k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">7 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="何以高可用"><a href="#何以高可用" class="headerlink" title="何以高可用?"></a>何以高可用?</h3><p>我们以前用Mysql的时候，经常是一台服务器走天下，如果只是用于学习，是没有问题的，但是在生产环境中，这样的风险是很大的，如果服务器因为网络原因或者崩溃了，就会导致数据库一段时间了不可用，这样的体验很不好。</p>
+<p>那么应该怎么办呢？既然一台机器不行，我就多上几台机器总可以了吧，比如我上个两台，让他们互为主备，相互同步数据。想到这里我就只想说一个字，稳。</p>
+<blockquote>
+<p>其实redis,mongodb,kafka等分布式应用基本上都是这样的思想</p>
+</blockquote>
+<p>MongoDB也差不多是这样的思想。它通过复制集来解决这个问题,MongoDB复制集由一组Mongod进程组成，包含一个Primary节点和多个Secondary节点，Mongodb Driver(客户端)的所有数据都写入Primary，Secondary从Primary同步写入的数据，以保持复制集内所有成员存储相同的数据集，提供数据的高可用。</p>
+<p>要想成为primary节点，你必须保证大多数节点都同意才行,大多数的节点就是副本中一半以上的成员。</p>
+<a id="more"></a>
+<table>
+<thead>
+<tr>
+<th>成员总数</th>
+<th>大多数</th>
+<th>容忍失败数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2</td>
+<td>0</td>
+</tr>
+<tr>
+<td>3</td>
+<td>2</td>
+<td>1</td>
+</tr>
+<tr>
+<td>4</td>
+<td>3</td>
+<td>1</td>
+</tr>
+<tr>
+<td>5</td>
+<td>3</td>
+<td>2</td>
+</tr>
+<tr>
+<td>6</td>
+<td>4</td>
+<td>2</td>
+</tr>
+<tr>
+<td>7</td>
+<td>4</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<p>为什么要要求大多数呢？其实是为了避免出现两个primary节点。比如一个五个节点的复制集，其中3个成员不可用，剩下的2个仍然正常工作。这两个工作的节点由于不能满足复制集大多数的要求（这个例子中要求要有3个节点才是大多数)，所以他们无法选择主节点，即使其中有一个节点是primary节点，当它注意到它无法获取大多数节点的支持时，它就会退位，成为备份节点。</p>
+<p>如果让这两个节点可以选出primary节点，问题是另外3个节点可能不是真正挂了，而只是网络不可达而已。另外3个节点就一定可以选择出primary节点，这样就存在了两个primary节点了。<br>所以要求大多数就可以避免产生两个primary节点的问题。</p>
+<blockquote>
+<p>如果MongoDB副本集可以拥有多个primary节点,那么就会面临写入冲突的问题，在支持多线程写入的系统中解决冲突的方式有手动解决和让操作系统任选一个这两种方式，但是这两种方式都不易实现，无法保证写入的数据不被其他节点修改，因此mongodb只支持单一的primary节点，这样使得开发更容易。</p>
+</blockquote>
+<p>当一个备份节点无法与主节点连通时，它会联系并请求其他副本集成员将自己选举为主节点，其他成员会做几项理性的检查：自身是否能够与主节点连通？希望被选举为主节点的备份节点的数据是否最新？有没有其他更高优先级的成员可以被选举为主节点？<br>如果竞选节点成员能够得到大多数投票，就会成为主节点。但是一旦大多数成员中只有一个否决了本次选举，选举就会取消。</p>
+<blockquote>
+<p>在日志中可以看到得票数为比较大的负数的情况，因为一张否决票相当于10000张赞成票。如果有2张赞成票，2张否决票，那么选举结果就是-19998，依此类推。</p>
+</blockquote>
+<h3 id="配置选项"><a href="#配置选项" class="headerlink" title="配置选项"></a>配置选项</h3><p>我们一般在部署的时候，副本集节点个数至少是3个(因为它允许1个失败),这也就意味着数据要被复制三份。<br><img src="/images/mongodb/1-primary-2-secondary.png" alt=""></p>
+<h4 id="仲裁者-arbiter"><a href="#仲裁者-arbiter" class="headerlink" title="仲裁者(arbiter)"></a>仲裁者(arbiter)</h4><p>很多人的应用程序使用量比较小，不想保存三份数据，只想要保存两份就行了，保存第三份纯粹是浪费。对于这种部署MongoDB也是支持的。它有一种特殊的成员叫做仲裁者(arbiter)，它唯一的作用就是参与选举，它既不保存数据也不为客户端提供服务，只是为了帮助只有两个成员的副本集满足大多数这个条件而已。<br><img src="/images/mongodb/arbiter.png" alt="arbiter"></p>
+<blockquote>
+<p>仲裁者其实也是有缺点的。如果真有一个节点挂了(数据无法恢复),另一个成员称为主节点。为了数据安全，就需要一个新的备份节点，并且将主节点的数据备份到备份节点。复制数据会对服务器造成很大的压力，会拖慢应用程序。相反如果有三个数据成员即使其中一个挂了，仍有一个主节点和一个备份节点，不影响正常运作。这个时候还可以用剩下的那个备份节点来初始化一个新的备份节点服务器，而不依赖于主节点。所以如果可能尽可能在副本集中使用奇数个数据成员，而不要使用仲裁者。</p>
+</blockquote>
+<h4 id="优先级-priority"><a href="#优先级-priority" class="headerlink" title="优先级(priority)"></a>优先级(priority)</h4><p>如果想让一个节点有更大的机会成为primary的话这需要设置优先级，比如我添加一个优先级为2的成员(默认为1)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rs.add(&#123;&quot;_id&quot;:4, &quot;host&quot;: &quot;10.17.28.190:27017&quot;, &quot;priority&quot; : 2&#125;);</span><br></pre></td></tr></table></figure>
+<p>假设其他都是默认优先级，只要10.17.28.190拥有最新数据，那么当前primary节点就会自动退位，10.17.28.190会被选举为新的主节点。如果它的数据不够新，那么当前主节点就会保持不变。</p>
+<p>如果设置priority为0，表示不会被选为primary节点。</p>
+<h4 id="投票权-vote"><a href="#投票权-vote" class="headerlink" title="投票权(vote)"></a>投票权(vote)</h4><p>由于复制集成员最多50个,而参与Primary成员投票的最多7个,所以其他成员的vote必须设置为0(priority也必须为0)。<br>尽管无投票权的成员不会在选举中投票，但这些成员拥有副本集数据的副本，并且可以接受来自客户端应用程序的读取操作。</p>
+<h4 id="隐藏成员-hidden"><a href="#隐藏成员-hidden" class="headerlink" title="隐藏成员(hidden)"></a>隐藏成员(hidden)</h4><p>客户端不会像隐藏成员发送请求，隐藏成员也不会作为复制源(尽管当其他复制源不可用时隐藏成员)。因此很多人将不够强大的服务器或者备份服务器隐藏起来。通过设置hidden:true可以设置隐藏，只有优先级为0的才能被隐藏。<br>可使用Hidden节点做一些数据备份、离线计算的任务，不会影响复制集的服务</p>
+<h4 id="延迟备份节点-slaveDelay"><a href="#延迟备份节点-slaveDelay" class="headerlink" title="延迟备份节点(slaveDelay)"></a>延迟备份节点(slaveDelay)</h4><p>数据可能会因为人为错误而遭到毁灭性的破坏，为了防止这类问题，可以使用slaveDelay设置一个延迟的备份节点。</p>
+<p>延迟备份节点的数据回比主节点延迟指定的时间(单位是秒),slaveDelay要求优先级是0，如果应用会将读请求路由到备份节点，应该将延迟备份节点隐藏掉，以免读请求被路由到延迟备份节点。</p>
+<p>因Delayed节点的数据比Primary落后一段时间，当错误或者无效的数据写入Primary时，可通过Delayed节点的数据来恢复到之前的时间点。</p>
+<h4 id="修改副本集配置"><a href="#修改副本集配置" class="headerlink" title="修改副本集配置"></a>修改副本集配置</h4><p>比如我有个副本集叫做rs0,我想修改增加或者删除成员，修改成员的配置(vote,hidden,priority等)可以通过reconfig命令</p>
+<blockquote>
+<p><a href="https://docs.mongodb.com/manual/reference/method/rs.reconfig/" target="_blank" rel="noopener">https://docs.mongodb.com/manual/reference/method/rs.reconfig/</a></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cfg = rs.conf();</span><br><span class="line">cfg.members[1].priority = 2;</span><br><span class="line">rs.reconfig(cfg);</span><br></pre></td></tr></table></figure>
+<h3 id="同步"><a href="#同步" class="headerlink" title="同步"></a>同步</h3><p>Primary与Secondary之间通过oplog来同步数据，Primary上的写操作完成后，会向特殊的local.oplog.rs特殊集合写入一条oplog，Secondary不断的从Primary取新的oplog并应用。</p>
+<p>因oplog的数据会不断增加，local.oplog.rs被设置成为一个capped集合，当容量达到配置上限时，会将最旧的数据删除掉。由于复制操作的过程是先复制数据在写入oplog，oplog必须具有幂等性，即重复应用也会得到相同的结果。</p>
+<p>我向test库的coll集合插入了一条数据之后(<code>db.coll.insert({count:1})</code>)，调用db.isMaster()命令可以看到当前节点的最后一次写入时间戳</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&gt; db.isMaster()</span><br><span class="line">&#123;</span><br><span class="line">  &quot;ismaster&quot; : true,</span><br><span class="line">  &quot;secondary&quot; : false,</span><br><span class="line">  &quot;lastWrite&quot; : &#123;</span><br><span class="line">    &quot;opTime&quot; : &#123;</span><br><span class="line">            &quot;ts&quot; : Timestamp(1572509087, 2),</span><br><span class="line">            &quot;t&quot; : NumberLong(1)</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;lastWriteDate&quot; : ISODate(&quot;2019-10-31T08:04:47Z&quot;),</span><br><span class="line">    &quot;majorityOpTime&quot; : &#123;</span><br><span class="line">            &quot;ts&quot; : Timestamp(1572509087, 2),</span><br><span class="line">            &quot;t&quot; : NumberLong(1)</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;majorityWriteDate&quot; : ISODate(&quot;2019-10-31T08:04:47Z&quot;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>命令会返回很多数据，这里我只列出了小部分，可以看到我们当前所在节点是master节点(primary),如果当前节点不是primary,也会通过primary属性告诉你当前primary节点是哪个,同时最后一次写入的时间戳是1572509087。</p>
+<p>此时我们登录另一台secondary节点,切换到local数据库,执行命令<code>db.oplog.rs.find()</code>命令,会返回很多条数据，这里我们查看最后一条即可<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123; </span><br><span class="line">  &quot;ts&quot; : Timestamp(1572509087, 2), </span><br><span class="line">  &quot;t&quot; : NumberLong(1), </span><br><span class="line">  &quot;h&quot; : NumberLong(&quot;6139682004250579847&quot;), </span><br><span class="line">  &quot;v&quot; : 2, </span><br><span class="line">  &quot;op&quot; : &quot;i&quot;, </span><br><span class="line">  &quot;ns&quot; : &quot;test.coll&quot;, </span><br><span class="line">  &quot;ui&quot; : UUID(&quot;1be7f8d0-fde2-4d68-89ea-808f14b326da&quot;), </span><br><span class="line">  &quot;wall&quot; : ISODate(&quot;2019-10-31T08:04:47.925Z&quot;), </span><br><span class="line">  &quot;o&quot; : &#123; </span><br><span class="line">    &quot;_id&quot; : ObjectId(&quot;5dba959fcf287dfd8727a1bf&quot;), </span><br><span class="line">    &quot;count&quot; : 1 </span><br><span class="line">  &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以看到oplog的ts和isMater()命令返回的lastTime.opTime.ts的值是一致的,证明我们的数据是最新的，如果你这个时候访问其他节点查看oplog.rs的数据，会发现数据是一模一样的。<br>在来解释下字段含义</p>
+<ul>
+<li>ts : 操作时间，当前timestamp + 计数器，计数器每秒都被重置</li>
+<li>h：操作的全局唯一标识</li>
+<li>v：oplog版本信息</li>
+<li>op：操作类型<ul>
+<li>i：插入操作</li>
+<li>u：更新操作</li>
+<li>d：删除操作</li>
+<li>c：执行命令（如createDatabase，dropDatabase）</li>
+</ul>
+</li>
+<li>n：空操作，特殊用途</li>
+<li>ns：操作针对的集合</li>
+<li>o：操作内容，可以看到我这里插入的字段是count，值是1</li>
+<li>o2：操作查询条件，仅update操作包含该字段</li>
+</ul>
+<h4 id="初始化同步"><a href="#初始化同步" class="headerlink" title="初始化同步"></a>初始化同步</h4><p>副本集中的成员启动之后，就会检查自身状态，确定是否可以从某个成员那里进行同步。如果不行的话，它会尝试从副本的另一个成员那里进行完整的数据复制。这个过程就是初始化同步(initial syncing)。</p>
+<p>init sync过程包含如下步骤</p>
+<ol>
+<li>准备工作删除所有已存在的数据库，以一个全新的状态开始同步</li>
+<li>将同步源的所有记录全部复制到本地(除了local)</li>
+<li>oplog同步第一步,克隆过程中的所有操作都会被记录到oplog中，如果有文档在克隆过程中被移动了，就有可能会被遗漏，导致没有被克隆，对于这样的文档，可能需要重新克隆</li>
+<li>oplog同步过程第二步，将第一个oplog同步中的操作记录下来</li>
+<li>创建索引</li>
+<li>如果当前节点的数据仍然远远落后于同步源，那么oplog同步过程的最后一步就是将创建索引期间的所有操作全部同步过来，防止该成员成为备份节点。</li>
+<li>完成初始化同步之后，切换到普通同步状态，这时当前成员就可以称为备份节点了。</li>
+</ol>
+<p>总结起来就是从其他节点同步全量数据，然后不过从Primary的local.oplog.rs集合里查询最新的oplog并应用到自身。</p>
+<blockquote>
+<p>查询固定集合使用的tailable cursor(<a href="https://docs.mongodb.com/manual/core/tailable-cursors/" target="_blank" rel="noopener">https://docs.mongodb.com/manual/core/tailable-cursors/</a>)</p>
+</blockquote>
+<h3 id="Primary选举"><a href="#Primary选举" class="headerlink" title="Primary选举"></a>Primary选举</h3><p>Primary选举除了在复制集初始化时发生，还有如下场景</p>
+<ol>
+<li>复制集reconfig</li>
+<li>Secondary节点检测到Primary宕机时，会触发新Primary的选举</li>
+<li>当有Primary节点主动stepDown（主动降级为Secondary）时，也会触发新的Primary选举</li>
+</ol>
+<p>Primary的选举受节点间心跳、优先级、最新的oplog时间等多种因素影响。</p>
+<h4 id="节点间心跳"><a href="#节点间心跳" class="headerlink" title="节点间心跳"></a>节点间心跳</h4><p>复制集成员间默认每2s会发送一次心跳信息，如果10s未收到某个节点的心跳，则认为该节点已宕机；如果宕机的节点为Primary，Secondary（前提是可被选为Primary）会发起新的Primary选举。</p>
+<blockquote>
+<p>心跳是为了知道其他成员状态,哪个是主节点，哪个可以作为同步源，哪个挂掉了等等信息</p>
+</blockquote>
+<p>成员状态:</p>
+<ol>
+<li>STARTUP : 刚启动时处于这个状态，加载副本集成功后就进入STARTUP2状态</li>
+<li>STARTUP2 : 整个初始化同步都处于这个状态，这个状态下，MongDB会创建几个线程，用于处理复制和选举，然后就会切换到RECOVERING状态</li>
+<li>RECOVERING : 表示运行正常，当暂时不能处理读取请求。如果有成员处于这个状态，可能会造成轻微系统过载</li>
+<li>ARBITER : 仲裁者处于这个状态</li>
+<li>DOWN : 一个正常运行的成员不可达，就处于DOWN状态。这个状态有可能是网络问题</li>
+<li>UNKNOWN : 成员无法到达其他任何成员，其他成员就知道无法它处于什么状态，就会处于UNKNOWN。表明这个未知状态的成员挂掉了。或者两个成员间存在网络访问问题。</li>
+<li>REMOVED : 被移除副本集时处于的状态,添加回来后，就会回到正常状态</li>
+<li>ROLLBACK : 处于数据回滚时就处于ROLLBACK状态。回滚结束后，会换为RECOVERING状态，然后成为备份节点。</li>
+<li>FATAL : 发生不可挽回错误，也不再尝试恢复，就处于这个状态。这个时候通常应该重启服务器</li>
+</ol>
+<h4 id="节点优先级"><a href="#节点优先级" class="headerlink" title="节点优先级"></a>节点优先级</h4><ol>
+<li>每个节点都倾向于投票给优先级最高的节点</li>
+<li>优先级为0的节点不会主动发起Primary选举</li>
+<li>当Primary发现有优先级更高Secondary，并且该Secondary的数据落后在10s内，则Primary会主动降级，让优先级更高的Secondary有成为Primary的机会。</li>
+</ol>
+<h4 id="OpTime"><a href="#OpTime" class="headerlink" title="OpTime"></a>OpTime</h4><p>最新optime（最近一条oplog的时间戳）的节点才能被选为主,请看上面对oplog.rs的分析。</p>
+<h4 id="网络分区"><a href="#网络分区" class="headerlink" title="网络分区"></a>网络分区</h4><p>只有大多数投票节点间保持网络连通，才有机会被选Primary；如果Primary与大多数的节点断开连接，Primary会主动降级为Secondary。当发生网络分区时，可能在短时间内出现多个Primary，故Driver在写入时，最好设置<strong>大多数成功</strong>的策略，这样即使出现多个Primary，也只有一个Primary能成功写入大多数。</p>
+<h3 id="复制集的读写设置"><a href="#复制集的读写设置" class="headerlink" title="复制集的读写设置"></a>复制集的读写设置</h3><h4 id="Read-Preference"><a href="#Read-Preference" class="headerlink" title="Read Preference"></a>Read Preference</h4><p>默认情况下，复制集的所有读请求都发到Primary，Driver可通过设置Read Preference来将读请求路由到其他的节点。</p>
+<ol>
+<li>primary： 默认规则，所有读请求发到Primary</li>
+<li>primaryPreferred： Primary优先，如果Primary不可达，请求Secondary</li>
+<li>secondary： 所有的读请求都发到secondary</li>
+<li>secondaryPreferred：Secondary优先，当所有Secondary不可达时，请求Primary</li>
+<li>nearest：读请求发送到最近的可达节点上（通过ping探测得出最近的节点）</li>
+</ol>
+<h4 id="Write-Concern"><a href="#Write-Concern" class="headerlink" title="Write Concern"></a>Write Concern</h4><p>默认情况下，Primary完成写操作即返回，Driver可通过设置<a href="https://docs.mongodb.org/manual/core/write-concern/" target="_blank" rel="noopener">Write Concern</a>来设置写成功的规则。</p>
+<p>如下的write concern规则设置写必须在大多数节点上成功，超时时间为5s。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">db.products.insert(</span><br><span class="line">  &#123; item: &quot;envelopes&quot;, qty : 100, type: &quot;Clasp&quot; &#125;,</span><br><span class="line">  &#123; writeConcern: &#123; w: majority, wtimeout: 5000 &#125; &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>上面的设置方式是针对单个请求的，也可以修改副本集默认的write concern，这样就不用每个请求单独设置。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cfg = rs.conf()</span><br><span class="line">cfg.settings = &#123;&#125;</span><br><span class="line">cfg.settings.getLastErrorDefaults = &#123; w: &quot;majority&quot;, wtimeout: 5000 &#125;</span><br><span class="line">rs.reconfig(cfg)</span><br></pre></td></tr></table></figure>
+<h3 id="回滚（rollback）"><a href="#回滚（rollback）" class="headerlink" title="回滚（rollback）"></a>回滚（rollback）</h3><p>Primary执行了一个写请求之后挂了，但是备份节点还没有来得及复制这次操作。新选举出来的主节点结就会漏掉这次写操作。当旧Primary恢复之后，就要回滚部分操作。</p>
+<p>比如一个复制集存在两个数据中心,DC1中存在A(primary),B两个节点,DC2中存在C,D,E这三个节点。<br>如果DC1出现了故障。其中DC1这个数据中心的最后的操作是126,但是126没有被复制到另外的数据中心。所以DC2中服务器最新的操作是125</p>
+<p>DC2的数据中心仍然满足副本集大多数的要求(5台，DC2有3台),因此其中一个会被选举成为新的主节点，这个节点会继续处理后续的写入操作。<br>当网络恢复之后，DC1中心的服务器就会从其他服务器同步126之后的操作，但是无法找到。这种时候DC1中的A,B就会进入回滚过程。</p>
+<p>回滚回将失败之前未复制的操作撤销。拥有126操作的服务器会在DC2的服务器的oplog寻找共同的操作点。这里会定位125，这是两个数据中心相匹配的最后一个操作。</p>
+<p>这时，服务器会查看这些没有被复制的操作，将受这些操作影响的文档写入一个.bson文件，保存在数据目录下的rollback目录中。</p>
+<p>如果126是一个更新操作，服务器回将126更新的文档写入collectionName.bson文件。如果想要恢复被回滚的操作，可以使用mongorestore命令。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MongoDB/" rel="tag"># MongoDB</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/25/springboot-with-k8s/" rel="next" title="让你的SpringBoot一次build,到处运行">
+                <i class="fa fa-chevron-left"></i> 让你的SpringBoot一次build,到处运行
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/11/08/install-nginx-ingress-controller/" rel="prev" title="K8S集群中安装Nginx Ingress Controller">
+                K8S集群中安装Nginx Ingress Controller <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Zhu.Yang">
+            
+              <p class="site-author-name" itemprop="name">Zhu.Yang</p>
+              <p class="site-description motion-element" itemprop="description">面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">70</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">分类</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">34</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://wmdpd.com/" title="https://wmdpd.com/" rel="noopener" target="_blank">完美的胖达</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#何以高可用"><span class="nav-number">1.</span> <span class="nav-text">何以高可用?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置选项"><span class="nav-number">2.</span> <span class="nav-text">配置选项</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#仲裁者-arbiter"><span class="nav-number">2.1.</span> <span class="nav-text">仲裁者(arbiter)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#优先级-priority"><span class="nav-number">2.2.</span> <span class="nav-text">优先级(priority)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#投票权-vote"><span class="nav-number">2.3.</span> <span class="nav-text">投票权(vote)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#隐藏成员-hidden"><span class="nav-number">2.4.</span> <span class="nav-text">隐藏成员(hidden)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#延迟备份节点-slaveDelay"><span class="nav-number">2.5.</span> <span class="nav-text">延迟备份节点(slaveDelay)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改副本集配置"><span class="nav-number">2.6.</span> <span class="nav-text">修改副本集配置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#同步"><span class="nav-number">3.</span> <span class="nav-text">同步</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#初始化同步"><span class="nav-number">3.1.</span> <span class="nav-text">初始化同步</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Primary选举"><span class="nav-number">4.</span> <span class="nav-text">Primary选举</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#节点间心跳"><span class="nav-number">4.1.</span> <span class="nav-text">节点间心跳</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#节点优先级"><span class="nav-number">4.2.</span> <span class="nav-text">节点优先级</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#OpTime"><span class="nav-number">4.3.</span> <span class="nav-text">OpTime</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#网络分区"><span class="nav-number">4.4.</span> <span class="nav-text">网络分区</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复制集的读写设置"><span class="nav-number">5.</span> <span class="nav-text">复制集的读写设置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Read-Preference"><span class="nav-number">5.1.</span> <span class="nav-text">Read Preference</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Write-Concern"><span class="nav-number">5.2.</span> <span class="nav-text">Write Concern</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#回滚（rollback）"><span class="nav-number">6.</span> <span class="nav-text">回滚（rollback）</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhu.Yang</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">364k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">5:31</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.6.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  
+    <script src="https://cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script src="https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script src="https://cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script src="https://cdn.bootcss.com/velocity/1.2.1/velocity.min.js"></script>
+  
+
+  
+  
+    <script src="https://cdn.bootcss.com/velocity/1.2.1/velocity.ui.min.js"></script>
+  
+
+  
+  
+    <script src="https://cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.js"></script>
+  
+
+  
+  
+    <script src="/lib/reading_progress/reading_progress.js"></script>
+  
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+  
+  <script src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'manual') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script>
+    
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+
+      Counter('get', '/classes/Counter', { where: JSON.stringify({ url }) })
+        .done(function ({ results }) {
+          if (results.length > 0) {
+            var counter = results[0];
+            
+            Counter('put', `/classes/Counter/${counter.objectId}`, JSON.stringify({ time: { "__op":"Increment", "amount":1 } }))
+            
+            .done(function () {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(counter.time + 1);
+            })
+            
+            .fail(function ({ responseJSON }) {
+                console.log('Failed to save Visitor num, with error message: ' + responseJSON.error);
+            })
+          } else {
+            
+              Counter('post', '/classes/Counter', JSON.stringify({ title: title, url: url, time: 1}))
+                .done(function () {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(1);
+                })
+                .fail(function () {
+                  console.log('Failed to create');
+                });
+            
+          }
+        })
+      .fail(function ({ responseJSON }) {
+        console.log('LeanCloud Counter Error:' + responseJSON.code + " " + responseJSON.error);
+      });
+    }
+    
+
+    $(function() {
+      $.get('https://app-router.leancloud.cn/2/route?appId=' + "meJ1FaNUdSGteWwG1EBwj4iw-gzGzoHsz")
+        .done(function ({ api_server }) {
+          var Counter = function (method, url, data) {
+            return $.ajax({
+              method: method,
+              url: `https://${api_server}/1.1${url}`,
+              headers: {
+                'X-LC-Id': "meJ1FaNUdSGteWwG1EBwj4iw-gzGzoHsz",
+                'X-LC-Key': "L5qaJWameLbFdhr25xbPS0fB",
+                'Content-Type': 'application/json',
+              },
+              data: data,
+            });
+          };
+          
+          addCount(Counter);
+          
+        })
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+  
+    
+  
+  <script src="https://cdn.bootcss.com/pangu/3.3.0/pangu.min.js"></script>
+  <script>pangu.spacingPage();</script>
+
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+  
+
+</body>
+</html>
