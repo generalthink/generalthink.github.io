@@ -142,11 +142,42 @@ steps:
 
 上面drone的配置就是整个CI的基本流程了，需要注意的有以下几点
 
-1. sonar配置中的sonar.projectKey,sonar.projectName一定要和你在sonar服务器(sonar.host.url指定的地址)中创建project时的名称一样
-2. sonar_token的值是在sonar服务器上创建的，然后将这个值设置在了drone的secrets中(drone中点击某一个仓库,进入Settings可以进行设置)
-3. github token和sonar_token是同样的方式，都需要在drone中预设置(好处就是你不会暴露你的密码在文件中，这样更加安全)
-4. 由于所用Java项目是个多模块项目,所以可以在sonar.modules中指定多个模块名称
-5. sonar scan feedback的内容到pr不要指定preview mode
+1. 只有当分支名称以feature/,issue/,develop开头的才会触发上面的执行步骤,对于unit test而言,只有develop分支才生效(可以根据需要自行定制)
+2. sonar配置中的sonar.projectKey,sonar.projectName一定要和你在sonar服务器(sonar.host.url指定的地址)中创建project时的名称一样
+3. sonar_token的值是在sonar服务器上创建的，然后将这个值设置在了drone的secrets中(drone中点击某一个仓库,进入Settings可以进行设置)
+4. github token和sonar_token是同样的方式，都需要在drone中预设置(好处就是你不会暴露你的密码在文件中，这样更加安全)
+5. 由于所用Java项目是个多模块项目,所以可以在sonar.modules中指定多个模块名称
+6. sonar scan feedback的内容到pr不要指定preview mode
+7. build的时候使用了jacoco(分析单元测试覆盖率),所以需要在java项目中pom.xml引入这个plugin
+
+```xml
+<plugin>
+  <groupId>org.jacoco</groupId>
+  <artifactId>jacoco-maven-plugin</artifactId>
+  <version>${jacoco.version}</version>
+  <executions>
+    <execution>
+      <id>prepare-agent</id>
+      <goals>
+          <goal>prepare-agent</goal>
+      </goals>
+    </execution>
+    <execution>
+      <id>default-report</id>
+      <phase>test</phase>
+      <goals>
+          <goal>report</goal>
+      </goals>
+      <configuration>
+          <dataFile>target/jacoco.exec</dataFile>
+          <outputDirectory>target/jacoco</outputDirectory>
+      </configuration>
+    </execution>
+  </executions>
+</plugin>
+
+```
+
 
 **其他可能遇到的问题：**
 
