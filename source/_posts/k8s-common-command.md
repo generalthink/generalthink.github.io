@@ -6,19 +6,18 @@ tags:
 - K8S
 ---
 
-1. 获取所有的namespace
+
+#### 获取所有的namespace
 
 ```
 kubectl get namespace
 ```
-
 > 默认使用的是 ~/.kube/config这个配置文件，如果文件不再这个目录下可以通过 <--kubeconfig configFilePath>指定
 > https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/#set-the-kubeconfig-environment-variable
 
 <!--more-->
 
-2. 生成config文件
-
+#### 生成config文件
 ```
 kubectl config --kubeconfig=config set-cluster <cluste name> --server=<kubernetes server address>
 
@@ -32,15 +31,14 @@ kubectl config --kubeconfig=config use-context <current context>
 
 通过上面的命令生成config文件，通过这个文件就可以使用kubectl访问kubernetes集群
 
-3. 生成证书
-
+#### 生成证书
 ```
 kubectl create secret tls <cert name> --cert <hostname.crt> --key <hostname.key> -n <namespace>
 ```
 
 生成证书之后就可以在ingress配置spec.tls.hosts.secretName中配置命令中指定的<cert name>
 
-4. 生成secret
+#### 生成secret
 
 ```
 # <secret file>这里常用的就是property文件，内容是key=value
@@ -68,25 +66,25 @@ echo 'MWYyZDFlMmU2N2Rm' | base64 --decode
 
 ```
 
-5. 查看有哪些pod
+#### 查看有哪些pod
 
 ```
 kubectl get pods -n <namespace> -o wide
 ```
 
-6. 查看deployment
+#### 查看deployment
 
 ```
 kubectl describe deploy/<deployment name> -n <namespace>
 ```
 
-7. 查看某个pod日志
+#### 查看某个pod日志
 
 ```
 kubectl logs <pod name> -n <namespace>
 ```
 
-8. 进入到容器内部
+#### 进入到容器内部
 
 ```
 winpty kubectl exec <pod name> -n <namespace> -it  -- bin/bash
@@ -100,13 +98,13 @@ windows下执行才需要加上winpty,mac是不需要的。 如果bin/bash没有
 winpty kubectl exec <pod name> -c <container name> -n <name space> -it -- bin/sh
 ```
 
-9. 水平扩展/收缩
+#### 水平扩展/收缩
 
 ```
 kubectl scale deployment <deployment name> --replicas=4
 ```
 
-10. 查看滚动更新结果
+#### 查看滚动更新结果
 
 ```
 # 查看deployment
@@ -117,26 +115,26 @@ kubectl get rs -n <namespace>
 
 ```
 
-11. 查看历史版本
+#### 查看历史版本
 
 ```
 kubectl rollout history deployment/<deployment name> -n <namespace>
 ```
 
-12. 查看某个历史版本的细节
+#### 查看某个历史版本的细节
 
 ```
 # 这里的versionNum是通过rollout history查看到的对应的数字
 kubectl rollout history deployment/<deployment name> --revision=<versionNum>
 ```
 
-14. 回滚到某个特定版本
+#### 回滚到某个特定版本
 
 ```
 kubectl rollout undo deployment/smcp-service --to-revision=<versionNum>
 ```
 
-15. 删除rs
+#### 删除rs
 
 ```
 kubectl delete rs -l app=<label name> -n <namespace>
@@ -146,7 +144,7 @@ kubectl delete rs -l app=<label name> -n <namespace>
 
 
 
-### 总结
+#### 总结
 
 其实kubectl语法都是存在特定格式的
 
