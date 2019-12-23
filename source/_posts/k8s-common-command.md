@@ -12,7 +12,7 @@ tags:
 ```
 kubectl get namespace
 ```
-> 默认使用的是 ~/.kube/config这个配置文件，如果文件不再这个目录下可以通过 <--kubeconfig configFilePath>指定
+> 默认使用的是 ~/.kube/config这个配置文件，如果文件不再这个目录下可以通过 --kubeconfig configFilePath>指定
 > https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/#set-the-kubeconfig-environment-variable
 
 <!--more-->
