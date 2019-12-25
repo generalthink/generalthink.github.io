@@ -142,7 +142,13 @@ kubectl delete rs -l app=<label name> -n <namespace>
 ```
 每次更新都会产生一个新的replica set,如果要删除那些旧的，可以使用这个命令，并通过-l参数指定label来进行删除
 
+### 将服务器上的服务暴露到本地
 
+```
+kubectl port-forward svc/argocd-server -n argocd 8080:443
+```
+
+当我们访问http://localhost:8080的时候，实际上就是访问的kubernetes集群中argocd-server的443端口，同理你可以暴露redis,mongodb等。
 
 #### 总结
 
