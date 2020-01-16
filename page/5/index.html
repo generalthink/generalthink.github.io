@@ -388,6 +388,212 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/25/understanding-git-move-node/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhu.Yang">
+      <meta itemprop="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhu.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/01/25/understanding-git-move-node/" class="post-title-link" itemprop="http://yoursite.com/page/5/index.html">深入浅出git(五)——自由的修改提交记录</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-01-25 16:15:59" itemprop="dateCreated datePublished" datetime="2019-01-25T16:15:59+08:00">2019-01-25</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-01-16 16:49:44" itemprop="dateModified" datetime="2020-01-16T16:49:44+08:00">2020-01-16</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/01/25/understanding-git-move-node/" class="leancloud_visitors" data-flag-title="深入浅出git(五)——自由的修改提交记录">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">1.3k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">1 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p><a href="https://generalthink.github.io/2019/01/23/understanding-git-merge-and-rebase/" target="_blank" rel="noopener">上篇文章</a>讲了merge和rebase,我们已经可以在commit object构成的图(当然我更愿意把它看成一棵树)上面进行分支的合并了,在图上我们可以新增节点(git commit),合并节点(merge或者rebase),这篇我们就来讲解下移动和删除节点。</p>
+<p>在讲移动和删除之前，我们先来认识下HEAD的分离。</p>
+<h3 id="分离的HEAD"><a href="#分离的HEAD" class="headerlink" title="分离的HEAD"></a>分离的HEAD</h3><p>我们都知道,HEAD是指向当前分支的,而分离的HEAD就是让其指向了某个具体的提交记录而不是分支名。</p>
+<p>现在我本地的提交记录是这样的</p>
+<p><img src="/images/understanding-git/move-and-delete/git-log-status.gif" alt="git log"></p>
+<p>当我们执行<code>git checkout  062704b1c3a814dfd95695aba3684c22e3f3fa85</code>之后HEAD就处于分离状态。</p>
+<p><img src="/images/understanding-git/move-and-delete/git-detached-head.gif" alt="分离HEAD"></p>
+<p><img src="/images/understanding-git/move-and-delete/git-detached-head-structure.gif" alt="分离HEAD"></p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/01/25/understanding-git-move-node/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/23/understanding-git-merge-and-rebase/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -450,7 +656,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-01-10 10:46:55" itemprop="dateModified" datetime="2020-01-10T10:46:55+08:00">2020-01-10</time>
+                <time title="修改时间：2020-01-16 16:49:44" itemprop="dateModified" datetime="2020-01-16T16:49:44+08:00">2020-01-16</time>
               
             
           </span>
@@ -653,7 +859,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-01-10 10:46:55" itemprop="dateModified" datetime="2020-01-10T10:46:55+08:00">2020-01-10</time>
+                <time title="修改时间：2020-01-16 16:49:44" itemprop="dateModified" datetime="2020-01-16T16:49:44+08:00">2020-01-16</time>
               
             
           </span>
@@ -853,7 +1059,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-01-10 10:46:55" itemprop="dateModified" datetime="2020-01-10T10:46:55+08:00">2020-01-10</time>
+                <time title="修改时间：2020-01-16 16:49:44" itemprop="dateModified" datetime="2020-01-16T16:49:44+08:00">2020-01-16</time>
               
             
           </span>
@@ -1052,7 +1258,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-01-10 10:46:55" itemprop="dateModified" datetime="2020-01-10T10:46:55+08:00">2020-01-10</time>
+                <time title="修改时间：2020-01-16 16:49:44" itemprop="dateModified" datetime="2020-01-16T16:49:44+08:00">2020-01-16</time>
               
             
           </span>
@@ -1253,7 +1459,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-01-10 10:46:55" itemprop="dateModified" datetime="2020-01-10T10:46:55+08:00">2020-01-10</time>
+                <time title="修改时间：2020-01-16 16:49:44" itemprop="dateModified" datetime="2020-01-16T16:49:44+08:00">2020-01-16</time>
               
             
           </span>
@@ -1471,7 +1677,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-01-10 10:46:55" itemprop="dateModified" datetime="2020-01-10T10:46:55+08:00">2020-01-10</time>
+                <time title="修改时间：2020-01-16 16:49:44" itemprop="dateModified" datetime="2020-01-16T16:49:44+08:00">2020-01-16</time>
               
             
           </span>
@@ -1688,7 +1894,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-01-10 10:46:55" itemprop="dateModified" datetime="2020-01-10T10:46:55+08:00">2020-01-10</time>
+                <time title="修改时间：2020-01-16 16:49:44" itemprop="dateModified" datetime="2020-01-16T16:49:44+08:00">2020-01-16</time>
               
             
           </span>
@@ -1905,7 +2111,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-01-10 10:46:55" itemprop="dateModified" datetime="2020-01-10T10:46:55+08:00">2020-01-10</time>
+                <time title="修改时间：2020-01-16 16:49:44" itemprop="dateModified" datetime="2020-01-16T16:49:44+08:00">2020-01-16</time>
               
             
           </span>
@@ -2122,7 +2328,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-01-10 10:46:55" itemprop="dateModified" datetime="2020-01-10T10:46:55+08:00">2020-01-10</time>
+                <time title="修改时间：2020-01-16 16:49:44" itemprop="dateModified" datetime="2020-01-16T16:49:44+08:00">2020-01-16</time>
               
             
           </span>
@@ -2262,223 +2468,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/13/jvm-log-analysis/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zhu.Yang">
-      <meta itemprop="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhu.Yang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/11/13/jvm-log-analysis/" class="post-title-link" itemprop="http://yoursite.com/page/5/index.html">JVM日志分析</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-11-13 21:39:44" itemprop="dateCreated datePublished" datetime="2018-11-13T21:39:44+08:00">2018-11-13</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2020-01-10 10:46:55" itemprop="dateModified" datetime="2020-01-10T10:46:55+08:00">2020-01-10</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/jvm/" itemprop="url" rel="index"><span itemprop="name">jvm</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/11/13/jvm-log-analysis/" class="leancloud_visitors" data-flag-title="JVM日志分析">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数：</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">本文字数：</span>
-                
-                <span title="本文字数">11k</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">10 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          线上经常会遇到服务器繁忙,请求响应缓慢，这个时候大多是在进行大量的gc或者full gc，为了排查这方面的问题我们就要清楚的知道
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2018/11/13/jvm-log-analysis/">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2528,7 +2517,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">77</span>
+                    <span class="site-state-item-count">78</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2740,7 +2729,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">390k</span>
+    <span title="站点总字数">392k</span>
   
 
   
@@ -2749,7 +2738,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">5:54</span>
+    <span title="站点阅读时长">5:57</span>
   
 </div>
 
