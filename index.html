@@ -388,6 +388,289 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/06/thread-pool-analysis/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhu.Yang">
+      <meta itemprop="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhu.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2020/02/06/thread-pool-analysis/" class="post-title-link" itemprop="http://yoursite.com/index.html">为什么阿里建议你不要使用Executors来创建线程池？</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-02-06 10:46:04" itemprop="dateCreated datePublished" datetime="2020-02-06T10:46:04+08:00">2020-02-06</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-02-17 10:43:51" itemprop="dateModified" datetime="2020-02-17T10:43:51+08:00">2020-02-17</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2020/02/06/thread-pool-analysis/" class="leancloud_visitors" data-flag-title="为什么阿里建议你不要使用Executors来创建线程池？">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">8.6k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">8 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>我相信大家在项目中或多或少的都使用过线程，而线程是宝贵的资源，不能频繁的创建，应当给其他任务进行复用,所以就有了我们的线程池。</p>
+<h3 id="线程池的使用"><a href="#线程池的使用" class="headerlink" title="线程池的使用"></a>线程池的使用</h3><blockquote>
+<p>你知道我们如何创建线程池吗？</p>
+</blockquote>
+<p>这我当然知道了,JDK主要提供了三种创建线程池的方法</p>
+<ol>
+<li>Executors.newFixedThreadPool(int nThreads) : 创建固定线程数量的线程池</li>
+<li>Executors.newSingleThreadExecutor() : 创建单个线程的线程池</li>
+<li>Executors.newCachedThreadPool() : 创建一个”无限大小”的线程池</li>
+</ol>
+<blockquote>
+<p>线程池如何使用</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ExecutorService threadPool = Executors.newFixedThreadPool(<span class="number">5</span>);</span><br><span class="line"></span><br><span class="line">threadPool.execute(() -&gt; &#123;</span><br><span class="line">  System.out.println(<span class="string">"执行任务"</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">threadPool.shutdown();</span><br></pre></td></tr></table></figure>
+<h3 id="线程池的原理"><a href="#线程池的原理" class="headerlink" title="线程池的原理"></a>线程池的原理</h3><blockquote>
+<p>你给我讲讲线程池的原理呢?</p>
+</blockquote>
+<h4 id="线程池核心参数以及状态"><a href="#线程池核心参数以及状态" class="headerlink" title="线程池核心参数以及状态"></a>线程池核心参数以及状态</h4><p>上面说的创建线程池的方法实际上都是通过创建ThreadPoolExecutor这个类来实现的,所以我们直接看这个类的实现原理即可。<br>首先来看看它的构造方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ThreadPoolExecutor</span><span class="params">(<span class="keyword">int</span> corePoolSize,</span></span></span><br><span class="line"><span class="function"><span class="params">                             <span class="keyword">int</span> maximumPoolSize,</span></span></span><br><span class="line"><span class="function"><span class="params">                             <span class="keyword">long</span> keepAliveTime,</span></span></span><br><span class="line"><span class="function"><span class="params">                             TimeUnit unit,</span></span></span><br><span class="line"><span class="function"><span class="params">                             BlockingQueue&lt;Runnable&gt; workQueue,</span></span></span><br><span class="line"><span class="function"><span class="params">                             RejectedExecutionHandler handler)</span></span></span><br></pre></td></tr></table></figure>
+<p>先说下它这几个核心参数的含义</p>
+<ul>
+<li>corePoolSize : 线程池核心线程数量</li>
+<li>maximumPoolSize : 线程池最大线程数量</li>
+<li>keepAliveTime : 非核心线程的超时时长,当系统中非核心线程闲置时间超过keepAliveTime之后，则会被回收。如果ThreadPoolExecutor的allowCoreThreadTimeOut属性设置为true，则该参数也表示核心线程的超时时长</li>
+<li>unit : 超时时长单位</li>
+<li>workQueue : 线程池中的任务队列，该队列主要用来存储已经被提交但是尚未执行的任务</li>
+<li>handler : 当线程池无法处理任务的时候的处理策略</li>
+</ul>
+<p>当然只是知道这几个参数也没有什么太大的作用,我们还是要着眼全局来看ThreadPoolExecutor类。</p>
+<p>首先来认识下线程池中定义的状态，它们一直贯穿在整个主体</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ctl存储了两个值,一个是线程池的状态,另一个是活动线程数(workerCount)</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">final</span> AtomicInteger ctl = <span class="keyword">new</span> AtomicInteger(ctlOf(RUNNING, <span class="number">0</span>));</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> COUNT_BITS = Integer.SIZE - <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 线程池最多允许2^29-1个(大概5亿)线程存在,当然首先要你的系统能新建这么多个</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> CAPACITY   = (<span class="number">1</span> &lt;&lt; COUNT_BITS) - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// runState is stored in the high-order bits</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> RUNNING    = -<span class="number">1</span> &lt;&lt; COUNT_BITS;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SHUTDOWN   =  <span class="number">0</span> &lt;&lt; COUNT_BITS;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> STOP       =  <span class="number">1</span> &lt;&lt; COUNT_BITS;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TIDYING    =  <span class="number">2</span> &lt;&lt; COUNT_BITS;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TERMINATED =  <span class="number">3</span> &lt;&lt; COUNT_BITS;</span><br></pre></td></tr></table></figure>
+<p>从上面的成员变量的定义我们可以知道,线程池最多允许5亿个(2^29-1)个线程活动，那么为什么不是2^31-1呢?因为设计者觉得这个值已经够大了，如果将来觉得这是一个瓶颈的话,会把这个换成Long类型。</p>
+<p>同时线程池这里也存在了五个状态，它们解决着线程池的生命周期。</p>
+<ol>
+<li>RUNNING : 运行状态。接受新的task并且处理队列中的task</li>
+<li>SHUTDOWN : 关闭状态(调用了shutdown方法)。不接受新的task,但是要处理队列中的task</li>
+<li>STOP : 停止状态(调用了shutdownNow方法)。不接受新的task,也不处理队列中的task,并且要中断正在处理的task</li>
+<li>TIDYING : 所有的task都已终止了,workerCount (活动终止状态，当执行 terminated() 后会更新为这个状态线程数) 为0，线程池进入该状态后会调用 terminated() 方法进入TERMINATED 状态</li>
+<li>TERMINATED : 终止状态，当执行 terminated() 后会更新为这个状态</li>
+</ol>
+<p>状态流转图如下:<br><img src="/images/java/thread-pool-status.png" alt="线程池状态"></p>
+<h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><p>我们知道当我们执行一个task的时候,调用的是execute方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">(Runnable command)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (command == <span class="keyword">null</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line">    <span class="keyword">int</span> c = ctl.get();</span><br><span class="line">    <span class="comment">// 1. 如果工作线程数小于核心线程数(corePoolSize),则创建一个工作线程执行任务</span></span><br><span class="line">    <span class="keyword">if</span> (workerCountOf(c) &lt; corePoolSize) &#123;</span><br><span class="line">        <span class="keyword">if</span> (addWorker(command, <span class="keyword">true</span>))</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        c = ctl.get();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 2. 如果当前是running状态，并且任务队列能够添加任务</span></span><br><span class="line">    <span class="keyword">if</span> (isRunning(c) &amp;&amp; workQueue.offer(command)) &#123;</span><br><span class="line">        <span class="keyword">int</span> recheck = ctl.get();</span><br><span class="line">        <span class="comment">// 2.1 如果不处于running状态了(使用者可能调用了shutdown方法),则将刚才添加到任务队列的任务移除</span></span><br><span class="line">        <span class="keyword">if</span> (! isRunning(recheck) &amp;&amp; remove(command))</span><br><span class="line">            reject(command);</span><br><span class="line">        <span class="comment">// 2.2 如果当前没有工作线程,则新建一个工作线程来执行任务(任务已经被添加到了任务队列)</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (workerCountOf(recheck) == <span class="number">0</span>)</span><br><span class="line">            addWorker(<span class="keyword">null</span>, <span class="keyword">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 3. 队列已经满了的情况下，则新启动一个工作线程来执行任务</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (!addWorker(command, <span class="keyword">false</span>))</span><br><span class="line">        reject(command);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>而在addWorker方法中还存在有一些必要的判断逻辑，比如当前线程池是否是非running状态,队列是否为空等条件，当然最主要的逻辑还是判断当前工作线程数量是否大于maximumPoolSize以及启动工作线程执行任务。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">addWorker</span><span class="params">(Runnable firstTask, <span class="keyword">boolean</span> core)</span> </span>&#123;</span><br><span class="line">    retry:</span><br><span class="line">    <span class="keyword">for</span> (;;) &#123;</span><br><span class="line">        <span class="keyword">for</span> (;;) &#123;</span><br><span class="line">            <span class="keyword">int</span> wc = workerCountOf(c);</span><br><span class="line">            <span class="comment">// 1. 判断当前工作线程是否满足条件</span></span><br><span class="line">            <span class="keyword">if</span> (wc &gt;= CAPACITY ||</span><br><span class="line">                wc &gt;= (core ? corePoolSize : maximumPoolSize))</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">            <span class="comment">// 2. 增加工作线程数量</span></span><br><span class="line">            <span class="keyword">if</span> (compareAndIncrementWorkerCount(c))</span><br><span class="line">                <span class="keyword">break</span> retry;</span><br><span class="line">            c = ctl.get();  <span class="comment">// Re-read ctl</span></span><br><span class="line">            <span class="keyword">if</span> (runStateOf(c) != rs)</span><br><span class="line">                <span class="keyword">continue</span> retry;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 3. 创建工作线程</span></span><br><span class="line">    w = <span class="keyword">new</span> Worker(firstTask);</span><br><span class="line">    <span class="keyword">final</span> Thread t = w.thread;</span><br><span class="line">    workers.add(w);     </span><br><span class="line">    <span class="keyword">if</span> (workerAdded) &#123;</span><br><span class="line">        <span class="comment">// 4. 运行工作线程</span></span><br><span class="line">        t.start();</span><br><span class="line">        workerStarted = <span class="keyword">true</span>;</span><br><span class="line">    &#125;     </span><br><span class="line">    <span class="keyword">return</span> workerStarted;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>所以，总结下线程池的#### #### 工作流程#### #### 如下:</p>
+<ol>
+<li>提交一个任务，如果线程池中的工作线程数小于corePoolSize,则新建一个工作线程执行任务</li>
+<li>如果线程池当前的工作线程已经等于了corePoolSize,则将新的任务放入到工作队列中正在执行</li>
+<li>如果工作队列已经满了,并且工作线程数小于maximumPoolSize,则新建一个工作线程来执行任务</li>
+<li>如果当前线程池中工作线程数已经达到了maximumPoolSize,而新的任务无法放入到任务队列中,则采用对应的策略进行相应<br>的处理(默认是拒绝策略)</li>
+</ol>
+<p>如果你觉得上面不好记，我给你讲个火锅店的故事你就更加明白了。</p>
+<p>以前有个火锅店,叫做朱帅帅火锅，老板是个刚辞掉程序员工作出来创业的帅小伙子,火锅店不大,只能摆上10张桌子(corePoolSize),如果吃火锅的来得早就可以去店里面坐(店里有空调),来晚了,店里面坐满了,后面来的人就要排队了(workQueue)。<br>排队的人数越来越多,朱帅帅一看不是办法,就给外面摆了几张临时桌子(非核心工作线程),让客人在外面吃。如果店里面有人吃完了或者外面临时桌子吃完了就让排队的人去吃。后面时间晚了，没有排队的人了，老板就让人撤了外面的临时桌子，毕竟摆在外面也不太好，而且还怕城管来。如果生意特别好,又来了特别多的人，已经超出火锅店的服务能力了，就只能喊他们去别家了。</p>
+<p>上面的故事，你要品，细细的品,最后你会发现,代码来源于生活。</p>
+<p>上面一直说到工作线程,工作线程到底是个什么鬼？其实工作线程指的就是我们的Worker类,它是ThreadPoolExecutor中的私有类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Worker</span></span></span><br><span class="line"><span class="class">    <span class="keyword">extends</span> <span class="title">AbstractQueuedSynchronizer</span></span></span><br><span class="line"><span class="class">    <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">final</span> Thread thread;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 需要执行的任务</span></span><br><span class="line">    Runnable firstTask;</span><br><span class="line"></span><br><span class="line">    Worker(Runnable firstTask) &#123;</span><br><span class="line">      <span class="keyword">this</span>.firstTask = firstTask;</span><br><span class="line">      <span class="keyword">this</span>.thread = getThreadFactory().newThread(<span class="keyword">this</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到Woker不仅继承了AbstractQueuedSynchronizer(实现独占锁功能),还实现了Runnable接口。</p>
+<p>实际上线程池中的每一个线程被封装成一个Worker对象，ThreadPool维护的其实就是一组Worker对象</p>
+<p>Worker用自己作为task构造一个线程，同时把外层任务赋值给自己的task成员变量，相当于对task做了一个包装。</p>
+<p>addWorker()方法中执行了worker.thread.start(),实际上执行的就是Worker的runWorker方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">final</span> <span class="keyword">void</span> <span class="title">runWorker</span><span class="params">(Worker w)</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 1. 获取任务开始执行任务,如果获取不到任务,当前的worker就会被JVM回收</span></span><br><span class="line">    <span class="keyword">while</span> (task != <span class="keyword">null</span> || (task = getTask()) != <span class="keyword">null</span>) &#123;</span><br><span class="line">       task.run();</span><br><span class="line">    &#125;     </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> Runnable <span class="title">getTask</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">boolean</span> timedOut = <span class="keyword">false</span>; </span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (;;) &#123;</span><br><span class="line">        <span class="keyword">int</span> c = ctl.get();</span><br><span class="line">        <span class="keyword">int</span> rs = runStateOf(c);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 1. 判断线程池是否关闭</span></span><br><span class="line">        <span class="keyword">if</span> (rs &gt;= SHUTDOWN &amp;&amp; (rs &gt;= STOP || workQueue.isEmpty())) &#123;</span><br><span class="line">            decrementWorkerCount();</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> wc = workerCountOf(c);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 2. 判断是否需要进行超时控制。</span></span><br><span class="line">        <span class="comment">// allowCoreThreadTimeOut默认是false，也就是核心线程不允许进行超时；</span></span><br><span class="line">        <span class="comment">// wc &gt; corePoolSize，表示当前线程池中的工作线程数量大于核心线程数量；</span></span><br><span class="line">        <span class="comment">// 对于超过核心线程数量的这些线程，需要进行超时控制</span></span><br><span class="line">        <span class="keyword">boolean</span> timed = allowCoreThreadTimeOut || wc &gt; corePoolSize;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 3. wc &gt; maximumPoolSize的情况是因为可能在此方法执行阶段同时执行了setMaximumPoolSize方法；</span></span><br><span class="line">        <span class="comment">// timed &amp;&amp; timedOut 如果为true，表示当前操作需要进行超时控制，并且上次从阻塞队列中获取任务发生了超时</span></span><br><span class="line">        <span class="keyword">if</span> ((wc &gt; maximumPoolSize || (timed &amp;&amp; timedOut))</span><br><span class="line">            &amp;&amp; (wc &gt; <span class="number">1</span> || workQueue.isEmpty())) &#123;</span><br><span class="line">            <span class="keyword">if</span> (compareAndDecrementWorkerCount(c))</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 4. timed如果为true，则通过阻塞队列的poll方法进行超时控制，如果在keepAliveTime时间内没有获取到任务，则返回null。如果为false，则直接阻塞</span></span><br><span class="line">        Runnable r = timed ?</span><br><span class="line">            workQueue.poll(keepAliveTime, TimeUnit.NANOSECONDS) :</span><br><span class="line">            workQueue.take();</span><br><span class="line">        <span class="keyword">if</span> (r != <span class="keyword">null</span>)</span><br><span class="line">            <span class="keyword">return</span> r;</span><br><span class="line">        timedOut = <span class="keyword">true</span>;</span><br><span class="line">       </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong> 上面的代码中尤其需要注意的是getTask()中的第3点,它的目的是控制线程池有效的工作线程数量。<br>从之前的分析我们可以知道，如果当前线程池的工作线程数量超过了corePoolSize且小于maximumPoolSize，并且workQueue已满，则可以增加工作线程，但这时如果超时没有获取到任务，也就是timedOut为true的情况，说明workQueue已经为空了，也就说明了线程池中不需要那么多线程来执行任务了，可以把多于corePoolSize数量的线程销毁掉，保持线程数量在corePoolSize即可。</strong></p>
+<h3 id="拒绝策略"><a href="#拒绝策略" class="headerlink" title="拒绝策略"></a>拒绝策略</h3><blockquote>
+<p>你刚才说到拒绝策略，都有哪些拒绝策略呀？</p>
+</blockquote>
+<p>主要有下面4种拒绝策略</p>
+<ol>
+<li>AbortPolicy : 始终抛出RejectedExecutionException</li>
+<li>CallerRunsPolicy : 如果线程池未关闭,则交给调用线程池的线程执行</li>
+<li>DiscardPolicy : 直接丢弃任务，啥也不做</li>
+<li>DiscardOldestPolicy : 丢弃队列里最老的任务,然后将当前这个任务重新提交给线程池。</li>
+</ol>
+<p>如果这四种策略都不满足需求，可以自己实现自己的拒绝策略。</p>
+<h3 id="通过Executors创建的线程池不同之处"><a href="#通过Executors创建的线程池不同之处" class="headerlink" title="通过Executors创建的线程池不同之处"></a>通过Executors创建的线程池不同之处</h3><blockquote>
+<p>你给我说说你开头说的通过Executors创建的线程池三者有何不同吗？</p>
+</blockquote>
+<h4 id="newFixedThreadPool"><a href="#newFixedThreadPool" class="headerlink" title="newFixedThreadPool"></a>newFixedThreadPool</h4><p>固定线程数量的线程池，corePoolSize等于maximumPoolSize,采用的阻塞队列是LinkedBlockingQueue,是一个无界队列,当任务量突然很大,线程池来不及处理，就会将任务一直添加到队列中,就有可能导致内存溢出。</p>
+<h4 id="newSingleThreadExecutor"><a href="#newSingleThreadExecutor" class="headerlink" title="newSingleThreadExecutor"></a>newSingleThreadExecutor</h4><p>创建单个线程的线程池,corePoolSize = maximumPoolSize = 1，也采用的LinkedBlockingQueue这个无界队列，当任务量很大,线程池来不及处理,就有可能会导致内存溢出。</p>
+<h4 id="newCachedThreadPool"><a href="#newCachedThreadPool" class="headerlink" title="newCachedThreadPool"></a>newCachedThreadPool</h4><p>创建可缓存的线程池,corePoolSize = 1,maximumPoolSize = Interger.MAX_VALUE;但是使用的是SynousQueue,这个队列比较特殊，内部没有结构来存储任何元素，所以如果任务数很大,而创建的那个线程(corePoolSize=1)迟迟没有处理完成任务,就会一直创建线程来处理,也有OOM的可能。</p>
+<p>cacheThreadPool中的cache其实指的就是SynousQueue,当往这个队列插入数据的时候，如果没有任务来取，插入这个过程会被阻塞。</p>
+<blockquote>
+<p>你既然说了都有可能OOM,那么应该如何创建线程池呢？</p>
+</blockquote>
+<p>实际使用中不建议通过Executors来创建线程池，而是通过 <code>new ThreadPoolExecutor</code>的方式来创建,而队列也不建议使用无界队列，而要使用有界队列，比如ArrayBlockingQueue。而拒绝策略这个就看你自己需求了(系统提供的如果不满足,就自己写一个)<br>同时对于核心线程数的设置也不是越大越好,只能说根据你的需求来设置这个值,一般来讲可以根据下面两点来进行合理配置</p>
+<ol>
+<li>对于I/O密集型任务,可以将线程数设置大一点,比如 CPU个数 * 2</li>
+<li>对于计算性任务(在内存中进行大量运算),可以将线程数设置小一点, 比如就等于 CPU的个数</li>
+</ol>
+<p>当然啦,这个考虑是很多方面的,不仅仅和程序有关，还和硬件等资源有关，总之就是在测试的时候多多调试。</p>
+<p>大家不要以为我上面说的是句废话,请你自信一点，把以为去掉。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/16/understand-java8-optional/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -450,7 +733,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-02-06 15:58:23" itemprop="dateModified" datetime="2020-02-06T15:58:23+08:00">2020-02-06</time>
+                <time title="修改时间：2020-02-17 10:43:51" itemprop="dateModified" datetime="2020-02-17T10:43:51+08:00">2020-02-17</time>
               
             
           </span>
@@ -651,7 +934,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-02-06 15:58:23" itemprop="dateModified" datetime="2020-02-06T15:58:23+08:00">2020-02-06</time>
+                <time title="修改时间：2020-02-17 10:43:51" itemprop="dateModified" datetime="2020-02-17T10:43:51+08:00">2020-02-17</time>
               
             
           </span>
@@ -855,7 +1138,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-02-06 15:58:23" itemprop="dateModified" datetime="2020-02-06T15:58:23+08:00">2020-02-06</time>
+                <time title="修改时间：2020-02-17 10:43:51" itemprop="dateModified" datetime="2020-02-17T10:43:51+08:00">2020-02-17</time>
               
             
           </span>
@@ -1056,7 +1339,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-02-06 15:58:23" itemprop="dateModified" datetime="2020-02-06T15:58:23+08:00">2020-02-06</time>
+                <time title="修改时间：2020-02-17 10:43:51" itemprop="dateModified" datetime="2020-02-17T10:43:51+08:00">2020-02-17</time>
               
             
           </span>
@@ -1259,7 +1542,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-02-06 15:58:23" itemprop="dateModified" datetime="2020-02-06T15:58:23+08:00">2020-02-06</time>
+                <time title="修改时间：2020-02-17 10:43:51" itemprop="dateModified" datetime="2020-02-17T10:43:51+08:00">2020-02-17</time>
               
             
           </span>
@@ -1461,7 +1744,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-02-06 15:58:23" itemprop="dateModified" datetime="2020-02-06T15:58:23+08:00">2020-02-06</time>
+                <time title="修改时间：2020-02-17 10:43:51" itemprop="dateModified" datetime="2020-02-17T10:43:51+08:00">2020-02-17</time>
               
             
           </span>
@@ -1668,7 +1951,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-02-06 15:58:23" itemprop="dateModified" datetime="2020-02-06T15:58:23+08:00">2020-02-06</time>
+                <time title="修改时间：2020-02-17 10:43:51" itemprop="dateModified" datetime="2020-02-17T10:43:51+08:00">2020-02-17</time>
               
             
           </span>
@@ -1868,7 +2151,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-02-06 15:58:23" itemprop="dateModified" datetime="2020-02-06T15:58:23+08:00">2020-02-06</time>
+                <time title="修改时间：2020-02-17 10:43:51" itemprop="dateModified" datetime="2020-02-17T10:43:51+08:00">2020-02-17</time>
               
             
           </span>
@@ -2069,7 +2352,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-02-06 15:58:23" itemprop="dateModified" datetime="2020-02-06T15:58:23+08:00">2020-02-06</time>
+                <time title="修改时间：2020-02-17 10:43:51" itemprop="dateModified" datetime="2020-02-17T10:43:51+08:00">2020-02-17</time>
               
             
           </span>
@@ -2194,211 +2477,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/30/mongodb-replica-set/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zhu.Yang">
-      <meta itemprop="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhu.Yang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/10/30/mongodb-replica-set/" class="post-title-link" itemprop="http://yoursite.com/index.html">MongoDB 复制集那点事儿</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-10-30 11:16:52" itemprop="dateCreated datePublished" datetime="2019-10-30T11:16:52+08:00">2019-10-30</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2020-02-06 15:58:23" itemprop="dateModified" datetime="2020-02-06T15:58:23+08:00">2020-02-06</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/10/30/mongodb-replica-set/" class="leancloud_visitors" data-flag-title="MongoDB 复制集那点事儿">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数：</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">本文字数：</span>
-                
-                <span title="本文字数">7.8k</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">7 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="何以高可用"><a href="#何以高可用" class="headerlink" title="何以高可用?"></a>何以高可用?</h3><p>我们以前用Mysql的时候，经常是一台服务器走天下，如果只是用于学习，是没有问题的，但是在生产环境中，这样的风险是很大的，如果服务器因为网络原因或者崩溃了，就会导致数据库一段时间了不可用，这样的体验很不好。</p>
-<p>那么应该怎么办呢？既然一台机器不行，我就多上几台机器总可以了吧，比如我上个两台，让他们互为主备，相互同步数据。想到这里我就只想说一个字，稳。</p>
-<blockquote>
-<p>其实redis,mongodb,kafka等分布式应用基本上都是这样的思想</p>
-</blockquote>
-<p>MongoDB也差不多是这样的思想。它通过复制集来解决这个问题,MongoDB复制集由一组Mongod进程组成，包含一个Primary节点和多个Secondary节点，Mongodb Driver(客户端)的所有数据都写入Primary，Secondary从Primary同步写入的数据，以保持复制集内所有成员存储相同的数据集，提供数据的高可用。</p>
-<p>要想成为primary节点，你必须保证大多数节点都同意才行,大多数的节点就是副本中一半以上的成员。</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/10/30/mongodb-replica-set/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-         
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2448,7 +2526,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">78</span>
+                    <span class="site-state-item-count">79</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2660,7 +2738,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">392k</span>
+    <span title="站点总字数">401k</span>
   
 
   
@@ -2669,7 +2747,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">5:57</span>
+    <span title="站点阅读时长">6:04</span>
   
 </div>
 
