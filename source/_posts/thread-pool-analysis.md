@@ -39,11 +39,11 @@ threadPool.shutdown();
 
 ```java
  public ThreadPoolExecutor(int corePoolSize,
-                              int maximumPoolSize,
-                              long keepAliveTime,
-                              TimeUnit unit,
-                              BlockingQueue<Runnable> workQueue,
-                              RejectedExecutionHandler handler)
+        int maximumPoolSize,
+        long keepAliveTime,
+        TimeUnit unit,
+        BlockingQueue<Runnable> workQueue,
+        RejectedExecutionHandler handler)
 
 ```
 
@@ -61,19 +61,19 @@ threadPool.shutdown();
 首先来认识下线程池中定义的状态，它们一直贯穿在整个主体
 
 ```java
-  // ctl存储了两个值,一个是线程池的状态,另一个是活动线程数(workerCount)
-    private final AtomicInteger ctl = new AtomicInteger(ctlOf(RUNNING, 0));
-    private static final int COUNT_BITS = Integer.SIZE - 3;
+// ctl存储了两个值,一个是线程池的状态,另一个是活动线程数(workerCount)
+private final AtomicInteger ctl = new AtomicInteger(ctlOf(RUNNING, 0));
+private static final int COUNT_BITS = Integer.SIZE - 3;
 
-    // 线程池最多允许2^29-1个(大概5亿)线程存在,当然首先要你的系统能新建这么多个
-    private static final int CAPACITY   = (1 << COUNT_BITS) - 1;
+// 线程池最多允许2^29-1个(大概5亿)线程存在,当然首先要你的系统能新建这么多个
+private static final int CAPACITY   = (1 << COUNT_BITS) - 1;
 
-    // runState is stored in the high-order bits
-    private static final int RUNNING    = -1 << COUNT_BITS;
-    private static final int SHUTDOWN   =  0 << COUNT_BITS;
-    private static final int STOP       =  1 << COUNT_BITS;
-    private static final int TIDYING    =  2 << COUNT_BITS;
-    private static final int TERMINATED =  3 << COUNT_BITS;
+// runState is stored in the high-order bits
+private static final int RUNNING    = -1 << COUNT_BITS;
+private static final int SHUTDOWN   =  0 << COUNT_BITS;
+private static final int STOP       =  1 << COUNT_BITS;
+private static final int TIDYING    =  2 << COUNT_BITS;
+private static final int TERMINATED =  3 << COUNT_BITS;
 
 ```
 
@@ -180,6 +180,7 @@ private final class Worker
     extends AbstractQueuedSynchronizer
     implements Runnable {
 
+    // 运行worker的线程(new Thread(this))
     final Thread thread;
     
     // 需要执行的任务
