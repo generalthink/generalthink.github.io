@@ -158,7 +158,7 @@ private boolean addWorker(Runnable firstTask, boolean core) {
 }
 
 ```
-所以，总结下线程池的#### #### 工作流程#### #### 如下:
+所以，总结下线程池的**工作流程** 如下:
 
 1. 提交一个任务，如果线程池中的工作线程数小于corePoolSize,则新建一个工作线程执行任务
 2. 如果线程池当前的工作线程已经等于了corePoolSize,则将新的任务放入到工作队列中正在执行
