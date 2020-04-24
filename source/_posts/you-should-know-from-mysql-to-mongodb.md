@@ -375,7 +375,7 @@ function insertUser(country) {
 在命令行执行
 
 ```
-mong host:port/databaseName filePath.js
+mongo host:port/databaseName filePath.js
 
 ```
 
