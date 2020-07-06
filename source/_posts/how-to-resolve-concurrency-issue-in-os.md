@@ -73,7 +73,7 @@ public class Counter {
 
 1. 任何两个进程不能同时处于其临界区
 2. 不应对CPU的速度和数量做任何假设
-3. 临界区以外运行的进程不着阻塞其他进程
+3. 临界区以外运行的进程不得阻塞其他进程
 4. 不得使进程无限期等待进入临界区
 
 ![临界区](/images/java/critical-region.png)
@@ -414,7 +414,7 @@ mutex_unlock:
 mutex_lock的方法和enter_region的方法有点类似,但是有一个很关键的区别,enter_region进入临界区失败,会忙等待(实际上由于CPU时钟超时,会调度其他进程运行)。
 
 
-由于thread_yield只是在用户空间中对线程调度程序的一个调用,所以它的运行非常快。这样,mutex_lock利mutex_unlock都不需要任何内核调用。
+由于thread_yield只是在用户空间中对线程调度程序的一个调用,所以它的运行非常快。这样,mutex_lock及mutex_unlock都不需要任何内核调用。
 
 
 #### 线程中的互斥
