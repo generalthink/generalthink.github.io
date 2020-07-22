@@ -191,6 +191,7 @@ public class Singleton {
 
 ![重排序导致双重检查失效](/images/java/broken-double-check.png)
 
+**不过如果将instance变量添加上volatile关键字就可以禁止编译优化，就不会出现我们上面所说的问题了。**
 
 ### 写到最后
 
