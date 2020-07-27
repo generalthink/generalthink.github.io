@@ -108,15 +108,15 @@ configure exiting with result code 1
 bash configure  --with-boot-jdk='/usr/local/jdk-11.0.2.jdk/Contents/Home' --with-debug-level=slowdebug --with-target-bits=64 --disable-warnings-as-errors --enable-dtrace --with-jvm-variants=server
 ```
 
---with-boot-jdk：指定Bootstrap JDK路径
---with-debug-level：编译级别,可选值为release、fastdebug、slowdebug和optimized,默认值为release,如果我们要调试的话,需要设定为fastdebug或者slowdebug,建议设置为slowdebug
---with-target-bits：指定编译32位还是64位的虚拟机
---disable-warnings-as-errors：避免因为警告而导致编译过程中断
---enable-dtrace：开启一个性能工具
---with-jvm-variants：编译特定模式下的虚拟机,一般这里编译server模式
---with-conf-name：指定编译配置的名称,如果没有指定,则会生成默认的配置名称macosx-x86_64-server-slowdebug,我这里采用默认生成配置
+`--with-boot-jdk`：指定Bootstrap JDK路径
+`--with-debug-level`：编译级别,可选值为release、fastdebug、slowdebug和optimized,默认值为release,如果我们要调试的话,需要设定为fastdebug或者slowdebug,建议设置为slowdebug
+`--with-target-bits`：指定编译32位还是64位的虚拟机
+`--disable-warnings-as-errors`：避免因为警告而导致编译过程中断
+`--enable-dtrace`：开启一个性能工具
+`--with-jvm-variants`：编译特定模式下的虚拟机,一般这里编译server模式
+`--with-conf-name`：指定编译配置的名称,如果没有指定,则会生成默认的配置名称macosx-x86_64-server-slowdebug,我这里采用默认生成配置
 
-在很多场景下编译OpenJDK都会使用--enable-ccache参数,来通过ccache加快编译速度,但我没有采用,因为目前编译速度其实不慢,再有就是如果增加了这个参数,后续导入到CLion的时候,会出现很多红字提示,看着好像不影响使用,但总归看着不太舒服
+在很多场景下编译OpenJDK都会使用`--enable-ccache`参数,来通过ccache加快编译速度,但我没有采用,因为目前编译速度其实不慢,再有就是如果增加了这个参数,后续导入到CLion的时候,会出现很多红字提示,看着好像不影响使用,但总归看着不太舒服
 
 
 #### 生成Compilation Database
