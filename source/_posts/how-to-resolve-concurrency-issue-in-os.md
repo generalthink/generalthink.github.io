@@ -471,7 +471,7 @@ void producer(void *ptr){
   int i;
   for (i =1; i <= MAX; i++) {
     // 互斥使用缓冲区
-    pthread_mutex_lck(&the_mutex);
+    pthread_mutex_lock(&the_mutex);
     while (buffer != 0) {
       pthread_cond_wait(&condp, &the_mutex);
     }
