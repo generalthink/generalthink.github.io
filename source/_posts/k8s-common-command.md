@@ -148,7 +148,7 @@ kubectl delete rs -l app=<label name> -n <namespace>
 kubectl port-forward svc/argocd-server -n argocd 8080:443
 ```
 
-当我们访问http://localhost:8080的时候，实际上就是访问的kubernetes集群中argocd-server的443端口，同理你可以暴露redis,mongodb等。
+当我们访问`http://localhost:8080`的时候，实际上就是访问的kubernetes集群中argocd-server的443端口，同理你可以暴露redis,mongodb等。
 
 #### 总结
 
