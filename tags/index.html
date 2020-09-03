@@ -26,7 +26,7 @@
 <meta property="og:description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2018-12-16T10:38:53.000Z">
-<meta property="article:modified_time" content="2020-08-28T05:12:28.053Z">
+<meta property="article:modified_time" content="2020-09-03T02:46:16.147Z">
 <meta property="article:author" content="Zhu.Yang">
 <meta property="article:tag" content="Java,JVM,HBase,MongoDB,大数据,设计模式,数据结构">
 <meta name="twitter:card" content="summary">
@@ -248,7 +248,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Microsoft YaHei', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: 'Microsoft YaHei', 'Microsoft YaHei', "PingFang SC", "Microsoft YaHei", sans-serif;
   font-weight: bold;
   line-height: 1.5;
   margin: 20px 0 15px;
@@ -1223,7 +1223,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #60ff0f;
+  background: #ff322f;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -1566,8 +1566,18 @@ pre .javascript .function {
     opacity: 0.8;
   }
 }
+.reading-progress-bar {
+  background: #37c6c0;
+  display: block;
+  height: 3px;
+  left: 0;
+  position: fixed;
+  width: 0;
+  z-index: 1500;
+  top: 0;
+}
 .post-body {
-  font-family: 'Microsoft YaHei', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: 'Microsoft YaHei', 'Microsoft YaHei', "PingFang SC", "Microsoft YaHei", sans-serif;
   overflow-wrap: break-word;
   word-wrap: break-word;
 }
@@ -1865,7 +1875,7 @@ pre .javascript .function {
 }
 .posts-expand .post-meta {
   color: #999;
-  font-family: 'Microsoft YaHei', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: 'Microsoft YaHei', 'Microsoft YaHei', "PingFang SC", "Microsoft YaHei", sans-serif;
   font-size: 0.75em;
   margin: 3px 0 60px 0;
   text-align: center;
@@ -2429,6 +2439,7 @@ embed {
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
+  <div class="reading-progress-bar"></div>
 
 
     <main class="main">
