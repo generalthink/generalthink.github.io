@@ -97,8 +97,8 @@ creative_commons:
 # ---------------------------------------------------------------
 
 # Schemes
-scheme: Muse
-#scheme: Mist
+#scheme: Muse
+scheme: Mist
 #scheme: Pisces
 #scheme: Gemini
 
@@ -408,7 +408,7 @@ github_banner:
 # ---------------------------------------------------------------
 
 font:
-  enable: false
+  enable: true
 
   # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).
   host:
@@ -421,13 +421,13 @@ font:
   # Global font settings used for all elements inside <body>.
   global:
     external: true
-    family: Microsoft YaHei
+    family: Microsoft YaHei,consolas
     size: 14px
 
   # Font settings for site title (.site-title).
   title:
     external: true
-    family: Microsoft YaHei
+    family: Microsoft YaHei,consolas
     size:
 
   # Font settings for headlines (<h1> to <h6>).
@@ -439,7 +439,7 @@ font:
   # Font settings for posts (.post-body).
   posts:
     external: true
-    family: Microsoft YaHei
+    family: Microsoft YaHei,consolas
 
   # Font settings for <code> and code blocks.
   codes:
@@ -711,7 +711,7 @@ firestore:
 # Show Views / Visitors of the website / page with busuanzi.
 # Get more information on http://ibruce.info/2015/04/04/busuanzi
 busuanzi_count:
-  enable: false
+  enable: true
   total_visitors: true
   total_visitors_icon: fa fa-user
   total_views: true
@@ -728,7 +728,7 @@ busuanzi_count:
 # Algolia Search
 # For more information: https://www.algolia.com
 algolia_search:
-  enable: false
+  enable: true
   hits:
     per_page: 10
   labels:
@@ -739,7 +739,7 @@ algolia_search:
 # Local Search
 # Dependencies: https://github.com/theme-next/hexo-generator-searchdb
 local_search:
-  enable: false
+  enable: true
   # If auto, trigger search by changing input.
   # If manual, trigger search by pressing enter key or search button.
   trigger: auto
