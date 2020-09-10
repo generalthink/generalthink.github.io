@@ -15,7 +15,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
@@ -52,23 +52,23 @@
 
   <style>:root {
   --body-bg-color: #fff;
-  --content-bg-color: #fff;
+  --content-bg-color: #f5f5f5;
   --card-bg-color: #f5f5f5;
   --text-color: #555;
   --blockquote-color: #666;
   --link-color: #555;
   --link-hover-color: #222;
-  --brand-color: #fff;
-  --brand-hover-color: #fff;
+  --brand-color: #222;
+  --brand-hover-color: #222;
   --table-row-odd-bg-color: #f9f9f9;
   --table-row-hover-bg-color: #f5f5f5;
-  --menu-item-bg-color: #f5f5f5;
-  --btn-default-bg: #222;
-  --btn-default-color: #fff;
-  --btn-default-border-color: #222;
-  --btn-default-hover-bg: #fff;
-  --btn-default-hover-color: #222;
-  --btn-default-hover-border-color: #222;
+  --menu-item-bg-color: #ddd;
+  --btn-default-bg: transparent;
+  --btn-default-color: var(--link-color);
+  --btn-default-border-color: var(--link-color);
+  --btn-default-hover-bg: transparent;
+  --btn-default-hover-color: var(--link-hover-color);
+  --btn-default-hover-border-color: var(--link-hover-color);
 }
 html {
   line-height: 1.15; /* 1 */
@@ -229,7 +229,7 @@ body {
 body {
   background: var(--body-bg-color);
   color: var(--text-color);
-  font-family: 'Microsoft YaHei', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: 'Microsoft YaHei,consolas', "PingFang SC", "Microsoft YaHei", sans-serif;
   font-size: 1em;
   line-height: 2;
 }
@@ -245,7 +245,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Microsoft YaHei', 'Microsoft YaHei', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: 'Microsoft YaHei', 'Microsoft YaHei,consolas', "PingFang SC", "Microsoft YaHei", sans-serif;
   font-weight: bold;
   line-height: 1.5;
   margin: 20px 0 15px;
@@ -273,7 +273,7 @@ p {
 }
 a,
 span.exturl {
-  border-bottom: 1px solid #999;
+  border-bottom: 1px solid #ccc;
   color: var(--link-color);
   outline: 0;
   text-decoration: none;
@@ -909,7 +909,8 @@ pre .javascript .function {
 .pagination .next {
   margin-right: 0;
 }
-.pagination .page-number.current {
+.pagination .page-number.current,
+.algolia-pagination .current .page-number {
   background: #ccc;
   border-top-color: #ccc;
   color: #fff;
@@ -1018,7 +1019,7 @@ pre .javascript .function {
 }
 .site-meta {
   flex-grow: 1;
-  text-align: center;
+  text-align: left;
 }
 @media (max-width: 767px) {
   .site-meta {
@@ -1037,7 +1038,7 @@ pre .javascript .function {
   color: var(--brand-hover-color);
 }
 .site-title {
-  font-family: 'Microsoft YaHei', 'Microsoft YaHei', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: 'Microsoft YaHei,consolas', 'Microsoft YaHei,consolas', "PingFang SC", "Microsoft YaHei", sans-serif;
   font-size: 1.375em;
   font-weight: normal;
   margin: 0;
@@ -1220,7 +1221,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #7c9eed;
+  background: #fff205;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -1574,7 +1575,7 @@ pre .javascript .function {
   top: 0;
 }
 .post-body {
-  font-family: 'Microsoft YaHei', 'Microsoft YaHei', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: 'Microsoft YaHei,consolas', 'Microsoft YaHei,consolas', "PingFang SC", "Microsoft YaHei", sans-serif;
   overflow-wrap: break-word;
   word-wrap: break-word;
 }
@@ -1872,7 +1873,7 @@ pre .javascript .function {
 }
 .posts-expand .post-meta {
   color: #999;
-  font-family: 'Microsoft YaHei', 'Microsoft YaHei', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: 'Microsoft YaHei,consolas', 'Microsoft YaHei,consolas', "PingFang SC", "Microsoft YaHei", sans-serif;
   font-size: 0.75em;
   margin: 3px 0 60px 0;
   text-align: center;
@@ -2203,118 +2204,364 @@ ul.breadcrumb li + li:last-child {
 .tag-cloud a:hover {
   color: var(--link-hover-color) !important;
 }
-@media (max-width: 767px) {
-  .header-inner,
-  .main-inner,
-  .footer-inner {
-    width: auto;
-  }
+.search-pop-overlay {
+  background: rgba(0,0,0,0);
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  transition: visibility 0s linear 0.2s, background 0.2s;
+  visibility: hidden;
+  width: 100%;
+  z-index: 1400;
 }
-.header-inner {
-  padding-top: 100px;
+.search-pop-overlay.search-active {
+  background: rgba(0,0,0,0.3);
+  transition: background 0.2s;
+  visibility: visible;
 }
-@media (max-width: 767px) {
-  .header-inner {
-    padding-top: 50px;
-  }
+.search-popup {
+  background: var(--card-bg-color);
+  border-radius: 5px;
+  height: 80%;
+  left: calc(50% - 350px);
+  position: fixed;
+  top: 10%;
+  transform: scale(0);
+  transition: transform 0.2s;
+  width: 700px;
+  z-index: 1500;
 }
-.main-inner {
-  padding-bottom: 60px;
-}
-.content {
-  padding-top: 70px;
-}
-@media (max-width: 767px) {
-  .content {
-    padding-top: 35px;
-  }
-}
-embed {
-  display: block;
-  margin: 0 auto 25px auto;
-}
-.custom-logo .site-meta-headline {
-  text-align: center;
-}
-.custom-logo .site-title {
-  color: #222;
-  margin: 10px auto 0;
-}
-.custom-logo .site-title a {
-  border: 0;
-}
-.custom-logo-image {
-  background: #fff;
-  margin: 0 auto;
-  max-width: 150px;
-  padding: 5px;
-}
-.brand {
-  background: var(--btn-default-bg);
+.search-active .search-popup {
+  transform: scale(1);
 }
 @media (max-width: 767px) {
-  .site-nav {
-    border-bottom: 1px solid #ddd;
-    border-top: 1px solid #ddd;
+  .search-popup {
+    border-radius: 0;
+    height: 100%;
     left: 0;
     margin: 0;
-    padding: 0;
+    top: 0;
     width: 100%;
   }
 }
-@media (max-width: 767px) {
-  .menu {
-    text-align: left;
-  }
+.search-popup .search-icon,
+.search-popup .popup-btn-close {
+  color: #999;
+  font-size: 18px;
+  padding: 0 10px;
 }
-.menu-item-active a,
-.menu .menu-item a:hover,
-.menu .menu-item span.exturl:hover {
+.search-popup .popup-btn-close {
+  cursor: pointer;
+}
+.search-popup .popup-btn-close:hover .fa {
+  color: #222;
+}
+.search-popup .search-header {
+  background: #eee;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  display: flex;
+  padding: 5px;
+}
+.search-popup input.search-input {
   background: transparent;
-  border-bottom: 1px solid var(--link-hover-color) !important;
+  border: 0;
+  outline: 0;
+  width: 100%;
+}
+.search-popup input.search-input::-webkit-search-cancel-button {
+  display: none;
+}
+.search-input-container {
+  flex-grow: 1;
+}
+.search-input-container form {
+  padding: 2px;
+}
+.algolia-powered {
+  float: right;
+}
+.algolia-powered img {
+  display: inline-block;
+  height: 18px;
+  vertical-align: middle;
+}
+.algolia-results {
+  height: calc(100% - 55px);
+  overflow: auto;
+  padding: 5px 30px;
+}
+.algolia-results hr {
+  margin: 10px 0;
+}
+.algolia-hit-item {
+  margin: 15px 0;
+}
+.algolia-hit-item-link {
+  border-bottom: 1px dashed #ccc;
+  display: block;
+  transition-delay: 0s;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
+}
+.algolia-pagination .pagination {
+  border-top: none;
+  margin: 40px 0;
+  opacity: 1;
+  padding: 0;
+}
+.algolia-pagination .pagination-item {
+  display: inline-block;
+}
+.algolia-pagination .page-number {
+  border-top: 1px solid transparent;
+  transition-delay: 0s;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
+}
+.algolia-pagination .page-number:hover {
+  border-top: 1px solid #222;
+}
+.algolia-pagination .current .page-number {
+  cursor: default;
+}
+.algolia-pagination .current .page-number:hover {
+  border-top-color: #ccc;
+}
+.algolia-pagination .disabled-item {
+  visibility: hidden;
+}
+.search-popup .search-input-container {
+  flex-grow: 1;
+  padding: 2px;
+}
+.search-popup ul.search-result-list {
+  margin: 0 5px;
+  padding: 0;
+  width: 100%;
+}
+.search-popup p.search-result {
+  border-bottom: 1px dashed #ccc;
+  padding: 5px 0;
+}
+.search-popup a.search-result-title {
+  font-weight: bold;
+}
+.search-popup .search-keyword {
+  border-bottom: 1px dashed #ff2a2a;
+  color: #ff2a2a;
+  font-weight: bold;
+}
+.search-popup #search-result {
+  display: flex;
+  height: calc(100% - 55px);
+  overflow: auto;
+  padding: 5px 25px;
+}
+.search-popup #no-result {
+  color: #ccc;
+  margin: auto;
+}
+hr {
+  height: 2px;
+  margin: 20px 0;
+}
+.btn {
+  padding: 0 10px;
+}
+.headband {
+  display: none;
+}
+.main-inner {
+  padding-bottom: 80px;
 }
 @media (max-width: 767px) {
-  .menu-item-active a,
-  .menu .menu-item a:hover,
-  .menu .menu-item span.exturl:hover {
-    border-bottom: 1px dotted #ddd !important;
+  .main-inner {
+    width: auto;
   }
+}
+.content {
+  padding-top: 80px;
+}
+@media (max-width: 767px) {
+  .content {
+    padding-top: 60px;
+  }
+}
+.pagination {
+  margin: 120px 0 0;
+  text-align: left;
+}
+@media (max-width: 767px) {
+  .pagination {
+    margin: 80px 10px 0;
+    text-align: center;
+  }
+}
+.footer {
+  background: var(--content-bg-color);
+  color: var(--text-color);
+  padding: 10px 0;
+}
+.footer-inner {
+  text-align: left;
+}
+@media (max-width: 767px) {
+  .footer-inner {
+    text-align: center;
+    width: auto;
+  }
+}
+.header {
+  background: var(--content-bg-color);
+}
+.header-inner {
+  align-items: center;
+  display: flex;
+  padding: 20px 0;
+}
+@media (max-width: 767px) {
+  .header-inner {
+    display: block;
+    padding: 10px 0;
+    width: auto;
+  }
+}
+.site-meta {
+  line-height: normal;
+}
+.site-meta .brand {
+  padding: 2px 1px;
+}
+@media (max-width: 767px) {
+  .site-meta .brand {
+    display: block;
+  }
+}
+.site-meta .site-title {
+  font-weight: bolder;
+}
+.logo-line-before,
+.logo-line-after {
+  display: block;
+  margin: 0 auto;
+  overflow: hidden;
+  width: 75%;
+}
+@media (max-width: 767px) {
+  .logo-line-before,
+  .logo-line-after {
+    display: none;
+  }
+}
+.logo-line-before i,
+.logo-line-after i {
+  background: var(--brand-color);
+  display: block;
+  height: 2px;
+  position: relative;
+}
+.use-motion .logo-line-before i {
+  left: -100%;
+}
+.use-motion .logo-line-after i {
+  right: -100%;
+}
+.site-subtitle {
+  display: none;
+}
+.site-nav {
+  flex-grow: 1;
+}
+@media (max-width: 767px) {
+  .site-nav {
+    padding: 10px 10px 0;
+  }
+}
+.menu {
+  margin: 0;
+}
+.menu .menu-item {
+  margin: 0;
 }
 @media (max-width: 767px) {
   .menu .menu-item {
-    margin: 0 10px;
+    margin-top: 5px;
   }
 }
 .menu .menu-item a,
 .menu .menu-item span.exturl {
-  border-bottom: 1px solid transparent;
+  border-radius: 2px;
+  padding: 0 10px;
+  transition-property: background;
 }
 @media (max-width: 767px) {
   .menu .menu-item a,
   .menu .menu-item span.exturl {
-    padding: 5px 10px;
-  }
-}
-@media (min-width: 768px) {
-  .menu .menu-item .fa,
-  .menu .menu-item .fab,
-  .menu .menu-item .far,
-  .menu .menu-item .fas {
-    display: block;
-    line-height: 2;
-    margin-right: 0;
-    width: 100%;
+    text-align: left;
   }
 }
 .menu .menu-item .badge {
-  background: #eee;
+  background: #fff;
+  border-radius: 10px;
+  color: #555;
   padding: 1px 4px;
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.1);
 }
-.sub-menu {
-  margin: 10px 0;
+.posts-expand.index .post-title,
+.posts-expand.index .post-meta {
+  text-align: left;
 }
-.sub-menu .menu-item {
-  display: inline-block;
+@media (max-width: 767px) {
+  .posts-expand.index .post-title,
+  .posts-expand.index .post-meta {
+    text-align: center;
+  }
+}
+.posts-expand.index .post-meta {
+  margin: 5px 0 20px 0;
+}
+.posts-expand .post-eof {
+  display: none;
+}
+.posts-expand .post-block:not(:first-child) {
+  margin-top: 120px;
+}
+.posts-expand .post-title,
+.posts-expand .post-meta {
+  text-align: center;
+}
+.posts-expand .post-body img {
+  margin-left: 0;
+}
+.posts-expand .post-tags {
+  text-align: left;
+}
+.posts-expand .post-tags a {
+  background: #f5f5f5;
+  border-bottom: none;
+  padding: 1px 5px;
+}
+.posts-expand .post-tags a:hover {
+  background: #ccc;
+}
+.posts-expand .post-nav {
+  margin-top: 40px;
+}
+.post-button {
+  margin-top: 20px;
+  text-align: left;
+}
+.post-button .btn {
+  background: none;
+  border: 0;
+  border-bottom: 2px solid var(--btn-default-border-color);
+  padding: 0;
+  transition-property: border;
+}
+.post-button .btn:hover {
+  border-bottom-color: var(--btn-default-hover-border-color);
 }
 .sidebar {
   left: -320px;
@@ -2351,6 +2598,12 @@ embed {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.sub-menu {
+  margin: 10px 0;
+}
+.sub-menu .menu-item {
+  display: inline-block;
+}
 </style><noscript>
   <style>
   .use-motion .brand,
@@ -2375,7 +2628,7 @@ embed {
 </noscript>
 
 <link rel="alternate" href="/atom.xml" title="Zhu.Yang" type="application/atom+xml">
-<script>function loadCss(l){var d=document,h=d.head,s=d.createElement('link');s.rel='stylesheet';s.href=l;!function e(f){if (d.body)return f();setTimeout(function(){e(f)})}(function(){h.appendChild(s);});}</script><noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"></noscript></head>
+<script>function loadCss(l){var d=document,h=d.head,s=d.createElement('link');s.rel='stylesheet';s.href=l;!function e(f){if (d.body)return f();setTimeout(function(){e(f)})}(function(){h.appendChild(s);});}</script><noscript><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Microsoft YaHei,consolas:300,300italic,400,400italic,700,700italic|Microsoft YaHei:300,300italic,400,400italic,700,700italic|consolas:300,300italic,400,400italic,700,700italic&amp;display=swap&amp;subset=latin,latin-ext"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"></noscript></head>
 
 <body itemscope="" itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -2403,6 +2656,7 @@ embed {
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -2422,11 +2676,35 @@ embed {
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
   </ul>
 </nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container"></div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="algolia-results">
+  <div id="algolia-stats"></div>
+  <div id="algolia-hits"></div>
+  <div id="algolia-pagination" class="algolia-pagination"></div>
+</div>
+
+      
+    </div>
+  </div>
 
 </div>
     </header>
@@ -2446,6 +2724,95 @@ embed {
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/22/install-traefik2-in-kubernetes/">
+
+    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Zhu.Yang">
+      <meta itemprop="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
+    </span>
+
+    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhu.Yang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/05/22/install-traefik2-in-kubernetes/" class="post-title-link" itemprop="url">在kubernetes中安装traefik2</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-05-22 09:39:51" itemprop="dateCreated datePublished" datetime="2020-05-22T09:39:51+08:00">2020-05-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-10 17:23:38" itemprop="dateModified" datetime="2020-09-10T17:23:38+08:00">2020-09-10</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 ≈</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="traefik2-DaemonSet"><a href="#traefik2-DaemonSet" class="headerlink" title="traefik2 DaemonSet"></a>traefik2 DaemonSet</h3><p>云原生微服务中我们使用了traefik2来作为我们的网关，当然我们也是通过DaemonSet(也可以使用deployment)的方式来部署到Kubernetes集群中。<br>DaemonSet部署之后的pod有如下特征</p>
+<blockquote>
+<p>Kubernetes集群中的每个work node上都有这个pod(traefik2实例)<br>每个work node上只有一个这样的pod实例<br> 当有新的work node加入Kubernetes集群后，该pod会自动在新加入的work node上被创建出来，而当旧的work node被删除后,它上面的pod也会被相应的删除掉。</p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/05/22/install-traefik2-in-kubernetes/#more" rel="contents">
+                阅读全文 »
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -2481,7 +2848,7 @@ embed {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-08 18:17:18" itemprop="dateModified" datetime="2020-09-08T18:17:18+08:00">2020-09-08</time>
+                <time title="修改时间：2020-09-10 17:23:38" itemprop="dateModified" datetime="2020-09-10T17:23:38+08:00">2020-09-10</time>
               </span>
 
           <br>
@@ -2568,7 +2935,7 @@ embed {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-08 18:17:18" itemprop="dateModified" datetime="2020-09-08T18:17:18+08:00">2020-09-08</time>
+                <time title="修改时间：2020-09-10 17:23:38" itemprop="dateModified" datetime="2020-09-10T17:23:38+08:00">2020-09-10</time>
               </span>
 
           <br>
@@ -2655,7 +3022,7 @@ embed {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-08 18:17:18" itemprop="dateModified" datetime="2020-09-08T18:17:18+08:00">2020-09-08</time>
+                <time title="修改时间：2020-09-10 17:23:38" itemprop="dateModified" datetime="2020-09-10T17:23:38+08:00">2020-09-10</time>
               </span>
 
           <br>
@@ -2806,7 +3173,7 @@ embed {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-08 18:17:18" itemprop="dateModified" datetime="2020-09-08T18:17:18+08:00">2020-09-08</time>
+                <time title="修改时间：2020-09-10 17:23:38" itemprop="dateModified" datetime="2020-09-10T17:23:38+08:00">2020-09-10</time>
               </span>
 
           <br>
@@ -2895,7 +3262,7 @@ embed {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-08 18:17:18" itemprop="dateModified" datetime="2020-09-08T18:17:18+08:00">2020-09-08</time>
+                <time title="修改时间：2020-09-10 17:23:38" itemprop="dateModified" datetime="2020-09-10T17:23:38+08:00">2020-09-10</time>
               </span>
 
           <br>
@@ -2983,7 +3350,7 @@ embed {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-08 18:17:18" itemprop="dateModified" datetime="2020-09-08T18:17:18+08:00">2020-09-08</time>
+                <time title="修改时间：2020-09-10 17:23:38" itemprop="dateModified" datetime="2020-09-10T17:23:38+08:00">2020-09-10</time>
               </span>
 
           <br>
@@ -3078,7 +3445,7 @@ embed {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-08 18:17:18" itemprop="dateModified" datetime="2020-09-08T18:17:18+08:00">2020-09-08</time>
+                <time title="修改时间：2020-09-10 17:23:38" itemprop="dateModified" datetime="2020-09-10T17:23:38+08:00">2020-09-10</time>
               </span>
 
           <br>
@@ -3228,7 +3595,7 @@ embed {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-08 18:17:18" itemprop="dateModified" datetime="2020-09-08T18:17:18+08:00">2020-09-08</time>
+                <time title="修改时间：2020-09-10 17:23:38" itemprop="dateModified" datetime="2020-09-10T17:23:38+08:00">2020-09-10</time>
               </span>
 
           <br>
@@ -3316,7 +3683,7 @@ embed {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-08 18:17:18" itemprop="dateModified" datetime="2020-09-08T18:17:18+08:00">2020-09-08</time>
+                <time title="修改时间：2020-09-10 17:23:38" itemprop="dateModified" datetime="2020-09-10T17:23:38+08:00">2020-09-10</time>
               </span>
 
           <br>
@@ -3369,99 +3736,10 @@ embed {
   
   
 
-      
-  
-  
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/20/use-proxy-in-java/">
-
-    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Zhu.Yang">
-      <meta itemprop="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
-    </span>
-
-    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhu.Yang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/02/20/use-proxy-in-java/" class="post-title-link" itemprop="url">Java中如何为HTTP请求设置代理?</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-02-20 13:36:32" itemprop="dateCreated datePublished" datetime="2020-02-20T13:36:32+08:00">2020-02-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-08 18:17:18" itemprop="dateModified" datetime="2020-09-08T18:17:18+08:00">2020-09-08</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>5.8k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 ≈</span>
-              <span>5 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="什么是代理服务器"><a href="#什么是代理服务器" class="headerlink" title="什么是代理服务器"></a>什么是代理服务器</h3><p>代理服务器充当你和Internet之间的网关，就像一个中间人。它实际上是一个中间服务器，可以将用户与它们游览的网站区分开。</p>
-<p>如果你使用了代理服务器，那么网络流量会通过代理服务器流向你请求的地址。然后该请求通过同一台代理服务器返回,然后代理服务器将从网站接收到的数据转发给你。</p>
-<p>当然如果仅仅是这样，也没什么必要使用代理服务器，我们直接访问网站岂不更美？</p>
-<p>现在代理服务器的功能远不只是转发Web请求，而这一切都是为了保证数据安全和网络性能。代理服务器充当防火墙和Web筛选器，提供共享的网络连接，并缓存数据以加快常见请求的速度。<br>而且还可以保护用户和内部网络以免收到外部Internet的不良影响。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/02/20/use-proxy-in-java/#more" rel="contents">
-                阅读全文 »
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">…</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">…</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -3527,7 +3805,7 @@ embed {
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">100</span>
+          <span class="site-state-item-count">101</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -3573,17 +3851,37 @@ embed {
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">489k</span>
+    <span title="站点总字数">499k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">7:25</span>
+    <span title="站点阅读时长">7:33</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> &amp; <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> &amp; <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
 
         
+<div class="busuanzi-count">
+  <script async="" src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
 
 
 
@@ -3615,6 +3913,13 @@ embed {
 
 
   
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
+<script src="//cdn.jsdelivr.net/npm/instantsearch.js@4/dist/instantsearch.production.min.js"></script>
 
 
 
