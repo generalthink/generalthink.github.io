@@ -194,7 +194,7 @@ void ObjectSynchronizer::fast_enter(Handle obj, BasicLock* lock, bool attempt_re
     } else {
       assert(!attempt_rebias, "can not rebias toward VM thread");
 
-      // 撤销偏向锁
+      // 撤销偏向锁,需要等到全局安全点
       BiasedLocking::revoke_at_safepoint(obj);
     }
     assert(!obj->mark()->has_bias_pattern(), "biases should be revoked by now");
@@ -206,6 +206,7 @@ void ObjectSynchronizer::fast_enter(Handle obj, BasicLock* lock, bool attempt_re
 ```
 
 由于biasedLocking.cpp中方法太长了,我就不引入了。
+
 
 
 MarkOop中还有一个epoch值,这个值表示第几代锁,这是什么意思呢？
