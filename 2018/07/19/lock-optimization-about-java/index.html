@@ -12,10 +12,13 @@
 
 
 
+  
+  
+  
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"manual","top_n_per_article":10,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="多线程编码中,我们常用到synchronized关键字,都知道它是加锁关键字,也或多或少听说过轻量级锁,重量级锁,偏向锁这些关键字,可是我们知道这些具体指的是什么吗？为了我们更优的使用,JVM团队在背后做了多少努力?">
@@ -28,7 +31,7 @@
 <meta property="og:image" content="http://yoursite.com/images/java/synchronized-process.png">
 <meta property="og:image" content="http://yoursite.com/images/mark_word.png">
 <meta property="article:published_time" content="2018-07-19T13:22:46.000Z">
-<meta property="article:modified_time" content="2020-10-22T07:44:31.021Z">
+<meta property="article:modified_time" content="2020-10-27T05:46:47.893Z">
 <meta property="article:author" content="Zhu.Yang">
 <meta property="article:tag" content="多线程">
 <meta name="twitter:card" content="summary">
@@ -234,7 +237,7 @@ body {
 body {
   background: var(--body-bg-color);
   color: var(--text-color);
-  font-family: 'Microsoft YaHei,consolas', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: 'Noto Sans SC', "PingFang SC", "Microsoft YaHei", sans-serif;
   font-size: 1em;
   line-height: 2;
 }
@@ -250,7 +253,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Microsoft YaHei', 'Microsoft YaHei,consolas', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: 'Microsoft YaHei', 'Noto Sans SC', "PingFang SC", "Microsoft YaHei", sans-serif;
   font-weight: bold;
   line-height: 1.5;
   margin: 20px 0 15px;
@@ -866,6 +869,11 @@ pre .javascript .function {
 .post-body .note.danger h6 {
   color: #d9534f;
 }
+.pdfobject-container iframe,
+.pdfobject-container embed {
+  height: 500px;
+  width: 100%;
+}
 .pagination .prev,
 .pagination .next,
 .pagination .page-number,
@@ -1043,7 +1051,7 @@ pre .javascript .function {
   color: var(--brand-hover-color);
 }
 .site-title {
-  font-family: 'Microsoft YaHei,consolas', 'Microsoft YaHei,consolas', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: 'Microsoft YaHei', 'Noto Sans SC', "PingFang SC", "Microsoft YaHei", sans-serif;
   font-size: 1.375em;
   font-weight: normal;
   margin: 0;
@@ -1226,7 +1234,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #ffb60f;
+  background: #b00be0;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -1417,7 +1425,7 @@ pre .javascript .function {
 }
 .site-state-item-count {
   display: block;
-  font-size: 1.25em;
+  font-size: 1em;
   font-weight: 600;
   text-align: center;
 }
@@ -1454,7 +1462,7 @@ pre .javascript .function {
 }
 .languages {
   display: inline-block;
-  font-size: 1.125em;
+  font-size: 1em;
   position: relative;
 }
 .languages .lang-select-label span {
@@ -1580,13 +1588,13 @@ pre .javascript .function {
   top: 0;
 }
 .post-body {
-  font-family: 'Microsoft YaHei,consolas', 'Microsoft YaHei,consolas', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: 'Noto Sans SC', 'Noto Sans SC', "PingFang SC", "Microsoft YaHei", sans-serif;
   overflow-wrap: break-word;
   word-wrap: break-word;
 }
 @media (min-width: 1200px) {
   .post-body {
-    font-size: 1.125em;
+    font-size: 1em;
   }
 }
 .post-body .exturl .fa {
@@ -1635,7 +1643,7 @@ pre .javascript .function {
   }
 }
 .posts-collapse .collection-title {
-  font-size: 1.125em;
+  font-size: 1em;
   position: relative;
 }
 .posts-collapse .collection-title::before {
@@ -1837,7 +1845,7 @@ pre .javascript .function {
   margin: 0;
 }
 .posts-expand .post-header {
-  font-size: 1.125em;
+  font-size: 1em;
 }
 .posts-expand .post-title {
   font-size: 1.5em;
@@ -1878,7 +1886,7 @@ pre .javascript .function {
 }
 .posts-expand .post-meta {
   color: #999;
-  font-family: 'Microsoft YaHei,consolas', 'Microsoft YaHei,consolas', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: 'Noto Sans SC', 'Noto Sans SC', "PingFang SC", "Microsoft YaHei", sans-serif;
   font-size: 0.75em;
   margin: 3px 0 60px 0;
   text-align: center;
@@ -2029,6 +2037,44 @@ pre .javascript .function {
 }
 #qr p {
   text-align: center;
+}
+.followme {
+  align-items: center;
+  background: var(--card-bg-color);
+  border-left: 3px solid #ff2a2a;
+  color: #bbb;
+  margin: 2em 0 1em 0;
+  padding: 1em 1.5em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.followme .social-list {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+}
+.followme .social-list .social-item {
+  margin: 0.5em 2em;
+}
+@media (max-width: 991px) {
+  .followme .social-list .social-item {
+    margin: 0.5em 0.75em;
+  }
+}
+.followme .social-list .social-link {
+  border: 0;
+  display: inline-block;
+  text-align: center;
+}
+.followme .social-list .social-link .icon {
+  font-size: 1.75em;
+  height: 1.75em;
+  width: 1.75em;
+}
+.followme .social-list .social-link .label {
+  display: block;
+  font-size: 14px;
 }
 .category-all-page .category-all-title {
   text-align: center;
@@ -2633,7 +2679,7 @@ hr {
 </noscript>
 
 <link rel="alternate" href="/atom.xml" title="Zhu.Yang" type="application/atom+xml">
-<script>function loadCss(l){var d=document,h=d.head,s=d.createElement('link');s.rel='stylesheet';s.href=l;!function e(f){if (d.body)return f();setTimeout(function(){e(f)})}(function(){h.appendChild(s);});}</script><noscript><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Microsoft YaHei,consolas:300,300italic,400,400italic,700,700italic|Microsoft YaHei:300,300italic,400,400italic,700,700italic|consolas:300,300italic,400,400italic,700,700italic&amp;display=swap&amp;subset=latin,latin-ext"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"></noscript></head>
+<script>function loadCss(l){var d=document,h=d.head,s=d.createElement('link');s.rel='stylesheet';s.href=l;!function e(f){if (d.body)return f();setTimeout(function(){e(f)})}(function(){h.appendChild(s);});}loadCss('/style.css');loadCss('//fonts.googleapis.com/css?family=Noto Sans SC:300,300italic,400,400italic,700,700italic|Microsoft YaHei:300,300italic,400,400italic,700,700italic|consolas:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext');loadCss('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css');loadCss('//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css');</script><noscript><link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto Sans SC:300,300italic,400,400italic,700,700italic|Microsoft YaHei:300,300italic,400,400italic,700,700italic|consolas:300,300italic,400,400italic,700,700italic&amp;display=swap&amp;subset=latin,latin-ext"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css"></noscript></head>
 
 <body itemscope="" itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -2764,7 +2810,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-22 15:44:31" itemprop="dateModified" datetime="2020-10-22T15:44:31+08:00">2020-10-22</time>
+                <time title="修改时间：2020-10-27 13:46:47" itemprop="dateModified" datetime="2020-10-27T13:46:47+08:00">2020-10-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -2836,7 +2882,7 @@ hr {
 <p>Java中每个对象实例都会有一个Monitor,其对应C++的ObjectMonitor.hpp</p>
 <figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">ObjectMonitor() {</span><br><span class="line">  _header       = <span class="literal">NULL</span>;</span><br><span class="line">  _count        = <span class="number">0</span>;</span><br><span class="line">  _waiters      = <span class="number">0</span>,</span><br><span class="line">  <span class="comment">// 递归数量,和可重入锁有关</span></span><br><span class="line">  _recursions   = <span class="number">0</span>;</span><br><span class="line">  _object       = <span class="literal">NULL</span>;</span><br><span class="line">  <span class="comment">// 标识拥有该monitor的线程</span></span><br><span class="line">  _owner        = <span class="literal">NULL</span>;</span><br><span class="line">  <span class="comment">// 处于wait状态的线程,会被加入到_WaitSet</span></span><br><span class="line">  _WaitSet      = <span class="literal">NULL</span>;</span><br><span class="line">  <span class="comment">// 自旋锁</span></span><br><span class="line">  _WaitSetLock  = <span class="number">0</span> ;</span><br><span class="line">  _Responsible  = <span class="literal">NULL</span> ;</span><br><span class="line">  _succ         = <span class="literal">NULL</span> ;</span><br><span class="line">  <span class="comment">// contention queue(保存竞争线程的队列)</span></span><br><span class="line">  _cxq          = <span class="literal">NULL</span> ;</span><br><span class="line">  FreeNext      = <span class="literal">NULL</span> ;</span><br><span class="line">  <span class="comment">// 处于等待锁block状态的线程,会被加入到该列表</span></span><br><span class="line">  _EntryList    = <span class="literal">NULL</span> ;</span><br><span class="line">  <span class="comment">// 自旋次数</span></span><br><span class="line">  _SpinFreq     = <span class="number">0</span> ;</span><br><span class="line">  _SpinClock    = <span class="number">0</span> ;</span><br><span class="line">  OwnerIsThread = <span class="number">0</span> ;</span><br><span class="line">  _previous_owner_tid = <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-<p><img src="/images/java/synchronized-process.png"></p>
+<p><img data-src="/images/java/synchronized-process.png"></p>
 <p>当多个线程同时访问一段同步代码时,多个竞争线程会先被存放到contention queue(cxq)中,cxq上的线程最终会被放置到EntryList,处于blocking状态的线程都会被加入到EntryList列表。<br>接下来当线程获取到对象的monitor时,monitor 是依靠底层操作系统的 Mutex Lock 来实现互斥的(实际就是信号量),线程阻塞操作由操作系统完成(在Linxu下通 过pthread_mutex_lock函数。当线程申请到Mutex成功,则持有该Mutex,其他线程将无法获取到Mutex,竞争失败的线程会再次进入contention queue被挂起。</p>
 <p>如果线程调用了wait()方法,就会释放当前持有的Mutex,此时线程就会被放置到_WaitSet集合中,等待下一次被唤醒。如果当前线程顺利执行完方法,也会释放Mutex。<br>而处于_WaitSet集中的线程被唤醒后都会加入到_EntryList集合中。</p>
 <blockquote>
@@ -2848,7 +2894,7 @@ hr {
 <p>对象头信息与对象自定义的数据无关的额外存储成本,考虑虚拟机的空间效率,Mark Word被设计成一个非固定的的数据结构以便在极小的空间存储更多的信息,它会根据对象的状态复用自己的存储空间。</p>
 <p>那么从哪里可以看到这些信息呢？有问题当然看源码,从github上jdk的源码<a target="_blank" rel="noopener" href="https://github.com/openjdk/jdk/blob/jdk8-b120/hotspot/src/share/vm/oops/markOop.hpp#L38">源码</a></p>
 <p>整理下,这里在内存中的布局如下：</p>
-<p><img src="/images/mark_word.png" alt="32位系统mark word"><br>上图表明了MarkWord在不同状态下的存储内容,当然上面这是32位系统的,如果是64位基本上是大同小异,</p>
+<p><img data-src="/images/mark_word.png" alt="32位系统mark word"><br>上图表明了MarkWord在不同状态下的存储内容,当然上面这是32位系统的,如果是64位基本上是大同小异,</p>
 <p>锁升级功能主要依赖于 Mark Word 中的锁标志位和释放偏向锁标志位,Synchronized 同步锁就是从偏向锁开始的,随着竞争越来越激烈,偏向锁升级到轻量级锁,最终升级到重量级锁。</p>
 <p>monitorenter执行入口在InterpreterRuntime.cpp的InterpreterRuntime::monitorenter函数。</p>
 <h4 id="自旋锁以及自适应自旋"><a href="#自旋锁以及自适应自旋" class="headerlink" title="自旋锁以及自适应自旋"></a>自旋锁以及自适应自旋</h4><p>在讲这两个锁之前我先讲一个小故事。</p>
@@ -2870,7 +2916,7 @@ hr {
 <p>在线程进行加锁时,如果该锁对象支持偏向锁,那么 Java 虚拟机会通过 CAS 操作,将当前线程的地址记录在锁对象的标记字段之中,并且将标记字段的最后三位设置为 101(锁标志位还是 01,“是否偏向锁”标志位设置为 1)。</p>
 <p>在接下来的运行过程中,每当有线程请求这把锁,Java 虚拟机只需判断锁对象标记字段中：最后三位是否为 101,是否包含当前线程的地址,以及 epoch 值是否和锁对象的类的 epoch 值相同。如果都满足,那么当前线程持有该偏向锁,可以直接返回</p>
 <p>一旦出现其它线程竞争锁资源时,偏向锁就会被撤销。偏向锁的撤销需要等待全局安全点,暂停持有该锁的线程,同时检查该线程是否还在执行该方法,如果是,则升级锁,反之则被其它线程抢占。</p>
-<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ObjectSynchronizer::fast_enter</span><span class="params">(Handle obj, BasicLock* lock, <span class="keyword">bool</span> attempt_rebias, TRAPS)</span> </span>{</span><br><span class="line"> <span class="keyword">if</span> (UseBiasedLocking) {</span><br><span class="line">         <span class="comment">// 是否到达线程安全点</span></span><br><span class="line">    <span class="keyword">if</span> (!SafepointSynchronize::is_at_safepoint()) {</span><br><span class="line">      BiasedLocking::Condition cond = BiasedLocking::revoke_and_rebias(obj, attempt_rebias, THREAD);</span><br><span class="line">      <span class="keyword">if</span> (cond == BiasedLocking::BIAS_REVOKED_AND_REBIASED) {</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">      }</span><br><span class="line">    } <span class="keyword">else</span> {</span><br><span class="line">      assert(!attempt_rebias, <span class="string">"can not rebias toward VM thread"</span>);</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 撤销偏向锁</span></span><br><span class="line">      BiasedLocking::revoke_at_safepoint(obj);</span><br><span class="line">    }</span><br><span class="line">    assert(!obj-&gt;mark()-&gt;has_bias_pattern(), <span class="string">"biases should be revoked by now"</span>);</span><br><span class="line"> }</span><br><span class="line"></span><br><span class="line"> slow_enter (obj, lock, THREAD) ;</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ObjectSynchronizer::fast_enter</span><span class="params">(Handle obj, BasicLock* lock, <span class="keyword">bool</span> attempt_rebias, TRAPS)</span> </span>{</span><br><span class="line"> <span class="keyword">if</span> (UseBiasedLocking) {</span><br><span class="line">         <span class="comment">// 是否到达线程安全点</span></span><br><span class="line">    <span class="keyword">if</span> (!SafepointSynchronize::is_at_safepoint()) {</span><br><span class="line">      BiasedLocking::Condition cond = BiasedLocking::revoke_and_rebias(obj, attempt_rebias, THREAD);</span><br><span class="line">      <span class="keyword">if</span> (cond == BiasedLocking::BIAS_REVOKED_AND_REBIASED) {</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">      }</span><br><span class="line">    } <span class="keyword">else</span> {</span><br><span class="line">      assert(!attempt_rebias, <span class="string">"can not rebias toward VM thread"</span>);</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 撤销偏向锁,需要等到全局安全点</span></span><br><span class="line">      BiasedLocking::revoke_at_safepoint(obj);</span><br><span class="line">    }</span><br><span class="line">    assert(!obj-&gt;mark()-&gt;has_bias_pattern(), <span class="string">"biases should be revoked by now"</span>);</span><br><span class="line"> }</span><br><span class="line"></span><br><span class="line"> slow_enter (obj, lock, THREAD) ;</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
 
 <p>由于biasedLocking.cpp中方法太长了,我就不引入了。</p>
 <p>MarkOop中还有一个epoch值,这个值表示第几代锁,这是什么意思呢？</p>
@@ -2896,6 +2942,25 @@ hr {
     
     
     
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/images/gzh.png">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
 
       <footer class="post-footer">
           <div class="post-tags">
@@ -2928,27 +2993,7 @@ hr {
           </div>
           
 
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
+
 
         </div>
           
@@ -2987,7 +3032,7 @@ hr {
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">102</span>
+          <span class="site-state-item-count">103</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -3033,19 +3078,19 @@ hr {
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">505k</span>
+    <span title="站点总字数">519k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">7:39</span>
+    <span title="站点阅读时长">7:52</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> &amp; <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
 
         
 <div class="busuanzi-count">
-  <script async="" src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <script data-pjax="" async="" src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
       <span class="post-meta-item-icon">
         <i class="fa fa-user"></i>
@@ -3078,6 +3123,12 @@ hr {
 
   
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
   
   
 
@@ -3090,6 +3141,8 @@ hr {
 
 
 
+
+  
 
 
 
@@ -3117,10 +3170,111 @@ hr {
 
 
 
+
+    <div id="pjax">
   
 
   
 
+    </div>
 
 
-<script src="/bundle.js"></script></body></html>
+<script src="/bundle.js"></script><script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+;
+
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+;
+
+document.querySelectorAll('.pdfobject-container').forEach(element => {
+  let url = element.dataset.target;
+  let pdfOpenParams = {
+    navpanes : 0,
+    toolbar  : 0,
+    statusbar: 0,
+    pagemode : 'thumbs',
+    view     : 'FitH'
+  };
+  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+
+  if (NexT.utils.supportsPDFs()) {
+    element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
+  } else {
+    element.innerHTML = `<iframe src="${fullURL}" style="height: ${element.dataset.height};" frameborder="0"></iframe>`;
+  }
+});
+</script></body></html>

@@ -12,10 +12,13 @@
 
 
 
+  
+  
+  
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"manual","top_n_per_article":10,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="上一篇文章中提到了ThreadLocalMap是使用开放地址法来解决冲突问题的，而我们今天的主角HashMap是采用了链表法来处理冲突的,什么是链表法呢?  在散列表中，每个 “ 桶(bucket)” 或者 “ 槽(slot)” 会对应一条链表，所有散列值相同的元素我们都放到相同槽位对应的链表中。 jdk8和jdk7不一样，jdk7中没有红黑树,数组中只挂载链表。而jdk8中在桶容量大于等于64且">
@@ -30,7 +33,7 @@
 <meta property="og:image" content="http://yoursite.com/images/java/hashmap-resize-threadA.png">
 <meta property="og:image" content="http://yoursite.com/images/java/hashmap-resize.png">
 <meta property="article:published_time" content="2019-07-29T10:08:35.000Z">
-<meta property="article:modified_time" content="2020-10-22T07:44:31.021Z">
+<meta property="article:modified_time" content="2020-10-27T05:46:47.893Z">
 <meta property="article:author" content="Zhu.Yang">
 <meta property="article:tag" content="java">
 <meta name="twitter:card" content="summary">
@@ -236,7 +239,7 @@ body {
 body {
   background: var(--body-bg-color);
   color: var(--text-color);
-  font-family: 'Microsoft YaHei,consolas', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: 'Noto Sans SC', "PingFang SC", "Microsoft YaHei", sans-serif;
   font-size: 1em;
   line-height: 2;
 }
@@ -252,7 +255,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Microsoft YaHei', 'Microsoft YaHei,consolas', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: 'Microsoft YaHei', 'Noto Sans SC', "PingFang SC", "Microsoft YaHei", sans-serif;
   font-weight: bold;
   line-height: 1.5;
   margin: 20px 0 15px;
@@ -868,6 +871,11 @@ pre .javascript .function {
 .post-body .note.danger h6 {
   color: #d9534f;
 }
+.pdfobject-container iframe,
+.pdfobject-container embed {
+  height: 500px;
+  width: 100%;
+}
 .pagination .prev,
 .pagination .next,
 .pagination .page-number,
@@ -1045,7 +1053,7 @@ pre .javascript .function {
   color: var(--brand-hover-color);
 }
 .site-title {
-  font-family: 'Microsoft YaHei,consolas', 'Microsoft YaHei,consolas', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: 'Microsoft YaHei', 'Noto Sans SC', "PingFang SC", "Microsoft YaHei", sans-serif;
   font-size: 1.375em;
   font-weight: normal;
   margin: 0;
@@ -1228,7 +1236,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #ffb60f;
+  background: #b00be0;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -1419,7 +1427,7 @@ pre .javascript .function {
 }
 .site-state-item-count {
   display: block;
-  font-size: 1.25em;
+  font-size: 1em;
   font-weight: 600;
   text-align: center;
 }
@@ -1456,7 +1464,7 @@ pre .javascript .function {
 }
 .languages {
   display: inline-block;
-  font-size: 1.125em;
+  font-size: 1em;
   position: relative;
 }
 .languages .lang-select-label span {
@@ -1582,13 +1590,13 @@ pre .javascript .function {
   top: 0;
 }
 .post-body {
-  font-family: 'Microsoft YaHei,consolas', 'Microsoft YaHei,consolas', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: 'Noto Sans SC', 'Noto Sans SC', "PingFang SC", "Microsoft YaHei", sans-serif;
   overflow-wrap: break-word;
   word-wrap: break-word;
 }
 @media (min-width: 1200px) {
   .post-body {
-    font-size: 1.125em;
+    font-size: 1em;
   }
 }
 .post-body .exturl .fa {
@@ -1637,7 +1645,7 @@ pre .javascript .function {
   }
 }
 .posts-collapse .collection-title {
-  font-size: 1.125em;
+  font-size: 1em;
   position: relative;
 }
 .posts-collapse .collection-title::before {
@@ -1839,7 +1847,7 @@ pre .javascript .function {
   margin: 0;
 }
 .posts-expand .post-header {
-  font-size: 1.125em;
+  font-size: 1em;
 }
 .posts-expand .post-title {
   font-size: 1.5em;
@@ -1880,7 +1888,7 @@ pre .javascript .function {
 }
 .posts-expand .post-meta {
   color: #999;
-  font-family: 'Microsoft YaHei,consolas', 'Microsoft YaHei,consolas', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: 'Noto Sans SC', 'Noto Sans SC', "PingFang SC", "Microsoft YaHei", sans-serif;
   font-size: 0.75em;
   margin: 3px 0 60px 0;
   text-align: center;
@@ -2031,6 +2039,44 @@ pre .javascript .function {
 }
 #qr p {
   text-align: center;
+}
+.followme {
+  align-items: center;
+  background: var(--card-bg-color);
+  border-left: 3px solid #ff2a2a;
+  color: #bbb;
+  margin: 2em 0 1em 0;
+  padding: 1em 1.5em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.followme .social-list {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+}
+.followme .social-list .social-item {
+  margin: 0.5em 2em;
+}
+@media (max-width: 991px) {
+  .followme .social-list .social-item {
+    margin: 0.5em 0.75em;
+  }
+}
+.followme .social-list .social-link {
+  border: 0;
+  display: inline-block;
+  text-align: center;
+}
+.followme .social-list .social-link .icon {
+  font-size: 1.75em;
+  height: 1.75em;
+  width: 1.75em;
+}
+.followme .social-list .social-link .label {
+  display: block;
+  font-size: 14px;
 }
 .category-all-page .category-all-title {
   text-align: center;
@@ -2635,7 +2681,7 @@ hr {
 </noscript>
 
 <link rel="alternate" href="/atom.xml" title="Zhu.Yang" type="application/atom+xml">
-<script>function loadCss(l){var d=document,h=d.head,s=d.createElement('link');s.rel='stylesheet';s.href=l;!function e(f){if (d.body)return f();setTimeout(function(){e(f)})}(function(){h.appendChild(s);});}</script><noscript><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Microsoft YaHei,consolas:300,300italic,400,400italic,700,700italic|Microsoft YaHei:300,300italic,400,400italic,700,700italic|consolas:300,300italic,400,400italic,700,700italic&amp;display=swap&amp;subset=latin,latin-ext"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"></noscript></head>
+<script>function loadCss(l){var d=document,h=d.head,s=d.createElement('link');s.rel='stylesheet';s.href=l;!function e(f){if (d.body)return f();setTimeout(function(){e(f)})}(function(){h.appendChild(s);});}loadCss('/style.css');loadCss('//fonts.googleapis.com/css?family=Noto Sans SC:300,300italic,400,400italic,700,700italic|Microsoft YaHei:300,300italic,400,400italic,700,700italic|consolas:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext');loadCss('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css');loadCss('//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css');</script><noscript><link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto Sans SC:300,300italic,400,400italic,700,700italic|Microsoft YaHei:300,300italic,400,400italic,700,700italic|consolas:300,300italic,400,400italic,700,700italic&amp;display=swap&amp;subset=latin,latin-ext"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css"></noscript></head>
 
 <body itemscope="" itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -2766,7 +2812,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-22 15:44:31" itemprop="dateModified" datetime="2020-10-22T15:44:31+08:00">2020-10-22</time>
+                <time title="修改时间：2020-10-27 13:46:47" itemprop="dateModified" datetime="2020-10-27T13:46:47+08:00">2020-10-27</time>
               </span>
 
           
@@ -2802,7 +2848,7 @@ hr {
 
       
         <p>上一篇文章中提到了ThreadLocalMap是使用开放地址法来解决冲突问题的，而我们今天的主角HashMap是采用了链表法来处理冲突的,什么是链表法呢?</p>
-<p><img src="/images/java/hashmap-structure.png" alt="jdk8链表法"></p>
+<p><img data-src="/images/java/hashmap-structure.png" alt="jdk8链表法"></p>
 <p>在散列表中，每个 “ 桶(bucket)” 或者 “ 槽(slot)” 会对应一条链表，所有散列值相同的元素我们都放到相同槽位对应的链表中。</p>
 <p>jdk8和jdk7不一样，jdk7中没有红黑树,数组中只挂载链表。而jdk8中在桶容量大于等于64且链表节点数大于等于8的时候转换为红黑树。当红黑树节点数量小于6时又会转换为链表。</p>
 <a id="more"></a>
@@ -2870,13 +2916,13 @@ hr {
 <figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (node != <span class="keyword">null</span> &amp;&amp; (!matchValue || (v = node.value) == value ||</span><br><span class="line">    (value != <span class="keyword">null</span> &amp;&amp; value.equals(v)))) {</span><br><span class="line">    <span class="comment">// 1. 删除树节点,删除时如果不平衡会重新移动节点位置</span></span><br><span class="line">    <span class="keyword">if</span> (node <span class="keyword">instanceof</span> TreeNode)</span><br><span class="line">        ((TreeNode&lt;K,V&gt;)node).removeTreeNode(<span class="keyword">this</span>, tab, movable);</span><br><span class="line">    <span class="comment">// 删除的节点是链表第一个节点,则直接将第二个节点赋值为第一个节点</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (node == p)</span><br><span class="line">        tab[index] = node.next;</span><br><span class="line">    <span class="comment">// 删除的节点是链表的中间节点，这里的p为node的prev节点</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        p.next = node.next;</span><br><span class="line">    ++modCount;</span><br><span class="line">    --size;</span><br><span class="line">    afterNodeRemoval(node);</span><br><span class="line">    <span class="keyword">return</span> node;</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
 <p>remove方法中，最为复杂的部分应该是removeTreeNode部分，因为删除红黑树节点后，可能需要退化为链表节点，还可能由于不满足红黑树特点，需要移动节点位置。<br>代码也比较多，这里就不贴上来了。但也因此佐证了为什么不全部使用红黑树来代替链表。</p>
 <h3 id="JDK7扩容时导致的死循环问题"><a href="#JDK7扩容时导致的死循环问题" class="headerlink" title="JDK7扩容时导致的死循环问题"></a>JDK7扩容时导致的死循环问题</h3><figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* Transfers all entries from current table to newTable.</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">transfer</span><span class="params">(Entry[] newTable)</span> </span>{</span><br><span class="line"> Entry[] src = table;</span><br><span class="line"> <span class="keyword">int</span> newCapacity = newTable.length;</span><br><span class="line"> <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; src.length; j++) {</span><br><span class="line">   Entry&lt;K,V&gt; e = src[j];</span><br><span class="line">   <span class="keyword">if</span> (e != <span class="keyword">null</span>) {</span><br><span class="line">       src[j] = <span class="keyword">null</span>;</span><br><span class="line">       <span class="keyword">do</span> {</span><br><span class="line">           <span class="comment">// B线程执行到这里之后就暂停了</span></span><br><span class="line">           Entry&lt;K,V&gt; next = e.next;</span><br><span class="line">           <span class="keyword">int</span> i = indexFor(e.hash, newCapacity);</span><br><span class="line">           e.next = newTable[i];</span><br><span class="line">           newTable[i] = e;</span><br><span class="line">           e = next;</span><br><span class="line">       } <span class="keyword">while</span> (e != <span class="keyword">null</span>);</span><br><span class="line">   }</span><br><span class="line"> }</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
-<p>扩容时上面的代码容易导致死循环,是怎样导致的呢？假设有两个线程A和B都在执行这一段代码，数组大小由2扩容到4,在扩容前tab[1]=1–&gt;5–&gt;9。<br><img src="/images/java/hashmap-unresize.png" alt="扩容前"></p>
+<p>扩容时上面的代码容易导致死循环,是怎样导致的呢？假设有两个线程A和B都在执行这一段代码，数组大小由2扩容到4,在扩容前tab[1]=1–&gt;5–&gt;9。<br><img data-src="/images/java/hashmap-unresize.png" alt="扩容前"></p>
 <p>当B线程执行到 next = e.next时让出时间片,A线程执行完整段代码但是还没有将内部的table设置为新的newTable时，线程B继续执行。</p>
 <p>此时A线程执行完成之后，挂载在tab[1]的元素是9–&gt;5–&gt;1,注意这里的<strong>顺序被颠倒了</strong>。此时e = 1, next = 5;</p>
 <blockquote>
 <p>tab[i]的按照循环次数变更顺序, 1. tab[i]=1, 2. tab[i]=5–&gt;1, 3. tab[i]=9–&gt;5–&gt;1</p>
 </blockquote>
-<p><img src="/images/java/hashmap-resize-threadA.png" alt="线程A执行完成后"></p>
+<p><img data-src="/images/java/hashmap-resize-threadA.png" alt="线程A执行完成后"></p>
 <p>同样B线程我们也按照循环次数来分析</p>
 <ol>
 <li>第一次循环执行完成后,newTable[i]=1, e = 5</li>
@@ -2884,7 +2930,7 @@ hr {
 <li>第三次循环,e没有next,所以next指向null。当执行e.next = newTable[i](1–&gt;5)的时候,就形成了 1–&gt;5–&gt;1的环,再执行newTable[i]=e,此时newTable[i] = 1–&gt;5–&gt;1。</li>
 </ol>
 <p>当在数组该位置get寻找对应的key的时候，就发生了死循环,引起CPU 100%问题。</p>
-<p><img src="/images/java/hashmap-resize.png" alt="线程B执行扩容过程"></p>
+<p><img data-src="/images/java/hashmap-resize.png" alt="线程B执行扩容过程"></p>
 <p>而JDK8就不会出现这个问题,它在这里就有一个优化，它使用了两个指针来分别指向头节点和尾节点，而且还保证了元素原本的顺序。<br>当然HashMap仍然是不安全的,所以在多线程并发条件下推荐使用ConcurrentHashMap。</p>
 
     </div>
@@ -2892,6 +2938,25 @@ hr {
     
     
     
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/images/gzh.png">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
 
       <footer class="post-footer">
           <div class="post-tags">
@@ -2924,27 +2989,7 @@ hr {
           </div>
           
 
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
+
 
         </div>
           
@@ -2983,7 +3028,7 @@ hr {
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">102</span>
+          <span class="site-state-item-count">103</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -3029,19 +3074,19 @@ hr {
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">505k</span>
+    <span title="站点总字数">519k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">7:39</span>
+    <span title="站点阅读时长">7:52</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> &amp; <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
 
         
 <div class="busuanzi-count">
-  <script async="" src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <script data-pjax="" async="" src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
       <span class="post-meta-item-icon">
         <i class="fa fa-user"></i>
@@ -3074,6 +3119,12 @@ hr {
 
   
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
   
   
 
@@ -3086,6 +3137,8 @@ hr {
 
 
 
+
+  
 
 
 
@@ -3113,10 +3166,111 @@ hr {
 
 
 
+
+    <div id="pjax">
   
 
   
 
+    </div>
 
 
-<script src="/bundle.js"></script></body></html>
+<script src="/bundle.js"></script><script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+;
+
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+;
+
+document.querySelectorAll('.pdfobject-container').forEach(element => {
+  let url = element.dataset.target;
+  let pdfOpenParams = {
+    navpanes : 0,
+    toolbar  : 0,
+    statusbar: 0,
+    pagemode : 'thumbs',
+    view     : 'FitH'
+  };
+  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+
+  if (NexT.utils.supportsPDFs()) {
+    element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
+  } else {
+    element.innerHTML = `<iframe src="${fullURL}" style="height: ${element.dataset.height};" frameborder="0"></iframe>`;
+  }
+});
+</script></body></html>

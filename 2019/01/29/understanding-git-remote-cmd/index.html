@@ -12,10 +12,13 @@
 
 
 
+  
+  
+  
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"manual","top_n_per_article":10,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="前面的文章讲的命令都是操作本地仓库的,我相信可以应付大部分的开发状况,提交代码到本地仓库已经不是问题了,那么这次我们就来看看如何和远程仓库进行对接。 git clone — 克隆远端代码到本地当我们进行开发的时候，开发流程是这样的：首先将远程仓库(中央仓库)的代码clone到本地，在本地进行开发，开发完成之后将代码提交到远程仓库。 远程仓库并不复杂,实际上它们只是你的仓库在另外一台计算机上的拷贝,">
@@ -30,7 +33,7 @@
 <meta property="og:image" content="http://yoursite.com/images/understanding-git/remote-cmd/get-fetch.gif">
 <meta property="og:image" content="http://yoursite.com/images/understanding-git/remote-cmd/git-pull-structure.gif">
 <meta property="article:published_time" content="2019-01-29T03:21:02.000Z">
-<meta property="article:modified_time" content="2020-10-22T07:44:31.021Z">
+<meta property="article:modified_time" content="2020-10-27T05:46:47.897Z">
 <meta property="article:author" content="Zhu.Yang">
 <meta property="article:tag" content="Git">
 <meta name="twitter:card" content="summary">
@@ -236,7 +239,7 @@ body {
 body {
   background: var(--body-bg-color);
   color: var(--text-color);
-  font-family: 'Microsoft YaHei,consolas', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: 'Noto Sans SC', "PingFang SC", "Microsoft YaHei", sans-serif;
   font-size: 1em;
   line-height: 2;
 }
@@ -252,7 +255,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Microsoft YaHei', 'Microsoft YaHei,consolas', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: 'Microsoft YaHei', 'Noto Sans SC', "PingFang SC", "Microsoft YaHei", sans-serif;
   font-weight: bold;
   line-height: 1.5;
   margin: 20px 0 15px;
@@ -868,6 +871,11 @@ pre .javascript .function {
 .post-body .note.danger h6 {
   color: #d9534f;
 }
+.pdfobject-container iframe,
+.pdfobject-container embed {
+  height: 500px;
+  width: 100%;
+}
 .pagination .prev,
 .pagination .next,
 .pagination .page-number,
@@ -1045,7 +1053,7 @@ pre .javascript .function {
   color: var(--brand-hover-color);
 }
 .site-title {
-  font-family: 'Microsoft YaHei,consolas', 'Microsoft YaHei,consolas', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: 'Microsoft YaHei', 'Noto Sans SC', "PingFang SC", "Microsoft YaHei", sans-serif;
   font-size: 1.375em;
   font-weight: normal;
   margin: 0;
@@ -1228,7 +1236,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #ffb60f;
+  background: #b00be0;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -1419,7 +1427,7 @@ pre .javascript .function {
 }
 .site-state-item-count {
   display: block;
-  font-size: 1.25em;
+  font-size: 1em;
   font-weight: 600;
   text-align: center;
 }
@@ -1456,7 +1464,7 @@ pre .javascript .function {
 }
 .languages {
   display: inline-block;
-  font-size: 1.125em;
+  font-size: 1em;
   position: relative;
 }
 .languages .lang-select-label span {
@@ -1582,13 +1590,13 @@ pre .javascript .function {
   top: 0;
 }
 .post-body {
-  font-family: 'Microsoft YaHei,consolas', 'Microsoft YaHei,consolas', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: 'Noto Sans SC', 'Noto Sans SC', "PingFang SC", "Microsoft YaHei", sans-serif;
   overflow-wrap: break-word;
   word-wrap: break-word;
 }
 @media (min-width: 1200px) {
   .post-body {
-    font-size: 1.125em;
+    font-size: 1em;
   }
 }
 .post-body .exturl .fa {
@@ -1637,7 +1645,7 @@ pre .javascript .function {
   }
 }
 .posts-collapse .collection-title {
-  font-size: 1.125em;
+  font-size: 1em;
   position: relative;
 }
 .posts-collapse .collection-title::before {
@@ -1839,7 +1847,7 @@ pre .javascript .function {
   margin: 0;
 }
 .posts-expand .post-header {
-  font-size: 1.125em;
+  font-size: 1em;
 }
 .posts-expand .post-title {
   font-size: 1.5em;
@@ -1880,7 +1888,7 @@ pre .javascript .function {
 }
 .posts-expand .post-meta {
   color: #999;
-  font-family: 'Microsoft YaHei,consolas', 'Microsoft YaHei,consolas', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: 'Noto Sans SC', 'Noto Sans SC', "PingFang SC", "Microsoft YaHei", sans-serif;
   font-size: 0.75em;
   margin: 3px 0 60px 0;
   text-align: center;
@@ -2031,6 +2039,44 @@ pre .javascript .function {
 }
 #qr p {
   text-align: center;
+}
+.followme {
+  align-items: center;
+  background: var(--card-bg-color);
+  border-left: 3px solid #ff2a2a;
+  color: #bbb;
+  margin: 2em 0 1em 0;
+  padding: 1em 1.5em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.followme .social-list {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+}
+.followme .social-list .social-item {
+  margin: 0.5em 2em;
+}
+@media (max-width: 991px) {
+  .followme .social-list .social-item {
+    margin: 0.5em 0.75em;
+  }
+}
+.followme .social-list .social-link {
+  border: 0;
+  display: inline-block;
+  text-align: center;
+}
+.followme .social-list .social-link .icon {
+  font-size: 1.75em;
+  height: 1.75em;
+  width: 1.75em;
+}
+.followme .social-list .social-link .label {
+  display: block;
+  font-size: 14px;
 }
 .category-all-page .category-all-title {
   text-align: center;
@@ -2635,7 +2681,7 @@ hr {
 </noscript>
 
 <link rel="alternate" href="/atom.xml" title="Zhu.Yang" type="application/atom+xml">
-<script>function loadCss(l){var d=document,h=d.head,s=d.createElement('link');s.rel='stylesheet';s.href=l;!function e(f){if (d.body)return f();setTimeout(function(){e(f)})}(function(){h.appendChild(s);});}</script><noscript><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Microsoft YaHei,consolas:300,300italic,400,400italic,700,700italic|Microsoft YaHei:300,300italic,400,400italic,700,700italic|consolas:300,300italic,400,400italic,700,700italic&amp;display=swap&amp;subset=latin,latin-ext"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"></noscript></head>
+<script>function loadCss(l){var d=document,h=d.head,s=d.createElement('link');s.rel='stylesheet';s.href=l;!function e(f){if (d.body)return f();setTimeout(function(){e(f)})}(function(){h.appendChild(s);});}loadCss('/style.css');loadCss('//fonts.googleapis.com/css?family=Noto Sans SC:300,300italic,400,400italic,700,700italic|Microsoft YaHei:300,300italic,400,400italic,700,700italic|consolas:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext');loadCss('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css');loadCss('//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css');</script><noscript><link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto Sans SC:300,300italic,400,400italic,700,700italic|Microsoft YaHei:300,300italic,400,400italic,700,700italic|consolas:300,300italic,400,400italic,700,700italic&amp;display=swap&amp;subset=latin,latin-ext"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css"></noscript></head>
 
 <body itemscope="" itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -2766,7 +2812,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-22 15:44:31" itemprop="dateModified" datetime="2020-10-22T15:44:31+08:00">2020-10-22</time>
+                <time title="修改时间：2020-10-27 13:46:47" itemprop="dateModified" datetime="2020-10-27T13:46:47+08:00">2020-10-27</time>
               </span>
 
           
@@ -2811,7 +2857,7 @@ hr {
 
 <p>当我们执行<code>git clone</code>的时候， Git 会为远程仓库中的每个分支在本地仓库中创建一个远程分支（比如 origin/master）。然后再<strong>创建一个跟踪远程仓库中活动分支的本地分支</strong>，默认情况下这个本地分支会被命名为 master。</p>
 <p>你可能注意到了我们除了本地的master分支,还多了origin/master的分支,这种类型的分支就叫远程分支,它反映了远程仓库在你上次和它通信的状态。还记得index那篇文章吗?index文件中记录了工作目录,暂存区,本地仓库的版本用于跟踪文件状态,那么远程仓库的状态由谁来维护呢?没错就是这个origin/master分支。</p>
-<p>需要注意的是远程分支有一个特别的属性,当我们检出时,自动进入分离HEAD状态(此种状态下提交并不能影响origin/master分支).git这么做是出于不能直接在这些分支上进行操作的原因, 你必须在别的地方完成你的工作。<br><img src="/images/understanding-git/remote-cmd/detached-origin-head.gif" alt="分离HEAD"></p>
+<p>需要注意的是远程分支有一个特别的属性,当我们检出时,自动进入分离HEAD状态(此种状态下提交并不能影响origin/master分支).git这么做是出于不能直接在这些分支上进行操作的原因, 你必须在别的地方完成你的工作。<br><img data-src="/images/understanding-git/remote-cmd/detached-origin-head.gif" alt="分离HEAD"></p>
 <p>远程分支的命令规范是这样的:<code>&lt;remote name&gt;/&lt;branch name&gt;</code>,当我们使用git clone某个仓库的时候,git已经帮我们把远程仓库的名称设置为origin了。</p>
 <p>可以使用下面的命令来查看远程库对应的简短名称</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git remote -v</span><br><span class="line">origin  https://github.com/generalthink/git_learn.git (fetch)</span><br><span class="line">origin  https://github.com/generalthink/git_learn.git (push)</span><br></pre></td></tr></tbody></table></figure>
@@ -2847,11 +2893,11 @@ hr {
 <h3 id="提交代码到远程仓库"><a href="#提交代码到远程仓库" class="headerlink" title="提交代码到远程仓库"></a>提交代码到远程仓库</h3><p><code>git push</code>命令负责将我们的变更上传到指定的远程仓库，现在直接将我们的代码推送到远程分支</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ git push origin bugFix:master</span><br><span class="line">To https://github.com/generalthink/git_learn.git</span><br><span class="line">! [rejected]        bugFix -&gt; master (fetch first)</span><br><span class="line">error: failed to push some refs to 'https://github.com/generalthink/git_learn.git'</span><br><span class="line">hint: Updates were rejected because the remote contains work that you do</span><br><span class="line">hint: not have locally。 This is usually caused by another repository pushing</span><br><span class="line">hint: to the same ref。 You may want to first integrate the remote changes</span><br><span class="line">hint: (e。g。, 'git pull 。。。') before pushing again。</span><br><span class="line">hint: See the 'Note about fast-forwards' in 'git push --help' for details。</span><br></pre></td></tr></tbody></table></figure>
 <p>执行命令发现报错了，为什么会这样呢？是因为你在开发的过程中，你的同事也在开发，并且他开发的代码已经合并到了主干上，这个时候你本地的代码就不是最新的了,这个时候如果你往远端push代码,那么git就会给你抛出这个错误提示。</p>
-<p>此时，远端和本地分支的情况是这样的。<br><img src="/images/understanding-git/remote-cmd/git-rep-compare.gif" alt="远端和本地分支对比"></p>
+<p>此时，远端和本地分支的情况是这样的。<br><img data-src="/images/understanding-git/remote-cmd/git-rep-compare.gif" alt="远端和本地分支对比"></p>
 <p>可以看到远端master节点和本地的origin/master指向的并不是同一个commit object,而我们执行的git push命令显然不能智能的帮助我们合并。此时我们应该先同步远端更改到本地，合并这些修改，然后在push到主干。</p>
 <h4 id="git-fetch-–-同步代码到本地"><a href="#git-fetch-–-同步代码到本地" class="headerlink" title="git fetch – 同步代码到本地"></a>git fetch – 同步代码到本地</h4><p>下面的命令用来和远端进行通信,把远端的代码先同步到本地</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git fetch origin master</span><br></pre></td></tr></tbody></table></figure>
-<p><img src="/images/understanding-git/remote-cmd/get-fetch.gif" alt="get fetch"></p>
+<p><img data-src="/images/understanding-git/remote-cmd/get-fetch.gif" alt="get fetch"></p>
 <p>git fetch完成了仅有的但是特别重要的两步<br>    1. 从远程仓库下载本地仓库中缺失的提交记录<br>    2. 更新远程分支指针(如 origin/master)</p>
 <p>现在本地仓库的远程分支更新成了远程仓库相应分支最新的状态。它通常通过互联网(http://或者git://协议)与远程仓库通信。<br>需要注意的是<strong>git fetch 并不会改变你本地仓库的状态。它不会更新你的 master 分支，也不会修改你磁盘上的文件。</strong></p>
 <h4 id="合并代码"><a href="#合并代码" class="headerlink" title="合并代码"></a>合并代码</h4><p>现在我们已经获取到了远程的数据,只需要将这些变化更新到我们的工作目录中就可以了,我们只需要像合并本地分支那样来合并远程分支就可以了,我们可以通过以下三种方式来完成合并<br>    1. git cherry-pick origin/master<br>    2. git rebase origin/master<br>    3. git merge origin/master</p>
@@ -2879,7 +2925,7 @@ hr {
 <p>那么</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull origin bugFix ====  git fetch orign master; git merge origin/bugFix</span><br></pre></td></tr></tbody></table></figure>
 
-<p><img src="/images/understanding-git/remote-cmd/git-pull-structure.gif" alt="get pull"></p>
+<p><img data-src="/images/understanding-git/remote-cmd/git-pull-structure.gif" alt="get pull"></p>
 <p>上图可以看到当前分支是bugFix，执行pull命令之后origin/master的指向改变了，bugFix分支的内容和远端master分支的内容进行了合并，把这条命令拆解为2条来记忆我相信更容易让人理解。</p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>git系列写到现在已经结束了，总共写了6篇文章，三篇理论，三篇实际运用。理论是实战的基础，弄明白了理论理解起来更加容易，git将再也不难，当然我也不可能将每个命令都进行细致的讲解，<br>但是2-8理论在git中同样适用,如果想看更加详细的命令，我相信官方文档才是最好的。</p>
 
@@ -2888,6 +2934,25 @@ hr {
     
     
     
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/images/gzh.png">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
 
       <footer class="post-footer">
           <div class="post-tags">
@@ -2920,27 +2985,7 @@ hr {
           </div>
           
 
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
+
 
         </div>
           
@@ -2979,7 +3024,7 @@ hr {
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">102</span>
+          <span class="site-state-item-count">103</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -3025,19 +3070,19 @@ hr {
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">505k</span>
+    <span title="站点总字数">519k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">7:39</span>
+    <span title="站点阅读时长">7:52</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> &amp; <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
 
         
 <div class="busuanzi-count">
-  <script async="" src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <script data-pjax="" async="" src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
       <span class="post-meta-item-icon">
         <i class="fa fa-user"></i>
@@ -3070,6 +3115,12 @@ hr {
 
   
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
   
   
 
@@ -3082,6 +3133,8 @@ hr {
 
 
 
+
+  
 
 
 
@@ -3109,10 +3162,111 @@ hr {
 
 
 
+
+    <div id="pjax">
   
 
   
 
+    </div>
 
 
-<script src="/bundle.js"></script></body></html>
+<script src="/bundle.js"></script><script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+;
+
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+;
+
+document.querySelectorAll('.pdfobject-container').forEach(element => {
+  let url = element.dataset.target;
+  let pdfOpenParams = {
+    navpanes : 0,
+    toolbar  : 0,
+    statusbar: 0,
+    pagemode : 'thumbs',
+    view     : 'FitH'
+  };
+  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+
+  if (NexT.utils.supportsPDFs()) {
+    element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
+  } else {
+    element.innerHTML = `<iframe src="${fullURL}" style="height: ${element.dataset.height};" frameborder="0"></iframe>`;
+  }
+});
+</script></body></html>

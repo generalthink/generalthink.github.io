@@ -12,10 +12,13 @@
 
 
 
+  
+  
+  
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"manual","top_n_per_article":10,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="hbase中scan命令是我们经常使用到的，而filter的作用尤其强大。这里简要的介绍下scan下filter命令的使用. 插入scan命令需要的数据这里模拟了部分微博评论的数据,然后使用代码插入数据到hbase,代码就不列出来了比较简单。 12345678910public class Comment &amp;#123;    //1-->普通文章，2--->热点文章    Intege">
@@ -39,7 +42,7 @@
 <meta property="og:image" content="http://yoursite.com/images/hbase-command/hbase-scan-rowfilter2.png">
 <meta property="og:image" content="http://yoursite.com/images/hbase-command/hbase-scan-filter-fullpath.png">
 <meta property="article:published_time" content="2018-12-17T07:59:23.000Z">
-<meta property="article:modified_time" content="2020-10-22T07:44:31.017Z">
+<meta property="article:modified_time" content="2020-10-27T05:46:47.889Z">
 <meta property="article:author" content="Zhu.Yang">
 <meta property="article:tag" content="HBase">
 <meta name="twitter:card" content="summary">
@@ -245,7 +248,7 @@ body {
 body {
   background: var(--body-bg-color);
   color: var(--text-color);
-  font-family: 'Microsoft YaHei,consolas', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: 'Noto Sans SC', "PingFang SC", "Microsoft YaHei", sans-serif;
   font-size: 1em;
   line-height: 2;
 }
@@ -261,7 +264,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Microsoft YaHei', 'Microsoft YaHei,consolas', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: 'Microsoft YaHei', 'Noto Sans SC', "PingFang SC", "Microsoft YaHei", sans-serif;
   font-weight: bold;
   line-height: 1.5;
   margin: 20px 0 15px;
@@ -877,6 +880,11 @@ pre .javascript .function {
 .post-body .note.danger h6 {
   color: #d9534f;
 }
+.pdfobject-container iframe,
+.pdfobject-container embed {
+  height: 500px;
+  width: 100%;
+}
 .pagination .prev,
 .pagination .next,
 .pagination .page-number,
@@ -1054,7 +1062,7 @@ pre .javascript .function {
   color: var(--brand-hover-color);
 }
 .site-title {
-  font-family: 'Microsoft YaHei,consolas', 'Microsoft YaHei,consolas', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: 'Microsoft YaHei', 'Noto Sans SC', "PingFang SC", "Microsoft YaHei", sans-serif;
   font-size: 1.375em;
   font-weight: normal;
   margin: 0;
@@ -1237,7 +1245,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #ffb60f;
+  background: #b00be0;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -1428,7 +1436,7 @@ pre .javascript .function {
 }
 .site-state-item-count {
   display: block;
-  font-size: 1.25em;
+  font-size: 1em;
   font-weight: 600;
   text-align: center;
 }
@@ -1465,7 +1473,7 @@ pre .javascript .function {
 }
 .languages {
   display: inline-block;
-  font-size: 1.125em;
+  font-size: 1em;
   position: relative;
 }
 .languages .lang-select-label span {
@@ -1591,13 +1599,13 @@ pre .javascript .function {
   top: 0;
 }
 .post-body {
-  font-family: 'Microsoft YaHei,consolas', 'Microsoft YaHei,consolas', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: 'Noto Sans SC', 'Noto Sans SC', "PingFang SC", "Microsoft YaHei", sans-serif;
   overflow-wrap: break-word;
   word-wrap: break-word;
 }
 @media (min-width: 1200px) {
   .post-body {
-    font-size: 1.125em;
+    font-size: 1em;
   }
 }
 .post-body .exturl .fa {
@@ -1646,7 +1654,7 @@ pre .javascript .function {
   }
 }
 .posts-collapse .collection-title {
-  font-size: 1.125em;
+  font-size: 1em;
   position: relative;
 }
 .posts-collapse .collection-title::before {
@@ -1848,7 +1856,7 @@ pre .javascript .function {
   margin: 0;
 }
 .posts-expand .post-header {
-  font-size: 1.125em;
+  font-size: 1em;
 }
 .posts-expand .post-title {
   font-size: 1.5em;
@@ -1889,7 +1897,7 @@ pre .javascript .function {
 }
 .posts-expand .post-meta {
   color: #999;
-  font-family: 'Microsoft YaHei,consolas', 'Microsoft YaHei,consolas', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: 'Noto Sans SC', 'Noto Sans SC', "PingFang SC", "Microsoft YaHei", sans-serif;
   font-size: 0.75em;
   margin: 3px 0 60px 0;
   text-align: center;
@@ -2040,6 +2048,44 @@ pre .javascript .function {
 }
 #qr p {
   text-align: center;
+}
+.followme {
+  align-items: center;
+  background: var(--card-bg-color);
+  border-left: 3px solid #ff2a2a;
+  color: #bbb;
+  margin: 2em 0 1em 0;
+  padding: 1em 1.5em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.followme .social-list {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+}
+.followme .social-list .social-item {
+  margin: 0.5em 2em;
+}
+@media (max-width: 991px) {
+  .followme .social-list .social-item {
+    margin: 0.5em 0.75em;
+  }
+}
+.followme .social-list .social-link {
+  border: 0;
+  display: inline-block;
+  text-align: center;
+}
+.followme .social-list .social-link .icon {
+  font-size: 1.75em;
+  height: 1.75em;
+  width: 1.75em;
+}
+.followme .social-list .social-link .label {
+  display: block;
+  font-size: 14px;
 }
 .category-all-page .category-all-title {
   text-align: center;
@@ -2644,7 +2690,7 @@ hr {
 </noscript>
 
 <link rel="alternate" href="/atom.xml" title="Zhu.Yang" type="application/atom+xml">
-<script>function loadCss(l){var d=document,h=d.head,s=d.createElement('link');s.rel='stylesheet';s.href=l;!function e(f){if (d.body)return f();setTimeout(function(){e(f)})}(function(){h.appendChild(s);});}</script><noscript><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Microsoft YaHei,consolas:300,300italic,400,400italic,700,700italic|Microsoft YaHei:300,300italic,400,400italic,700,700italic|consolas:300,300italic,400,400italic,700,700italic&amp;display=swap&amp;subset=latin,latin-ext"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"></noscript></head>
+<script>function loadCss(l){var d=document,h=d.head,s=d.createElement('link');s.rel='stylesheet';s.href=l;!function e(f){if (d.body)return f();setTimeout(function(){e(f)})}(function(){h.appendChild(s);});}loadCss('/style.css');loadCss('//fonts.googleapis.com/css?family=Noto Sans SC:300,300italic,400,400italic,700,700italic|Microsoft YaHei:300,300italic,400,400italic,700,700italic|consolas:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext');loadCss('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css');loadCss('//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css');</script><noscript><link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto Sans SC:300,300italic,400,400italic,700,700italic|Microsoft YaHei:300,300italic,400,400italic,700,700italic|consolas:300,300italic,400,400italic,700,700italic&amp;display=swap&amp;subset=latin,latin-ext"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css"></noscript></head>
 
 <body itemscope="" itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -2775,7 +2821,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-22 15:44:31" itemprop="dateModified" datetime="2020-10-22T15:44:31+08:00">2020-10-22</time>
+                <time title="修改时间：2020-10-27 13:46:47" itemprop="dateModified" datetime="2020-10-27T13:46:47+08:00">2020-10-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -2823,15 +2869,15 @@ hr {
 <h3 id="插入scan命令需要的数据"><a href="#插入scan命令需要的数据" class="headerlink" title="插入scan命令需要的数据"></a>插入scan命令需要的数据</h3><p>这里模拟了部分微博评论的数据,然后使用代码插入数据到hbase,代码就不列出来了比较简单。</p>
 <figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Comment</span> </span>{</span><br><span class="line">    <span class="comment">//1--&gt;普通文章，2---&gt;热点文章</span></span><br><span class="line">    Integer articleType;</span><br><span class="line">    <span class="comment">//文章id</span></span><br><span class="line">    String articleId;</span><br><span class="line">    String userId;</span><br><span class="line">    <span class="keyword">long</span> timestamp;</span><br><span class="line">    <span class="comment">//comment content,暂时只考虑文本</span></span><br><span class="line">    String commentContent;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <a id="more"></a>
-<p>hbase的表名称为zy_comment,列簇info下有articleType以及commentInfo两个列。commentInfo的value为上面Comment类的json字符串,插入的数据如下所示<br><img src="/images/hbase-command/hbase-scan-readydata1.png" alt="插入数据"><br><img src="/images/hbase-command/hbase-scan-readydata2.png" alt="插入数据"></p>
+<p>hbase的表名称为zy_comment,列簇info下有articleType以及commentInfo两个列。commentInfo的value为上面Comment类的json字符串,插入的数据如下所示<br><img data-src="/images/hbase-command/hbase-scan-readydata1.png" alt="插入数据"><br><img data-src="/images/hbase-command/hbase-scan-readydata2.png" alt="插入数据"></p>
 <h3 id="HBase数据顺序"><a href="#HBase数据顺序" class="headerlink" title="HBase数据顺序"></a>HBase数据顺序</h3><p>HBase是三维有序存储的，是指rowkey（行键），column key（column family和qualifier）和TimeStamp（时间戳）这个三个维度是依照ASCII码表排序的。（比如A排在a前面）</p>
 <ol>
 <li>先rowkey升序排序，</li>
 <li>rowkey相同则column key升序排序</li>
 <li>rowkey、column key相同则timestamp降序排序</li>
 </ol>
-<h3 id="支持的Filter"><a href="#支持的Filter" class="headerlink" title="支持的Filter"></a>支持的Filter</h3><p>scan命令我们经常会大量使用Filter,hbase shell提供的filter都可以在hbase client包中找到对应的类，它们都是Filter的子类，很多命令都是通过filter来进行实现的。<br><img src="/images/hbase-command/hbase-scan-javafilter.png" alt="filter"></p>
-<p>使用<code>show_filters</code>命令查看shell中定义了哪些filter常量,如果想要使用shell中未定义的常量,在使用的时候必须手动import filter的全路径。<br><img src="/images/hbase-command/hbase-show-filter.png" alt="filter"></p>
+<h3 id="支持的Filter"><a href="#支持的Filter" class="headerlink" title="支持的Filter"></a>支持的Filter</h3><p>scan命令我们经常会大量使用Filter,hbase shell提供的filter都可以在hbase client包中找到对应的类，它们都是Filter的子类，很多命令都是通过filter来进行实现的。<br><img data-src="/images/hbase-command/hbase-scan-javafilter.png" alt="filter"></p>
+<p>使用<code>show_filters</code>命令查看shell中定义了哪些filter常量,如果想要使用shell中未定义的常量,在使用的时候必须手动import filter的全路径。<br><img data-src="/images/hbase-command/hbase-show-filter.png" alt="filter"></p>
 <h3 id="scan的用法"><a href="#scan的用法" class="headerlink" title="scan的用法"></a>scan的用法</h3><p>使用 <code>help 'scan'</code> 命令可以查看scan的语法以及用法,关于scan命令中filter的使用规则如下:</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scan 'tableName',{FILTER=&gt;"FilterName(param1,param2,...,paramN)"}</span><br></pre></td></tr></tbody></table></figure>
 <p>{}中的语法是ruby的map的语法，FILTER必须大写,filter的参数是根据构造方法来的，也就是相当于java中的new Filter(‘param1’,’param2’)等，这里只是省略了new参数而已。<br>当然同样可以使用ruby中new对象的方式，只是那样就必须使用全限定名称。后面会举一个全限定名称的例子。</p>
@@ -2843,34 +2889,34 @@ hr {
 
 <h3 id="scan例子"><a href="#scan例子" class="headerlink" title="scan例子"></a>scan例子</h3><p>查询方式通过rowKey来进行查询是最快的，所以rowkey的设计一定要合理，如果不合理会很影响查询速率。但是有时候确实没有办法完全通过rowkey来查询，所以就要借助scan.<br>scan命令支持的修饰词除了列（<code>COLUMNS</code>）修饰词外，HBase还支持<code>Limit</code>（限制查询结果行数），<code>STARTROW</code>（ROWKEY起始行。会先根据这个key定位到region，再向后扫描）、<code>STOPROW</code>(结束行)、<code>TIMERANGE</code>（限定时间戳范围）、<code>VERSIONS</code>（版本数）、和<code>FILTER</code>（按条件过滤行）等</p>
 <ol>
-<li>查询user是zhangsan的用户的评论数据,最多只返回10条<br><code>scan 'zy_comment',{LIMIT=&gt;10,FILTER=&gt;"PrefixFilter('zhangsan')"}</code><br> <img src="/images/hbase-command/hbase-scan-prefixfilter.png" alt="scan命令"></li>
+<li>查询user是zhangsan的用户的评论数据,最多只返回10条<br><code>scan 'zy_comment',{LIMIT=&gt;10,FILTER=&gt;"PrefixFilter('zhangsan')"}</code><br> <img data-src="/images/hbase-command/hbase-scan-prefixfilter.png" alt="scan命令"></li>
 </ol>
 <ol start="2">
-<li><p>通过startrow,stoprow来进行查询(这种也比较快,实际操作中如果不能通过rowkey)<br><code>scan 'zy_comment',{STARTROW=&gt;'b',STOPROW='e',LIMIT=&gt;10}</code><br> <img src="/images/hbase-command/hbase-scan-startendrow.png" alt="scan命令"></p>
+<li><p>通过startrow,stoprow来进行查询(这种也比较快,实际操作中如果不能通过rowkey)<br><code>scan 'zy_comment',{STARTROW=&gt;'b',STOPROW='e',LIMIT=&gt;10}</code><br> <img data-src="/images/hbase-command/hbase-scan-startendrow.png" alt="scan命令"></p>
 </li>
-<li><p>查询评论内容为666的评论有哪些<br><code>scan 'zy_comment',{LIMIT=&gt;10,FILTER=&gt;"ValueFilter(=,'substring:666')"}</code><br> <img src="/images/hbase-command/hbase-scan-valuefilter.png" alt="scan命令"></p>
+<li><p>查询评论内容为666的评论有哪些<br><code>scan 'zy_comment',{LIMIT=&gt;10,FILTER=&gt;"ValueFilter(=,'substring:666')"}</code><br> <img data-src="/images/hbase-command/hbase-scan-valuefilter.png" alt="scan命令"></p>
 </li>
 <li><p>查询热点文章的数据有哪些</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scan 'zy_comment',{LIMIT=&gt;10,FILTER="SingleColumnValueFilter('info','articleType',=,'binary: \x00\x00\x00\x00\x00\x00\x00\x02')"}</span><br></pre></td></tr></tbody></table></figure>
-<p> <img src="/images/hbase-command/hbase-scan-singlecolumn.png" alt="scan命令"></p>
+<p> <img data-src="/images/hbase-command/hbase-scan-singlecolumn.png" alt="scan命令"></p>
 <p> 这里binary中的数据一定要是二进制字符串而不是具体的值</p>
 </li>
 </ol>
 <ol start="5">
 <li><p>查看评论包含great的热点文章评论有哪些</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scan 'zy_comment',{LIMIT=&gt;3,FILTER=&gt;"(SingleColumnValueFilter('info','articleType',=,'binary:\x00\x00\x00\x00\x00\x00\x00\x02')) AND (ColumnPrefixFilter('commentInfo') AND ValueFilter(=,'substring:great'))"}</span><br></pre></td></tr></tbody></table></figure>
-<p> <img src="/images/hbase-command/hbase-scan-multifilter.png" alt="scan命令"></p>
+<p> <img data-src="/images/hbase-command/hbase-scan-multifilter.png" alt="scan命令"></p>
 </li>
-<li><p>查询评论的前两条<br><code>scan 'zy_comment',{FILTER=&gt;"PageFilter(2)"}</code>和LIMIT有异曲同工之妙<br> <img src="/images/hbase-command/hbase-scan-pagefilter.png" alt="scan命令"></p>
+<li><p>查询评论的前两条<br><code>scan 'zy_comment',{FILTER=&gt;"PageFilter(2)"}</code>和LIMIT有异曲同工之妙<br> <img data-src="/images/hbase-command/hbase-scan-pagefilter.png" alt="scan命令"></p>
 </li>
 <li><p>查询rowkey中包含特定前缀的数据<br><code>scan 'zy_comment',{FILTER=&gt;"RowFilter(=,'substring:zhangsan')"}</code></p>
-<p> <img src="/images/hbase-command/hbase-scan-rowfilter1.png" alt="scan命令"></p>
-<p> <img src="/images/hbase-command/hbase-scan-rowfilter2.png" alt="scan命令"></p>
+<p> <img data-src="/images/hbase-command/hbase-scan-rowfilter1.png" alt="scan命令"></p>
+<p> <img data-src="/images/hbase-command/hbase-scan-rowfilter2.png" alt="scan命令"></p>
 </li>
 <li><p>使用全限定名称查询articleId是123456的数据</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import org.apache.hadoop.hbase.filter.SingleColumnValueFilter</span><br><span class="line">import org.apache.hadoop.hbase.filter.CompareFilter</span><br><span class="line">import org.apache.hadoop.hbase.filter.SubstringComparator</span><br><span class="line">scan 'zy_comment', {COLUMNS=&gt;['info:commentInfo'], FILTER =&gt; SingleColumnValueFilter.new(Bytes.toBytes('info'), Bytes.toBytes('commentInfo'), CompareFilter::CompareOp.valueOf('EQUAL'), SubstringComparator.new('123456'))}</span><br></pre></td></tr></tbody></table></figure>
 
-<p> <img src="/images/hbase-command/hbase-scan-filter-fullpath.png" alt="scan命令"></p>
+<p> <img data-src="/images/hbase-command/hbase-scan-filter-fullpath.png" alt="scan命令"></p>
 </li>
 </ol>
 <h4 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h4><ul>
@@ -2885,6 +2931,25 @@ hr {
     
     
     
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/images/gzh.png">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
 
       <footer class="post-footer">
           <div class="post-tags">
@@ -2917,27 +2982,7 @@ hr {
           </div>
           
 
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
+
 
         </div>
           
@@ -2976,7 +3021,7 @@ hr {
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">102</span>
+          <span class="site-state-item-count">103</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -3022,19 +3067,19 @@ hr {
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">505k</span>
+    <span title="站点总字数">519k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">7:39</span>
+    <span title="站点阅读时长">7:52</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> &amp; <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
 
         
 <div class="busuanzi-count">
-  <script async="" src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <script data-pjax="" async="" src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
       <span class="post-meta-item-icon">
         <i class="fa fa-user"></i>
@@ -3067,6 +3112,12 @@ hr {
 
   
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
   
   
 
@@ -3079,6 +3130,8 @@ hr {
 
 
 
+
+  
 
 
 
@@ -3106,10 +3159,111 @@ hr {
 
 
 
+
+    <div id="pjax">
   
 
   
 
+    </div>
 
 
-<script src="/bundle.js"></script></body></html>
+<script src="/bundle.js"></script><script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+;
+
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+;
+
+document.querySelectorAll('.pdfobject-container').forEach(element => {
+  let url = element.dataset.target;
+  let pdfOpenParams = {
+    navpanes : 0,
+    toolbar  : 0,
+    statusbar: 0,
+    pagemode : 'thumbs',
+    view     : 'FitH'
+  };
+  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+
+  if (NexT.utils.supportsPDFs()) {
+    element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
+  } else {
+    element.innerHTML = `<iframe src="${fullURL}" style="height: ${element.dataset.height};" frameborder="0"></iframe>`;
+  }
+});
+</script></body></html>
