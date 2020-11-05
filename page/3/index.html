@@ -1228,7 +1228,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #1b1888;
+  background: #af7cff;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2715,6 +2715,156 @@ hr {
   
   
   <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/18/learn-java-jaxb/">
+
+    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Zhu.Yang">
+      <meta itemprop="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
+    </span>
+
+    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhu.Yang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/18/learn-java-jaxb/" class="post-title-link" itemprop="url">道友,JAXB了解下</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-03-18 16:23:48" itemprop="dateCreated datePublished" datetime="2020-03-18T16:23:48+08:00">2020-03-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-11-05 17:46:06" itemprop="dateModified" datetime="2020-11-05T17:46:06+08:00">2020-11-05</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>9.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 ≈</span>
+              <span>9 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="什么是JAXB"><a href="#什么是JAXB" class="headerlink" title="什么是JAXB"></a>什么是JAXB</h3><p>JAXB(Java Architecture for XML Binding简称JAXB)允许Java开发人员将Java类映射为XML表示方式。JAXB提供两种主要特性：将一个Java对象序列化为XML，以及反向操作，将XML解析成Java对象。换句话说，JAXB允许以XML格式存储和读取数据，而不需要程序的类结构实现特定的读取XML和保存XML的代码。</p>
+<h3 id="注解"><a href="#注解" class="headerlink" title="注解"></a>注解</h3><table>
+<thead>
+<tr>
+<th>注解</th>
+<th>作用域</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>@XmlRootElement</td>
+<td>Class,Enum</td>
+<td>定义XML根元素</td>
+</tr>
+<tr>
+<td>@XmlAccessorType</td>
+<td>Package,Class</td>
+<td>定义JAXB引擎用于绑定的Java类的字段和属性。它具有四个值：PUBLIC_MEMBER，FIELD，PROPERTY和NONE。</td>
+</tr>
+<tr>
+<td>@XmlAccessorOrde</td>
+<td>Package,Class</td>
+<td>定义子项顺序</td>
+</tr>
+<tr>
+<td>@XmlType</td>
+<td>Class,Enum</td>
+<td>类型映射(java到xml)。它定义了其子类型的名称和顺序。</td>
+</tr>
+<tr>
+<td>@XmlElement</td>
+<td>Field</td>
+<td>将字段或属性映射到XML元素</td>
+</tr>
+<tr>
+<td>@XmlAttribute</td>
+<td>Field</td>
+<td>将字段或属性映射到XML属性</td>
+</tr>
+<tr>
+<td>@XmlTransient</td>
+<td>Field</td>
+<td>防止将字段或属性映射到XML</td>
+</tr>
+<tr>
+<td>@XmlValue</td>
+<td>Field</td>
+<td>将字段或属性映射到XML标签上的文本值</td>
+</tr>
+<tr>
+<td>@XmlList</td>
+<td>Field,Parameter</td>
+<td>将集合映射到以空格分隔的值列表。</td>
+</tr>
+<tr>
+<td>@XmlElementWrapper</td>
+<td>Field</td>
+<td>将Java集合映射到XML包装的集合</td>
+</tr>
+<tr>
+<td>@XmlJavaTypeAdapter</td>
+<td>PACKAGE,FIELD,METHOD,TYPE,PARAMETER</td>
+<td>复杂对象转换器</td>
+</tr>
+</tbody></table>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/03/18/learn-java-jaxb/#more" rel="contents">
+                阅读全文 »
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/13/why-we-need-gateway/">
 
     <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -2746,7 +2896,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-29 11:50:52" itemprop="dateModified" datetime="2020-10-29T11:50:52+08:00">2020-10-29</time>
+                <time title="修改时间：2020-11-05 17:46:06" itemprop="dateModified" datetime="2020-11-05T17:46:06+08:00">2020-11-05</time>
               </span>
 
           <br>
@@ -2834,7 +2984,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-29 11:50:52" itemprop="dateModified" datetime="2020-10-29T11:50:52+08:00">2020-10-29</time>
+                <time title="修改时间：2020-11-05 17:46:06" itemprop="dateModified" datetime="2020-11-05T17:46:06+08:00">2020-11-05</time>
               </span>
 
           <br>
@@ -2922,7 +3072,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-29 11:50:52" itemprop="dateModified" datetime="2020-10-29T11:50:52+08:00">2020-10-29</time>
+                <time title="修改时间：2020-11-05 17:46:06" itemprop="dateModified" datetime="2020-11-05T17:46:06+08:00">2020-11-05</time>
               </span>
 
           <br>
@@ -3011,7 +3161,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-29 11:50:51" itemprop="dateModified" datetime="2020-10-29T11:50:51+08:00">2020-10-29</time>
+                <time title="修改时间：2020-11-05 17:46:06" itemprop="dateModified" datetime="2020-11-05T17:46:06+08:00">2020-11-05</time>
               </span>
 
           <br>
@@ -3097,7 +3247,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-29 11:50:52" itemprop="dateModified" datetime="2020-10-29T11:50:52+08:00">2020-10-29</time>
+                <time title="修改时间：2020-11-05 17:46:06" itemprop="dateModified" datetime="2020-11-05T17:46:06+08:00">2020-11-05</time>
               </span>
 
           <br>
@@ -3272,7 +3422,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-29 11:50:52" itemprop="dateModified" datetime="2020-10-29T11:50:52+08:00">2020-10-29</time>
+                <time title="修改时间：2020-11-05 17:46:06" itemprop="dateModified" datetime="2020-11-05T17:46:06+08:00">2020-11-05</time>
               </span>
 
           <br>
@@ -3360,7 +3510,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-29 11:50:52" itemprop="dateModified" datetime="2020-10-29T11:50:52+08:00">2020-10-29</time>
+                <time title="修改时间：2020-11-05 17:46:06" itemprop="dateModified" datetime="2020-11-05T17:46:06+08:00">2020-11-05</time>
               </span>
 
           <br>
@@ -3451,7 +3601,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-29 11:50:52" itemprop="dateModified" datetime="2020-10-29T11:50:52+08:00">2020-10-29</time>
+                <time title="修改时间：2020-11-05 17:46:06" itemprop="dateModified" datetime="2020-11-05T17:46:06+08:00">2020-11-05</time>
               </span>
 
           <br>
@@ -3539,7 +3689,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-29 11:50:52" itemprop="dateModified" datetime="2020-10-29T11:50:52+08:00">2020-10-29</time>
+                <time title="修改时间：2020-11-05 17:46:06" itemprop="dateModified" datetime="2020-11-05T17:46:06+08:00">2020-11-05</time>
               </span>
 
           <br>
@@ -3575,95 +3725,6 @@ hr {
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/12/23/priority-queue-analysis/#more" rel="contents">
-                阅读全文 »
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/19/k8s-common-command/">
-
-    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Zhu.Yang">
-      <meta itemprop="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
-    </span>
-
-    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhu.Yang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/12/19/k8s-common-command/" class="post-title-link" itemprop="url">Kubernetes常用命令</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-12-19 17:58:24" itemprop="dateCreated datePublished" datetime="2019-12-19T17:58:24+08:00">2019-12-19</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-29 11:50:52" itemprop="dateModified" datetime="2020-10-29T11:50:52+08:00">2020-10-29</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.8k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 ≈</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h4 id="获取所有的namespace"><a href="#获取所有的namespace" class="headerlink" title="获取所有的namespace"></a>获取所有的namespace</h4><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get namespace</span><br></pre></td></tr></tbody></table></figure>
-<blockquote>
-<p>默认使用的是 ~/.kube/config这个配置文件，如果文件不再这个目录下可以通过 –kubeconfig configFilePath&gt;指定<br><a target="_blank" rel="noopener" href="https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/#set-the-kubeconfig-environment-variable">https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/#set-the-kubeconfig-environment-variable</a></p>
-</blockquote>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/12/19/k8s-common-command/#more" rel="contents">
                 阅读全文 »
               </a>
             </div>
@@ -3732,7 +3793,7 @@ hr {
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">103</span>
+          <span class="site-state-item-count">104</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -3778,12 +3839,12 @@ hr {
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">519k</span>
+    <span title="站点总字数">524k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">7:52</span>
+    <span title="站点阅读时长">7:57</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> &amp; <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>

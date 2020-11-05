@@ -1228,7 +1228,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #1b1888;
+  background: #af7cff;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2715,6 +2715,95 @@ hr {
   
   
   <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/20/restful-resource-naming-practise/">
+
+    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Zhu.Yang">
+      <meta itemprop="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
+    </span>
+
+    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhu.Yang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/09/20/restful-resource-naming-practise/" class="post-title-link" itemprop="url">RESTful资源命名最佳实践</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-09-20 12:08:37" itemprop="dateCreated datePublished" datetime="2019-09-20T12:08:37+08:00">2019-09-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-11-05 17:46:06" itemprop="dateModified" datetime="2020-11-05T17:46:06+08:00">2020-11-05</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 ≈</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>在Rest中，数据的呈现方式叫做资源(Resource)。拥有强大而一致的REST资源命名策略,是最好的设计决策。</p>
+<p>一个资源可以是单个的也可以是一个集合。比如customers是一个集合，而customer是单个资源。我们可以定义customers这个集合的资源的URI是<code>/customers</code>,而单个customer资源的URI是<code>/customers/{customerId}</code>。</p>
+<p>资源也可以包含子集合的资源。比如，使用<code>/customers/{customerId}/accounts</code> 来表示某个customer下的account集合资源。同样的，对于account集合资源下的单个account我们可以定义成这样:<code>/customers/{customerId}/accounts/{accountId}</code></p>
+<p>REST API使用统一资源标识符（URI）来寻址资源。REST API设计者应该创建URI，将REST API的资源模型传达给潜在的客户端开发人员。当资源命名良好时，API直观且易于使用。如果做得不好，那么相同的API会感觉难以使用和理解。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/09/20/restful-resource-naming-practise/#more" rel="contents">
+                阅读全文 »
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/06/log-framework-search-princeple/">
 
     <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -2746,7 +2835,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-29 11:50:52" itemprop="dateModified" datetime="2020-10-29T11:50:52+08:00">2020-10-29</time>
+                <time title="修改时间：2020-11-05 17:46:06" itemprop="dateModified" datetime="2020-11-05T17:46:06+08:00">2020-11-05</time>
               </span>
 
           <br>
@@ -2834,7 +2923,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-29 11:50:51" itemprop="dateModified" datetime="2020-10-29T11:50:51+08:00">2020-10-29</time>
+                <time title="修改时间：2020-11-05 17:46:06" itemprop="dateModified" datetime="2020-11-05T17:46:06+08:00">2020-11-05</time>
               </span>
 
           <br>
@@ -2923,7 +3012,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-29 11:50:52" itemprop="dateModified" datetime="2020-10-29T11:50:52+08:00">2020-10-29</time>
+                <time title="修改时间：2020-11-05 17:46:06" itemprop="dateModified" datetime="2020-11-05T17:46:06+08:00">2020-11-05</time>
               </span>
 
           <br>
@@ -3012,7 +3101,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-29 11:50:51" itemprop="dateModified" datetime="2020-10-29T11:50:51+08:00">2020-10-29</time>
+                <time title="修改时间：2020-11-05 17:46:06" itemprop="dateModified" datetime="2020-11-05T17:46:06+08:00">2020-11-05</time>
               </span>
 
           <br>
@@ -3100,7 +3189,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-29 11:50:52" itemprop="dateModified" datetime="2020-10-29T11:50:52+08:00">2020-10-29</time>
+                <time title="修改时间：2020-11-05 17:46:06" itemprop="dateModified" datetime="2020-11-05T17:46:06+08:00">2020-11-05</time>
               </span>
 
           <br>
@@ -3189,7 +3278,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-29 11:50:51" itemprop="dateModified" datetime="2020-10-29T11:50:51+08:00">2020-10-29</time>
+                <time title="修改时间：2020-11-05 17:46:06" itemprop="dateModified" datetime="2020-11-05T17:46:06+08:00">2020-11-05</time>
               </span>
 
           <br>
@@ -3276,7 +3365,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-29 11:50:52" itemprop="dateModified" datetime="2020-10-29T11:50:52+08:00">2020-10-29</time>
+                <time title="修改时间：2020-11-05 17:46:06" itemprop="dateModified" datetime="2020-11-05T17:46:06+08:00">2020-11-05</time>
               </span>
 
           <br>
@@ -3364,7 +3453,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-29 11:50:52" itemprop="dateModified" datetime="2020-10-29T11:50:52+08:00">2020-10-29</time>
+                <time title="修改时间：2020-11-05 17:46:06" itemprop="dateModified" datetime="2020-11-05T17:46:06+08:00">2020-11-05</time>
               </span>
 
           <br>
@@ -3452,7 +3541,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-29 11:50:52" itemprop="dateModified" datetime="2020-10-29T11:50:52+08:00">2020-10-29</time>
+                <time title="修改时间：2020-11-05 17:46:06" itemprop="dateModified" datetime="2020-11-05T17:46:06+08:00">2020-11-05</time>
               </span>
 
           <br>
@@ -3491,92 +3580,6 @@ hr {
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/07/05/mongodb-locks/#more" rel="contents">
-                阅读全文 »
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/27/logs-in-mongodb/">
-
-    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Zhu.Yang">
-      <meta itemprop="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
-    </span>
-
-    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhu.Yang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/06/27/logs-in-mongodb/" class="post-title-link" itemprop="url">MongoDB中有几种日志?</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-06-27 16:07:20" itemprop="dateCreated datePublished" datetime="2019-06-27T16:07:20+08:00">2019-06-27</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-29 11:50:52" itemprop="dateModified" datetime="2020-10-29T11:50:52+08:00">2020-10-29</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>3.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 ≈</span>
-              <span>4 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>任何一种数据库都有各种各样的日志，MongoDB也不例外。MongoDB中有4种日志，分别是系统日志、Journal日志、oplog主从日志、慢查询日志等。这些日志记录着MongoDB数据库不同方面的踪迹。下面分别介绍这几种日志。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/06/27/logs-in-mongodb/#more" rel="contents">
                 阅读全文 »
               </a>
             </div>
@@ -3645,7 +3648,7 @@ hr {
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">103</span>
+          <span class="site-state-item-count">104</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -3691,12 +3694,12 @@ hr {
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">519k</span>
+    <span title="站点总字数">524k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">7:52</span>
+    <span title="站点阅读时长">7:57</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> &amp; <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
