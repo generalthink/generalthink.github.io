@@ -1228,7 +1228,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #7affff;
+  background: #2d8e1a;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2715,6 +2715,88 @@ hr {
   
   
   <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/20/sourcecode-of-AQS/">
+
+    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Zhu.Yang">
+      <meta itemprop="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
+    </span>
+
+    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhu.Yang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/11/20/sourcecode-of-AQS/" class="post-title-link" itemprop="url">AQS源码分析</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-11-20 14:21:24 / 修改时间：18:06:08" itemprop="dateCreated datePublished" datetime="2020-11-20T14:21:24+08:00">2020-11-20</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>11k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 ≈</span>
+              <span>10 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="如何看待AQS"><a href="#如何看待AQS" class="headerlink" title="如何看待AQS?"></a>如何看待AQS?</h3><p>看了Synchronized的实现方式之后，再来看JDK的AQS,感觉就比较简单了，它的行为有点像银行排队，银行有很多窗口处理很多业务，不同的窗口处理不同的业务，比如有个人业务，也有金融业务，也有公司业务等，每个窗口都有很多人排队。一般来讲当你在窗口处理业务的时候是不会有人来打扰你的，不一般的时候是什么时候呢？那就是资料分发窗口，谁来了都给你一张资料，一边看去吧。</p>
+<p>而且当你去处理业务的时候，你可能有些资料忘记带了，然后你又要重新去取资料，取完之后回来继续排队。</p>
+<p>所以说，代码源于生活，古人诚不欺我。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/11/20/sourcecode-of-AQS/#more" rel="contents">
+                阅读全文 »
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/10/threads-of-request-lock-in-synchronized/">
 
     <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -2746,7 +2828,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-20 15:19:33" itemprop="dateModified" datetime="2020-11-20T15:19:33+08:00">2020-11-20</time>
+                <time title="修改时间：2020-11-20 18:06:08" itemprop="dateModified" datetime="2020-11-20T18:06:08+08:00">2020-11-20</time>
               </span>
 
           <br>
@@ -2834,7 +2916,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-20 15:19:33" itemprop="dateModified" datetime="2020-11-20T15:19:33+08:00">2020-11-20</time>
+                <time title="修改时间：2020-11-20 18:06:08" itemprop="dateModified" datetime="2020-11-20T18:06:08+08:00">2020-11-20</time>
               </span>
 
           <br>
@@ -2926,7 +3008,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-20 15:19:33" itemprop="dateModified" datetime="2020-11-20T15:19:33+08:00">2020-11-20</time>
+                <time title="修改时间：2020-11-20 18:06:08" itemprop="dateModified" datetime="2020-11-20T18:06:08+08:00">2020-11-20</time>
               </span>
 
           <br>
@@ -3015,7 +3097,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-20 15:19:33" itemprop="dateModified" datetime="2020-11-20T15:19:33+08:00">2020-11-20</time>
+                <time title="修改时间：2020-11-20 18:06:08" itemprop="dateModified" datetime="2020-11-20T18:06:08+08:00">2020-11-20</time>
               </span>
 
           <br>
@@ -3104,7 +3186,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-20 15:19:33" itemprop="dateModified" datetime="2020-11-20T15:19:33+08:00">2020-11-20</time>
+                <time title="修改时间：2020-11-20 18:06:08" itemprop="dateModified" datetime="2020-11-20T18:06:08+08:00">2020-11-20</time>
               </span>
 
           <br>
@@ -3191,7 +3273,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-20 15:19:33" itemprop="dateModified" datetime="2020-11-20T15:19:33+08:00">2020-11-20</time>
+                <time title="修改时间：2020-11-20 18:06:08" itemprop="dateModified" datetime="2020-11-20T18:06:08+08:00">2020-11-20</time>
               </span>
 
           <br>
@@ -3279,7 +3361,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-20 15:19:33" itemprop="dateModified" datetime="2020-11-20T15:19:33+08:00">2020-11-20</time>
+                <time title="修改时间：2020-11-20 18:06:08" itemprop="dateModified" datetime="2020-11-20T18:06:08+08:00">2020-11-20</time>
               </span>
 
           <br>
@@ -3372,7 +3454,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-20 15:19:33" itemprop="dateModified" datetime="2020-11-20T15:19:33+08:00">2020-11-20</time>
+                <time title="修改时间：2020-11-20 18:06:08" itemprop="dateModified" datetime="2020-11-20T18:06:08+08:00">2020-11-20</time>
               </span>
 
           <br>
@@ -3470,7 +3552,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-20 15:19:33" itemprop="dateModified" datetime="2020-11-20T15:19:33+08:00">2020-11-20</time>
+                <time title="修改时间：2020-11-20 18:06:08" itemprop="dateModified" datetime="2020-11-20T18:06:08+08:00">2020-11-20</time>
               </span>
 
           <br>
@@ -3505,95 +3587,6 @@ hr {
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2020/08/03/how-to-start-thread/#more" rel="contents">
-                阅读全文 »
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/27/main-thread-in-java/">
-
-    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Zhu.Yang">
-      <meta itemprop="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
-    </span>
-
-    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhu.Yang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/07/27/main-thread-in-java/" class="post-title-link" itemprop="url">Java中的main线程是如何被创建的？</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-07-27 15:51:09" itemprop="dateCreated datePublished" datetime="2020-07-27T15:51:09+08:00">2020-07-27</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-20 15:19:33" itemprop="dateModified" datetime="2020-11-20T15:19:33+08:00">2020-11-20</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>6.3k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 ≈</span>
-              <span>6 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>当我们运行Java程序main方法的时候，我们都知道当前线程是main线程</p>
-<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Thread.currentThread().getName()</span><br></pre></td></tr></tbody></table></figure>
-
-<p>那么这个main线程是被谁启动,又是在什么时候被启动的呢?我们通过源码一探究竟。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/07/27/main-thread-in-java/#more" rel="contents">
                 阅读全文 »
               </a>
             </div>
@@ -3662,7 +3655,7 @@ hr {
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">105</span>
+          <span class="site-state-item-count">106</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -3708,12 +3701,12 @@ hr {
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">535k</span>
+    <span title="站点总字数">547k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">8:07</span>
+    <span title="站点阅读时长">8:17</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> &amp; <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
