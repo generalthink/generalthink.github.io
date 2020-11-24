@@ -1,5 +1,5 @@
 ---
-title: 如果你知道策略模式,那你也应该了解下EventBus
+title: 如果你知道观察者模式,那你也应该了解下EventBus
 date: 2020-09-10 15:19:50
 tags: java
 ---
