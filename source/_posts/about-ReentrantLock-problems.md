@@ -91,7 +91,6 @@ synchronized 之所以能够保证[可见性](https://generalthink.github.io/202
 它是利用了 volatile 相关的 Happens-Before 规则。AQS内部有一个 volatile 的成员变量 state，当获取锁的时候，会读写state 的值；解锁的时候，也会读写 state 的值。
 > 对一个volatile变量的写操作happens-before 于后面对这个变量的读操作。这里的happens-before是时间上的先后顺序
 
-其实JVM在很多实现上都是有规范的，
 
 这样说起来挺抽象的，我们直接去看JVM中对volatile是否有特殊的处理，在`src/hotspot/share/interpreter/bytecodeinterpreter.cpp`中，我们找到getfield和getstatic字节码执行的位置
 > 现在这个执行器基本不再使用了，基本都会使用模板解释器，但是模板解释器的代码基本都是汇编，而我们只是想要快速了解其原理，所以可以看这个，对模板解释器感兴趣的可以去看templateTable_x86.cpp::getfield查看相关细节

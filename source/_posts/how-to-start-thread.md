@@ -213,8 +213,11 @@ bool os::create_thread(Thread* thread, ThreadType thr_type,
 }
 
 ```
-pthread_create函数作用是创建一个线程,它的第三个参数是线程运行函数的起始地址,第四个参数是运行函数参数
+pthread_create函数作用是创建一个线程,它的第三个参数是线程运行函数的起始地址,第四个参数是运行函数参数。
 > IEEE标准1003.1c中定义了线程的标准,它定义的线程包叫做Pthread,大部分UNIX系统都支持这个标准。
+
+而pthread_create实际上是调用了clone()完成系统调用创建线程的,所以目前 Java 在 Linux 操作系统下采用的是用户线程加
+轻量级线程，一个用户线程映射到一个内核线程.
 
 我们的thread_native_entry实际传入的是JavaThread这个对象,所以最终会调用JavaThread::run()(thread.cpp中)
 
