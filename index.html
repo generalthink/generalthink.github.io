@@ -1228,7 +1228,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #ccff91;
+  background: #a20adb;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2715,6 +2715,166 @@ hr {
   
   
   <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/10/install-two-traefiks/">
+
+    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Zhu.Yang">
+      <meta itemprop="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
+    </span>
+
+    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhu.Yang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/12/10/install-two-traefiks/" class="post-title-link" itemprop="url">install-two-traefiks</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-12-10 17:10:48 / 修改时间：17:42:08" itemprop="dateCreated datePublished" datetime="2020-12-10T17:10:48+08:00">2020-12-10</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>0</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 ≈</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/02/AQS-shared-lock/">
+
+    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Zhu.Yang">
+      <meta itemprop="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
+    </span>
+
+    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhu.Yang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/12/02/AQS-shared-lock/" class="post-title-link" itemprop="url">面试官问我AQS中的PROPAGATE有什么用？</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-12-02 18:52:28" itemprop="dateCreated datePublished" datetime="2020-12-02T18:52:28+08:00">2020-12-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-10 17:42:08" itemprop="dateModified" datetime="2020-12-10T17:42:08+08:00">2020-12-10</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 ≈</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>之前分析过<a target="_blank" rel="noopener" href="https://generalthink.github.io/2020/11/20/sourcecode-of-AQS/">AQS的源码</a>，但只分析了独占锁的原理。</p>
+<p>而刚好我们可以借助Semaphore来分析共享锁。</p>
+<h3 id="如何使用Semaphore"><a href="#如何使用Semaphore" class="headerlink" title="如何使用Semaphore"></a>如何使用Semaphore</h3><figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SemaphoreDemo</span> </span>{</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 申请共享锁数量</span></span><br><span class="line">    Semaphore sp = <span class="keyword">new</span> Semaphore(<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) {</span><br><span class="line">      <span class="keyword">new</span> Thread(() -&gt; {</span><br><span class="line">        <span class="keyword">try</span> {</span><br><span class="line"></span><br><span class="line">          <span class="comment">// 获取共享锁</span></span><br><span class="line">          sp.acquire();</span><br><span class="line"></span><br><span class="line">          String threadName = Thread.currentThread().getName();</span><br><span class="line"></span><br><span class="line">          <span class="comment">// 访问API</span></span><br><span class="line">          System.out.println(threadName + <span class="string">" 获取许可,访问API。剩余许可数 "</span> + sp.availablePermits());</span><br><span class="line"></span><br><span class="line">          TimeUnit.SECONDS.sleep(<span class="number">1</span>);</span><br><span class="line">          </span><br><span class="line">          <span class="comment">// 释放共享锁</span></span><br><span class="line">          sp.release();</span><br><span class="line"></span><br><span class="line">          System.out.println(threadName + <span class="string">" 释放许可,当前可用许可数为 "</span> + sp.availablePermits());</span><br><span class="line"></span><br><span class="line">        } <span class="keyword">catch</span> (InterruptedException e) {</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">      }, <span class="string">"thread-"</span> + (i+<span class="number">1</span>)).start();</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/12/02/AQS-shared-lock/#more" rel="contents">
+                阅读全文 »
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/23/about-ReentrantLock-problems/">
 
     <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -2746,7 +2906,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-27 14:38:21" itemprop="dateModified" datetime="2020-11-27T14:38:21+08:00">2020-11-27</time>
+                <time title="修改时间：2020-12-10 17:42:08" itemprop="dateModified" datetime="2020-12-10T17:42:08+08:00">2020-12-10</time>
               </span>
 
           <br>
@@ -2834,7 +2994,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-27 14:38:21" itemprop="dateModified" datetime="2020-11-27T14:38:21+08:00">2020-11-27</time>
+                <time title="修改时间：2020-12-10 17:42:08" itemprop="dateModified" datetime="2020-12-10T17:42:08+08:00">2020-12-10</time>
               </span>
 
           <br>
@@ -2922,7 +3082,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-27 14:38:21" itemprop="dateModified" datetime="2020-11-27T14:38:21+08:00">2020-11-27</time>
+                <time title="修改时间：2020-12-10 17:42:08" itemprop="dateModified" datetime="2020-12-10T17:42:08+08:00">2020-12-10</time>
               </span>
 
           <br>
@@ -3010,7 +3170,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-27 14:38:21" itemprop="dateModified" datetime="2020-11-27T14:38:21+08:00">2020-11-27</time>
+                <time title="修改时间：2020-12-10 17:42:08" itemprop="dateModified" datetime="2020-12-10T17:42:08+08:00">2020-12-10</time>
               </span>
 
           <br>
@@ -3102,7 +3262,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-27 14:38:21" itemprop="dateModified" datetime="2020-11-27T14:38:21+08:00">2020-11-27</time>
+                <time title="修改时间：2020-12-10 17:42:08" itemprop="dateModified" datetime="2020-12-10T17:42:08+08:00">2020-12-10</time>
               </span>
 
           <br>
@@ -3191,7 +3351,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-27 14:38:21" itemprop="dateModified" datetime="2020-11-27T14:38:21+08:00">2020-11-27</time>
+                <time title="修改时间：2020-12-10 17:42:08" itemprop="dateModified" datetime="2020-12-10T17:42:08+08:00">2020-12-10</time>
               </span>
 
           <br>
@@ -3280,7 +3440,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-27 14:38:21" itemprop="dateModified" datetime="2020-11-27T14:38:21+08:00">2020-11-27</time>
+                <time title="修改时间：2020-12-10 17:42:08" itemprop="dateModified" datetime="2020-12-10T17:42:08+08:00">2020-12-10</time>
               </span>
 
           <br>
@@ -3367,7 +3527,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-27 14:38:21" itemprop="dateModified" datetime="2020-11-27T14:38:21+08:00">2020-11-27</time>
+                <time title="修改时间：2020-12-10 17:42:08" itemprop="dateModified" datetime="2020-12-10T17:42:08+08:00">2020-12-10</time>
               </span>
 
           <br>
@@ -3406,197 +3566,6 @@ hr {
             </div>
           <!--/noindex-->
         
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/26/analysis-string-intern/">
-
-    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Zhu.Yang">
-      <meta itemprop="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
-    </span>
-
-    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhu.Yang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/08/26/analysis-string-intern/" class="post-title-link" itemprop="url">深入浅出String.intern()</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-08-26 16:48:35" itemprop="dateCreated datePublished" datetime="2020-08-26T16:48:35+08:00">2020-08-26</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-27 14:38:21" itemprop="dateModified" datetime="2020-11-27T14:38:21+08:00">2020-11-27</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>11k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 ≈</span>
-              <span>10 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="常量池"><a href="#常量池" class="headerlink" title="常量池"></a>常量池</h3><p>Java虚拟机管理的内存包含以下几个运行时数据区域</p>
-<p><img data-src="/images/thread-java-running-data-area.png" alt="Java虚拟机运行时数据区"></p>
-<p>方法区与java堆一样，是各个线程共享的内存区域，用于存储已经被虚拟机加载的类型信息、常量、静态变量、即时编译器编译后的代码缓存等数据。</p>
-<p><strong>JDK8之前很多人叫它永久代(这里可以联想下年前代，老年代)，是因为当时HotSpot虚拟机的设计团队选择将收集器的分代设计扩展至方法区，或者说使用永久代来实现方法区而已。<br>这样使得HotSpot的垃圾收集器能像管理Java堆一样管理这部分内存。但是对于其他虚拟机实现是不存在这个概念的。</strong></p>
-<p>运行时常量池(Runtime ConstantPool)是方法区的一部分。Class文件中除了有类的版本、字、方法、接口等描述信息外,还有一项信息是常量池表(ConstantPoolTable),用于存放编译期生<br>成的各种字面量与符号引用,这部分内容将在类加载后存放到方法区的运行时常量池中。</p>
-<blockquote>
-<p>String str = “think123” 其中的think123就直接保存在常量池中</p>
-</blockquote>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/08/26/analysis-string-intern/#more" rel="contents">
-                阅读全文 »
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/12/tomcat-thread-pool-executor/">
-
-    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Zhu.Yang">
-      <meta itemprop="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
-    </span>
-
-    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhu.Yang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/08/12/tomcat-thread-pool-executor/" class="post-title-link" itemprop="url">我丢,线程池原来还可以优先扩容核心线程数？</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-08-12 15:21:15" itemprop="dateCreated datePublished" datetime="2020-08-12T15:21:15+08:00">2020-08-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-27 14:38:21" itemprop="dateModified" datetime="2020-11-27T14:38:21+08:00">2020-11-27</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 ≈</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>在之前的《为什么阿里建议你不要使用Executors来创建线程池？》文章中深入分析了一下线程池,这里重温下它的主要流程:</p>
-<ol>
-<li>提交一个任务，如果线程池中的工作线程数小于corePoolSize,则新建一个工作线程执行任务</li>
-<li>如果线程池当前的工作线程已经等于了corePoolSize,则将新的任务放入到工作队列中正在执行</li>
-<li>如果工作队列已经满了,并且工作线程数小于maximumPoolSize,则新建一个工作线程来执行任务</li>
-<li>如果当前线程池中工作线程数已经达到了maximumPoolSize,而新的任务无法放入到任务队列中,则采用对应的策略进行相应的处理(默认是拒绝策略)</li>
-<li>当线程数大于核心线程数时，线程等待 keepAliveTime 后还是没有任务需要处理的话，收缩线程到核心线程数。(传入 true 给 allowCoreThreadTimeOut 方法,来让线程池在空闲的时候同样回收核心线程。)</li>
-</ol>
-<p>在JDK自带的策略中有一个CallerRunsPolicy策略，很容易被忽视,当任务队列已经满了的时候这个任务会被调用线程池的线程执行。<br>比如我们在tomcat线程中调用了线程池，当线程池的队列满了之后,会将这个任务交给tomcat线程执行。这个时候就会影响其他同步执行的线程，甚至可能把线程池搞崩溃。</p>
-<p>我们还可以通过一些手段来修改线程池的默认行为，比如回收核心线程。或者声明线程池后立即调用 prestartAllCoreThreads 方法，来启动所有核心线程。</p>
-<p>我们发现核心线程数只有在工作队列满了之后才会扩容,那么能不能先扩容核心线程,等到达到最大线程数之后再加入工作队列呢？让线程池更弹性,优先开启更多线程呢？</p>
-<p>当然可以，tomcat中的ThreadPoolExecutor就是就做了这样的优化。</p>
-<p>tomcat的线程池在创建的时候会先启动所有的核心线程(prestartAllCoreThreads),并且会优先扩容线程数。</p>
-<p>tomcat中的<code>ThreadPoolExecutor</code>继承自<code>java.util.concurrent.ThreadPoolExecutor</code>,并且任务队列使用的是<code>TaskQueue</code>(继承自<code>LinkedBlockingQueue&lt;Runnable&gt;</code>)</p>
-<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadPoolExecutor</span> <span class="keyword">extends</span> <span class="title">java</span>.<span class="title">util</span>.<span class="title">concurrent</span>.<span class="title">ThreadPoolExecutor</span> </span>{</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ThreadPoolExecutor</span><span class="params">(<span class="keyword">int</span> corePoolSize, <span class="keyword">int</span> maximumPoolSize, <span class="keyword">long</span> keepAliveTime, </span></span></span><br><span class="line"><span class="function"><span class="params">  TimeUnit unit, BlockingQueue&lt;Runnable&gt; workQueue, RejectedExecutionHandler handler)</span> </span>{</span><br><span class="line">      <span class="keyword">super</span>(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue, handler);</span><br><span class="line">      <span class="comment">// 调用父类的方法,先启动所有的核心线程</span></span><br><span class="line">      prestartAllCoreThreads();</span><br><span class="line">    }</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">(Runnable command)</span> </span>{</span><br><span class="line">    <span class="keyword">if</span> (command == <span class="keyword">null</span>)</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> c = ctl.get();</span><br><span class="line">    <span class="comment">// 1. 如果工作线程数小于核心线程数(corePoolSize),则创建一个工作线程执行任务</span></span><br><span class="line">    <span class="keyword">if</span> (workerCountOf(c) &lt; corePoolSize) {</span><br><span class="line">      <span class="keyword">if</span> (addWorker(command, <span class="keyword">true</span>))</span><br><span class="line">          <span class="keyword">return</span>;</span><br><span class="line">      c = ctl.get();</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 2. 如果当前是running状态，并且任务队列能够添加任务</span></span><br><span class="line">    <span class="keyword">if</span> (isRunning(c) &amp;&amp; workQueue.offer(command)) {</span><br><span class="line">      <span class="keyword">int</span> recheck = ctl.get();</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 2.1 如果不处于running状态了(使用者可能调用了shutdown方法),</span></span><br><span class="line">      <span class="comment">// 则将刚才添加到任务队列的任务移除</span></span><br><span class="line">      <span class="keyword">if</span> (! isRunning(recheck) &amp;&amp; remove(command))</span><br><span class="line">          reject(command);</span><br><span class="line">       <span class="comment">// 2.2 如果当前没有工作线程,</span></span><br><span class="line">       <span class="comment">// 则新建一个工作线程来执行任务(任务已经被添加到了任务队列)</span></span><br><span class="line">      <span class="keyword">else</span> <span class="keyword">if</span> (workerCountOf(recheck) == <span class="number">0</span>)</span><br><span class="line">          addWorker(<span class="keyword">null</span>, <span class="keyword">false</span>);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 3. 队列已经满了的情况下，则新启动一个工作线程来执行任务</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (!addWorker(command, <span class="keyword">false</span>))</span><br><span class="line">      reject(command);</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TaskQueue</span> <span class="keyword">extends</span> <span class="title">LinkedBlockingQueue</span>&lt;<span class="title">Runnable</span>&gt; </span>{</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 通过setParent方法设置线程池</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">volatile</span> ThreadPoolExecutor parent = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">offer</span><span class="params">(Runnable o)</span> </span>{</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (parent==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">super</span>.offer(o);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 1. 线程数已经扩容到了最大线程数,此时正常加入队列</span></span><br><span class="line">    <span class="keyword">if</span> (parent.getPoolSize() == parent.getMaximumPoolSize()) <span class="keyword">return</span> <span class="keyword">super</span>.offer(o);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 2. 存在空闲线程将其加入到队列中</span></span><br><span class="line">    <span class="keyword">if</span> (parent.getSubmittedCount()&lt;=(parent.getPoolSize())) <span class="keyword">return</span> <span class="keyword">super</span>.offer(o);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 3. 核心线程数少于最大线程数,不加入队列,而是会创建一个新的工作线程</span></span><br><span class="line">    <span class="keyword">if</span> (parent.getPoolSize()&lt;parent.getMaximumPoolSize()) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 加入队列</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">super</span>.offer(o);</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-
-<p>比如核心线程数设置为1,最大线程数设置为2,每个任务执行时间是5s,当第一个任务提交之后,submittedCount=1,会创建一个工作线程执行任务，poolSize变成1(查看execute方法的第一步)。</p>
-<p>此时第二个任务提交了，submittedCount的值为2。不符合offer方法中第一和第二个判断,但是符合第三个判断,返回false,表示加入队列失败(表示队列已满)</p>
-<p>此时在回到execute的第三个条件判断,直接启动一个新的工作线程来执行任务。</p>
-<p>这样就做到了优先扩容到最大线程数。来不及处理的多余任务才会放入到队列中。</p>
-
       
     </div>
 
@@ -3660,7 +3629,7 @@ hr {
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">107</span>
+          <span class="site-state-item-count">109</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -3706,12 +3675,12 @@ hr {
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">550k</span>
+    <span title="站点总字数">558k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">8:20</span>
+    <span title="站点阅读时长">8:27</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> &amp; <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>

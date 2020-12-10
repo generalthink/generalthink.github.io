@@ -1228,7 +1228,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #ccff91;
+  background: #a20adb;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2715,6 +2715,197 @@ hr {
   
   
   <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/26/analysis-string-intern/">
+
+    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Zhu.Yang">
+      <meta itemprop="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
+    </span>
+
+    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhu.Yang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/26/analysis-string-intern/" class="post-title-link" itemprop="url">深入浅出String.intern()</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-26 16:48:35" itemprop="dateCreated datePublished" datetime="2020-08-26T16:48:35+08:00">2020-08-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-10 17:42:08" itemprop="dateModified" datetime="2020-12-10T17:42:08+08:00">2020-12-10</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>11k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 ≈</span>
+              <span>10 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="常量池"><a href="#常量池" class="headerlink" title="常量池"></a>常量池</h3><p>Java虚拟机管理的内存包含以下几个运行时数据区域</p>
+<p><img data-src="/images/thread-java-running-data-area.png" alt="Java虚拟机运行时数据区"></p>
+<p>方法区与java堆一样，是各个线程共享的内存区域，用于存储已经被虚拟机加载的类型信息、常量、静态变量、即时编译器编译后的代码缓存等数据。</p>
+<p><strong>JDK8之前很多人叫它永久代(这里可以联想下年前代，老年代)，是因为当时HotSpot虚拟机的设计团队选择将收集器的分代设计扩展至方法区，或者说使用永久代来实现方法区而已。<br>这样使得HotSpot的垃圾收集器能像管理Java堆一样管理这部分内存。但是对于其他虚拟机实现是不存在这个概念的。</strong></p>
+<p>运行时常量池(Runtime ConstantPool)是方法区的一部分。Class文件中除了有类的版本、字、方法、接口等描述信息外,还有一项信息是常量池表(ConstantPoolTable),用于存放编译期生<br>成的各种字面量与符号引用,这部分内容将在类加载后存放到方法区的运行时常量池中。</p>
+<blockquote>
+<p>String str = “think123” 其中的think123就直接保存在常量池中</p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/08/26/analysis-string-intern/#more" rel="contents">
+                阅读全文 »
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/12/tomcat-thread-pool-executor/">
+
+    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Zhu.Yang">
+      <meta itemprop="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
+    </span>
+
+    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhu.Yang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/12/tomcat-thread-pool-executor/" class="post-title-link" itemprop="url">我丢,线程池原来还可以优先扩容核心线程数？</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-12 15:21:15" itemprop="dateCreated datePublished" datetime="2020-08-12T15:21:15+08:00">2020-08-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-10 17:42:08" itemprop="dateModified" datetime="2020-12-10T17:42:08+08:00">2020-12-10</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 ≈</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>在之前的《为什么阿里建议你不要使用Executors来创建线程池？》文章中深入分析了一下线程池,这里重温下它的主要流程:</p>
+<ol>
+<li>提交一个任务，如果线程池中的工作线程数小于corePoolSize,则新建一个工作线程执行任务</li>
+<li>如果线程池当前的工作线程已经等于了corePoolSize,则将新的任务放入到工作队列中正在执行</li>
+<li>如果工作队列已经满了,并且工作线程数小于maximumPoolSize,则新建一个工作线程来执行任务</li>
+<li>如果当前线程池中工作线程数已经达到了maximumPoolSize,而新的任务无法放入到任务队列中,则采用对应的策略进行相应的处理(默认是拒绝策略)</li>
+<li>当线程数大于核心线程数时，线程等待 keepAliveTime 后还是没有任务需要处理的话，收缩线程到核心线程数。(传入 true 给 allowCoreThreadTimeOut 方法,来让线程池在空闲的时候同样回收核心线程。)</li>
+</ol>
+<p>在JDK自带的策略中有一个CallerRunsPolicy策略，很容易被忽视,当任务队列已经满了的时候这个任务会被调用线程池的线程执行。<br>比如我们在tomcat线程中调用了线程池，当线程池的队列满了之后,会将这个任务交给tomcat线程执行。这个时候就会影响其他同步执行的线程，甚至可能把线程池搞崩溃。</p>
+<p>我们还可以通过一些手段来修改线程池的默认行为，比如回收核心线程。或者声明线程池后立即调用 prestartAllCoreThreads 方法，来启动所有核心线程。</p>
+<p>我们发现核心线程数只有在工作队列满了之后才会扩容,那么能不能先扩容核心线程,等到达到最大线程数之后再加入工作队列呢？让线程池更弹性,优先开启更多线程呢？</p>
+<p>当然可以，tomcat中的ThreadPoolExecutor就是就做了这样的优化。</p>
+<p>tomcat的线程池在创建的时候会先启动所有的核心线程(prestartAllCoreThreads),并且会优先扩容线程数。</p>
+<p>tomcat中的<code>ThreadPoolExecutor</code>继承自<code>java.util.concurrent.ThreadPoolExecutor</code>,并且任务队列使用的是<code>TaskQueue</code>(继承自<code>LinkedBlockingQueue&lt;Runnable&gt;</code>)</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadPoolExecutor</span> <span class="keyword">extends</span> <span class="title">java</span>.<span class="title">util</span>.<span class="title">concurrent</span>.<span class="title">ThreadPoolExecutor</span> </span>{</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ThreadPoolExecutor</span><span class="params">(<span class="keyword">int</span> corePoolSize, <span class="keyword">int</span> maximumPoolSize, <span class="keyword">long</span> keepAliveTime, </span></span></span><br><span class="line"><span class="function"><span class="params">  TimeUnit unit, BlockingQueue&lt;Runnable&gt; workQueue, RejectedExecutionHandler handler)</span> </span>{</span><br><span class="line">      <span class="keyword">super</span>(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue, handler);</span><br><span class="line">      <span class="comment">// 调用父类的方法,先启动所有的核心线程</span></span><br><span class="line">      prestartAllCoreThreads();</span><br><span class="line">    }</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">(Runnable command)</span> </span>{</span><br><span class="line">    <span class="keyword">if</span> (command == <span class="keyword">null</span>)</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> c = ctl.get();</span><br><span class="line">    <span class="comment">// 1. 如果工作线程数小于核心线程数(corePoolSize),则创建一个工作线程执行任务</span></span><br><span class="line">    <span class="keyword">if</span> (workerCountOf(c) &lt; corePoolSize) {</span><br><span class="line">      <span class="keyword">if</span> (addWorker(command, <span class="keyword">true</span>))</span><br><span class="line">          <span class="keyword">return</span>;</span><br><span class="line">      c = ctl.get();</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 2. 如果当前是running状态，并且任务队列能够添加任务</span></span><br><span class="line">    <span class="keyword">if</span> (isRunning(c) &amp;&amp; workQueue.offer(command)) {</span><br><span class="line">      <span class="keyword">int</span> recheck = ctl.get();</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 2.1 如果不处于running状态了(使用者可能调用了shutdown方法),</span></span><br><span class="line">      <span class="comment">// 则将刚才添加到任务队列的任务移除</span></span><br><span class="line">      <span class="keyword">if</span> (! isRunning(recheck) &amp;&amp; remove(command))</span><br><span class="line">          reject(command);</span><br><span class="line">       <span class="comment">// 2.2 如果当前没有工作线程,</span></span><br><span class="line">       <span class="comment">// 则新建一个工作线程来执行任务(任务已经被添加到了任务队列)</span></span><br><span class="line">      <span class="keyword">else</span> <span class="keyword">if</span> (workerCountOf(recheck) == <span class="number">0</span>)</span><br><span class="line">          addWorker(<span class="keyword">null</span>, <span class="keyword">false</span>);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 3. 队列已经满了的情况下，则新启动一个工作线程来执行任务</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (!addWorker(command, <span class="keyword">false</span>))</span><br><span class="line">      reject(command);</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TaskQueue</span> <span class="keyword">extends</span> <span class="title">LinkedBlockingQueue</span>&lt;<span class="title">Runnable</span>&gt; </span>{</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 通过setParent方法设置线程池</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">volatile</span> ThreadPoolExecutor parent = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">offer</span><span class="params">(Runnable o)</span> </span>{</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (parent==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">super</span>.offer(o);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 1. 线程数已经扩容到了最大线程数,此时正常加入队列</span></span><br><span class="line">    <span class="keyword">if</span> (parent.getPoolSize() == parent.getMaximumPoolSize()) <span class="keyword">return</span> <span class="keyword">super</span>.offer(o);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 2. 存在空闲线程将其加入到队列中</span></span><br><span class="line">    <span class="keyword">if</span> (parent.getSubmittedCount()&lt;=(parent.getPoolSize())) <span class="keyword">return</span> <span class="keyword">super</span>.offer(o);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 3. 核心线程数少于最大线程数,不加入队列,而是会创建一个新的工作线程</span></span><br><span class="line">    <span class="keyword">if</span> (parent.getPoolSize()&lt;parent.getMaximumPoolSize()) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 加入队列</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">super</span>.offer(o);</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>比如核心线程数设置为1,最大线程数设置为2,每个任务执行时间是5s,当第一个任务提交之后,submittedCount=1,会创建一个工作线程执行任务，poolSize变成1(查看execute方法的第一步)。</p>
+<p>此时第二个任务提交了，submittedCount的值为2。不符合offer方法中第一和第二个判断,但是符合第三个判断,返回false,表示加入队列失败(表示队列已满)</p>
+<p>此时在回到execute的第三个条件判断,直接启动一个新的工作线程来执行任务。</p>
+<p>这样就做到了优先扩容到最大线程数。来不及处理的多余任务才会放入到队列中。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/03/how-to-start-thread/">
 
     <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -2746,7 +2937,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-27 14:38:21" itemprop="dateModified" datetime="2020-11-27T14:38:21+08:00">2020-11-27</time>
+                <time title="修改时间：2020-12-10 17:42:08" itemprop="dateModified" datetime="2020-12-10T17:42:08+08:00">2020-12-10</time>
               </span>
 
           <br>
@@ -2835,7 +3026,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-27 14:38:21" itemprop="dateModified" datetime="2020-11-27T14:38:21+08:00">2020-11-27</time>
+                <time title="修改时间：2020-12-10 17:42:08" itemprop="dateModified" datetime="2020-12-10T17:42:08+08:00">2020-12-10</time>
               </span>
 
           <br>
@@ -2924,7 +3115,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-27 14:38:21" itemprop="dateModified" datetime="2020-11-27T14:38:21+08:00">2020-11-27</time>
+                <time title="修改时间：2020-12-10 17:42:08" itemprop="dateModified" datetime="2020-12-10T17:42:08+08:00">2020-12-10</time>
               </span>
 
           <br>
@@ -3011,7 +3202,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-27 14:38:21" itemprop="dateModified" datetime="2020-11-27T14:38:21+08:00">2020-11-27</time>
+                <time title="修改时间：2020-12-10 17:42:08" itemprop="dateModified" datetime="2020-12-10T17:42:08+08:00">2020-12-10</time>
               </span>
 
           <br>
@@ -3098,7 +3289,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-27 14:38:21" itemprop="dateModified" datetime="2020-11-27T14:38:21+08:00">2020-11-27</time>
+                <time title="修改时间：2020-12-10 17:42:08" itemprop="dateModified" datetime="2020-12-10T17:42:08+08:00">2020-12-10</time>
               </span>
 
           <br>
@@ -3193,7 +3384,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-27 14:38:21" itemprop="dateModified" datetime="2020-11-27T14:38:21+08:00">2020-11-27</time>
+                <time title="修改时间：2020-12-10 17:42:08" itemprop="dateModified" datetime="2020-12-10T17:42:08+08:00">2020-12-10</time>
               </span>
 
           <br>
@@ -3292,7 +3483,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-27 14:38:21" itemprop="dateModified" datetime="2020-11-27T14:38:21+08:00">2020-11-27</time>
+                <time title="修改时间：2020-12-10 17:42:08" itemprop="dateModified" datetime="2020-12-10T17:42:08+08:00">2020-12-10</time>
               </span>
 
           <br>
@@ -3381,7 +3572,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-27 14:38:21" itemprop="dateModified" datetime="2020-11-27T14:38:21+08:00">2020-11-27</time>
+                <time title="修改时间：2020-12-10 17:42:08" itemprop="dateModified" datetime="2020-12-10T17:42:08+08:00">2020-12-10</time>
               </span>
 
           <br>
@@ -3419,244 +3610,6 @@ hr {
             </div>
           <!--/noindex-->
         
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/16/mongodb-index-anslysis/">
-
-    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Zhu.Yang">
-      <meta itemprop="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
-    </span>
-
-    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhu.Yang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/04/16/mongodb-index-anslysis/" class="post-title-link" itemprop="url">索引优化-世人皆知Mysql,谁人懂我MongoDB</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-04-16 17:20:58" itemprop="dateCreated datePublished" datetime="2020-04-16T17:20:58+08:00">2020-04-16</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-27 14:38:21" itemprop="dateModified" datetime="2020-11-27T14:38:21+08:00">2020-11-27</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>14k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 ≈</span>
-              <span>13 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="查看执行计划"><a href="#查看执行计划" class="headerlink" title="查看执行计划"></a>查看执行计划</h3><p>索引优化是一个永远都绕不过的话题,作为NoSQL的MongoDB也不例外。Mysql中通过explain命令来查看对应的索引信息,MongoDB亦如此。</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1. db.collection.explain().&lt;method(...)&gt;</span><br><span class="line">    db.products.explain().remove( { category: "apparel" }, { justOne: true })</span><br><span class="line"></span><br><span class="line">2. db.collection.&lt;method(...)&gt;.explain({})</span><br><span class="line">    db.products.remove( { category: "apparel" }, { justOne: true }).explain()</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/04/16/mongodb-index-anslysis/#more" rel="contents">
-                阅读全文 »
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/16/why-mongodb-use-b-tree/">
-
-    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Zhu.Yang">
-      <meta itemprop="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
-    </span>
-
-    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhu.Yang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/04/16/why-mongodb-use-b-tree/" class="post-title-link" itemprop="url">why-mongodb-use-b-tree</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-04-16 15:23:27" itemprop="dateCreated datePublished" datetime="2020-04-16T15:23:27+08:00">2020-04-16</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-27 14:38:21" itemprop="dateModified" datetime="2020-11-27T14:38:21+08:00">2020-11-27</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 ≈</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>除了 B+ 树，你可能还听说过 B 树、 B- 树，实际上， B- 树就是 B 树，英文翻译都是 B-Tree ，这里的 “-” 并不是相对 B+ 树中的 “+” ，而只是一个连接符。而 B 树实际上是低级版的B+ 树，或者说 B+ 树是 B 树的改进版。 </p>
-<h3 id="B-tree"><a href="#B-tree" class="headerlink" title="B+ tree"></a>B+ tree</h3><p>B+ tree 实际上是一颗m叉平衡查找树(不是二叉树)</p>
-<blockquote>
-<p>平衡查找树定义：树中任意一个节点的左右子树的高度相差不能大于 1 </p>
-</blockquote>
-<p><img data-src="/images/java/BPlusTree.png" alt="B+ tree"></p>
-<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 这是B+树非叶子节点的定义。</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">* 假设keywords=[3, 5, 8, 10]</span></span><br><span class="line"><span class="comment">* 4个键值将数据分为5个区间：(-INF,3), [3,5), [5,8), [8,10), [10,INF)</span></span><br><span class="line"><span class="comment">* 5个区间分别对应：children[0]...children[4]</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">* m值是事先计算得到的，计算的依据是让所有信息的大小正好等于页的大小：</span></span><br><span class="line"><span class="comment">* PAGE_SIZE = (m-1)*4[keywordss大小]+m*8[children大小]</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BPlusTreeNode</span> </span>{</span><br><span class="line">  <span class="comment">// 5叉树</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> m = <span class="number">5</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 键值，用来划分数据区间</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">int</span>[] keywords = <span class="keyword">new</span> <span class="keyword">int</span>[m-<span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 保存子节点指针</span></span><br><span class="line">  <span class="keyword">public</span> BPlusTreeNode[] children = <span class="keyword">new</span> BPlusTreeNode[m];</span><br><span class="line">}</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 这是B+树中叶子节点的定义。</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">* B+树中的叶子节点跟内部结点是不一样的,</span></span><br><span class="line"><span class="comment">* 叶子节点存储的是值，而非区间。</span></span><br><span class="line"><span class="comment">* 这个定义里，每个叶子节点存储3个数据行的键值及地址信息。</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">* k值是事先计算得到的，计算的依据是让所有信息的大小正好等于页的大小：</span></span><br><span class="line"><span class="comment">* PAGE_SIZE = k*4[keyw..大小]+k*8[dataAd..大小]+8[prev大小]+8[next大小]</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BPlusTreeLeafNode</span> </span>{</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> k = <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 数据的键值</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">int</span>[] keywords = <span class="keyword">new</span> <span class="keyword">int</span>[k];</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 数据地址</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">long</span>[] dataAddress = <span class="keyword">new</span> <span class="keyword">long</span>[k];</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 这个结点在链表中的前驱结点</span></span><br><span class="line">  <span class="keyword">public</span> BPlusTreeLeafNode prev;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 这个结点在链表中的后继结点 </span></span><br><span class="line">  <span class="keyword">public</span> BPlusTreeLeafNode next;</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
-<p>在B+ 树中，树中的节点并不存储数据本身，而是只是作为索引。除此之外，所有记录的节点按大小顺序存储在同一层的叶节点中，并且每个叶节点通过指针连接。</p>
-<p>总结下,B+树有以下特点</p>
-<ol>
-<li><p>B +树的每个节点可以包含更多节点，其原因有两个，其一是降低树的高度(索引不会全部存储在内存中,内存中可能撑不住,所以一般都是将索引树存储在磁盘中，只是将根节点放到内存中，这样对每个节点的访问,实际上就是访问磁盘,树的高度就等于每次查询数据时磁盘 IO 操作的次数),另一种是将数据范围更改为多个间隔。间隔越大，数据检索越快(可以想象跳表)</p>
-</li>
-<li><p>每个节点不在是存储一个key,而是存储多个key</p>
-</li>
-<li><p>叶节点来存储数据，而其他节点用于索引</p>
-</li>
-<li><p>叶子节点通过两个指针相互链接，顺序查询性能更高。</p>
-</li>
-</ol>
-<p>这样设计还有以下优点：</p>
-<ol>
-<li><p>B +树的非叶子节点仅存储键，占用很小的空间，因此节点的每一层可以索引的数据范围要宽得多。换句话说，可以为每个IO操作搜索更多数据</p>
-</li>
-<li><p>叶子节点成对连接，符合磁盘的预读特性。例如，叶节点存储50和55，它们具有指向叶节点60和62的指针。当我们从磁盘读取对应于50和55的数据时，由于磁盘的预读特性，我们将顺便提一下60和62。读出相应的数据。这次是顺序读取，而不是磁盘搜索，加快了速度。</p>
-</li>
-<li><p>支持范围查询，局部范围查询非常高效，每个节点都可以索引更大，更准确的范围，这意味着B +树单磁盘IO信息大于B树，并且I / O效率更高</p>
-</li>
-<li><p>由于数据存储在叶节点层中，并且有指向其他叶节点的指针，因此范围查询仅需要遍历叶节点层，而无需遍历整个树。</p>
-</li>
-</ol>
-<p>由于磁盘访问速度和内存之间存在差距，为了提高效率，应将磁盘I / O最小化。磁盘通常不是严格按需读取的，而是每次都被预读。磁盘读取所需的数据后，它将向后读取内存中的一定长度的数据。这样做的理论基础是计算机科学中众所周知的本地原理：</p>
-<blockquote>
-<p>关于MySQL数据索引是如何实现的，可以参考这篇文章：<a target="_blank" rel="noopener" href="https://time.geekbang.org/column/article/77830">https://time.geekbang.org/column/article/77830</a></p>
-</blockquote>
-<h3 id="B-Tree"><a href="#B-Tree" class="headerlink" title="B-Tree"></a>B-Tree</h3><p>B-Tree实际上也是一颗m叉平衡查找树</p>
-<p><img data-src="/images/java/B-Tree.png" alt="B-Tree"></p>
-<ol>
-<li>所有的key值分布在整个树中</li>
-<li>所有的key值出现在一个节点中</li>
-<li>搜索可以在非叶子节点处结束</li>
-<li>在完整的关键字搜索过程中，性能接近二分搜索。</li>
-</ol>
-<h3 id="B树和B-树之间的区别"><a href="#B树和B-树之间的区别" class="headerlink" title="B树和B+树之间的区别"></a>B树和B+树之间的区别</h3><ol>
-<li><p>B +树中的非叶子节点不存储数据，并且存储在叶节点中的所有数据使得查询时间复杂度固定为log n。</p>
-</li>
-<li><p>B树查询时间的复杂度不是固定的，它与键在树中的位置有关，最好是O（1）。</p>
-</li>
-<li><p>由于B+树的叶子节点是通过双向链表链接的，所以支持范围查询，且效率比B树高</p>
-</li>
-<li><p>B树每个节点的键和数据是一起的</p>
-</li>
-</ol>
-<h3 id="为什么MongoDB使用B-Tree-Mysql使用B-Tree"><a href="#为什么MongoDB使用B-Tree-Mysql使用B-Tree" class="headerlink" title="为什么MongoDB使用B-Tree,Mysql使用B+Tree ?"></a>为什么MongoDB使用B-Tree,Mysql使用B+Tree ?</h3><p>B +树中的非叶子节点不存储数据，并且存储在叶节点中的所有数据使得查询时间复杂度固定为log n。B树查询时间复杂度不是固定的，它与键在树中的位置有关，最好是O(1)。</p>
-<p><strong>我们已经说过，尽可能少的磁盘IO是提高性能的有效方法。MongoDB是一个聚合数据库，而B树恰好是键域和数据域的集群。</strong></p>
-<p>至于为什么MongoDB使用B树而不是B +树，可以从其设计的角度考虑它。<br>MongoDB不是传统的关系数据库，而是以BSON格式(可以认为是JSON)存储的nosql。目的是高性能，高可用性和易于扩展。</p>
-<p>Mysql是关系型数据库，最常用的是数据遍历操作(join)，而MongoDB它的数据更多的是聚合过的数据，不像Mysql那样表之间的关系那么强烈,因此MongoDB更多的是单个查询。</p>
-<p>由于Mysql使用B+树，数据在叶节点上,叶子节点之间又通过双向链表连接,更加有利于数据遍历，而MongoDB使用B树,所有节点都有一个数据字段。只要找到指定的索引，就可以对其进行访问。毫无疑问，单个查询MongoDB平均查询速度比Mysql快。</p>
-<h3 id="Hash索引"><a href="#Hash索引" class="headerlink" title="Hash索引"></a>Hash索引</h3><p>简而言之，哈希索引使用某种哈希算法将键值转换为新的哈希值。不需要像B +树那样从根节点到叶节点逐步搜索。只需要一种哈希算法,就可以立即找到对应的位置，速度非常快。(此处可以想想Java中的HashMap)。</p>
-<h4 id="B-树索引和Hash索引的区别"><a href="#B-树索引和Hash索引的区别" class="headerlink" title="B+树索引和Hash索引的区别"></a>B+树索引和Hash索引的区别</h4><ol>
-<li><p>如果是等价查询，则哈希索引显然具有绝对优势，因为只需一种算法即可找到相应的键值；当然，前提是键值是唯一的,如果存在hash冲突就必须链表遍历了。</p>
-</li>
-<li><p>哈希索引不支持范围查询(不过改造之后可以,Java中的LinkedHashMap通过链表保存了节点的插入顺序,那么也可以使用链表将数据的大小顺序保存起来)</p>
-<blockquote>
-<p>这样做虽然支持了范围查询但是时间复杂度是O(n),效率比跳表和B+Tree差</p>
-</blockquote>
-</li>
-<li><p>哈希索引无法使用索引排序以及模糊匹配</p>
-</li>
-<li><p>哈希索引也不支持多列联合索引的最左边匹配规则。</p>
-</li>
-<li><p>键值大量冲突的情况下,Hash索引效率极低</p>
-</li>
-</ol>
-
       
     </div>
 
@@ -3720,7 +3673,7 @@ hr {
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">107</span>
+          <span class="site-state-item-count">109</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -3766,12 +3719,12 @@ hr {
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">550k</span>
+    <span title="站点总字数">558k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">8:20</span>
+    <span title="站点阅读时长">8:27</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> &amp; <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
