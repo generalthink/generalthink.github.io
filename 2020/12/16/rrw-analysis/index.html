@@ -21,18 +21,21 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"manual","top_n_per_article":10,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Zhu.Yang">
-<meta property="og:url" content="http://yoursite.com/tags/java/index.html">
+  <meta name="description" content="针对读多写少的场景，Java提供了另外一个实现Lock接口的读写锁ReentrantReadWriteLock(RRW),之前分析过ReentrantLock是一个独占锁，同一时间只允许一个线程访问。 而 RRW 允许多个读线程同时访问，但不允许写线程和读线程、写线程和写线程同时访问。读写锁内部维护了两个锁，一个是用于读操作的ReadLock，一个是用于写操作的 WriteLock。 读写锁遵守以">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ReentrantReadWriteLock源码分析">
+<meta property="og:url" content="http://yoursite.com/2020/12/16/rrw-analysis/index.html">
 <meta property="og:site_name" content="Zhu.Yang">
-<meta property="og:description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
+<meta property="og:description" content="针对读多写少的场景，Java提供了另外一个实现Lock接口的读写锁ReentrantReadWriteLock(RRW),之前分析过ReentrantLock是一个独占锁，同一时间只允许一个线程访问。 而 RRW 允许多个读线程同时访问，但不允许写线程和读线程、写线程和写线程同时访问。读写锁内部维护了两个锁，一个是用于读操作的ReadLock，一个是用于写操作的 WriteLock。 读写锁遵守以">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-12-16T07:24:30.000Z">
+<meta property="article:modified_time" content="2020-12-25T06:45:34.500Z">
 <meta property="article:author" content="Zhu.Yang">
-<meta property="article:tag" content="Java,JVM,HBase,MongoDB,大数据,设计模式,数据结构">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="多线程">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://yoursite.com/tags/java/">
+<link rel="canonical" href="http://yoursite.com/2020/12/16/rrw-analysis/">
 
 
 <script id="page-configurations">
@@ -40,12 +43,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>标签: java | Zhu.Yang</title>
+  <title>ReentrantReadWriteLock源码分析 | Zhu.Yang</title>
   
 
 
@@ -2709,215 +2712,174 @@ hr {
         <div class="content-wrap">
           
 
-          <div class="content tag">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h2 class="collection-header">java
-          <small>标签</small>
-        </h2>
-      </div>
+  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/16/rrw-analysis/">
+
+    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Zhu.Yang">
+      <meta itemprop="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
+    </span>
+
+    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhu.Yang">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ReentrantReadWriteLock源码分析
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-12-16 15:24:30" itemprop="dateCreated datePublished" datetime="2020-12-16T15:24:30+08:00">2020-12-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-25 14:45:34" itemprop="dateModified" datetime="2020-12-25T14:45:34+08:00">2020-12-25</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 ≈</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2020</span>
+        <p>针对读多写少的场景，Java提供了另外一个实现Lock接口的读写锁ReentrantReadWriteLock(RRW),之前分析过ReentrantLock是一个独占锁，同一时间只允许一个线程访问。</p>
+<p>而 RRW 允许多个读线程同时访问，但不允许写线程和读线程、写线程和写线程同时访问。<br>读写锁内部维护了两个锁，一个是用于读操作的ReadLock，一个是用于写操作的 WriteLock。</p>
+<p>读写锁遵守以下三条基本原则</p>
+<ol>
+<li>允许多个线程同时读共享变量；</li>
+<li>只允许一个线程写共享变量；</li>
+<li>如果一个写线程正在执行写操作，此时禁止读线程读共享变量。</li>
+</ol>
+<a id="more"></a>
+
+<h3 id="读写锁如何实现"><a href="#读写锁如何实现" class="headerlink" title="读写锁如何实现"></a>读写锁如何实现</h3><p>RRW也是基于AQS实现的，它的自定义同步器(继承自AQS)需要在同步状态state上维护多个读线程和一个写线程的状态。RRW的做法是使用高低位来实现一个整形控制两种状态，一个int占4个字节，一个字节8位。所以高16位表示读，低16位表示写。</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Sync</span> <span class="keyword">extends</span> <span class="title">AbstractQueuedSynchronizer</span> </span>{</span><br><span class="line"></span><br><span class="line">  <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SHARED_SHIFT   = <span class="number">16</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 10000000000000000(65536)</span></span><br><span class="line">  <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SHARED_UNIT    = (<span class="number">1</span> &lt;&lt; SHARED_SHIFT);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 65535</span></span><br><span class="line">  <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MAX_COUNT      = (<span class="number">1</span> &lt;&lt; SHARED_SHIFT) - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//1111111111111111</span></span><br><span class="line">  <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> EXCLUSIVE_MASK = (<span class="number">1</span> &lt;&lt; SHARED_SHIFT) - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 读锁(共享锁)的数量,只计算高16位的值</span></span><br><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">sharedCount</span><span class="params">(<span class="keyword">int</span> c)</span>    </span>{ <span class="keyword">return</span> c &gt;&gt;&gt; SHARED_SHIFT; }</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 写锁(独占锁)的数量</span></span><br><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">exclusiveCount</span><span class="params">(<span class="keyword">int</span> c)</span> </span>{ <span class="keyword">return</span> c &amp; EXCLUSIVE_MASK; }</span><br><span class="line"> }</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="获取读锁"><a href="#获取读锁" class="headerlink" title="获取读锁"></a>获取读锁</h3><p>当线程获取读锁时，首先判断同步状态低16位，如果存在写锁，则获取锁失败，进入CLH队列阻塞，反之，判断当前线程是否应该被阻塞，如果不应该阻塞则尝试 CAS 同步状态，获取成功更新同步锁为读状态。</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">protected</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">tryAcquireShared</span><span class="params">(<span class="keyword">int</span> unused)</span> </span>{</span><br><span class="line">           </span><br><span class="line">  Thread current = Thread.currentThread();</span><br><span class="line">  <span class="keyword">int</span> c = getState();</span><br><span class="line">  <span class="comment">// 如果当前已经有写锁了，则获取失败</span></span><br><span class="line">  <span class="keyword">if</span> (exclusiveCount(c) != <span class="number">0</span> &amp;&amp;</span><br><span class="line">      getExclusiveOwnerThread() != current)</span><br><span class="line">      <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">  <span class="comment">// 获取读锁数量</span></span><br><span class="line">  <span class="keyword">int</span> r = sharedCount(c);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 非公平锁实现中readerShouldBlock()返回true表示CLH队列中有正在排队的写锁</span></span><br><span class="line">  <span class="comment">// CAS设置读锁的状态值</span></span><br><span class="line">  <span class="keyword">if</span> (!readerShouldBlock() &amp;&amp;</span><br><span class="line">      r &lt; MAX_COUNT &amp;&amp;</span><br><span class="line">      compareAndSetState(c, c + SHARED_UNIT)) {</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 省略记录获取readLock次数的代码</span></span><br><span class="line"></span><br><span class="line">      <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 针对上面失败的条件进行再次处理</span></span><br><span class="line">  <span class="keyword">return</span> fullTryAcquireShared(current);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">final</span> <span class="keyword">int</span> <span class="title">fullTryAcquireShared</span><span class="params">(Thread current)</span> </span>{</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 无线循环</span></span><br><span class="line">  <span class="keyword">for</span> (;;) {</span><br><span class="line">    <span class="keyword">int</span> c = getState();</span><br><span class="line">    <span class="keyword">if</span> (exclusiveCount(c) != <span class="number">0</span>) {</span><br><span class="line">      <span class="comment">// 如果不是当前线程持有写锁，则进入CLH队列阻塞</span></span><br><span class="line">      <span class="keyword">if</span> (getExclusiveOwnerThread() != current)</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    } </span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果reader应该被阻塞</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (readerShouldBlock()) {</span><br><span class="line">        <span class="comment">// Make sure we're not acquiring read lock reentrantly</span></span><br><span class="line">        <span class="keyword">if</span> (firstReader == current) {</span><br><span class="line">            <span class="comment">// assert firstReaderHoldCount &gt; 0;</span></span><br><span class="line">        } <span class="keyword">else</span> {</span><br><span class="line">            <span class="keyword">if</span> (rh == <span class="keyword">null</span>) {</span><br><span class="line">                rh = cachedHoldCounter;</span><br><span class="line">                <span class="keyword">if</span> (rh == <span class="keyword">null</span> || rh.tid != getThreadId(current)) {</span><br><span class="line">                    rh = readHolds.get();</span><br><span class="line">                    <span class="keyword">if</span> (rh.count == <span class="number">0</span>)</span><br><span class="line">                        readHolds.remove();</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">            <span class="comment">// 当前线程没有持有读锁，即不存在锁重入情况。则进入CLH队列阻塞</span></span><br><span class="line">            <span class="keyword">if</span> (rh.count == <span class="number">0</span>)</span><br><span class="line">                <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 共享锁的如果超出了限制</span></span><br><span class="line">    <span class="keyword">if</span> (sharedCount(c) == MAX_COUNT)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> Error(<span class="string">"Maximum lock count exceeded"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// CAS设置状态值</span></span><br><span class="line">    <span class="keyword">if</span> (compareAndSetState(c, c + SHARED_UNIT)) {</span><br><span class="line">      </span><br><span class="line">      <span class="comment">// 省略记录readLock次数的代码</span></span><br><span class="line"></span><br><span class="line">      <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>SHARED_UNIT</code>的值是65536，也就是说，当第一次获取读锁的后，state的值就变成了65536。<br><strong>在公平锁的实现中当CLH队列中有排队的线程，<code>readerShouldBlock()</code>方法就会返回为true。非公平锁的实现中则是当CLH队列中存在等待获取写锁的线程就返回true</strong></p>
+<p>还需要注意的是获取读锁的时候，如果当前线程已经持有写锁，是仍然能获取读锁成功的。后面会提到锁的降级，如果你对那里的代码有疑问，可以在回过头来看看这里申请锁的代码</p>
+<h3 id="释放读锁"><a href="#释放读锁" class="headerlink" title="释放读锁"></a>释放读锁</h3><figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">tryReleaseShared</span><span class="params">(<span class="keyword">int</span> unused)</span> </span>{</span><br><span class="line">           </span><br><span class="line">  <span class="keyword">for</span> (;;) {</span><br><span class="line">    <span class="keyword">int</span> c = getState();</span><br><span class="line">    <span class="comment">// 减去65536</span></span><br><span class="line">    <span class="keyword">int</span> nextc = c - SHARED_UNIT;</span><br><span class="line">    <span class="comment">// 只有当state的值变成0才会真正的释放锁</span></span><br><span class="line">    <span class="keyword">if</span> (compareAndSetState(c, nextc))</span><br><span class="line">        <span class="keyword">return</span> nextc == <span class="number">0</span>;</span><br><span class="line">}</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>释放锁时，state的值需要减去65536，因为当第一次获取读锁后，state值变成了65536。</p>
+<p>任何一个线程释放读锁的时候只有在<code>state==0</code>的时候才真正释放了锁，比如有100个线程获取了读锁，只有最后一个线程执行<code>tryReleaseShared</code>方法时才真正释放了锁，此时会唤醒CLH队列中的排队线程。</p>
+<h3 id="获取写锁"><a href="#获取写锁" class="headerlink" title="获取写锁"></a>获取写锁</h3><p>一个线程尝试获取写锁时，会先判断同步状态 state 是否为0。如果 state 等于 0，说明暂时没有其它线程获取锁；如果 state 不等于 0，则说明有其它线程获取了锁。</p>
+<p>此时再判断state的低16位(w)是否为0，如果w为0，表示其他线程获取了读锁，此时进入CLH队列进行阻塞等待。</p>
+<p>如果w不为0，则说明其他线程获取了写锁，此时需要判断获取了写锁的是不是当前线程，如果不是则进入CLH队列进行阻塞等待，如果获取了写锁的是当前线程，则判断当前线程获取写锁是否超过了最大次数，若超过，抛出异常。反之则更新同步状态。</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取写锁</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">tryAcquire</span><span class="params">(<span class="keyword">int</span> acquires)</span> </span>{</span><br><span class="line">           </span><br><span class="line">  Thread current = Thread.currentThread();</span><br><span class="line">  <span class="keyword">int</span> c = getState();</span><br><span class="line">  <span class="keyword">int</span> w = exclusiveCount(c);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 判断state是否为0</span></span><br><span class="line">  <span class="keyword">if</span> (c != <span class="number">0</span>) {</span><br><span class="line">      <span class="comment">// 获取锁失败</span></span><br><span class="line">      <span class="keyword">if</span> (w == <span class="number">0</span> || current != getExclusiveOwnerThread())</span><br><span class="line">          <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 判断当前线程获取写锁是否超出了最大次数65535</span></span><br><span class="line">      <span class="keyword">if</span> (w + exclusiveCount(acquires) &gt; MAX_COUNT)</span><br><span class="line">          <span class="keyword">throw</span> <span class="keyword">new</span> Error(<span class="string">"Maximum lock count exceeded"</span>);</span><br><span class="line">      </span><br><span class="line">      <span class="comment">// 锁重入</span></span><br><span class="line">      setState(c + acquires);</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">  }</span><br><span class="line">  <span class="comment">// 非公平锁实现中writerShouldBlock()永远返回为false</span></span><br><span class="line">  <span class="comment">// CAS修改state的值</span></span><br><span class="line">  <span class="keyword">if</span> (writerShouldBlock() ||</span><br><span class="line">      !compareAndSetState(c, c + acquires))</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// CAS成功后，设置当前线程为拥有独占锁的线程</span></span><br><span class="line">  setExclusiveOwnerThread(current);</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>在公平锁的实现中当CLH队列中存在排队的线程,那么<code>writerShouldBlock()</code>方法就会返回为true，此时获取写锁的线程就会被阻塞。</p>
+<h3 id="释放写锁"><a href="#释放写锁" class="headerlink" title="释放写锁"></a>释放写锁</h3><p>释放写锁的逻辑比较简单</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">protected</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">tryRelease</span><span class="params">(<span class="keyword">int</span> releases)</span> </span>{</span><br><span class="line">  <span class="comment">// 写锁是否被当前线程持有</span></span><br><span class="line">  <span class="keyword">if</span> (!isHeldExclusively())</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> IllegalMonitorStateException();</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">int</span> nextc = getState() - releases;</span><br><span class="line">  <span class="keyword">boolean</span> free = exclusiveCount(nextc) == <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 没有其他线程持有写锁</span></span><br><span class="line">  <span class="keyword">if</span> (free)</span><br><span class="line">      setExclusiveOwnerThread(<span class="keyword">null</span>);</span><br><span class="line">  setState(nextc);</span><br><span class="line">  <span class="keyword">return</span> free;</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="锁的升级？"><a href="#锁的升级？" class="headerlink" title="锁的升级？"></a>锁的升级？</h3><figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 准备读缓存</span></span><br><span class="line">readLock.lock();</span><br><span class="line"><span class="keyword">try</span> {</span><br><span class="line">  v = map.get(key);</span><br><span class="line">  <span class="keyword">if</span>(v == <span class="keyword">null</span>) {</span><br><span class="line">    writeLock.lock();</span><br><span class="line">    <span class="keyword">try</span> {</span><br><span class="line">      <span class="keyword">if</span>(map.get(key) != <span class="keyword">null</span>) {</span><br><span class="line">        <span class="keyword">return</span> map.get(key);</span><br><span class="line">      }</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 更新缓存代码，省略</span></span><br><span class="line">    } <span class="keyword">finally</span> {</span><br><span class="line">      writeLock.unlock();</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">} <span class="keyword">finally</span> {</span><br><span class="line">  readLock.unlock();</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<p>对于上面的代码，先是获取读锁，然后再升级为写锁，这样的行为叫做锁的升级。可惜RRW不支持，这样会导致写锁永久等待，最终导致线程被永久阻塞。所以<strong>锁的升级是不允许的</strong>。</p>
+<h3 id="锁的降级"><a href="#锁的降级" class="headerlink" title="锁的降级"></a>锁的降级</h3><p>虽然锁的升级不允许，但是锁的降级却是可以的。</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">ReentrantReadWriteLock lock = <span class="keyword">new</span> ReentrantReadWriteLock();</span><br><span class="line"></span><br><span class="line">ReadLock readLock = lock.readLock();</span><br><span class="line"></span><br><span class="line">WriteLock writeLock = lock.writeLock();</span><br><span class="line"></span><br><span class="line">Map&lt;String, String&gt; dataMap = <span class="keyword">new</span> HashMap();</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">processCacheData</span><span class="params">()</span> </span>{</span><br><span class="line">  readLock.lock();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(!cacheValid()) {</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 释放读锁，因为不允许</span></span><br><span class="line">    readLock.unlock();</span><br><span class="line"></span><br><span class="line">    writeLock.lock();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> {</span><br><span class="line">      <span class="keyword">if</span>(!cacheValid()) {</span><br><span class="line">          dataMap.put(<span class="string">"key"</span>, <span class="string">"think123"</span>);</span><br><span class="line">      }</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 降级为读锁</span></span><br><span class="line">      readLock.lock();</span><br><span class="line">    } <span class="keyword">finally</span> {</span><br><span class="line">        writeLock.unlock();</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="keyword">try</span> {</span><br><span class="line">    <span class="comment">// 仍然持有读锁</span></span><br><span class="line">    System.out.println(dataMap);</span><br><span class="line">  } <span class="keyword">finally</span> {</span><br><span class="line">      readLock.unlock();</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">cacheValid</span><span class="params">()</span> </span>{</span><br><span class="line">    <span class="keyword">return</span> !dataMap.isEmpty();</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+
+
+<h3 id="RRW需要注意的问题"><a href="#RRW需要注意的问题" class="headerlink" title="RRW需要注意的问题"></a>RRW需要注意的问题</h3><ol>
+<li><p>在读取很多、写入很少的情况下，RRW 会使写入线程遭遇饥饿（Starvation）问题，也就是说写入线程会因迟迟无法竞争到锁而一直处于等待状态。</p>
+</li>
+<li><p>写锁支持条件变量，读锁不支持。读锁调用newCondition() 会抛出UnsupportedOperationException 异常</p>
+</li>
+</ol>
+<h3 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h3><p>之前有写过AQS的实现，ReentrantLock的实现，可以参考我下面的文章</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://generalthink.github.io/2020/11/20/sourcecode-of-AQS/">AQS源码分析</a></li>
+<li><a target="_blank" rel="noopener" href="https://generalthink.github.io/2020/11/23/about-ReentrantLock-problems/">ReentrantLock分析</a></li>
+</ol>
+
     </div>
 
-  <article itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
+        
 
-      <div class="post-meta">
-        <time itemprop="dateCreated" datetime="2020-12-16T15:24:30+08:00" content="2020-12-16">
-          12-16
-        </time>
-      </div>
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/12/16/rrw-analysis/" itemprop="url">
-            <span itemprop="name">ReentrantReadWriteLock源码分析</span>
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/images/gzh.png">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
           </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated" datetime="2020-12-02T18:52:28+08:00" content="2020-12-02">
-          12-02
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/12/02/AQS-shared-lock/" itemprop="url">
-            <span itemprop="name">面试官问我AQS中的PROPAGATE有什么用？</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated" datetime="2020-11-23T10:21:05+08:00" content="2020-11-23">
-          11-23
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/11/23/about-ReentrantLock-problems/" itemprop="url">
-            <span itemprop="name">ReentrantLock的这几个问题，你都知道吗？</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated" datetime="2020-09-10T15:19:50+08:00" content="2020-09-10">
-          09-10
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/09/10/google-event-bus/" itemprop="url">
-            <span itemprop="name">如果你知道观察者模式,那你也应该了解下EventBus</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated" datetime="2020-09-01T22:25:10+08:00" content="2020-09-01">
-          09-01
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/09/01/konw-try-catch-finally-with-bytecode/" itemprop="url">
-            <span itemprop="name">从字节码角度来看try-catch-finally是如何执行的</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated" datetime="2020-08-26T16:48:35+08:00" content="2020-08-26">
-          08-26
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/08/26/analysis-string-intern/" itemprop="url">
-            <span itemprop="name">深入浅出String.intern()</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated" datetime="2020-08-12T15:21:15+08:00" content="2020-08-12">
-          08-12
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/08/12/tomcat-thread-pool-executor/" itemprop="url">
-            <span itemprop="name">我丢,线程池原来还可以优先扩容核心线程数？</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated" datetime="2020-08-03T09:47:28+08:00" content="2020-08-03">
-          08-03
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/08/03/how-to-start-thread/" itemprop="url">
-            <span itemprop="name">为什么start方法才能启动线程,而run不行？</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated" datetime="2020-07-27T15:51:09+08:00" content="2020-07-27">
-          07-27
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/07/27/main-thread-in-java/" itemprop="url">
-            <span itemprop="name">Java中的main线程是如何被创建的？</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated" datetime="2020-03-18T16:23:48+08:00" content="2020-03-18">
-          03-18
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/03/18/learn-java-jaxb/" itemprop="url">
-            <span itemprop="name">道友,JAXB了解下</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
+        </div>
     </div>
   </div>
-  
-  
-  
 
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/java/" rel="tag"># java</a>
+              <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" rel="tag"># 多线程</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/12/10/install-two-traefiks/" rel="prev" title="架构师喊我安装两个traefik">
+      <i class="fa fa-chevron-left"></i> 架构师喊我安装两个traefik
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
   
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/tags/java/page/2/">2</a><a class="page-number" href="/tags/java/page/3/">3</a><a class="extend next" rel="next" href="/tags/java/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
-  </nav>
+  
+  
 
 
 
@@ -2949,6 +2911,7 @@ hr {
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%BB%E5%86%99%E9%94%81%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.</span> <span class="nav-text">读写锁如何实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E8%AF%BB%E9%94%81"><span class="nav-number">2.</span> <span class="nav-text">获取读锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8A%E6%94%BE%E8%AF%BB%E9%94%81"><span class="nav-number">3.</span> <span class="nav-text">释放读锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E5%86%99%E9%94%81"><span class="nav-number">4.</span> <span class="nav-text">获取写锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8A%E6%94%BE%E5%86%99%E9%94%81"><span class="nav-number">5.</span> <span class="nav-text">释放写锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%81%E7%9A%84%E5%8D%87%E7%BA%A7%EF%BC%9F"><span class="nav-number">6.</span> <span class="nav-text">锁的升级？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%81%E7%9A%84%E9%99%8D%E7%BA%A7"><span class="nav-number">7.</span> <span class="nav-text">锁的降级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RRW%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">8.</span> <span class="nav-text">RRW需要注意的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A8%E8%8D%90%E9%98%85%E8%AF%BB"><span class="nav-number">9.</span> <span class="nav-text">推荐阅读</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

@@ -1228,7 +1228,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #c7c2ff;
+  background: #facfd0;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2715,6 +2715,94 @@ hr {
   
   
   <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/01/konw-try-catch-finally-with-bytecode/">
+
+    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Zhu.Yang">
+      <meta itemprop="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
+    </span>
+
+    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhu.Yang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/09/01/konw-try-catch-finally-with-bytecode/" class="post-title-link" itemprop="url">从字节码角度来看try-catch-finally是如何执行的</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-01 22:25:10" itemprop="dateCreated datePublished" datetime="2020-09-01T22:25:10+08:00">2020-09-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-25 14:45:34" itemprop="dateModified" datetime="2020-12-25T14:45:34+08:00">2020-12-25</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 ≈</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>三年前，我做了一道关于try-catch-finnaly的面试题，但我做错了，当时面试官问我为啥错了，我告诉它，我平常不会写这么傻逼的代码，然后面试官就没有问我了。。。。</p>
+<p>最近看到其他面试的童鞋，又让我想起了这道题，刚好也试着分析下。</p>
+<p>我们知道Java虚拟机栈是线程私有的，它的生命周期与线程相同。虚拟机栈是Java虚拟机运行时数据区一部分，它描述的是Java方法执行的内存模型：每个方法在执行的同时都会创建一个栈帧用于存储局部变量表、操作数栈、动态链接、方法出口等信息。<strong>每一个方法从调用直至执行完成的过程就对应着一个帧栈在虚拟机中入栈到出栈的过程。</strong></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/09/01/konw-try-catch-finally-with-bytecode/#more" rel="contents">
+                阅读全文 »
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/26/analysis-string-intern/">
 
     <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -2746,7 +2834,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-14 14:35:03" itemprop="dateModified" datetime="2020-12-14T14:35:03+08:00">2020-12-14</time>
+                <time title="修改时间：2020-12-25 14:45:34" itemprop="dateModified" datetime="2020-12-25T14:45:34+08:00">2020-12-25</time>
               </span>
 
           <br>
@@ -2839,7 +2927,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-14 14:35:03" itemprop="dateModified" datetime="2020-12-14T14:35:03+08:00">2020-12-14</time>
+                <time title="修改时间：2020-12-25 14:45:34" itemprop="dateModified" datetime="2020-12-25T14:45:34+08:00">2020-12-25</time>
               </span>
 
           <br>
@@ -2937,7 +3025,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-14 14:35:03" itemprop="dateModified" datetime="2020-12-14T14:35:03+08:00">2020-12-14</time>
+                <time title="修改时间：2020-12-25 14:45:34" itemprop="dateModified" datetime="2020-12-25T14:45:34+08:00">2020-12-25</time>
               </span>
 
           <br>
@@ -3026,7 +3114,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-14 14:35:03" itemprop="dateModified" datetime="2020-12-14T14:35:03+08:00">2020-12-14</time>
+                <time title="修改时间：2020-12-25 14:45:34" itemprop="dateModified" datetime="2020-12-25T14:45:34+08:00">2020-12-25</time>
               </span>
 
           <br>
@@ -3115,7 +3203,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-14 14:35:03" itemprop="dateModified" datetime="2020-12-14T14:35:03+08:00">2020-12-14</time>
+                <time title="修改时间：2020-12-25 14:45:34" itemprop="dateModified" datetime="2020-12-25T14:45:34+08:00">2020-12-25</time>
               </span>
 
           <br>
@@ -3202,7 +3290,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-14 14:35:03" itemprop="dateModified" datetime="2020-12-14T14:35:03+08:00">2020-12-14</time>
+                <time title="修改时间：2020-12-25 14:45:34" itemprop="dateModified" datetime="2020-12-25T14:45:34+08:00">2020-12-25</time>
               </span>
 
           <br>
@@ -3289,7 +3377,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-14 14:35:03" itemprop="dateModified" datetime="2020-12-14T14:35:03+08:00">2020-12-14</time>
+                <time title="修改时间：2020-12-25 14:45:34" itemprop="dateModified" datetime="2020-12-25T14:45:34+08:00">2020-12-25</time>
               </span>
 
           <br>
@@ -3384,7 +3472,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-14 14:35:03" itemprop="dateModified" datetime="2020-12-14T14:35:03+08:00">2020-12-14</time>
+                <time title="修改时间：2020-12-25 14:45:34" itemprop="dateModified" datetime="2020-12-25T14:45:34+08:00">2020-12-25</time>
               </span>
 
           <br>
@@ -3483,7 +3571,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-14 14:35:03" itemprop="dateModified" datetime="2020-12-14T14:35:03+08:00">2020-12-14</time>
+                <time title="修改时间：2020-12-25 14:45:34" itemprop="dateModified" datetime="2020-12-25T14:45:34+08:00">2020-12-25</time>
               </span>
 
           <br>
@@ -3518,93 +3606,6 @@ hr {
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2020/05/22/install-traefik2-in-kubernetes/#more" rel="contents">
-                阅读全文 »
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/06/why-so-diffcult-to-get-ip/">
-
-    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Zhu.Yang">
-      <meta itemprop="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
-    </span>
-
-    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhu.Yang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/05/06/why-so-diffcult-to-get-ip/" class="post-title-link" itemprop="url">为什么获取请求IP这么麻烦？</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-05-06 18:12:55" itemprop="dateCreated datePublished" datetime="2020-05-06T18:12:55+08:00">2020-05-06</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-14 14:35:03" itemprop="dateModified" datetime="2020-12-14T14:35:03+08:00">2020-12-14</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>4.3k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 ≈</span>
-              <span>4 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>web开发中，经常会获取请求端IP地址,熟悉的同学可能第一时间就想到了</p>
-<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String ip = httpServletRequest.getRemoteAddr();</span><br></pre></td></tr></tbody></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/05/06/why-so-diffcult-to-get-ip/#more" rel="contents">
                 阅读全文 »
               </a>
             </div>
@@ -3673,7 +3674,7 @@ hr {
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-count">110</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -3719,12 +3720,12 @@ hr {
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">562k</span>
+    <span title="站点总字数">567k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">8:31</span>
+    <span title="站点阅读时长">8:36</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> &amp; <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
