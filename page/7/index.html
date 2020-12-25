@@ -1228,7 +1228,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #facfd0;
+  background: #b84650;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2715,6 +2715,96 @@ hr {
   
   
   <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/04/kafka-consumer-offset-commit/">
+
+    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Zhu.Yang">
+      <meta itemprop="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
+    </span>
+
+    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhu.Yang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/06/04/kafka-consumer-offset-commit/" class="post-title-link" itemprop="url">Kafka consumer的offset的提交方式</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-06-04 10:18:47" itemprop="dateCreated datePublished" datetime="2019-06-04T10:18:47+08:00">2019-06-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-25 17:13:39" itemprop="dateModified" datetime="2020-12-25T17:13:39+08:00">2020-12-25</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 ≈</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Kafka consumer的offset提交机制有以下两种</p>
+<h3 id="手动提交"><a href="#手动提交" class="headerlink" title="手动提交"></a>手动提交</h3><h4 id="同步提交"><a href="#同步提交" class="headerlink" title="同步提交"></a>同步提交</h4><p>consumer.commitSync()方式提交</p>
+<h4 id="异步提交"><a href="#异步提交" class="headerlink" title="异步提交"></a>异步提交</h4><p>consumer.commitAsync(callback)方式提交</p>
+<h3 id="自动提交"><a href="#自动提交" class="headerlink" title="自动提交"></a>自动提交</h3><p>props.put(“enable.auto.commit”, “true”);<br>props.put(“auto.commit.interval.ms”, “1000”);</p>
+<p>通过上面启动自动提交以及设置自动提交间隔时间(默认为5s)</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/06/04/kafka-consumer-offset-commit/#more" rel="contents">
+                阅读全文 »
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/31/kafka-consumer-offset/">
 
     <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -2746,7 +2836,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-25 14:45:34" itemprop="dateModified" datetime="2020-12-25T14:45:34+08:00">2020-12-25</time>
+                <time title="修改时间：2020-12-25 17:13:39" itemprop="dateModified" datetime="2020-12-25T17:13:39+08:00">2020-12-25</time>
               </span>
 
           <br>
@@ -2835,7 +2925,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-25 14:45:34" itemprop="dateModified" datetime="2020-12-25T14:45:34+08:00">2020-12-25</time>
+                <time title="修改时间：2020-12-25 17:13:39" itemprop="dateModified" datetime="2020-12-25T17:13:39+08:00">2020-12-25</time>
               </span>
 
           <br>
@@ -2927,7 +3017,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-25 14:45:34" itemprop="dateModified" datetime="2020-12-25T14:45:34+08:00">2020-12-25</time>
+                <time title="修改时间：2020-12-25 17:13:39" itemprop="dateModified" datetime="2020-12-25T17:13:39+08:00">2020-12-25</time>
               </span>
 
           <br>
@@ -3014,7 +3104,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-25 14:45:34" itemprop="dateModified" datetime="2020-12-25T14:45:34+08:00">2020-12-25</time>
+                <time title="修改时间：2020-12-25 17:13:39" itemprop="dateModified" datetime="2020-12-25T17:13:39+08:00">2020-12-25</time>
               </span>
 
           <br>
@@ -3111,7 +3201,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-25 14:45:34" itemprop="dateModified" datetime="2020-12-25T14:45:34+08:00">2020-12-25</time>
+                <time title="修改时间：2020-12-25 17:13:39" itemprop="dateModified" datetime="2020-12-25T17:13:39+08:00">2020-12-25</time>
               </span>
 
           <br>
@@ -3199,7 +3289,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-25 14:45:34" itemprop="dateModified" datetime="2020-12-25T14:45:34+08:00">2020-12-25</time>
+                <time title="修改时间：2020-12-25 17:13:39" itemprop="dateModified" datetime="2020-12-25T17:13:39+08:00">2020-12-25</time>
               </span>
 
           <br>
@@ -3286,7 +3376,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-25 14:45:34" itemprop="dateModified" datetime="2020-12-25T14:45:34+08:00">2020-12-25</time>
+                <time title="修改时间：2020-12-25 17:13:39" itemprop="dateModified" datetime="2020-12-25T17:13:39+08:00">2020-12-25</time>
               </span>
 
           <br>
@@ -3373,7 +3463,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-25 14:45:34" itemprop="dateModified" datetime="2020-12-25T14:45:34+08:00">2020-12-25</time>
+                <time title="修改时间：2020-12-25 17:13:39" itemprop="dateModified" datetime="2020-12-25T17:13:39+08:00">2020-12-25</time>
               </span>
 
           <br>
@@ -3460,7 +3550,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-25 14:45:34" itemprop="dateModified" datetime="2020-12-25T14:45:34+08:00">2020-12-25</time>
+                <time title="修改时间：2020-12-25 17:13:39" itemprop="dateModified" datetime="2020-12-25T17:13:39+08:00">2020-12-25</time>
               </span>
 
           <br>
@@ -3514,97 +3604,10 @@ hr {
   
   
 
-      
-  
-  
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/07/kafka-producer-source-code-analysis/">
-
-    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Zhu.Yang">
-      <meta itemprop="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
-    </span>
-
-    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhu.Yang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/03/07/kafka-producer-source-code-analysis/" class="post-title-link" itemprop="url">我花了一周读了Kafka Producer的源码</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-03-07 16:29:16" itemprop="dateCreated datePublished" datetime="2019-03-07T16:29:16+08:00">2019-03-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-25 14:45:34" itemprop="dateModified" datetime="2020-12-25T14:45:34+08:00">2020-12-25</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>12k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 ≈</span>
-              <span>11 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>talk is easy,show me the code,先来看一段创建producer的代码</p>
-<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">KafkaProducerDemo</span> </span>{</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{</span><br><span class="line"></span><br><span class="line">    KafkaProducer&lt;String,String&gt; producer = createProducer();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//指定topic,key,value</span></span><br><span class="line">    ProducerRecord&lt;String,String&gt; record = <span class="keyword">new</span> ProducerRecord&lt;&gt;(<span class="string">"test1"</span>,<span class="string">"newkey1"</span>,<span class="string">"newvalue1"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//异步发送</span></span><br><span class="line">    producer.send(record);</span><br><span class="line">    producer.close();</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">"发送完成"</span>);</span><br><span class="line"></span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> KafkaProducer&lt;String,String&gt; <span class="title">createProducer</span><span class="params">()</span> </span>{</span><br><span class="line">    Properties props = <span class="keyword">new</span> Properties();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//bootstrap.servers 必须设置</span></span><br><span class="line">    props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, <span class="string">"192.168.239.131:9092"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// key.serializer   必须设置</span></span><br><span class="line">    props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());</span><br><span class="line"></span><br><span class="line">    <span class="comment">// value.serializer  必须设置</span></span><br><span class="line">    props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());</span><br><span class="line"></span><br><span class="line">    <span class="comment">//client.id</span></span><br><span class="line">    props.put(ProducerConfig.CLIENT_ID_CONFIG, <span class="string">"client-0"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//retries</span></span><br><span class="line">    props.put(ProducerConfig.RETRIES_CONFIG, <span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//acks</span></span><br><span class="line">    props.put(ProducerConfig.ACKS_CONFIG, <span class="string">"all"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//max.in.flight.requests.per.connection</span></span><br><span class="line">    props.put(ProducerConfig.MAX_IN_FLIGHT_REQUESTS_PER_CONNECTION, <span class="number">1</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//linger.ms</span></span><br><span class="line">    props.put(ProducerConfig.LINGER_MS_CONFIG, <span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//batch.size</span></span><br><span class="line">    props.put(ProducerConfig.BATCH_SIZE_CONFIG, <span class="number">10240</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//buffer.memory</span></span><br><span class="line">    props.put(ProducerConfig.BUFFER_MEMORY_CONFIG, <span class="number">10240</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> KafkaProducer&lt;&gt;(props);</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/03/07/kafka-producer-source-code-analysis/#more" rel="contents">
-                阅读全文 »
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">…</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">…</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">…</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">…</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -3650,7 +3653,7 @@ hr {
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">110</span>
+          <span class="site-state-item-count">111</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -3696,12 +3699,12 @@ hr {
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">567k</span>
+    <span title="站点总字数">577k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">8:36</span>
+    <span title="站点阅读时长">8:45</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> &amp; <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
