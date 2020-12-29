@@ -1228,7 +1228,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #b84650;
+  background: #f7dec4;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2715,6 +2715,97 @@ hr {
   
   
   <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/28/CountDownLatch-CyclicBarrier/">
+
+    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Zhu.Yang">
+      <meta itemprop="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
+    </span>
+
+    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhu.Yang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/12/28/CountDownLatch-CyclicBarrier/" class="post-title-link" itemprop="url">CountDownLatch和CyclicBarrier,我该怎么选?</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-12-28 14:42:19" itemprop="dateCreated datePublished" datetime="2020-12-28T14:42:19+08:00">2020-12-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-29 15:29:41" itemprop="dateModified" datetime="2020-12-29T15:29:41+08:00">2020-12-29</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 ≈</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="CountDownLatch和CyclicBarrier区别"><a href="#CountDownLatch和CyclicBarrier区别" class="headerlink" title="CountDownLatch和CyclicBarrier区别"></a>CountDownLatch和CyclicBarrier区别</h3><p>CountDownLatch 和 CyclicBarrier 是 Java 并发包提供的两个非常易用的线程同步工具类，把它们放在一起介绍是因为它们之间有点像，又很不同。</p>
+<p>CountDownLatch 主要用来解决一个线程等待多个线程的场景，可以类比旅游团团长要等待所有的游客到齐才能去下一个景点。</p>
+<p>CyclicBarrier 是一组线程之间互相等待，只要有一个线程没有完成，其他线程都要等待,更像是你和你老婆不离不弃。</p>
+<p>对于CountDownLatch来说，重点是那<strong>一个线程</strong>, 是它在等待，而另外那N个线程在把“某个事情”做完之后可以继续等待，可以终止。</p>
+<p>而对于CyclicBarrier来说，重点是那**一组(N个)**线程，他们之间任何一个没有完成，所有的线程都必须等待。</p>
+<p>除此之外 CountDownLatch 的计数器是不能循环利用的，也就是说一旦计数器减到 0，再有线程调用 await()，该线程会直接通过。<br>但CyclicBarrier 的计数器是可以循环利用的，而且具备自动重置的功能，一旦计数器减到 0 会自动重置到你设置的初始值。除此之外，CyclicBarrier 还可以设置回调函数，可以说是功能丰富。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/12/28/CountDownLatch-CyclicBarrier/#more" rel="contents">
+                阅读全文 »
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/25/StampedLock-analysis/">
 
     <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -2738,10 +2829,16 @@ hr {
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-12-25 14:45:55 / 修改时间：17:13:39" itemprop="dateCreated datePublished" datetime="2020-12-25T14:45:55+08:00">2020-12-25</time>
+              <time title="创建时间：2020-12-25 14:45:55" itemprop="dateCreated datePublished" datetime="2020-12-25T14:45:55+08:00">2020-12-25</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-29 15:29:41" itemprop="dateModified" datetime="2020-12-29T15:29:41+08:00">2020-12-29</time>
+              </span>
 
           <br>
             <span class="post-meta-item" title="本文字数">
@@ -2827,7 +2924,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-25 17:13:39" itemprop="dateModified" datetime="2020-12-25T17:13:39+08:00">2020-12-25</time>
+                <time title="修改时间：2020-12-29 15:29:41" itemprop="dateModified" datetime="2020-12-29T15:29:41+08:00">2020-12-29</time>
               </span>
 
           <br>
@@ -2920,7 +3017,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-25 17:13:39" itemprop="dateModified" datetime="2020-12-25T17:13:39+08:00">2020-12-25</time>
+                <time title="修改时间：2020-12-29 15:29:41" itemprop="dateModified" datetime="2020-12-29T15:29:41+08:00">2020-12-29</time>
               </span>
 
           <br>
@@ -3009,7 +3106,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-25 17:13:39" itemprop="dateModified" datetime="2020-12-25T17:13:39+08:00">2020-12-25</time>
+                <time title="修改时间：2020-12-29 15:29:41" itemprop="dateModified" datetime="2020-12-29T15:29:41+08:00">2020-12-29</time>
               </span>
 
           <br>
@@ -3097,7 +3194,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-25 17:13:39" itemprop="dateModified" datetime="2020-12-25T17:13:39+08:00">2020-12-25</time>
+                <time title="修改时间：2020-12-29 15:29:41" itemprop="dateModified" datetime="2020-12-29T15:29:41+08:00">2020-12-29</time>
               </span>
 
           <br>
@@ -3185,7 +3282,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-25 17:13:39" itemprop="dateModified" datetime="2020-12-25T17:13:39+08:00">2020-12-25</time>
+                <time title="修改时间：2020-12-29 15:29:41" itemprop="dateModified" datetime="2020-12-29T15:29:41+08:00">2020-12-29</time>
               </span>
 
           <br>
@@ -3273,7 +3370,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-25 17:13:39" itemprop="dateModified" datetime="2020-12-25T17:13:39+08:00">2020-12-25</time>
+                <time title="修改时间：2020-12-29 15:29:41" itemprop="dateModified" datetime="2020-12-29T15:29:41+08:00">2020-12-29</time>
               </span>
 
           <br>
@@ -3361,7 +3458,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-25 17:13:39" itemprop="dateModified" datetime="2020-12-25T17:13:39+08:00">2020-12-25</time>
+                <time title="修改时间：2020-12-29 15:29:41" itemprop="dateModified" datetime="2020-12-29T15:29:41+08:00">2020-12-29</time>
               </span>
 
           <br>
@@ -3453,7 +3550,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-25 17:13:39" itemprop="dateModified" datetime="2020-12-25T17:13:39+08:00">2020-12-25</time>
+                <time title="修改时间：2020-12-29 15:29:41" itemprop="dateModified" datetime="2020-12-29T15:29:41+08:00">2020-12-29</time>
               </span>
 
           <br>
@@ -3488,95 +3585,6 @@ hr {
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2020/10/22/synchronized-source-code-analysis/#more" rel="contents">
-                阅读全文 »
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/25/java-object-in-meory-with-markword/">
-
-    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Zhu.Yang">
-      <meta itemprop="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
-    </span>
-
-    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhu.Yang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/09/25/java-object-in-meory-with-markword/" class="post-title-link" itemprop="url">Java对象在内存中的布局</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-09-25 15:53:04" itemprop="dateCreated datePublished" datetime="2020-09-25T15:53:04+08:00">2020-09-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-25 17:13:39" itemprop="dateModified" datetime="2020-12-25T17:13:39+08:00">2020-12-25</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>5.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 ≈</span>
-              <span>5 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h3><p>Java是用C++写的，所以java对象最终会映射到c++中的某个对象，用这个对象可以描述所有Java对象。而我们所熟知的synchronized锁的优化就是基于这个对象来实现的。</p>
-<h3 id="对象在内存中的布局"><a href="#对象在内存中的布局" class="headerlink" title="对象在内存中的布局"></a>对象在内存中的布局</h3><p>Java对象在被创建的时候,在内存分配完成后，虚拟机需要对对象进行必要设置， 例如这个对象是哪个类的实例、如何才能找到类的元数据信息、对象的哈希码、对象的GC分代年龄等信息。</p>
-<p>这些信息存放在对象的对象头(Object Header)中。根据虚拟机当前运行状态的不同，如是否启用偏向锁等对象头会有不同的设置方式。</p>
-<p><strong>在虚拟机中，对象在内存中存储的布局可以分为3块区域：对象头(Header)、实例数据(Instance Data)和对齐填充(Padding)</strong></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/09/25/java-object-in-meory-with-markword/#more" rel="contents">
                 阅读全文 »
               </a>
             </div>
@@ -3645,7 +3653,7 @@ hr {
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">111</span>
+          <span class="site-state-item-count">112</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -3691,12 +3699,12 @@ hr {
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">577k</span>
+    <span title="站点总字数">582k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">8:45</span>
+    <span title="站点阅读时长">8:49</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> &amp; <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
