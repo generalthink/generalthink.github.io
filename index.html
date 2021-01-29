@@ -1228,7 +1228,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #adbfff;
+  background: #ff05ff;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2715,6 +2715,93 @@ hr {
   
   
   <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/01/21/methods-of-create-thread/">
+
+    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Zhu.Yang">
+      <meta itemprop="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
+    </span>
+
+    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhu.Yang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/21/methods-of-create-thread/" class="post-title-link" itemprop="url">创建线程的几种主流方式</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-01-21 19:19:36" itemprop="dateCreated datePublished" datetime="2021-01-21T19:19:36+08:00">2021-01-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-01-29 17:20:04" itemprop="dateModified" datetime="2021-01-29T17:20:04+08:00">2021-01-29</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 ≈</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="继承Thread类"><a href="#继承Thread类" class="headerlink" title="继承Thread类"></a>继承Thread类</h3><p>继承Thread类，并重写它的run方法，就可以创建一个线程了，当然线程是如何真正被启动，可以参考我之前的 <a target="_blank" rel="noopener" href="https://juejin.cn/post/6858058928467968008">为什么start方法才能启动线程,而run不行？</a></p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ThinkThread</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>{</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>{</span><br><span class="line">      System.out.println(<span class="string">"think123"</span>);</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> ThinkThread().start();</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/01/21/methods-of-create-thread/#more" rel="contents">
+                阅读全文 »
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/01/11/concurrent-container-introduce/">
 
     <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -2746,7 +2833,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-14 11:22:27" itemprop="dateModified" datetime="2021-01-14T11:22:27+08:00">2021-01-14</time>
+                <time title="修改时间：2021-01-29 17:20:04" itemprop="dateModified" datetime="2021-01-29T17:20:04+08:00">2021-01-29</time>
               </span>
 
           <br>
@@ -2834,7 +2921,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-14 11:22:27" itemprop="dateModified" datetime="2021-01-14T11:22:27+08:00">2021-01-14</time>
+                <time title="修改时间：2021-01-29 17:20:04" itemprop="dateModified" datetime="2021-01-29T17:20:04+08:00">2021-01-29</time>
               </span>
 
           <br>
@@ -2925,7 +3012,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-14 11:22:27" itemprop="dateModified" datetime="2021-01-14T11:22:27+08:00">2021-01-14</time>
+                <time title="修改时间：2021-01-29 17:20:04" itemprop="dateModified" datetime="2021-01-29T17:20:04+08:00">2021-01-29</time>
               </span>
 
           <br>
@@ -3012,7 +3099,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-14 11:22:27" itemprop="dateModified" datetime="2021-01-14T11:22:27+08:00">2021-01-14</time>
+                <time title="修改时间：2021-01-29 17:20:04" itemprop="dateModified" datetime="2021-01-29T17:20:04+08:00">2021-01-29</time>
               </span>
 
           <br>
@@ -3105,7 +3192,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-14 11:22:27" itemprop="dateModified" datetime="2021-01-14T11:22:27+08:00">2021-01-14</time>
+                <time title="修改时间：2021-01-29 17:20:04" itemprop="dateModified" datetime="2021-01-29T17:20:04+08:00">2021-01-29</time>
               </span>
 
           <br>
@@ -3194,7 +3281,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-14 11:22:27" itemprop="dateModified" datetime="2021-01-14T11:22:27+08:00">2021-01-14</time>
+                <time title="修改时间：2021-01-29 17:20:04" itemprop="dateModified" datetime="2021-01-29T17:20:04+08:00">2021-01-29</time>
               </span>
 
           <br>
@@ -3282,7 +3369,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-14 11:22:27" itemprop="dateModified" datetime="2021-01-14T11:22:27+08:00">2021-01-14</time>
+                <time title="修改时间：2021-01-29 17:20:04" itemprop="dateModified" datetime="2021-01-29T17:20:04+08:00">2021-01-29</time>
               </span>
 
           <br>
@@ -3370,7 +3457,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-14 11:22:27" itemprop="dateModified" datetime="2021-01-14T11:22:27+08:00">2021-01-14</time>
+                <time title="修改时间：2021-01-29 17:20:04" itemprop="dateModified" datetime="2021-01-29T17:20:04+08:00">2021-01-29</time>
               </span>
 
           <br>
@@ -3458,7 +3545,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-14 11:22:27" itemprop="dateModified" datetime="2021-01-14T11:22:27+08:00">2021-01-14</time>
+                <time title="修改时间：2021-01-29 17:20:04" itemprop="dateModified" datetime="2021-01-29T17:20:04+08:00">2021-01-29</time>
               </span>
 
           <br>
@@ -3492,98 +3579,6 @@ hr {
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2020/11/10/threads-of-request-lock-in-synchronized/#more" rel="contents">
-                阅读全文 »
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/27/use-kubernetes-cron-job/">
-
-    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Zhu.Yang">
-      <meta itemprop="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
-    </span>
-
-    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhu.Yang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/10/27/use-kubernetes-cron-job/" class="post-title-link" itemprop="url">拥抱Kubernetes,再见了,SpringBoot cronjob</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-10-27 16:56:52" itemprop="dateCreated datePublished" datetime="2020-10-27T16:56:52+08:00">2020-10-27</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-14 11:22:27" itemprop="dateModified" datetime="2021-01-14T11:22:27+08:00">2021-01-14</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>5.1k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 ≈</span>
-              <span>5 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>项目开发中总是需要执行一些定时任务，比如定时处理数据之后发送邮件，定时更新缓存等等。</p>
-<h3 id="Java定时任务"><a href="#Java定时任务" class="headerlink" title="Java定时任务"></a>Java定时任务</h3><ol>
-<li>基于 java.util.Timer 定时器，实现类似闹钟的定时任务</li>
-<li>使用 Quartz、elastic-job、xxl-job 等开源第三方定时任务框架，适合分布式项目应用</li>
-<li>使用 Spring 提供的一个注解： @Scheduled</li>
-</ol>
-<p>项目框架使用的是SpringBoot,所以之前定时任务使用的是SpringBoot中的@Scheduled。可是这种方式并不适合我们现在的cloud环境，为了更加cloud native一点,我删除了使用SpringBoot写的37个定时任务，改为使用Kubernetes cronjob的方式。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/10/27/use-kubernetes-cron-job/#more" rel="contents">
                 阅读全文 »
               </a>
             </div>
@@ -3652,7 +3647,7 @@ hr {
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">113</span>
+          <span class="site-state-item-count">114</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -3698,12 +3693,12 @@ hr {
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">588k</span>
+    <span title="站点总字数">590k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">8:55</span>
+    <span title="站点阅读时长">8:56</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> &amp; <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>

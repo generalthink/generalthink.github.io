@@ -1228,7 +1228,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #adbfff;
+  background: #ff05ff;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2715,6 +2715,98 @@ hr {
   
   
   <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/27/use-kubernetes-cron-job/">
+
+    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Zhu.Yang">
+      <meta itemprop="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
+    </span>
+
+    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhu.Yang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/10/27/use-kubernetes-cron-job/" class="post-title-link" itemprop="url">拥抱Kubernetes,再见了,SpringBoot cronjob</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-10-27 16:56:52" itemprop="dateCreated datePublished" datetime="2020-10-27T16:56:52+08:00">2020-10-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-01-29 17:20:04" itemprop="dateModified" datetime="2021-01-29T17:20:04+08:00">2021-01-29</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 ≈</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>项目开发中总是需要执行一些定时任务，比如定时处理数据之后发送邮件，定时更新缓存等等。</p>
+<h3 id="Java定时任务"><a href="#Java定时任务" class="headerlink" title="Java定时任务"></a>Java定时任务</h3><ol>
+<li>基于 java.util.Timer 定时器，实现类似闹钟的定时任务</li>
+<li>使用 Quartz、elastic-job、xxl-job 等开源第三方定时任务框架，适合分布式项目应用</li>
+<li>使用 Spring 提供的一个注解： @Scheduled</li>
+</ol>
+<p>项目框架使用的是SpringBoot,所以之前定时任务使用的是SpringBoot中的@Scheduled。可是这种方式并不适合我们现在的cloud环境，为了更加cloud native一点,我删除了使用SpringBoot写的37个定时任务，改为使用Kubernetes cronjob的方式。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/10/27/use-kubernetes-cron-job/#more" rel="contents">
+                阅读全文 »
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/22/synchronized-source-code-analysis/">
 
     <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -2746,7 +2838,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-14 11:22:27" itemprop="dateModified" datetime="2021-01-14T11:22:27+08:00">2021-01-14</time>
+                <time title="修改时间：2021-01-29 17:20:04" itemprop="dateModified" datetime="2021-01-29T17:20:04+08:00">2021-01-29</time>
               </span>
 
           <br>
@@ -2835,7 +2927,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-14 11:22:27" itemprop="dateModified" datetime="2021-01-14T11:22:27+08:00">2021-01-14</time>
+                <time title="修改时间：2021-01-29 17:20:04" itemprop="dateModified" datetime="2021-01-29T17:20:04+08:00">2021-01-29</time>
               </span>
 
           <br>
@@ -2924,7 +3016,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-14 11:22:27" itemprop="dateModified" datetime="2021-01-14T11:22:27+08:00">2021-01-14</time>
+                <time title="修改时间：2021-01-29 17:20:04" itemprop="dateModified" datetime="2021-01-29T17:20:04+08:00">2021-01-29</time>
               </span>
 
           <br>
@@ -3011,7 +3103,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-14 11:22:27" itemprop="dateModified" datetime="2021-01-14T11:22:27+08:00">2021-01-14</time>
+                <time title="修改时间：2021-01-29 17:20:04" itemprop="dateModified" datetime="2021-01-29T17:20:04+08:00">2021-01-29</time>
               </span>
 
           <br>
@@ -3099,7 +3191,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-14 11:22:27" itemprop="dateModified" datetime="2021-01-14T11:22:27+08:00">2021-01-14</time>
+                <time title="修改时间：2021-01-29 17:20:04" itemprop="dateModified" datetime="2021-01-29T17:20:04+08:00">2021-01-29</time>
               </span>
 
           <br>
@@ -3192,7 +3284,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-14 11:22:27" itemprop="dateModified" datetime="2021-01-14T11:22:27+08:00">2021-01-14</time>
+                <time title="修改时间：2021-01-29 17:20:04" itemprop="dateModified" datetime="2021-01-29T17:20:04+08:00">2021-01-29</time>
               </span>
 
           <br>
@@ -3290,7 +3382,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-14 11:22:27" itemprop="dateModified" datetime="2021-01-14T11:22:27+08:00">2021-01-14</time>
+                <time title="修改时间：2021-01-29 17:20:04" itemprop="dateModified" datetime="2021-01-29T17:20:04+08:00">2021-01-29</time>
               </span>
 
           <br>
@@ -3379,7 +3471,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-14 11:22:27" itemprop="dateModified" datetime="2021-01-14T11:22:27+08:00">2021-01-14</time>
+                <time title="修改时间：2021-01-29 17:20:04" itemprop="dateModified" datetime="2021-01-29T17:20:04+08:00">2021-01-29</time>
               </span>
 
           <br>
@@ -3468,7 +3560,7 @@ hr {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-14 11:22:27" itemprop="dateModified" datetime="2021-01-14T11:22:27+08:00">2021-01-14</time>
+                <time title="修改时间：2021-01-29 17:20:04" itemprop="dateModified" datetime="2021-01-29T17:20:04+08:00">2021-01-29</time>
               </span>
 
           <br>
@@ -3501,93 +3593,6 @@ hr {
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2020/07/22/debug-jvm-12-in-macox/#more" rel="contents">
-                阅读全文 »
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/02/how-to-resolve-concurrency-issue-in-os/">
-
-    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Zhu.Yang">
-      <meta itemprop="description" content="面朝大海，去他妈的。因为你不理解,所以你才会觉得他很奇怪.">
-    </span>
-
-    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zhu.Yang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/07/02/how-to-resolve-concurrency-issue-in-os/" class="post-title-link" itemprop="url">万字长文:操作系统如何解决并发问题?</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-07-02 16:16:11" itemprop="dateCreated datePublished" datetime="2020-07-02T16:16:11+08:00">2020-07-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-14 11:22:27" itemprop="dateModified" datetime="2021-01-14T11:22:27+08:00">2021-01-14</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>11k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 ≈</span>
-              <span>10 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>在之前的文章中我们讲到过引起多线程bug的三大源头问题(可见性,原子性,有序性问题),java的内存模型(Java Memory Model)可以解决可见性和有序性问题,但是原子性问题如何解决呢？</p>
-<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Counter</span> </span>{</span><br><span class="line"></span><br><span class="line">  <span class="keyword">volatile</span> <span class="keyword">int</span> count;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add10K</span><span class="params">()</span> </span>{</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10000</span>; i++) {</span><br><span class="line">        count++;</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">get</span><span class="params">()</span> </span>{</span><br><span class="line">      <span class="keyword">return</span> count;</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>{</span><br><span class="line"></span><br><span class="line">    Counter counter = <span class="keyword">new</span> Counter();</span><br><span class="line"></span><br><span class="line">    Thread t1 = <span class="keyword">new</span> Thread(() -&gt; counter.add10K());</span><br><span class="line"></span><br><span class="line">    Thread t2 = <span class="keyword">new</span> Thread(() -&gt; counter.add10K());</span><br><span class="line"></span><br><span class="line">    t1.start();</span><br><span class="line">    t2.start();</span><br><span class="line"></span><br><span class="line">    t1.join();</span><br><span class="line">    t2.join();</span><br><span class="line"></span><br><span class="line">    System.out.println(counter.count);</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/07/02/how-to-resolve-concurrency-issue-in-os/#more" rel="contents">
                 阅读全文 »
               </a>
             </div>
@@ -3656,7 +3661,7 @@ hr {
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">113</span>
+          <span class="site-state-item-count">114</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -3702,12 +3707,12 @@ hr {
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">588k</span>
+    <span title="站点总字数">590k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">8:55</span>
+    <span title="站点阅读时长">8:56</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> &amp; <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
