@@ -2703,6 +2703,22 @@
       </tags>
   </entry>
   <entry>
+    <title>K8S你知道,K9S你可能也知道，那Lens呢？</title>
+    <url>/2021/01/29/k8s-lens/</url>
+    <content><![CDATA[<p>Kubernetes是用于自动部署、扩展和管理“容器化应用程序”的开源系统，而<a href="https://github.com/derailed/k9s">K9S</a>则提供了一个终端让我们能方便的操作K8S集群，它在github上有10.8K的star</p>
+<p>比如查看日志</p>
+<p><img data-src="/images/k8s/k9s_logs.png" alt="查看日志"></p>
+<p>而<a href="https://github.com/lensapp/lens">Lens</a>也是一个终端工具，它也能让我们更好的操控集群，它在github上也有12.6K star</p>
+<p><img data-src="/images/k8s/lens.png" alt="Lens"></p>
+<p>Lens的使用比K9S更加方便也更加直观,无论是查看Deployment, Service, Pod。它还可以直接access work node,更是方便至极。</p>
+<p><img data-src="/images/k8s/lens-info.png" alt="Lens"></p>
+<p>所以，我推荐大家使用Lens。</p>
+]]></content>
+      <tags>
+        <tag>K8S</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>k8s rolling update遇到的一个问题</title>
     <url>/2019/12/02/k8s-rolling-update-get-error/</url>
     <content><![CDATA[<p><strong>在使用K8S rolling update的时候,我同时使用JMeter不间断call API，就有少部分请求抛出了这个错误</strong></p>
