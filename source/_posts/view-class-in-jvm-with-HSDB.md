@@ -53,7 +53,7 @@ JVM内部访问对象并不是直接通过oop，而是通过handle,handle封装�
 
 这完全是为GC考虑。
 
-1. 通过handle，能够让GC知道其内部代码有哪些地方持有GC管理对象的引用，只需要臊面handle对应的table,这样JVM无须关注其内部哪些地方持有对普通对象的引用。
+1. 通过handle，能够让GC知道其内部代码有哪些地方持有GC管理对象的引用，只需要扫描handle对应的table,这样JVM无须关注其内部哪些地方持有对普通对象的引用。
 2. GC过程中，如果发生了对象移动(比如从新生代移动到老年代),那么JVM内部引用无须跟着更改为被移动对象的新地址，JVM只需要更改handle table里面对应的指针即可。
 
 在JVM中为了方便回收oop和klass(oop在堆中,klass处于metaspace),会将这两个对象封装成 oop
