@@ -1,7 +1,7 @@
 ---
 title: 老生常谈：mysql的体系结构
 date: 2022-04-06 14:20:27
-tags: [Mysql]
+tags: [MySQL]
 ---
 
 现在要进厂，每个面试官都要问你熟不熟悉mysql,作为开发者咋们也应该清楚mysql的基础体系架构
@@ -38,8 +38,9 @@ mysql比较有特色的一点就是，它的存储引擎是以插件方式提供
 
 由于我们平时使用最多的还是InnoDB引擎，所以这里主要剖析下InnoDB的存储结构(MyISAM和InnoDB在存储结构上是类似的)
 
-![InnoDB索引引擎](/images/mysql/innodb-architecture.png)
+![InnoDB索引引擎(5.7)](/images/mysql/innodb-architecture.png)
 
+>5.7和8.0有些许不一致，主要是系统表空间的一些内容会移动到单独的表空间中去
 
 为了保证数据不丢失,我们的数据必须要落盘,但是如果每次增删改查都去操作磁盘，那效率太低了，所以mysql会在内存中抽象出一份数据结构和磁盘一一对应，这样我们每次的增删改查就会优先操作内存中的数据。
 
@@ -90,7 +91,7 @@ public class User {
 
 Buffer Pool中存储的是页，页中会存储很多条数据。当我们修改数据的时候会先修改内存中的数据，修改后的页面并不立即同步到磁盘，而是作为脏页继续呆在内存中，然后会有后台线程将内存中的数据刷盘到文件，保证数据一致。
 
-![简化的结构](images/mysql/innodb-1.png)
+![简化的结构](/images/mysql/innodb-1.png)
 
 
 我们可以通过下面的命令查看缓冲池大小
@@ -106,9 +107,11 @@ innodb_buffer_pool_size = 268435456
 ```
 
 
-缓冲池中缓存的数据页类型有:索引页、数据页、undo页、插入缓冲、自适应哈希索引(adaptive hash index)、InnoDB中锁信息、数据字典信息等。除了这些，InnoDB引擎中内存的结构除了缓冲池还有其他结构，如图所示
+缓冲池中缓存的数据页类型有:索引页、数据页、undo页、修改缓冲(change buffer)、自适应哈希索引(adaptive hash index)、InnoDB中锁信息、数据字典信息等。除了这些，InnoDB引擎中内存的结构除了缓冲池还有其他结构，如图所示
 
 ![InnoDB内存数据对象](/images/mysql/innodb-memory-data-structure.png)
+
+>图中插入缓冲的部分现在叫做修改缓冲(change buffer),也就是说以前只对插入有用，现在对insert update delete都起作用，后面会分析下什么是修改缓冲
 
 多线程环境下，访问缓冲池(buffer pool)中的各种page是需要加锁的，不然会有并发问题，而且在Buffer Pool特别⼤⽽且多线程并发访问特别 ⾼的情况下，单⼀的Buffer Pool可能会影响请求的处理速度。所以在Buffer Pool特别⼤的时候，我们可以把它们拆分成多个⼩的Buffer Pool，每个Buffer Pool都称为⼀个实例，它们都是独⽴的，独 ⽴的去申请内存空间，这样可以增加数据库的并发处理，减少资源竞争，我们可以通过修改配置的方式来配置缓冲池个数
 
@@ -122,6 +125,7 @@ innodb_buffer_pool_instances = 2
 ```
 innodb_buffer_pool_size/innodb_buffer_pool_instances
 ```
+
 
 #### 自适应Hash索引
 
@@ -144,40 +148,27 @@ where a = xxx and b=xxx
 show engine innodb status;
 ```
 
+其本质是将频繁访问数据页的索引键值以“Key”放在缓存中，“Value”为该索引键值匹配完整记录所在页面（Page）的位置，通过缩短寻路路径（Search Path）从而提升MySQL查询性能的一种方式
+
 ### 物理结构
 
 数据最终会落盘到磁盘的文件中，而实际mysql管理的数据以及额外信息等等都会写入到文件中。
 
+#### 系统表空间
 
-#### 表结构文件
-当我们在数据库新建一个表test的时候(如果未做特殊说明，表引擎都是InnoDB),会产生两个文件，一个是 test.frm文件，一个是test.ibd文件。
-
-frm文件中存储的是表结构(任何存储引擎都会产生这个文件)，ibd文件存储的是索引以及数据。
-
-
-
-InnoDB采用将存储的数据按照表空间(tablespace)进行存放设计，默认配置下会有一个初始大小为10M，名为 ibdata1的文件，这个文件就是默认表空间文件，我们可以通过参数在配置文件中进行设置，比如:
+InnoDB采用将存储的数据按照表空间(tablespace)进行存放设计，默认配置下会有一个初始大小为10M，名为 ibdata1的文件，这个文件就是系统表空间文件，我们可以通过参数在配置文件中进行设置，比如:
 
 ```
 innodb_data_file_path = ibdata1:10M:autoextend
 ```
 表示文件初始大小为10MB,用完了这10M,该文件可以自动增长（autoextend)。
 
-设置 innodb_data_file_path 参数后，所有基于InnoDB存储引擎的表的数都会记录到该共享表空间中。如果设置了 innodb_file_per_table ，则每个基于InnodDB存储引擎产生的表都会产生一个独立表空间，其命名规则为 表名.ibd。 
->表空间是⼀个抽象的概念，对于系统表空间来说，对应着⽂件系统中⼀个或多个实际⽂件；对于每个独⽴表空间来说，对应着⽂件系统中⼀个名为表名.ibd的实际⽂件
+设置 innodb_data_file_path 参数后，所有基于InnoDB存储引擎的表的数都会记录到该共享表空间中。
 
-innodb_file_per_table 也是推荐的方式(我使用的5.7默认是开启的)，可以通过以下命令查看设置情况
+系统表空间中除了双写缓冲区(doublewrite buffer)、change buffer、undo logs之外,还会记录一些有关整个系统的信息。
 
-```
-show VARIABLES like 'innodb_file_per_table'
-```
-
-需要注意的是单独的.ibd独立表空间文件仅仅存储该表的数据、索引和插入缓冲等信息，其余信息还是存放在默认的系统表空间中的。
-
-#### 系统表空间
-
-除了上面所说的独立表空间之外，整个Mysql进程还拥有一个系统表空间，其中会记录一些有关整个系统信息的页面。
-其中的双写缓冲区(doublewrite buffer)也是处于系统表空间的，这里主要涉及到了事务和多版本问题，后面会分析下。
+> 再次提一下，从mysql 8.0开始doublewrite buffer会有单独的文件, undo log也会放到自己单独的表空间中
+> https://dev.mysql.com/doc/refman/8.0/en/innodb-architecture.html
 
 当我们插入数据到表里面的时候，我们需要知道很多信息，比如
 1. 某个表属于哪个表空间，表里面有多少列
@@ -206,7 +197,74 @@ show VARIABLES like 'innodb_file_per_table'
 information_schema数据库中的这些以INNODB_SYS开头的表并不是真正的内部系统表，⽽是在存储引擎启动时读取真正的系统表，然后 填充到这些以INNODB_SYS开头的表中。
 
 
-#### redo log 文件
+
+
+#### 独立表空间
+当我们在数据库新建一个表test的时候(如果未做特殊说明，表引擎都是InnoDB),会产生两个文件，一个是 test.frm文件，一个是test.ibd文件。
+
+frm文件中存储的是表结构(任何存储引擎都会产生这个文件)，ibd文件存储的是索引以及数据。
+
+
+如果设置了 innodb_file_per_table ，则每个基于InnodDB存储引擎产生的表都会产生一个独立表空间，其命名规则为 表名.ibd。 
+>表空间是⼀个抽象的概念，对于系统表空间来说，对应着⽂件系统中⼀个或多个实际⽂件；对于每个独⽴表空间来说，对应着⽂件系统中⼀个名为 表名.ibd 的实际⽂件
+
+innodb_file_per_table 也是推荐的方式(我使用的5.7默认是开启的)，可以通过以下命令查看设置情况
+
+```
+show VARIABLES like 'innodb_file_per_table'
+```
+
+需要注意的是单独的.ibd独立表空间文件仅仅存储该表的数据、索引和插入缓冲等信息，其余信息还是存放在默认的系统表空间中的。
+
+### 通用表空间(general tablesapce)
+
+通用表空间是使用 CREATE TABLESPACE 语法创建的共享 InnoDB 表空间，我们除了像上面那样说的让每个表都有自己的独立表空间之外，还可以让多个表在同一个表空间
+
+```sql
+// 创建表空间,文件默认是在data目录下
+CREATE TABLESPACE `ts1` ADD DATAFILE 'ts1.ibd' Engine=InnoDB;
+
+// 可以放到data目录外
+CREATE TABLESPACE `ts1` ADD DATAFILE '/my/tablespace/directory/ts1.ibd' Engine=InnoDB;
+
+// 指定表在某个表空间
+CREATE TABLE t1 (c1 INT PRIMARY KEY) TABLESPACE ts1;
+
+```
+
+这个让多个表在同一个表空间有啥用呢？ 按照官方文档的说法，其主要特殊点在于两个地方
+
+1. 相比独立的表空间，通用表空间因为是多个表放到同一个表空间中，所以其元数据占用内存更少
+2. 通过表空间可以将数据文件放在MySQL数据目录之外，因此我们可以为这些特定的表设置RAID或DRBD，或将表绑定到特定的磁盘上
+
+### 临时表空间(temporary tablespace)
+
+临时表空间分为会话(session)临时表空间和一个全局(global)临时表空间。
+
+全局临时表空间在正常关机或初始化中止时被移除，并在每次服务器启动时重新创建。全局临时表空间在创建时收到一个动态生成的空间ID。如果全局临时表空间不能被创建，则拒绝启动。如果服务器意外停止，全局临时表空间不会被删除。在这种情况下，数据库管理员可以手动删除全局临时表空间或重新启动MySQL服务器。重启MySQL服务器会自动删除并重新创建全局临时表空间。
+
+会话临时表空间在第一次请求创建磁盘临时表时从临时表空间池中分配给会话。 一个会话最多分配两个表空间，一个用于用户创建的临时表，另一个用于优化器创建的内部临时表。 分配给会话的临时表空间用于会话创建的所有磁盘临时表。 当会话断开连接时，其临时表空间将被截断并释放回池中。
+
+当我们创建临时表的时候数据会被放到临时表空间
+
+```sql
+create temporary table
+
+```
+
+session的临时表数据会存储在ibt文件中，而global session的临时表数据会存储在ibtmp1文件中
+
+临时表可以使用各种引擎类型，如果使用的是InnoDB或者MyISAM引擎的临时表，写数据的时候是写到磁盘上的，当然临时表也可以使用Memory引擎。
+
+临时表只针对当前会话有用，当会话(session)被关闭的时候，这个临时表也会被删除。临时表具有以下特性
+1. 临时表只能被创建它的session访问，对其他线程不可见。
+2. 临时表可以于普通表同名
+3. session A中有同名的临时表和普通标表的时候，show create 语句，以及增删改查语句访问的是临时表
+4. show tables不显示临时表
+
+
+
+#### redo log
 
 我们之前说过修改数据也是先修改buffer pool中页的数据，如果事务提交后发生了故障，导致内存中的数据都丢失了(此时还未刷盘),那提交了的事务对数据库所做的更改也跟着丢失了，这是不能忍受的。
 
@@ -252,9 +310,9 @@ innodb_log_files_in_group=2
 
 
 ### 参考资料
-
-1. <<MySQL是怎样运行的:从根儿上理解MySQL>>
-2. <<MySQL技术内幕：InnoDB存储引擎>>
+1. Mysql官方文档
+2. <<MySQL是怎样运行的:从根儿上理解MySQL>>
+3. <<MySQL技术内幕：InnoDB存储引擎>>
 
 
 
