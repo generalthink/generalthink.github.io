@@ -4,9 +4,6 @@ sudo: required
 
 node_js: stable
 
-install:
-  - npm install
-
 branches:
   only:
     - source
