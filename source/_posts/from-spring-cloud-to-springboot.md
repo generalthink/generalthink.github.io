@@ -53,7 +53,7 @@ handler也是一样的,将其转换成filter,需要注意执行顺序。
 
 不然你会发现你启动不了,说找不到文件，这个坑也是自己把自己给坑了。
 
-
+然后就是要将gateway的filter转换成spring filter的时候要注意一定要保证之前的逻辑完全移植过来了，我就遇到一个在改造前可以重复读取request的流,但是改造后这段代码报错了，就是因为没有将这段逻辑移植过去的问题。
 
 #### 改造nacos
 
@@ -164,7 +164,7 @@ secretOverrides:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "bv-manifesto.fullname" . }}-configmap
+  name: {{ include "think-manifesto.fullname" . }}-configmap
   namespace: {{ .Values.nameSpace }}
 data:
 {{- $files := .Files }}
@@ -178,7 +178,7 @@ data:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: {{ include "bv-manifesto.fullname" . }}-secret
+  name: {{ include "think-manifesto.fullname" . }}-secret
   namespace: {{ .Values.nameSpace }}
 type: Opaque
 data:
@@ -198,19 +198,19 @@ data:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "bv-manifesto.fullname" . }}
+  name: {{ include "think-manifesto.fullname" . }}
   namespace: {{ .Values.nameSpace }}
   labels:
-    {{- include "bv-manifesto.labels" . | nindent 4 }}
+    {{- include "think-manifesto.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      {{- include "bv-manifesto.selectorLabels" . | nindent 6 }}
+      {{- include "think-manifesto.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- include "bv-manifesto.selectorLabels" . | nindent 8 }}
+        {{- include "think-manifesto.selectorLabels" . | nindent 8 }}
       annotations:
         {{- if .Values.configOverrides}}
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
@@ -233,11 +233,11 @@ spec:
           envFrom:
             {{- if .Values.configOverrides }}
             - configMapRef:
-                name: {{ include "bv-manifesto.fullname" . }}-configmap
+                name: {{ include "think-manifesto.fullname" . }}-configmap
             {{- end }}
             {{- if .Values.secretOverrides }}
             - secretRef:
-                name: {{ include "bv-manifesto.fullname" . }}-secret
+                name: {{ include "think-manifesto.fullname" . }}-secret
             {{- end }}
           {{- with .Values.livenessProbe }}
           livenessProbe:
