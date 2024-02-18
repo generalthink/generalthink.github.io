@@ -67,22 +67,22 @@ pro-file, 就现在它没法根据我这个pro-file名字找到对应的IP了，
 
 此刻我自信的打开了IDEA, 输入了类名 `FeignAutoConfiguration` , Spring Cloud关于某个组件的自动注入类大多是XXXConfiguration, 所以按照这么找准没错。
 
-然后我有自信的把断电打在了这个部分 `FeignAutoConfiguration:246`
+然后我有自信的把断点打在了这个部分 `FeignAutoConfiguration:246`
 
 ```java
-	@Configuration(proxyBeanMethods = false)
-	@ConditionalOnClass(ApacheHttpClient.class)
-	@ConditionalOnMissingBean(CloseableHttpClient.class)
-	@ConditionalOnProperty(value = "feign.httpclient.enabled", matchIfMissing = true)
-	@Conditional(HttpClient5DisabledConditions.class)
-	protected static class HttpClientFeignConfiguration {
-		// 省略其他代码
+@Configuration(proxyBeanMethods = false)
+@ConditionalOnClass(ApacheHttpClient.class)
+@ConditionalOnMissingBean(CloseableHttpClient.class)
+@ConditionalOnProperty(value = "feign.httpclient.enabled", matchIfMissing = true)
+@Conditional(HttpClient5DisabledConditions.class)
+protected static class HttpClientFeignConfiguration {
+	// 省略其他代码
 
-		@Bean
-		@ConditionalOnMissingBean(Client.class)
-		public Client feignClient(HttpClient httpClient) {
-			return new ApacheHttpClient(httpClient);
-		}
+	@Bean
+	@ConditionalOnMissingBean(Client.class)
+	public Client feignClient(HttpClient httpClient) {
+		return new ApacheHttpClient(httpClient);
+	}
 
 }
 ```
