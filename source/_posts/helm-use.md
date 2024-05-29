@@ -93,8 +93,10 @@ kubectl describe node
 
 然后，你可以使用 YAML 格式的文件覆盖上述任意配置项，并在安装过程中使用该文件
 
+```
 2. echo '{web.port: 8080}' > values.yml
 3. helm install -f values.yml traefik/traefik --generate-name
+```
 
 还可以直接使用 --set web.port=8080 指定,优先级比-f(--values)高
 
@@ -107,22 +109,22 @@ kubectl describe node
 
 ### debug chart而不安装
 
-helm install --debug --dry-run goodly-guppy ./mychart
+`helm install --debug --dry-run goodly-guppy ./mychart`
 
 这样不会安装应用(chart)到你的kubenetes集群中，只会渲染模板内容到控制台
 
 如果想看渲染出错的内容,可以加上另外参数
 
-helm install --dry-run --disable-openapi-validation moldy-jaguar ./mychart
+`helm install --dry-run --disable-openapi-validation moldy-jaguar ./mychart`
 
 ### 调试
 
 + helm lint 是验证chart是否遵循最佳实践的首选工具。
-+ helm template --debug 在本地测试渲染chart模板。
-+ helm install --dry-run --debug：我们已经看到过这个技巧了，这是让服务器渲染模板的好方法，然后返回生成的清单文件。
++ `helm template --debug` 在本地测试渲染chart模板。
++ `helm install --dry-run --debug`：我们已经看到过这个技巧了，这是让服务器渲染模板的好方法，然后返回生成的清单文件。
 + helm get manifest: 这是查看安装在服务器上的模板的好方法。
 
-helm template --dry-run --debug --disable-openapi-validation thinkpro-test .\think-manifesto\
+`helm template --dry-run --debug --disable-openapi-validation thinkpro-test .\think-manifesto\`
 
 ### helm内置对象
 
@@ -140,7 +142,7 @@ Values对象是从values.yaml文件和用户提供的文件传进模板的。默
 
 #### Chart
 
-Chart.yaml文件内容。 Chart.yaml里的所有数据在这里都可以可访问的。比如 {{ .Chart.Name }}-{{ .Chart.Version }} 会打印出 mychart-0.1.0
+Chart.yaml文件内容。 Chart.yaml里的所有数据在这里都可以可访问的。比如 `{{ .Chart.Name }}-{{ .Chart.Version }}` 会打印出 mychart-0.1.0
 
 ### 常用函数
 
@@ -152,9 +154,9 @@ drink: {{ .Values.favorite.drink | default "tea" | quote }}
 
 ### 删除空白
 
-{{- (包括添加的横杠和空格)表示向左删除空白， 而 -}}表示右边的空格应该被去掉。 一定注意空格就是换行
+`{{-` (包括添加的横杠和空格)表示向左删除空白， 而 `-}}`表示右边的空格应该被去掉。 一定注意空格就是换行
 
-要确保-和其他命令之间有一个空格。 {{- 3 }} 表示“删除左边空格并打印3”，而{{-3 }}表示“打印-3”。
+要确保-和其他命令之间有一个空格。 `{{- 3 }}` 表示“删除左边空格并打印3”，而`{{-3 }}`表示“打印-3”。
 
 ### 模板的使用
 

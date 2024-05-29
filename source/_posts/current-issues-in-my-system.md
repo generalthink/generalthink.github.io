@@ -78,6 +78,8 @@ Date: Sun, 18 Feb 2024 07:36:22 GMT
 
 首先进入到minio所在的服务器,然后执行下面的命令
 
+```
+
 1.  sudo mkdir /home/azcopy 
 
 2. cd /home/azcopy
@@ -91,13 +93,12 @@ Date: Sun, 18 Feb 2024 07:36:22 GMT
 
 6. 同步minio数据到blob,将sc-dev bucket的数据迁移到blob的container
 
-```
 
-// 这里的sc-dev是minio的bucket, saoscdev是azure blob的account name, bvsc是container name
-sudo /home/azcopy/azcopy copy '/data/minio/data/sc-dev/*' 'https://saoscdev.blob.core.windows.net/bvsc' --recursive
+	// 这里的sc-dev是minio的bucket, saoscdev是azure blob的account name, bvsc是container name
+	a. sudo /home/azcopy/azcopy copy '/data/minio/data/sc-dev/*' 'https://saoscdev.blob.core.windows.net/bvsc' --recursive
 
-// 将增量数据同步到blob中
-sudo /home/azcopy/azcopy sync '/data/minio/data/sc-dev' 'https://saoscdev.blob.core.windows.net/bvsc' --recursive
+	// 将增量数据同步到blob中
+	b. sudo /home/azcopy/azcopy sync '/data/minio/data/sc-dev' 'https://saoscdev.blob.core.windows.net/bvsc' --recursive
 ```
 
 
