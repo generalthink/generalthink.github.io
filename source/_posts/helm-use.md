@@ -55,16 +55,26 @@ helm --kube-apiserver address
 ### 安装traefik
 
 1. 安装traefik,并指定对应参数
+
+```
 helm install --set deployment.kind=DaemonSet --set namespaceOverride=traefik --set service.enabled=false traefik traefik/traefik
+```
 
 2. 端口转发，像访问本地服务一样访问traefik
+
+```
 kubectl port-forward $(kubectl get pods --selector "app.kubernetes.io/name=traefik" -n traefik --output=name) 9000:9000 -n traefik
+```
 
 3. 更新服务
+```
 helm upgrade --set deployment.kind=DaemonSet --set namespaceOverride=traefik --set service.enabled=false traefik traefik/traefik
+```
 
 4. 配合Azure使用
+```
 helm install --set deployment.kind=DaemonSet --set namespaceOverride=traefik --set service.annotations."service.beta.kubernetes.io/azure-load-balancer-internal"=true  traefik traefik/traefik
+```
 
 
 ### 安装时报错内存不足
