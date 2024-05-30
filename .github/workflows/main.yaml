@@ -50,14 +50,9 @@ jobs:
         HEXO_DEPLOY_KEY: ${{secrets.HEXO_DEPLOY_KEY}}
       # 将编译后的博客文件推送到指定仓库
       run: |
-        sudo timedatectl set-timezone "Asia/Shanghai"
-        mkdir -p ~/.ssh/
-        echo "$HEXO_DEPLOY_KEY" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
         cd ./public && git init && git add .
         git config user.name "generalthink"
         git config user.email "general_go@163.com"
         git add .
         git commit -m "GitHub Actions Auto Builder at $(date +'%Y-%m-%d %H:%M:%S')"
-        git push --force --quiet "https:/$GITHUB_REPO" master:master
+        git push --force --quiet "https:/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@$GITHUB_REPO" master:master
