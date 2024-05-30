@@ -47,13 +47,14 @@ jobs:
       env: 
         # Github 仓库
         GITHUB_REPO: github.com/generalthink/generalthink.github.io
-        ACTIONS_DEPLOY_KEY: ${{secrets.ACTION_SECRET}}
+        HEXO_DEPLOY_KEY: ${{secrets.HEXO_DEPLOY_KEY}}
       # 将编译后的博客文件推送到指定仓库
       run: |
         sudo timedatectl set-timezone "Asia/Shanghai"
         mkdir -p ~/.ssh/
-        echo "$ACTIONS_DEPLOY_KEY" > ~/.ssh/id_rsa
+        echo "$HEXO_DEPLOY_KEY" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
         cd ./public && git init && git add .
         git config user.name "generalthink"
         git config user.email "general_go@163.com"
