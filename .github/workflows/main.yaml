@@ -48,7 +48,7 @@ jobs:
         # Github 仓库
         GITHUB_REPO: github.com/generalthink/generalthink.github.io
         ACTIONS_DEPLOY_KEY: ${{secrets.ACTIONS_DEPLOY_KEY}}
-        ACTION_SECRET: ${{secrets.ACTION_SECRET}}
+        ACTION_SECRET: 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
       # 将编译后的博客文件推送到指定仓库
       run: |
         sudo timedatectl set-timezone "Asia/Shanghai"
@@ -61,4 +61,4 @@ jobs:
         git config user.email "general_go@163.com"
         git add .
         git commit -m "GitHub Actions Auto Builder at $(date +'%Y-%m-%d %H:%M:%S')"
-        git push --force --quiet "https://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@$GITHUB_REPO" master:master
+        git push --force --quiet "https:/$@ACTION_SECRET$GITHUB_REPO" master:master
