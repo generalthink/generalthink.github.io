@@ -50,6 +50,11 @@ jobs:
         HEXO_DEPLOY_KEY: ${{secrets.HEXO_DEPLOY_KEY}}
       # 将编译后的博客文件推送到指定仓库
       run: |
+        mkdir -p ~/.ssh/
+        echo "$HEXO_DEPLOY_KEY"
+        echo "$HEXO_DEPLOY_KEY" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
         cd ./public && git init && git add .
         git config user.name "generalthink"
         git config user.email "general_go@163.com"
