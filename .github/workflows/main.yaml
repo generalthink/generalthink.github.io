@@ -37,12 +37,6 @@ jobs:
         npm install -g hexo-cli
         npm install
 
-    - name: Generate files
-      # 编译 markdown 文件
-      run: |
-        hexo clean
-        hexo generate
-
     - name: Deploy hexo blog
       env: 
         # Github 仓库
@@ -55,7 +49,12 @@ jobs:
         echo "$HEXO_DEPLOY_KEY" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
         ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
-        cd ./public && git init && git add .
-        git config user.name "generalthink"
-        git config user.email "general_go@163.com"
-        hexo deploy
+        git config --global user.name "generalthink"
+        git config --global user.email "general_go@163.com"
+        
+    - name: Generate files
+      # 编译 markdown 文件
+      run: |
+        hexo clean
+        hexo generate
+        hexo generate
