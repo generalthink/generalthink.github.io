@@ -58,6 +58,4 @@ jobs:
         cd ./public && git init && git add .
         git config user.name "generalthink"
         git config user.email "general_go@163.com"
-        git add .
-        git commit -m "GitHub Actions Auto Builder at $(date +'%Y-%m-%d %H:%M:%S')"
-        git push --force --quiet "https://github.com/generalthink/generalthink.github.io" master:master
+        hexo deploy
