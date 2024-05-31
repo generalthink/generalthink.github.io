@@ -107,5 +107,5 @@ search:
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: https://github.com/generalthink/generalthink.github.io
+  repo: git@github.com:generalthink/generalthink.github.io.git
   branch: master
