@@ -11,6 +11,7 @@ hi, bro, 最好的永远是官方文档: https://helm.sh/zh/docs/
 
 
 ### helm添加仓库
+```
 helm repo add  elastic  https://helm.elastic.co       
 helm repo add  gitlab   https://charts.gitlab.io       
 helm repo add  harbor   https://helm.goharbor.io
@@ -22,13 +23,14 @@ helm repo add aliyun https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts
 helm repo update       
 helm repo list
 
+```
 <!--more-->
 
 
 ### 搜索chart
 
-1. helm search repo traefik/traefik
-2. helm search repo nginx
+1. `helm search repo traefik/traefik`
+2. `helm search repo nginx`
 
 ### 安装或者查看出错时
 
@@ -36,19 +38,19 @@ helm repo list
 
 需要指定kubernetes api server地址,可以通过
 
-helm --kube-apiserver address
+`helm --kube-apiserver address`
 
 
 ### 安装chart
-1. helm repo update
-2. helm install bitnami/mysql --generate-name
+1. `helm repo update`
+2. `helm install bitnami/mysql --generate-name`
 > 在 Helm 3 中，必须主动指定release名称，或者增加 --generate-name 的参数使Helm自动生成
 
 ### 查看安装的chart
-1. helm list(helm ls)
+1. `helm list(helm ls)`
 
 ### 卸载chart
-1. helm uninstall mysql-xxx
+1. `helm uninstall mysql-xxx`
 
 
 
@@ -94,12 +96,12 @@ kubectl describe node
 
 ### 查看chart信息
 
-+. 查看基本信息: helm show chart traefik/traefik
-+. 查看所有信息: helm show all traefik/traefik
++. 查看基本信息: `helm show chart traefik/traefik`
++. 查看所有信息: `helm show all traefik/traefik`
 
 ### 查看chart的可配置选项
 
-1. helm show values traefik/traefik 
+1. `helm show values traefik/traefik`
 
 然后，你可以使用 YAML 格式的文件覆盖上述任意配置项，并在安装过程中使用该文件
 
@@ -113,9 +115,9 @@ kubectl describe node
 
 ### 创建并安装自己的charts
 
-1. helm create think-manifesto
-2. heml package think-manifesto
-3. helm install think-manifesto 上一步打包好的tgz包
+1. `helm create think-manifesto`
+2. `heml package think-manifesto`
+3. `helm install think-manifesto` 上一步打包好的tgz包
 
 ### debug chart而不安装
 
@@ -129,10 +131,10 @@ kubectl describe node
 
 ### 调试
 
-+ helm lint 是验证chart是否遵循最佳实践的首选工具。
++ `helm lin`t 是验证chart是否遵循最佳实践的首选工具。
 + `helm template --debug` 在本地测试渲染chart模板。
 + `helm install --dry-run --debug`：我们已经看到过这个技巧了，这是让服务器渲染模板的好方法，然后返回生成的清单文件。
-+ helm get manifest: 这是查看安装在服务器上的模板的好方法。
++ `helm get manifest`: 这是查看安装在服务器上的模板的好方法。
 
 `helm template --dry-run --debug --disable-openapi-validation thinkpro-test .\think-manifesto\`
 
