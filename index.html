@@ -1,0 +1,4085 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+
+
+
+
+  
+  
+  
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"manual","top_n_per_article":10,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="来都来了看看吧.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Zhu.Yang">
+<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:site_name" content="Zhu.Yang">
+<meta property="og:description" content="来都来了看看吧.">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="Zhu.Yang">
+<meta property="article:tag" content="Java,JVM,HBase,K8S,DevOps,MongoDB,大数据,设计模式,数据结构">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Zhu.Yang</title>
+  
+
+
+
+
+
+
+  <style>:root {
+  --body-bg-color: #fff;
+  --content-bg-color: #f5f5f5;
+  --card-bg-color: #f5f5f5;
+  --text-color: #555;
+  --blockquote-color: #666;
+  --link-color: #555;
+  --link-hover-color: #222;
+  --brand-color: #222;
+  --brand-hover-color: #222;
+  --table-row-odd-bg-color: #f9f9f9;
+  --table-row-hover-bg-color: #f5f5f5;
+  --menu-item-bg-color: #ddd;
+  --btn-default-bg: transparent;
+  --btn-default-color: var(--link-color);
+  --btn-default-border-color: var(--link-color);
+  --btn-default-hover-bg: transparent;
+  --btn-default-hover-color: var(--link-hover-color);
+  --btn-default-hover-border-color: var(--link-hover-color);
+}
+html {
+  line-height: 1.15; /* 1 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+}
+body {
+  margin: 0;
+}
+main {
+  display: block;
+}
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+hr {
+  box-sizing: content-box; /* 1 */
+  height: 0; /* 1 */
+  overflow: visible; /* 2 */
+}
+pre {
+  font-family: monospace, monospace; /* 1 */
+  font-size: 1em; /* 2 */
+}
+a {
+  background: transparent;
+}
+abbr[title] {
+  border-bottom: none; /* 1 */
+  text-decoration: underline; /* 2 */
+  text-decoration: underline dotted; /* 2 */
+}
+b,
+strong {
+  font-weight: bolder;
+}
+code,
+kbd,
+samp {
+  font-family: monospace, monospace; /* 1 */
+  font-size: 1em; /* 2 */
+}
+small {
+  font-size: 80%;
+}
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+sub {
+  bottom: -0.25em;
+}
+sup {
+  top: -0.5em;
+}
+img {
+  border-style: none;
+}
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit; /* 1 */
+  font-size: 100%; /* 1 */
+  line-height: 1.15; /* 1 */
+  margin: 0; /* 2 */
+}
+button,
+input {
+/* 1 */
+  overflow: visible;
+}
+button,
+select {
+/* 1 */
+  text-transform: none;
+}
+button,
+[type='button'],
+[type='reset'],
+[type='submit'] {
+  -webkit-appearance: button;
+}
+button::-moz-focus-inner,
+[type='button']::-moz-focus-inner,
+[type='reset']::-moz-focus-inner,
+[type='submit']::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+button:-moz-focusring,
+[type='button']:-moz-focusring,
+[type='reset']:-moz-focusring,
+[type='submit']:-moz-focusring {
+  outline: 1px dotted ButtonText;
+}
+fieldset {
+  padding: 0.35em 0.75em 0.625em;
+}
+legend {
+  box-sizing: border-box; /* 1 */
+  color: inherit; /* 2 */
+  display: table; /* 1 */
+  max-width: 100%; /* 1 */
+  padding: 0; /* 3 */
+  white-space: normal; /* 1 */
+}
+progress {
+  vertical-align: baseline;
+}
+textarea {
+  overflow: auto;
+}
+[type='checkbox'],
+[type='radio'] {
+  box-sizing: border-box; /* 1 */
+  padding: 0; /* 2 */
+}
+[type='number']::-webkit-inner-spin-button,
+[type='number']::-webkit-outer-spin-button {
+  height: auto;
+}
+[type='search'] {
+  outline-offset: -2px; /* 2 */
+  -webkit-appearance: textfield; /* 1 */
+}
+[type='search']::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+::-webkit-file-upload-button {
+  font: inherit; /* 2 */
+  -webkit-appearance: button; /* 1 */
+}
+details {
+  display: block;
+}
+summary {
+  display: list-item;
+}
+template {
+  display: none;
+}
+[hidden] {
+  display: none;
+}
+::selection {
+  background: #262a30;
+  color: #eee;
+}
+html,
+body {
+  height: 100%;
+}
+body {
+  background: var(--body-bg-color);
+  color: var(--text-color);
+  font-family: 'Noto Sans SC', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 1em;
+  line-height: 2;
+}
+@media (max-width: 991px) {
+  body {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Microsoft YaHei', 'Noto Sans SC', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-weight: bold;
+  line-height: 1.5;
+  margin: 20px 0 15px;
+}
+h1 {
+  font-size: 1.5em;
+}
+h2 {
+  font-size: 1.375em;
+}
+h3 {
+  font-size: 1.25em;
+}
+h4 {
+  font-size: 1.125em;
+}
+h5 {
+  font-size: 1em;
+}
+h6 {
+  font-size: 0.875em;
+}
+p {
+  margin: 0 0 20px 0;
+}
+a,
+span.exturl {
+  border-bottom: 1px solid #ccc;
+  color: var(--link-color);
+  outline: 0;
+  text-decoration: none;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  cursor: pointer;
+}
+a:hover,
+span.exturl:hover {
+  border-bottom-color: var(--link-hover-color);
+  color: var(--link-hover-color);
+}
+iframe,
+img,
+video {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100%;
+}
+hr {
+  background-image: repeating-linear-gradient(-45deg, #ddd, #ddd 4px, transparent 4px, transparent 8px);
+  border: 0;
+  height: 3px;
+  margin: 40px 0;
+}
+blockquote {
+  border-left: 4px solid #ddd;
+  color: var(--blockquote-color);
+  margin: 0;
+  padding: 0 15px;
+}
+blockquote cite::before {
+  content: '-';
+  padding: 0 5px;
+}
+dt {
+  font-weight: bold;
+}
+dd {
+  margin: 0;
+  padding: 0;
+}
+kbd {
+  background-color: #f5f5f5;
+  background-image: linear-gradient(#eee, #fff, #eee);
+  border: 1px solid #ccc;
+  border-radius: 0.2em;
+  box-shadow: 0.1em 0.1em 0.2em rgba(0,0,0,0.1);
+  color: #555;
+  font-family: inherit;
+  padding: 0.1em 0.3em;
+  white-space: nowrap;
+}
+.table-container {
+  overflow: auto;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-size: 0.875em;
+  margin: 0 0 20px 0;
+  width: 100%;
+}
+tbody tr:nth-of-type(odd) {
+  background: var(--table-row-odd-bg-color);
+}
+tbody tr:hover {
+  background: var(--table-row-hover-bg-color);
+}
+caption,
+th,
+td {
+  font-weight: normal;
+  padding: 8px;
+  vertical-align: middle;
+}
+th,
+td {
+  border: 1px solid #ddd;
+  border-bottom: 3px solid #ddd;
+}
+th {
+  font-weight: 700;
+  padding-bottom: 10px;
+}
+td {
+  border-bottom-width: 1px;
+}
+.btn {
+  background: var(--btn-default-bg);
+  border: 2px solid var(--btn-default-border-color);
+  border-radius: 0;
+  color: var(--btn-default-color);
+  display: inline-block;
+  font-size: 0.875em;
+  line-height: 2;
+  padding: 0 20px;
+  text-decoration: none;
+  transition-property: background-color;
+  transition-delay: 0s;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
+}
+.btn:hover {
+  background: var(--btn-default-hover-bg);
+  border-color: var(--btn-default-hover-border-color);
+  color: var(--btn-default-hover-color);
+}
+.btn + .btn {
+  margin: 0 0 8px 8px;
+}
+.btn .fa-fw {
+  text-align: left;
+  width: 1.285714285714286em;
+}
+.toggle {
+  line-height: 0;
+}
+.toggle .toggle-line {
+  background: #fff;
+  display: inline-block;
+  height: 2px;
+  left: 0;
+  position: relative;
+  top: 0;
+  transition: all 0.4s;
+  vertical-align: top;
+  width: 100%;
+}
+.toggle .toggle-line:not(:first-child) {
+  margin-top: 3px;
+}
+.toggle.toggle-arrow .toggle-line-first {
+  left: 50%;
+  top: 2px;
+  transform: rotate(45deg);
+  width: 50%;
+}
+.toggle.toggle-arrow .toggle-line-middle {
+  left: 2px;
+  width: 90%;
+}
+.toggle.toggle-arrow .toggle-line-last {
+  left: 50%;
+  top: -2px;
+  transform: rotate(-45deg);
+  width: 50%;
+}
+.toggle.toggle-close .toggle-line-first {
+  transform: rotate(-45deg);
+  top: 5px;
+}
+.toggle.toggle-close .toggle-line-middle {
+  opacity: 0;
+}
+.toggle.toggle-close .toggle-line-last {
+  transform: rotate(45deg);
+  top: -5px;
+}
+.highlight,
+pre {
+  background: #f7f7f7;
+  color: #4d4d4c;
+  line-height: 1.6;
+  margin: 0 auto 20px;
+}
+pre,
+code {
+  font-family: 'consolas', consolas, Menlo, monospace, "PingFang SC", "Microsoft YaHei";
+}
+code {
+  background: #eee;
+  border-radius: 3px;
+  color: #555;
+  padding: 2px 4px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+.highlight *::selection {
+  background: #d6d6d6;
+}
+.highlight pre {
+  border: 0;
+  margin: 0;
+  padding: 10px 0;
+}
+.highlight table {
+  border: 0;
+  margin: 0;
+  width: auto;
+}
+.highlight td {
+  border: 0;
+  padding: 0;
+}
+.highlight figcaption {
+  background: #eff2f3;
+  color: #4d4d4c;
+  display: flex;
+  font-size: 0.875em;
+  justify-content: space-between;
+  line-height: 1.2;
+  padding: 0.5em;
+}
+.highlight figcaption a {
+  color: #4d4d4c;
+}
+.highlight figcaption a:hover {
+  border-bottom-color: #4d4d4c;
+}
+.highlight .gutter {
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.highlight .gutter pre {
+  background: #eff2f3;
+  color: #869194;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-align: right;
+}
+.highlight .code pre {
+  background: #f7f7f7;
+  padding-left: 10px;
+  width: 100%;
+}
+.gist table {
+  width: auto;
+}
+.gist table td {
+  border: 0;
+}
+pre {
+  overflow: auto;
+  padding: 10px;
+}
+pre code {
+  background: none;
+  color: #4d4d4c;
+  font-size: 0.875em;
+  padding: 0;
+  text-shadow: none;
+}
+pre .deletion {
+  background: #fdd;
+}
+pre .addition {
+  background: #dfd;
+}
+pre .meta {
+  color: #eab700;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+pre .comment {
+  color: #8e908c;
+}
+pre .variable,
+pre .attribute,
+pre .tag,
+pre .name,
+pre .regexp,
+pre .ruby .constant,
+pre .xml .tag .title,
+pre .xml .pi,
+pre .xml .doctype,
+pre .html .doctype,
+pre .css .id,
+pre .css .class,
+pre .css .pseudo {
+  color: #c82829;
+}
+pre .number,
+pre .preprocessor,
+pre .built_in,
+pre .builtin-name,
+pre .literal,
+pre .params,
+pre .constant,
+pre .command {
+  color: #f5871f;
+}
+pre .ruby .class .title,
+pre .css .rules .attribute,
+pre .string,
+pre .symbol,
+pre .value,
+pre .inheritance,
+pre .header,
+pre .ruby .symbol,
+pre .xml .cdata,
+pre .special,
+pre .formula {
+  color: #718c00;
+}
+pre .title,
+pre .css .hexcolor {
+  color: #3e999f;
+}
+pre .function,
+pre .python .decorator,
+pre .python .title,
+pre .ruby .function .title,
+pre .ruby .title .keyword,
+pre .perl .sub,
+pre .javascript .title,
+pre .coffeescript .title {
+  color: #4271ae;
+}
+pre .keyword,
+pre .javascript .function {
+  color: #8959a8;
+}
+.blockquote-center {
+  border-left: none;
+  margin: 40px 0;
+  padding: 0;
+  position: relative;
+  text-align: center;
+}
+.blockquote-center .fa {
+  display: block;
+  opacity: 0.6;
+  position: absolute;
+  width: 100%;
+}
+.blockquote-center .fa-quote-left {
+  border-top: 1px solid #ccc;
+  text-align: left;
+  top: -20px;
+}
+.blockquote-center .fa-quote-right {
+  border-bottom: 1px solid #ccc;
+  text-align: right;
+  bottom: -20px;
+}
+.blockquote-center p,
+.blockquote-center div {
+  text-align: center;
+}
+.post-body .group-picture img {
+  margin: 0 auto;
+  padding: 0 3px;
+}
+.group-picture-row {
+  margin-bottom: 6px;
+  overflow: hidden;
+}
+.group-picture-column {
+  float: left;
+  margin-bottom: 10px;
+}
+.post-body .label {
+  color: #555;
+  display: inline;
+  padding: 0 2px;
+}
+.post-body .label.default {
+  background: #f0f0f0;
+}
+.post-body .label.primary {
+  background: #efe6f7;
+}
+.post-body .label.info {
+  background: #e5f2f8;
+}
+.post-body .label.success {
+  background: #e7f4e9;
+}
+.post-body .label.warning {
+  background: #fcf6e1;
+}
+.post-body .label.danger {
+  background: #fae8eb;
+}
+.post-body .tabs {
+  margin-bottom: 20px;
+}
+.post-body .tabs,
+.tabs-comment {
+  display: block;
+  padding-top: 10px;
+  position: relative;
+}
+.post-body .tabs ul.nav-tabs,
+.tabs-comment ul.nav-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  margin-bottom: -1px;
+  padding: 0;
+}
+@media (max-width: 413px) {
+  .post-body .tabs ul.nav-tabs,
+  .tabs-comment ul.nav-tabs {
+    display: block;
+    margin-bottom: 5px;
+  }
+}
+.post-body .tabs ul.nav-tabs li.tab,
+.tabs-comment ul.nav-tabs li.tab {
+  border-bottom: 1px solid #ddd;
+  border-left: 1px solid transparent;
+  border-right: 1px solid transparent;
+  border-top: 3px solid transparent;
+  flex-grow: 1;
+  list-style-type: none;
+  border-radius: 0 0 0 0;
+}
+@media (max-width: 413px) {
+  .post-body .tabs ul.nav-tabs li.tab,
+  .tabs-comment ul.nav-tabs li.tab {
+    border-bottom: 1px solid transparent;
+    border-left: 3px solid transparent;
+    border-right: 1px solid transparent;
+    border-top: 1px solid transparent;
+  }
+}
+@media (max-width: 413px) {
+  .post-body .tabs ul.nav-tabs li.tab,
+  .tabs-comment ul.nav-tabs li.tab {
+    border-radius: 0;
+  }
+}
+.post-body .tabs ul.nav-tabs li.tab a,
+.tabs-comment ul.nav-tabs li.tab a {
+  border-bottom: initial;
+  display: block;
+  line-height: 1.8;
+  outline: 0;
+  padding: 0.25em 0.75em;
+  text-align: center;
+  transition-delay: 0s;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-out;
+}
+.post-body .tabs ul.nav-tabs li.tab a i,
+.tabs-comment ul.nav-tabs li.tab a i {
+  width: 1.285714285714286em;
+}
+.post-body .tabs ul.nav-tabs li.tab.active,
+.tabs-comment ul.nav-tabs li.tab.active {
+  border-bottom: 1px solid transparent;
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  border-top: 3px solid #fc6423;
+}
+@media (max-width: 413px) {
+  .post-body .tabs ul.nav-tabs li.tab.active,
+  .tabs-comment ul.nav-tabs li.tab.active {
+    border-bottom: 1px solid #ddd;
+    border-left: 3px solid #fc6423;
+    border-right: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+  }
+}
+.post-body .tabs ul.nav-tabs li.tab.active a,
+.tabs-comment ul.nav-tabs li.tab.active a {
+  color: var(--link-color);
+  cursor: default;
+}
+.post-body .tabs .tab-content .tab-pane,
+.tabs-comment .tab-content .tab-pane {
+  border: 1px solid #ddd;
+  border-top: 0;
+  padding: 20px 20px 0 20px;
+  border-radius: 0;
+}
+.post-body .tabs .tab-content .tab-pane:not(.active),
+.tabs-comment .tab-content .tab-pane:not(.active) {
+  display: none;
+}
+.post-body .tabs .tab-content .tab-pane.active,
+.tabs-comment .tab-content .tab-pane.active {
+  display: block;
+}
+.post-body .tabs .tab-content .tab-pane.active:nth-of-type(1),
+.tabs-comment .tab-content .tab-pane.active:nth-of-type(1) {
+  border-radius: 0 0 0 0;
+}
+@media (max-width: 413px) {
+  .post-body .tabs .tab-content .tab-pane.active:nth-of-type(1),
+  .tabs-comment .tab-content .tab-pane.active:nth-of-type(1) {
+    border-radius: 0;
+  }
+}
+.post-body .note {
+  border-radius: 3px;
+  margin-bottom: 20px;
+  padding: 1em;
+  position: relative;
+  border: 1px solid #eee;
+  border-left-width: 5px;
+}
+.post-body .note h2,
+.post-body .note h3,
+.post-body .note h4,
+.post-body .note h5,
+.post-body .note h6 {
+  margin-top: 0;
+  border-bottom: initial;
+  margin-bottom: 0;
+  padding-top: 0;
+}
+.post-body .note p:first-child,
+.post-body .note ul:first-child,
+.post-body .note ol:first-child,
+.post-body .note table:first-child,
+.post-body .note pre:first-child,
+.post-body .note blockquote:first-child,
+.post-body .note img:first-child {
+  margin-top: 0;
+}
+.post-body .note p:last-child,
+.post-body .note ul:last-child,
+.post-body .note ol:last-child,
+.post-body .note table:last-child,
+.post-body .note pre:last-child,
+.post-body .note blockquote:last-child,
+.post-body .note img:last-child {
+  margin-bottom: 0;
+}
+.post-body .note.default {
+  border-left-color: #777;
+}
+.post-body .note.default h2,
+.post-body .note.default h3,
+.post-body .note.default h4,
+.post-body .note.default h5,
+.post-body .note.default h6 {
+  color: #777;
+}
+.post-body .note.primary {
+  border-left-color: #6f42c1;
+}
+.post-body .note.primary h2,
+.post-body .note.primary h3,
+.post-body .note.primary h4,
+.post-body .note.primary h5,
+.post-body .note.primary h6 {
+  color: #6f42c1;
+}
+.post-body .note.info {
+  border-left-color: #428bca;
+}
+.post-body .note.info h2,
+.post-body .note.info h3,
+.post-body .note.info h4,
+.post-body .note.info h5,
+.post-body .note.info h6 {
+  color: #428bca;
+}
+.post-body .note.success {
+  border-left-color: #5cb85c;
+}
+.post-body .note.success h2,
+.post-body .note.success h3,
+.post-body .note.success h4,
+.post-body .note.success h5,
+.post-body .note.success h6 {
+  color: #5cb85c;
+}
+.post-body .note.warning {
+  border-left-color: #f0ad4e;
+}
+.post-body .note.warning h2,
+.post-body .note.warning h3,
+.post-body .note.warning h4,
+.post-body .note.warning h5,
+.post-body .note.warning h6 {
+  color: #f0ad4e;
+}
+.post-body .note.danger {
+  border-left-color: #d9534f;
+}
+.post-body .note.danger h2,
+.post-body .note.danger h3,
+.post-body .note.danger h4,
+.post-body .note.danger h5,
+.post-body .note.danger h6 {
+  color: #d9534f;
+}
+.pdfobject-container iframe,
+.pdfobject-container embed {
+  height: 500px;
+  width: 100%;
+}
+.pagination .prev,
+.pagination .next,
+.pagination .page-number,
+.pagination .space {
+  display: inline-block;
+  margin: 0 10px;
+  padding: 0 11px;
+  position: relative;
+  top: -1px;
+}
+@media (max-width: 767px) {
+  .pagination .prev,
+  .pagination .next,
+  .pagination .page-number,
+  .pagination .space {
+    margin: 0 5px;
+  }
+}
+.pagination {
+  border-top: 1px solid #eee;
+  margin: 120px 0 0;
+  text-align: center;
+}
+.pagination .prev,
+.pagination .next,
+.pagination .page-number {
+  border-bottom: 0;
+  border-top: 1px solid #eee;
+  transition-property: border-color;
+  transition-delay: 0s;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
+}
+.pagination .prev:hover,
+.pagination .next:hover,
+.pagination .page-number:hover {
+  border-top-color: #222;
+}
+.pagination .space {
+  margin: 0;
+  padding: 0;
+}
+.pagination .prev {
+  margin-left: 0;
+}
+.pagination .next {
+  margin-right: 0;
+}
+.pagination .page-number.current {
+  background: #ccc;
+  border-top-color: #ccc;
+  color: #fff;
+}
+@media (max-width: 767px) {
+  .pagination {
+    border-top: none;
+  }
+  .pagination .prev,
+  .pagination .next,
+  .pagination .page-number {
+    border-bottom: 1px solid #eee;
+    border-top: 0;
+    margin-bottom: 10px;
+    padding: 0 10px;
+  }
+  .pagination .prev:hover,
+  .pagination .next:hover,
+  .pagination .page-number:hover {
+    border-bottom-color: #222;
+  }
+}
+.comments {
+  margin-top: 60px;
+  overflow: hidden;
+}
+.comment-button-group {
+  display: flex;
+  flex-wrap: wrap-reverse;
+  justify-content: center;
+  margin: 1em 0;
+}
+.comment-button-group .comment-button {
+  margin: 0.1em 0.2em;
+}
+.comment-button-group .comment-button.active {
+  background: var(--btn-default-hover-bg);
+  border-color: var(--btn-default-hover-border-color);
+  color: var(--btn-default-hover-color);
+}
+.comment-position {
+  display: none;
+}
+.comment-position.active {
+  display: block;
+}
+.tabs-comment {
+  background: var(--content-bg-color);
+  margin-top: 4em;
+  padding-top: 0;
+}
+.tabs-comment .comments {
+  border: 0;
+  box-shadow: none;
+  margin-top: 0;
+  padding-top: 0;
+}
+.container {
+  min-height: 100%;
+  position: relative;
+}
+.main-inner {
+  margin: 0 auto;
+  width: 700px;
+}
+@media (min-width: 1200px) {
+  .main-inner {
+    width: 800px;
+  }
+}
+@media (min-width: 1600px) {
+  .main-inner {
+    width: 900px;
+  }
+}
+@media (max-width: 767px) {
+  .content-wrap {
+    padding: 0 20px;
+  }
+}
+.header {
+  background: transparent;
+}
+.header-inner {
+  margin: 0 auto;
+  width: 700px;
+}
+@media (min-width: 1200px) {
+  .header-inner {
+    width: 800px;
+  }
+}
+@media (min-width: 1600px) {
+  .header-inner {
+    width: 900px;
+  }
+}
+.site-brand-container {
+  display: flex;
+  flex-shrink: 0;
+  padding: 0 10px;
+}
+.headband {
+  background: #222;
+  height: 3px;
+}
+.site-meta {
+  flex-grow: 1;
+  text-align: left;
+}
+@media (max-width: 767px) {
+  .site-meta {
+    text-align: center;
+  }
+}
+.brand {
+  border-bottom: none;
+  color: var(--brand-color);
+  display: inline-block;
+  line-height: 1.375em;
+  padding: 0 40px;
+  position: relative;
+}
+.brand:hover {
+  color: var(--brand-hover-color);
+}
+.site-title {
+  font-family: 'Microsoft YaHei', 'Noto Sans SC', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 1.375em;
+  font-weight: normal;
+  margin: 0;
+}
+.site-subtitle {
+  color: #999;
+  font-size: 0.8125em;
+  margin: 10px 0;
+}
+.use-motion .brand {
+  opacity: 0;
+}
+.use-motion .site-title,
+.use-motion .site-subtitle,
+.use-motion .custom-logo-image {
+  opacity: 0;
+  position: relative;
+  top: -10px;
+}
+.site-nav-toggle,
+.site-nav-right {
+  display: none;
+}
+@media (max-width: 767px) {
+  .site-nav-toggle,
+  .site-nav-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+.site-nav-toggle .toggle,
+.site-nav-right .toggle {
+  color: var(--text-color);
+  padding: 10px;
+  width: 22px;
+}
+.site-nav-toggle .toggle .toggle-line,
+.site-nav-right .toggle .toggle-line {
+  background: var(--text-color);
+  border-radius: 1px;
+}
+.site-nav {
+  display: block;
+}
+@media (max-width: 767px) {
+  .site-nav {
+    clear: both;
+    display: none;
+  }
+}
+.site-nav.site-nav-on {
+  display: block;
+}
+.menu {
+  margin-top: 20px;
+  padding-left: 0;
+  text-align: center;
+}
+.menu-item {
+  display: inline-block;
+  list-style: none;
+  margin: 0 10px;
+}
+@media (max-width: 767px) {
+  .menu-item {
+    display: block;
+    margin-top: 10px;
+  }
+  .menu-item.menu-item-search {
+    display: none;
+  }
+}
+.menu-item a,
+.menu-item span.exturl {
+  border-bottom: 0;
+  display: block;
+  font-size: 0.8125em;
+  transition-property: border-color;
+  transition-delay: 0s;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
+}
+@media (hover: none) {
+  .menu-item a:hover,
+  .menu-item span.exturl:hover {
+    border-bottom-color: transparent !important;
+  }
+}
+.menu-item .fa,
+.menu-item .fab,
+.menu-item .far,
+.menu-item .fas {
+  margin-right: 8px;
+}
+.menu-item .badge {
+  display: inline-block;
+  font-weight: bold;
+  line-height: 1;
+  margin-left: 0.35em;
+  margin-top: 0.35em;
+  text-align: center;
+  white-space: nowrap;
+}
+@media (max-width: 767px) {
+  .menu-item .badge {
+    float: right;
+    margin-left: 0;
+  }
+}
+.menu-item-active a,
+.menu .menu-item a:hover,
+.menu .menu-item span.exturl:hover {
+  background: var(--menu-item-bg-color);
+}
+.use-motion .menu-item {
+  opacity: 0;
+}
+.sidebar {
+  background: #222;
+  bottom: 0;
+  box-shadow: inset 0 2px 6px #000;
+  position: fixed;
+  top: 0;
+}
+@media (max-width: 991px) {
+  .sidebar {
+    display: none;
+  }
+}
+.sidebar-inner {
+  color: #999;
+  padding: 18px 10px;
+  text-align: center;
+}
+.cc-license {
+  margin-top: 10px;
+  text-align: center;
+}
+.cc-license .cc-opacity {
+  border-bottom: none;
+  opacity: 0.7;
+}
+.cc-license .cc-opacity:hover {
+  opacity: 0.9;
+}
+.cc-license img {
+  display: inline-block;
+}
+.site-author-image {
+  border: 2px solid #333;
+  display: block;
+  margin: 0 auto;
+  max-width: 96px;
+  padding: 2px;
+}
+.site-author-name {
+  color: #f5f5f5;
+  font-weight: normal;
+  margin: 5px 0 0;
+  text-align: center;
+}
+.site-description {
+  color: #999;
+  font-size: 1em;
+  margin-top: 5px;
+  text-align: center;
+}
+.links-of-author {
+  margin-top: 15px;
+}
+.links-of-author a,
+.links-of-author span.exturl {
+  border-bottom-color: #555;
+  display: inline-block;
+  font-size: 0.8125em;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+.links-of-author a::before,
+.links-of-author span.exturl::before {
+  background: #5d2d86;
+  border-radius: 50%;
+  content: ' ';
+  display: inline-block;
+  height: 4px;
+  margin-right: 3px;
+  vertical-align: middle;
+  width: 4px;
+}
+.sidebar-button {
+  margin-top: 15px;
+}
+.sidebar-button a {
+  border: 1px solid #fc6423;
+  border-radius: 4px;
+  color: #fc6423;
+  display: inline-block;
+  padding: 0 15px;
+}
+.sidebar-button a .fa,
+.sidebar-button a .fab,
+.sidebar-button a .far,
+.sidebar-button a .fas {
+  margin-right: 5px;
+}
+.sidebar-button a:hover {
+  background: #fc6423;
+  border: 1px solid #fc6423;
+  color: #fff;
+}
+.sidebar-button a:hover .fa,
+.sidebar-button a:hover .fab,
+.sidebar-button a:hover .far,
+.sidebar-button a:hover .fas {
+  color: #fff;
+}
+.links-of-blogroll {
+  font-size: 0.8125em;
+  margin-top: 10px;
+}
+.links-of-blogroll-title {
+  font-size: 0.875em;
+  font-weight: 600;
+  margin-top: 0;
+}
+.links-of-blogroll-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#sidebar-dimmer {
+  display: none;
+}
+@media (max-width: 767px) {
+  #sidebar-dimmer {
+    background: #000;
+    display: block;
+    height: 100%;
+    left: 100%;
+    opacity: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1100;
+  }
+  .sidebar-active + #sidebar-dimmer {
+    opacity: 0.7;
+    transform: translateX(-100%);
+    transition: opacity 0.5s;
+  }
+}
+.sidebar-nav {
+  margin: 0;
+  padding-bottom: 20px;
+  padding-left: 0;
+}
+.sidebar-nav li {
+  border-bottom: 1px solid transparent;
+  color: #666;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 0.875em;
+}
+.sidebar-nav li.sidebar-nav-overview {
+  margin-left: 10px;
+}
+.sidebar-nav li:hover {
+  color: #f5f5f5;
+}
+.sidebar-nav .sidebar-nav-active {
+  border-bottom-color: #87daff;
+  color: #87daff;
+}
+.sidebar-nav .sidebar-nav-active:hover {
+  color: #87daff;
+}
+.sidebar-panel {
+  display: none;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.sidebar-panel-active {
+  display: block;
+}
+.sidebar-toggle {
+  background: #222;
+  bottom: 45px;
+  cursor: pointer;
+  height: 14px;
+  left: 30px;
+  padding: 5px;
+  position: fixed;
+  width: 14px;
+  z-index: 1300;
+}
+@media (max-width: 991px) {
+  .sidebar-toggle {
+    left: 20px;
+    opacity: 0.8;
+    display: none;
+  }
+}
+.sidebar-toggle:hover .toggle-line {
+  background: #87daff;
+}
+.post-toc {
+  font-size: 0.875em;
+}
+.post-toc ol {
+  list-style: none;
+  margin: 0;
+  padding: 0 2px 5px 10px;
+  text-align: left;
+}
+.post-toc ol > ol {
+  padding-left: 0;
+}
+.post-toc ol a {
+  transition-property: all;
+  transition-delay: 0s;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
+}
+.post-toc .nav-item {
+  line-height: 1.8;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.post-toc .nav .nav-child {
+  display: none;
+}
+.post-toc .nav .active > .nav-child {
+  display: block;
+}
+.post-toc .nav .active-current > .nav-child {
+  display: block;
+}
+.post-toc .nav .active-current > .nav-child > .nav-item {
+  display: block;
+}
+.post-toc .nav .active > a {
+  border-bottom-color: #87daff;
+  color: #87daff;
+}
+.post-toc .nav .active-current > a {
+  color: #87daff;
+}
+.post-toc .nav .active-current > a:hover {
+  color: #87daff;
+}
+.site-state {
+  display: flex;
+  justify-content: center;
+  line-height: 1.4;
+  margin-top: 10px;
+  overflow: hidden;
+  text-align: center;
+  white-space: nowrap;
+}
+.site-state-item {
+  padding: 0 15px;
+}
+.site-state-item:not(:first-child) {
+  border-left: 1px solid #333;
+}
+.site-state-item a {
+  border-bottom: none;
+}
+.site-state-item-count {
+  display: block;
+  font-size: 1em;
+  font-weight: 600;
+  text-align: center;
+}
+.site-state-item-name {
+  color: inherit;
+  font-size: 0.875em;
+}
+.footer {
+  color: #999;
+  font-size: 0.875em;
+  padding: 20px 0;
+}
+.footer.footer-fixed {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+}
+.footer-inner {
+  box-sizing: border-box;
+  margin: 0 auto;
+  text-align: center;
+  width: 700px;
+}
+@media (min-width: 1200px) {
+  .footer-inner {
+    width: 800px;
+  }
+}
+@media (min-width: 1600px) {
+  .footer-inner {
+    width: 900px;
+  }
+}
+.languages {
+  display: inline-block;
+  font-size: 1em;
+  position: relative;
+}
+.languages .lang-select-label span {
+  margin: 0 0.5em;
+}
+.languages .lang-select {
+  height: 100%;
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+.with-love {
+  color: #ff0000;
+  display: inline-block;
+  margin: 0 5px;
+}
+.powered-by,
+.theme-info {
+  display: inline-block;
+}
+@-moz-keyframes iconAnimate {
+  0%, 100% {
+    transform: scale(1);
+  }
+  10%, 30% {
+    transform: scale(0.9);
+  }
+  20%, 40%, 60%, 80% {
+    transform: scale(1.1);
+  }
+  50%, 70% {
+    transform: scale(1.1);
+  }
+}
+@-webkit-keyframes iconAnimate {
+  0%, 100% {
+    transform: scale(1);
+  }
+  10%, 30% {
+    transform: scale(0.9);
+  }
+  20%, 40%, 60%, 80% {
+    transform: scale(1.1);
+  }
+  50%, 70% {
+    transform: scale(1.1);
+  }
+}
+@-o-keyframes iconAnimate {
+  0%, 100% {
+    transform: scale(1);
+  }
+  10%, 30% {
+    transform: scale(0.9);
+  }
+  20%, 40%, 60%, 80% {
+    transform: scale(1.1);
+  }
+  50%, 70% {
+    transform: scale(1.1);
+  }
+}
+@keyframes iconAnimate {
+  0%, 100% {
+    transform: scale(1);
+  }
+  10%, 30% {
+    transform: scale(0.9);
+  }
+  20%, 40%, 60%, 80% {
+    transform: scale(1.1);
+  }
+  50%, 70% {
+    transform: scale(1.1);
+  }
+}
+.back-to-top {
+  font-size: 12px;
+  text-align: center;
+  transition-delay: 0s;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
+}
+.back-to-top {
+  background: #222;
+  bottom: -100px;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  left: 30px;
+  opacity: 1;
+  padding: 0 6px;
+  position: fixed;
+  transition-property: bottom;
+  z-index: 1300;
+  width: 24px;
+}
+.back-to-top span {
+  display: none;
+}
+.back-to-top:hover {
+  color: #87daff;
+}
+.back-to-top.back-to-top-on {
+  bottom: 19px;
+}
+@media (max-width: 991px) {
+  .back-to-top {
+    left: 20px;
+    opacity: 0.8;
+  }
+}
+.reading-progress-bar {
+  background: #37c6c0;
+  display: block;
+  height: 3px;
+  left: 0;
+  position: fixed;
+  width: 0;
+  z-index: 1500;
+  top: 0;
+}
+.post-body {
+  font-family: 'Noto Sans SC', 'Noto Sans SC', "PingFang SC", "Microsoft YaHei", sans-serif;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+@media (min-width: 1200px) {
+  .post-body {
+    font-size: 1em;
+  }
+}
+.post-body .exturl .fa {
+  font-size: 0.875em;
+  margin-left: 4px;
+}
+.post-body .image-caption,
+.post-body .figure .caption {
+  color: #999;
+  font-size: 0.875em;
+  font-weight: bold;
+  line-height: 1;
+  margin: -20px auto 15px;
+  text-align: center;
+}
+.post-sticky-flag {
+  display: inline-block;
+  transform: rotate(30deg);
+}
+.post-button {
+  margin-top: 40px;
+  text-align: center;
+}
+.use-motion .post-block,
+.use-motion .pagination,
+.use-motion .comments {
+  opacity: 0;
+}
+.use-motion .post-header {
+  opacity: 0;
+}
+.use-motion .post-body {
+  opacity: 0;
+}
+.use-motion .collection-header {
+  opacity: 0;
+}
+.posts-collapse {
+  margin-left: 35px;
+  position: relative;
+}
+@media (max-width: 767px) {
+  .posts-collapse {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+}
+.posts-collapse .collection-title {
+  font-size: 1em;
+  position: relative;
+}
+.posts-collapse .collection-title::before {
+  background: #999;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  content: ' ';
+  height: 10px;
+  left: 0;
+  margin-left: -6px;
+  margin-top: -4px;
+  position: absolute;
+  top: 50%;
+  width: 10px;
+}
+.posts-collapse .collection-year {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin: 60px 0;
+  position: relative;
+}
+.posts-collapse .collection-year::before {
+  background: #bbb;
+  border-radius: 50%;
+  content: ' ';
+  height: 8px;
+  left: 0;
+  margin-left: -4px;
+  margin-top: -4px;
+  position: absolute;
+  top: 50%;
+  width: 8px;
+}
+.posts-collapse .collection-header {
+  display: block;
+  margin: 0 0 0 20px;
+}
+.posts-collapse .collection-header small {
+  color: #bbb;
+  margin-left: 5px;
+}
+.posts-collapse .post-header {
+  border-bottom: 1px dashed #ccc;
+  margin: 30px 0;
+  padding-left: 15px;
+  position: relative;
+  transition-property: border;
+  transition-delay: 0s;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
+}
+.posts-collapse .post-header::before {
+  background: #bbb;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  content: ' ';
+  height: 6px;
+  left: 0;
+  margin-left: -4px;
+  position: absolute;
+  top: 0.75em;
+  transition-property: background;
+  width: 6px;
+  transition-delay: 0s;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
+}
+.posts-collapse .post-header:hover {
+  border-bottom-color: #666;
+}
+.posts-collapse .post-header:hover::before {
+  background: #222;
+}
+.posts-collapse .post-meta {
+  display: inline;
+  font-size: 0.75em;
+  margin-right: 10px;
+}
+.posts-collapse .post-title {
+  display: inline;
+}
+.posts-collapse .post-title a,
+.posts-collapse .post-title span.exturl {
+  border-bottom: none;
+  color: var(--link-color);
+}
+.posts-collapse .post-title .fa-external-link-alt {
+  font-size: 0.875em;
+  margin-left: 5px;
+}
+.posts-collapse::before {
+  background: #f5f5f5;
+  content: ' ';
+  height: 100%;
+  left: 0;
+  margin-left: -2px;
+  position: absolute;
+  top: 1.25em;
+  width: 4px;
+}
+.post-eof {
+  background: #ccc;
+  height: 1px;
+  margin: 80px auto 60px;
+  text-align: center;
+  width: 8%;
+}
+.post-block:last-of-type .post-eof {
+  display: none;
+}
+.content {
+  padding-top: 40px;
+}
+@media (min-width: 992px) {
+  .post-body {
+    text-align: justify;
+  }
+}
+@media (max-width: 991px) {
+  .post-body {
+    text-align: justify;
+  }
+}
+.post-body h1,
+.post-body h2,
+.post-body h3,
+.post-body h4,
+.post-body h5,
+.post-body h6 {
+  padding-top: 10px;
+}
+.post-body h1 .header-anchor,
+.post-body h2 .header-anchor,
+.post-body h3 .header-anchor,
+.post-body h4 .header-anchor,
+.post-body h5 .header-anchor,
+.post-body h6 .header-anchor {
+  border-bottom-style: none;
+  color: #ccc;
+  float: right;
+  margin-left: 10px;
+  visibility: hidden;
+}
+.post-body h1 .header-anchor:hover,
+.post-body h2 .header-anchor:hover,
+.post-body h3 .header-anchor:hover,
+.post-body h4 .header-anchor:hover,
+.post-body h5 .header-anchor:hover,
+.post-body h6 .header-anchor:hover {
+  color: inherit;
+}
+.post-body h1:hover .header-anchor,
+.post-body h2:hover .header-anchor,
+.post-body h3:hover .header-anchor,
+.post-body h4:hover .header-anchor,
+.post-body h5:hover .header-anchor,
+.post-body h6:hover .header-anchor {
+  visibility: visible;
+}
+.post-body iframe,
+.post-body img,
+.post-body video {
+  margin-bottom: 20px;
+}
+.post-body .video-container {
+  height: 0;
+  margin-bottom: 20px;
+  overflow: hidden;
+  padding-top: 75%;
+  position: relative;
+  width: 100%;
+}
+.post-body .video-container iframe,
+.post-body .video-container object,
+.post-body .video-container embed {
+  height: 100%;
+  left: 0;
+  margin: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+.post-gallery {
+  align-items: center;
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: 1fr 1fr 1fr;
+  margin-bottom: 20px;
+}
+@media (max-width: 767px) {
+  .post-gallery {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.post-gallery a {
+  border: 0;
+}
+.post-gallery img {
+  margin: 0;
+}
+.posts-expand .post-header {
+  font-size: 1em;
+}
+.posts-expand .post-title {
+  font-size: 1.5em;
+  font-weight: normal;
+  margin: initial;
+  text-align: center;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+.posts-expand .post-title-link {
+  border-bottom: none;
+  color: var(--link-color);
+  display: inline-block;
+  position: relative;
+  vertical-align: top;
+}
+.posts-expand .post-title-link::before {
+  background: var(--link-color);
+  bottom: 0;
+  content: '';
+  height: 2px;
+  left: 0;
+  position: absolute;
+  transform: scaleX(0);
+  visibility: hidden;
+  width: 100%;
+  transition-delay: 0s;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
+}
+.posts-expand .post-title-link:hover::before {
+  transform: scaleX(1);
+  visibility: visible;
+}
+.posts-expand .post-title-link .fa-external-link-alt {
+  font-size: 0.875em;
+  margin-left: 5px;
+}
+.posts-expand .post-meta {
+  color: #999;
+  font-family: 'Noto Sans SC', 'Noto Sans SC', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 0.75em;
+  margin: 3px 0 60px 0;
+  text-align: center;
+}
+.posts-expand .post-meta .post-description {
+  font-size: 0.875em;
+  margin-top: 2px;
+}
+.posts-expand .post-meta time {
+  border-bottom: 1px dashed #999;
+  cursor: pointer;
+}
+.post-meta .post-meta-item + .post-meta-item::before {
+  content: '|';
+  margin: 0 0.5em;
+}
+.post-meta-divider {
+  margin: 0 0.5em;
+}
+.post-meta-item-icon {
+  margin-right: 3px;
+}
+@media (max-width: 991px) {
+  .post-meta-item-icon {
+    display: inline-block;
+  }
+}
+@media (max-width: 991px) {
+  .post-meta-item-text {
+    display: none;
+  }
+}
+.post-nav {
+  border-top: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+  padding: 10px 5px 0;
+}
+.post-nav-item {
+  flex: 1;
+}
+.post-nav-item a {
+  border-bottom: none;
+  display: block;
+  font-size: 0.875em;
+  line-height: 1.6;
+  position: relative;
+}
+.post-nav-item a:active {
+  top: 2px;
+}
+.post-nav-item .fa {
+  font-size: 0.75em;
+}
+.post-nav-item:first-child {
+  margin-right: 15px;
+}
+.post-nav-item:first-child .fa {
+  margin-right: 5px;
+}
+.post-nav-item:last-child {
+  margin-left: 15px;
+  text-align: right;
+}
+.post-nav-item:last-child .fa {
+  margin-left: 5px;
+}
+.rtl.post-body p,
+.rtl.post-body a,
+.rtl.post-body h1,
+.rtl.post-body h2,
+.rtl.post-body h3,
+.rtl.post-body h4,
+.rtl.post-body h5,
+.rtl.post-body h6,
+.rtl.post-body li,
+.rtl.post-body ul,
+.rtl.post-body ol {
+  direction: rtl;
+  font-family: UKIJ Ekran;
+}
+.rtl.post-title {
+  font-family: UKIJ Ekran;
+}
+.post-tags {
+  margin-top: 40px;
+  text-align: center;
+}
+.post-tags a {
+  display: inline-block;
+  font-size: 0.8125em;
+}
+.post-tags a:not(:last-child) {
+  margin-right: 10px;
+}
+.post-widgets {
+  border-top: 1px solid #eee;
+  margin-top: 15px;
+  text-align: center;
+}
+.wp_rating {
+  height: 20px;
+  line-height: 20px;
+  margin-top: 10px;
+  padding-top: 6px;
+  text-align: center;
+}
+.social-like {
+  display: flex;
+  font-size: 0.875em;
+  justify-content: center;
+  text-align: center;
+}
+.reward-container {
+  margin: 20px auto;
+  padding: 10px 0;
+  text-align: center;
+  width: 90%;
+}
+.reward-container button {
+  background: transparent;
+  border: 1px solid #fc6423;
+  border-radius: 0;
+  color: #fc6423;
+  cursor: pointer;
+  line-height: 2;
+  outline: 0;
+  padding: 0 15px;
+  vertical-align: text-top;
+}
+.reward-container button:hover {
+  background: #fc6423;
+  border: 1px solid transparent;
+  color: #fa9366;
+}
+#qr {
+  padding-top: 20px;
+}
+#qr a {
+  border: 0;
+}
+#qr img {
+  display: inline-block;
+  margin: 0.8em 2em 0 2em;
+  max-width: 100%;
+  width: 180px;
+}
+#qr p {
+  text-align: center;
+}
+.followme {
+  align-items: center;
+  background: var(--card-bg-color);
+  border-left: 3px solid #ff2a2a;
+  color: #bbb;
+  margin: 2em 0 1em 0;
+  padding: 1em 1.5em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.followme .social-list {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+}
+.followme .social-list .social-item {
+  margin: 0.5em 2em;
+}
+@media (max-width: 991px) {
+  .followme .social-list .social-item {
+    margin: 0.5em 0.75em;
+  }
+}
+.followme .social-list .social-link {
+  border: 0;
+  display: inline-block;
+  text-align: center;
+}
+.followme .social-list .social-link .icon {
+  font-size: 1.75em;
+  height: 1.75em;
+  width: 1.75em;
+}
+.followme .social-list .social-link .label {
+  display: block;
+  font-size: 14px;
+}
+.category-all-page .category-all-title {
+  text-align: center;
+}
+.category-all-page .category-all {
+  margin-top: 20px;
+}
+.category-all-page .category-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.category-all-page .category-list-item {
+  margin: 5px 10px;
+}
+.category-all-page .category-list-count {
+  color: #bbb;
+}
+.category-all-page .category-list-count::before {
+  content: ' (';
+  display: inline;
+}
+.category-all-page .category-list-count::after {
+  content: ') ';
+  display: inline;
+}
+.category-all-page .category-list-child {
+  padding-left: 10px;
+}
+.event-list {
+  padding: 0;
+}
+.event-list hr {
+  background: #222;
+  margin: 20px 0 45px 0;
+}
+.event-list hr::after {
+  background: #222;
+  color: #fff;
+  content: 'NOW';
+  display: inline-block;
+  font-weight: bold;
+  padding: 0 5px;
+  text-align: right;
+}
+.event-list .event {
+  background: #222;
+  margin: 20px 0;
+  min-height: 40px;
+  padding: 15px 0 15px 10px;
+}
+.event-list .event .event-summary {
+  color: #fff;
+  margin: 0;
+  padding-bottom: 3px;
+}
+.event-list .event .event-summary::before {
+  animation: dot-flash 1s alternate infinite ease-in-out;
+  color: #fff;
+  content: '\f111';
+  display: inline-block;
+  font-size: 10px;
+  margin-right: 25px;
+  vertical-align: middle;
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+}
+.event-list .event .event-relative-time {
+  color: #bbb;
+  display: inline-block;
+  font-size: 12px;
+  font-weight: normal;
+  padding-left: 12px;
+}
+.event-list .event .event-details {
+  color: #fff;
+  display: block;
+  line-height: 18px;
+  margin-left: 56px;
+  padding-bottom: 6px;
+  padding-top: 3px;
+  text-indent: -24px;
+}
+.event-list .event .event-details::before {
+  color: #fff;
+  display: inline-block;
+  margin-right: 9px;
+  text-align: center;
+  text-indent: 0;
+  width: 14px;
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+}
+.event-list .event .event-details.event-location::before {
+  content: '\f041';
+}
+.event-list .event .event-details.event-duration::before {
+  content: '\f017';
+}
+.event-list .event-past {
+  background: #f5f5f5;
+}
+.event-list .event-past .event-summary,
+.event-list .event-past .event-details {
+  color: #bbb;
+  opacity: 0.9;
+}
+.event-list .event-past .event-summary::before,
+.event-list .event-past .event-details::before {
+  animation: none;
+  color: #bbb;
+}
+@-moz-keyframes dot-flash {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+@-webkit-keyframes dot-flash {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+@-o-keyframes dot-flash {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+@keyframes dot-flash {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+ul.breadcrumb {
+  font-size: 0.75em;
+  list-style: none;
+  margin: 1em 0;
+  padding: 0 2em;
+  text-align: center;
+}
+ul.breadcrumb li {
+  display: inline;
+}
+ul.breadcrumb li + li::before {
+  content: '/\00a0';
+  font-weight: normal;
+  padding: 0.5em;
+}
+ul.breadcrumb li + li:last-child {
+  font-weight: bold;
+}
+.tag-cloud {
+  text-align: center;
+}
+.tag-cloud a {
+  display: inline-block;
+  margin: 10px;
+}
+.tag-cloud a:hover {
+  color: var(--link-hover-color) !important;
+}
+.search-pop-overlay {
+  background: rgba(0,0,0,0);
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  transition: visibility 0s linear 0.2s, background 0.2s;
+  visibility: hidden;
+  width: 100%;
+  z-index: 1400;
+}
+.search-pop-overlay.search-active {
+  background: rgba(0,0,0,0.3);
+  transition: background 0.2s;
+  visibility: visible;
+}
+.search-popup {
+  background: var(--card-bg-color);
+  border-radius: 5px;
+  height: 80%;
+  left: calc(50% - 350px);
+  position: fixed;
+  top: 10%;
+  transform: scale(0);
+  transition: transform 0.2s;
+  width: 700px;
+  z-index: 1500;
+}
+.search-active .search-popup {
+  transform: scale(1);
+}
+@media (max-width: 767px) {
+  .search-popup {
+    border-radius: 0;
+    height: 100%;
+    left: 0;
+    margin: 0;
+    top: 0;
+    width: 100%;
+  }
+}
+.search-popup .search-icon,
+.search-popup .popup-btn-close {
+  color: #999;
+  font-size: 18px;
+  padding: 0 10px;
+}
+.search-popup .popup-btn-close {
+  cursor: pointer;
+}
+.search-popup .popup-btn-close:hover .fa {
+  color: #222;
+}
+.search-popup .search-header {
+  background: #eee;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  display: flex;
+  padding: 5px;
+}
+.search-popup input.search-input {
+  background: transparent;
+  border: 0;
+  outline: 0;
+  width: 100%;
+}
+.search-popup input.search-input::-webkit-search-cancel-button {
+  display: none;
+}
+.search-popup .search-input-container {
+  flex-grow: 1;
+  padding: 2px;
+}
+.search-popup ul.search-result-list {
+  margin: 0 5px;
+  padding: 0;
+  width: 100%;
+}
+.search-popup p.search-result {
+  border-bottom: 1px dashed #ccc;
+  padding: 5px 0;
+}
+.search-popup a.search-result-title {
+  font-weight: bold;
+}
+.search-popup .search-keyword {
+  border-bottom: 1px dashed #ff2a2a;
+  color: #ff2a2a;
+  font-weight: bold;
+}
+.search-popup #search-result {
+  display: flex;
+  height: calc(100% - 55px);
+  overflow: auto;
+  padding: 5px 25px;
+}
+.search-popup #no-result {
+  color: #ccc;
+  margin: auto;
+}
+hr {
+  height: 2px;
+  margin: 20px 0;
+}
+.btn {
+  padding: 0 10px;
+}
+.headband {
+  display: none;
+}
+.main-inner {
+  padding-bottom: 80px;
+}
+@media (max-width: 767px) {
+  .main-inner {
+    width: auto;
+  }
+}
+.content {
+  padding-top: 80px;
+}
+@media (max-width: 767px) {
+  .content {
+    padding-top: 60px;
+  }
+}
+.pagination {
+  margin: 120px 0 0;
+  text-align: left;
+}
+@media (max-width: 767px) {
+  .pagination {
+    margin: 80px 10px 0;
+    text-align: center;
+  }
+}
+.footer {
+  background: var(--content-bg-color);
+  color: var(--text-color);
+  padding: 10px 0;
+}
+.footer-inner {
+  text-align: left;
+}
+@media (max-width: 767px) {
+  .footer-inner {
+    text-align: center;
+    width: auto;
+  }
+}
+.header {
+  background: var(--content-bg-color);
+}
+.header-inner {
+  align-items: center;
+  display: flex;
+  padding: 20px 0;
+}
+@media (max-width: 767px) {
+  .header-inner {
+    display: block;
+    padding: 10px 0;
+    width: auto;
+  }
+}
+.site-meta {
+  line-height: normal;
+}
+.site-meta .brand {
+  padding: 2px 1px;
+}
+@media (max-width: 767px) {
+  .site-meta .brand {
+    display: block;
+  }
+}
+.site-meta .site-title {
+  font-weight: bolder;
+}
+.logo-line-before,
+.logo-line-after {
+  display: block;
+  margin: 0 auto;
+  overflow: hidden;
+  width: 75%;
+}
+@media (max-width: 767px) {
+  .logo-line-before,
+  .logo-line-after {
+    display: none;
+  }
+}
+.logo-line-before i,
+.logo-line-after i {
+  background: var(--brand-color);
+  display: block;
+  height: 2px;
+  position: relative;
+}
+.use-motion .logo-line-before i {
+  left: -100%;
+}
+.use-motion .logo-line-after i {
+  right: -100%;
+}
+.site-subtitle {
+  display: none;
+}
+.site-nav {
+  flex-grow: 1;
+}
+@media (max-width: 767px) {
+  .site-nav {
+    padding: 10px 10px 0;
+  }
+}
+.menu {
+  margin: 0;
+}
+.menu .menu-item {
+  margin: 0;
+}
+@media (max-width: 767px) {
+  .menu .menu-item {
+    margin-top: 5px;
+  }
+}
+.menu .menu-item a,
+.menu .menu-item span.exturl {
+  border-radius: 2px;
+  padding: 0 10px;
+  transition-property: background;
+}
+@media (max-width: 767px) {
+  .menu .menu-item a,
+  .menu .menu-item span.exturl {
+    text-align: left;
+  }
+}
+.menu .menu-item .badge {
+  background: #fff;
+  border-radius: 10px;
+  color: #555;
+  padding: 1px 4px;
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.1);
+}
+.posts-expand.index .post-title,
+.posts-expand.index .post-meta {
+  text-align: left;
+}
+@media (max-width: 767px) {
+  .posts-expand.index .post-title,
+  .posts-expand.index .post-meta {
+    text-align: center;
+  }
+}
+.posts-expand.index .post-meta {
+  margin: 5px 0 20px 0;
+}
+.posts-expand .post-eof {
+  display: none;
+}
+.posts-expand .post-block:not(:first-child) {
+  margin-top: 120px;
+}
+.posts-expand .post-title,
+.posts-expand .post-meta {
+  text-align: center;
+}
+.posts-expand .post-body img {
+  margin-left: 0;
+}
+.posts-expand .post-tags {
+  text-align: left;
+}
+.posts-expand .post-tags a {
+  background: #f5f5f5;
+  border-bottom: none;
+  padding: 1px 5px;
+}
+.posts-expand .post-tags a:hover {
+  background: #ccc;
+}
+.posts-expand .post-nav {
+  margin-top: 40px;
+}
+.post-button {
+  margin-top: 20px;
+  text-align: left;
+}
+.post-button .btn {
+  background: none;
+  border: 0;
+  border-bottom: 2px solid var(--btn-default-border-color);
+  padding: 0;
+  transition-property: border;
+}
+.post-button .btn:hover {
+  border-bottom-color: var(--btn-default-hover-border-color);
+}
+.sidebar {
+  left: -320px;
+}
+.sidebar.sidebar-active {
+  left: 0;
+}
+.sidebar {
+  width: 320px;
+  z-index: 1200;
+  transition-delay: 0s;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-out;
+}
+.sidebar a,
+.sidebar span.exturl {
+  border-bottom-color: #555;
+  color: #999;
+}
+.sidebar a:hover,
+.sidebar span.exturl:hover {
+  border-bottom-color: #eee;
+  color: #eee;
+}
+.links-of-blogroll-item {
+  padding: 2px 10px;
+}
+.links-of-blogroll-item a,
+.links-of-blogroll-item span.exturl {
+  box-sizing: border-box;
+  display: inline-block;
+  max-width: 280px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.sub-menu {
+  margin: 10px 0;
+}
+.sub-menu .menu-item {
+  display: inline-block;
+}
+</style><noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Zhu.Yang" type="application/atom+xml">
+<script>function loadCss(l){var d=document,h=d.head,s=d.createElement('link');s.rel='stylesheet';s.href=l;!function e(f){if (d.body)return f();setTimeout(function(){e(f)})}(function(){h.appendChild(s);});}loadCss('/style.css');loadCss('//fonts.googleapis.com/css?family=Noto Sans SC:300,300italic,400,400italic,700,700italic|Microsoft YaHei:300,300italic,400,400italic,700,700italic|consolas:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext');loadCss('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css');loadCss('//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css');</script><noscript><link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto Sans SC:300,300italic,400,400italic,700,700italic|Microsoft YaHei:300,300italic,400,400italic,700,700italic|consolas:300,300italic,400,400italic,700,700italic&amp;display=swap&amp;subset=latin,latin-ext"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css"></noscript></head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Zhu.Yang</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">朱阳的个人博客(公众号:think123)</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" placeholder="搜索..." spellcheck="false" type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2024/09/23/mysql-index-optimize-method/">
+
+    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Zhu.Yang">
+      <meta itemprop="description" content="来都来了看看吧.">
+    </span>
+
+    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhu.Yang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/09/23/mysql-index-optimize-method/" class="post-title-link" itemprop="url">mysql-index-optimize-method</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-09-23 10:03:44" itemprop="dateCreated datePublished" datetime="2024-09-23T10:03:44+08:00">2024-09-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-11-13 10:21:33" itemprop="dateModified" datetime="2024-11-13T10:21:33+08:00">2024-11-13</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 ≈</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>·</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2024/09/19/how-to-record-log/">
+
+    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Zhu.Yang">
+      <meta itemprop="description" content="来都来了看看吧.">
+    </span>
+
+    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhu.Yang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/09/19/how-to-record-log/" class="post-title-link" itemprop="url">工作8年,你就是这样记日志的？</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-09-19 17:05:40" itemprop="dateCreated datePublished" datetime="2024-09-19T17:05:40+08:00">2024-09-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-11-13 10:21:33" itemprop="dateModified" datetime="2024-11-13T10:21:33+08:00">2024-11-13</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 ≈</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>平常在写代码的过程中,我们经常需要记录日志,具体的日志实现我们可以使用logback, log4j, log4j2等。 但是一般我们会通过日志门面来记录日志，比如通过SLF4J或者apache commons logging。 无论使用哪种方式记录日志都不在我们这篇文章的讨论范围内。</p>
+<p>如果你对它们如何找到真正的日志实现感兴趣，可以看看我<a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903936780926989">之前的文章</a>。</p>
+<h3 id="日志怎么记录"><a href="#日志怎么记录" class="headerlink" title="日志怎么记录"></a>日志怎么记录</h3><p>日志分为6种，每种级别实际上有不同的应对场景，但是说实话我在项目中看到最多的永远是INFO, ERROR级别。</p>
+<p>几乎没有怎么见到业务系统中有其他级别。 DEBUG的日志在集成的各个框架中是比较多见的。</p>
+<p>日志应该是帮助我们定位问题的，所以日志怎么记录其实很关键。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/09/19/how-to-record-log/#more" rel="contents">
+                阅读全文 »
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2024/06/05/multi-profile-in-springboot/">
+
+    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Zhu.Yang">
+      <meta itemprop="description" content="来都来了看看吧.">
+    </span>
+
+    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhu.Yang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/06/05/multi-profile-in-springboot/" class="post-title-link" itemprop="url">SpringBoot中使用profile的几种方式</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-06-05 09:58:23" itemprop="dateCreated datePublished" datetime="2024-06-05T09:58:23+08:00">2024-06-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-11-13 10:21:33" itemprop="dateModified" datetime="2024-11-13T10:21:33+08:00">2024-11-13</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 ≈</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>最近项目中进行仓库拆分了之后,因为引入了公共包,所以就存在可能有snapshot版本以及release版本问题,比如我想要在dev环境的时候import snapshot版本,prod环境的时候又使用release版本，为了不频繁修改pom.xml文件，因此决定使用POM的profile来解决这个问题。 </p>
+<p>当然由于maven默认是不下载snapshot包的，因此我们要配置让它下载，这里分为全局配置和项目级别配置</p>
+<h3 id="项目配置"><a href="#项目配置" class="headerlink" title="项目配置"></a>项目配置</h3><p>在pom文件中添加如下内容</p>
+<figure class="highlight xml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">repositories</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">repository</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span>&gt;</span>nexus<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--修改成自己私服地址--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://localhost:18081/repository/maven-public/<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">releases</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">updatePolicy</span>&gt;</span>always<span class="tag">&lt;/<span class="name">updatePolicy</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">releases</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">snapshots</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--主要是这里--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">updatePolicy</span>&gt;</span>always<span class="tag">&lt;/<span class="name">updatePolicy</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">snapshots</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">repository</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">repositories</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/06/05/multi-profile-in-springboot/#more" rel="contents">
+                阅读全文 »
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2024/05/30/migrate-service-in-git/">
+
+    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Zhu.Yang">
+      <meta itemprop="description" content="来都来了看看吧.">
+    </span>
+
+    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhu.Yang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/05/30/migrate-service-in-git/" class="post-title-link" itemprop="url">Git中仓库拆分的两种方式</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-05-30 15:46:33" itemprop="dateCreated datePublished" datetime="2024-05-30T15:46:33+08:00">2024-05-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-11-13 10:21:33" itemprop="dateModified" datetime="2024-11-13T10:21:33+08:00">2024-11-13</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 ≈</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>最近要把项目中的子模块单独拆分为一个项目,并且移动到新的仓库地址，同时需要保留所有提交记录以及所有分支(包括未上线-未合并到master分支)的代码,我这里总结了2种方式以供大家参考。</p>
+<h3 id="项目现状"><a href="#项目现状" class="headerlink" title="项目现状"></a>项目现状</h3><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">bv_sc_server</span><br><span class="line">|───bvpro-modules</span><br><span class="line">    │  ├─bvpro-job</span><br><span class="line">    │  │  ├─src</span><br><span class="line">    │  │  │  └─main</span><br><span class="line">    │  │  │      ├─java</span><br><span class="line">    │  │  │      │  └─com</span><br><span class="line">    │  │  │      │      └─bvpro</span><br><span class="line">    │  │  │      │          └─job</span><br><span class="line">    |  ├─bvpro-file</span><br><span class="line">    │  │  ├─src</span><br><span class="line">    │  │  │  └─main</span><br><span class="line">    │  │  │      ├─java</span><br><span class="line">    │  │  │      │  └─com</span><br><span class="line">    │  │  │      │      └─bvpro</span><br><span class="line">    │  │  │      │          └─file    </span><br></pre></td></tr></tbody></table></figure>
+<p>&lt;!-more–&gt;</p>
+<p>项目中有很多子模块，我需要将他们单独独立出来放到放到一个新的仓库,同时只保留各自仓库的代码。 </p>
+<p>比如我有一个分支feature/migrate-data,它同时修改了bvpro-file以及bvpro-job的代码，那么迁移过去的效果希望是<br>新的bvpro-file和bvpro-job仓库都有这个分支，同时也只包含当前仓库的代码，而不再想之前一样混杂着多个模块的代码。</p>
+<p>因此调研了下发现有两种方案可以达到这样的目的，一种是git subtree, 一种是git filter-repo。 </p>
+<h3 id="git-subtree"><a href="#git-subtree" class="headerlink" title="git subtree"></a>git subtree</h3><p>需要拆分的仓库叫做 bv_sc_server, 现在需要拆分的模块是 bv_sc_server/bvpro-modules/bvpro-job, 拆分后的新仓库叫做bvpro-job</p>
+<ol>
+<li><p>先在代码服务器(比如gitlab)上新建一个空的仓库， 比如bvpro-job</p>
+</li>
+<li><p>在本地文件夹clone刚创建的新仓库, 和bv_sc_server在同一个目录下</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone http://localhost:8090/sc_group/bvpro-job.git</span><br></pre></td></tr></tbody></table></figure>
+
+<ol start="3">
+<li>进入bv_sc_server这个仓库的目录下进行拆分,当前处于master分支(这个分支是需要迁移的分支)</li>
+</ol>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git subtree split -P bvpro-modules/bvpro-job -b feature/split-bvpro-job</span><br></pre></td></tr></tbody></table></figure>
+
+<ol start="4">
+<li>进入到bvpro-job这个新仓库,执行以下命令: <ul>
+<li>cd ../bvpro-job</li>
+<li>git pull ..\bv_sc_server feature/split-bvpro-job</li>
+<li>git remote remove origin</li>
+<li>git remote add origin <a target="_blank" rel="noopener" href="http://localhost:8090/sc_group/bvpro-job.git">http://localhost:8090/sc_group/bvpro-job.git</a></li>
+<li>git push –set-upstream origin –all</li>
+</ul>
+</li>
+</ol>
+<p>到这里我们就把bv_sc_server中bvpro-job模块的master分支代码迁移到了新的仓库，但是其他分支还没有迁移过去,所以这里我们重复执行下操作</p>
+<p>这里为了不相互影响，我们将本地bvpro-job目录删除，然后重新新建一个空白bvpro-job目录。然后在重复执行上面的命令,这里为了演示方便我就将命令写到一起。</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">cd bvpro-job</span><br><span class="line">git clone http://localhost:8090/sc_group/bvpro-job.git</span><br><span class="line">cd ../bv_sc_server</span><br><span class="line">#切换到需要迁移的分支</span><br><span class="line">git checkout feature/SCA-5034_AutoApprovalForTcAndSc</span><br><span class="line">git subtree split -P bvpro-modules/bvpro-job -b  split/SCA-5034_AutoApprovalForTcAndSc</span><br><span class="line">cd ../bvpro-job</span><br><span class="line">git pull ..\bv_sc_server split/SCA-5034_AutoApprovalForTcAndSc</span><br><span class="line">git remote remove origin</span><br><span class="line">git remote add origin http://localhost:8090/sc_group/bvpro-job.git</span><br><span class="line"># 新clone的仓库默认是master分支(也可能是main), 然后推送到远端的feature分支</span><br><span class="line">git push --set-upstream origin master:feature/SCA-5034_AutoApprovalForTcAndSc</span><br></pre></td></tr></tbody></table></figure>
+
+<p>这样就完成了feature/SCA-5034_AutoApprovalForTcAndSc分支的迁移了,这样迁移也只保留了bvpro-job有关的代码，如果这个分支在以前的其他模块也有代码,那么也要按照这样的方式进行迁移，同时有多少个分支需要迁移就需要执行多次上面的命令。</p>
+<p>可以发现这样迁移的效率是很低的，要是分支或者提交记录很多一天的时间都耗在这上面了。当然如果你只想要迁移master分支代码，这种方式也是很不错的，关键是这个命令是git自带的。</p>
+<h3 id="git-filter-repo"><a href="#git-filter-repo" class="headerlink" title="git filter-repo"></a>git filter-repo</h3><p>这个命令并不是git自带的,但是它也很赫赫有名，毕竟官方都推荐使用它进行迁移。</p>
+<p>使用它是有限制的，首先python版本要在3.5以上,git版本要在2.2以上。因为我使用的是windows,所以下面演示windows上的安装方式</p>
+<ol>
+<li>安装git-filter-repo<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m pip install --user git-filter-repo</span><br></pre></td></tr></tbody></table></figure>
+
+</li>
+</ol>
+<p>记录下安装的地址，然后配置环境变量，然后就可以使用git filter-repo这个命令了。</p>
+<ol start="2">
+<li>git clone bv_sc_server项目,默认master分支,最好是最新的,这样子命令运行错了也不影响你的开发</li>
+</ol>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone http://localhost:8090/sc_group/bv_sc_server.git bvpro-job</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+
+<ol start="3">
+<li>拆分</li>
+</ol>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">cd bvpro-job</span><br><span class="line"></span><br><span class="line"># 只保留bvpro-modules/bvpro-job这个路径的代码</span><br><span class="line">git filter-repo --path bvpro-modules/bvpro-job</span><br><span class="line"></span><br><span class="line"># 将bvpro-modules/bvpro-job这个目录提升为根目录</span><br><span class="line">git filter-repo --subdirectory-filter bvpro-modules/bvpro-job</span><br><span class="line"></span><br><span class="line"># 上面两句可以合并成下面这句，还可以指定要保留的分支</span><br><span class="line">git filter-repo --path bvpro-modules/bvpro-job --subdirectory-filter bvpro-modules/bvpro-job --branches &lt;保留的分支名称&gt;</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<p>上面的命令执行完成后,bv_sc_server这个目录下的代码就只有以前bvpro-job的代码了</p>
+<ol start="4">
+<li>推送</li>
+</ol>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin http://localhost:8090/sc_group/bvpro-job.git</span><br><span class="line"></span><br><span class="line">git push --set-upstream origin --all</span><br></pre></td></tr></tbody></table></figure>
+<p>这样子就将bvpro-job这个子模块的所有代码，commit以及分支都迁移到了新的仓库，不用再想subtree一样针对特定的分支反复操作了， 所以我是推荐使用这个命令的。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2024/02/18/current-issues-in-my-system/">
+
+    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Zhu.Yang">
+      <meta itemprop="description" content="来都来了看看吧.">
+    </span>
+
+    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhu.Yang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/02/18/current-issues-in-my-system/" class="post-title-link" itemprop="url">好家伙，这些问题还不是手拿把掐</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-02-18 10:44:01" itemprop="dateCreated datePublished" datetime="2024-02-18T10:44:01+08:00">2024-02-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-11-13 10:21:33" itemprop="dateModified" datetime="2024-11-13T10:21:33+08:00">2024-11-13</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 ≈</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>总结了下这段时间遇到的问题。</p>
+<h3 id="快速生成字典表数据"><a href="#快速生成字典表数据" class="headerlink" title="快速生成字典表数据"></a>快速生成字典表数据</h3><p>在前期开发的时候，BA总是给我好几张excel,让我生成字典表,写代码又耗时，而且不同的excel字段也不一样，不可能每次都要去改代码吧，总之我不干，好在我能借助excel函数完成这样的需求。</p>
+<p><img data-src="/images/excel.gif" alt="函数"></p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">=CONCATENATE("insert into test_claims(`id`,`code`,`name`) values('", A1, "','",B1, "','",C1,"');")</span><br><span class="line"></span><br><span class="line">这个函数的语法是 CONCATENATE(text1, [text2], ...)</span><br><span class="line">1. text1（必需）：要联接的第一个项目。项目可以是文本值、数字或单元格引用；</span><br><span class="line"></span><br><span class="line">2. Text2, ... （可选）：要联接的其他文本项目。最多可以有 255 个项目，总共最多支持 8,192 个字符</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="Kubernetes-Pod频繁重启"><a href="#Kubernetes-Pod频繁重启" class="headerlink" title="Kubernetes Pod频繁重启"></a>Kubernetes Pod频繁重启</h3><p>后台看到部署到kubernetes的pod一直在重启，但是看日志没有报错，但是一会儿它就自动重启了，最后通过describe命令看到是因为liveness接口的原因</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubelet  Liveness probe failed: Get "http://10.24.8.84:9202/actuator/health"</span><br></pre></td></tr></tbody></table></figure>
+
+<p>因为使用了springboot actuator接口,它会检测服务中使用到的其他服务是否能正常使用,从而判定当前服务是否存活，所以必然是因为这个接口返回的信息导致pod重启。</p>
+<p>重启的这个服务主要用到了邮件以及Redis,但是不知道到底是哪个服务健康检查失败了。此时我们也无法进入到pod中访问health接口了。</p>
+<p>所以我们先移除掉pod template的livenessProbe配置，然后重新部署服务</p>
+<figure class="highlight yaml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">livenessProbe:</span></span><br><span class="line">  <span class="attr">httpGet:</span></span><br><span class="line">    <span class="attr">path:</span> <span class="string">/actuator/health</span></span><br><span class="line">    <span class="attr">port:</span> <span class="number">9204</span></span><br><span class="line">  <span class="attr">initialDelaySeconds:</span> <span class="number">60</span></span><br><span class="line">  <span class="attr">periodSeconds:</span> <span class="number">20</span></span><br><span class="line">  <span class="attr">timeoutSeconds:</span> <span class="number">10</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>这个时候使用exec命令进入pod</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">kubectl <span class="built_in">exec</span> -it &lt;pod name&gt; -n &lt;namespace&gt; -- /bin/bash</span><br></pre></td></tr></tbody></table></figure>
+
+<p>访问  <code>curl -i http://localhost:9202/actuator/health</code>  可以看到response status code是503,并且还可以看到具体失败的组件是哪一个。 </p>
+<p>最终确定是redis访问超时了，于是调整了下 livenessProbe的timeoutSeconds,然后在重启就不报错了。</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">root@noti-844567c558-2mvj8:/home/pro# curl -i http://localhost:9202/actuator/health</span><br><span class="line">HTTP/1.1 200 </span><br><span class="line">X-XSS-Protection: 1; mode=block</span><br><span class="line">Content-Security-Policy: default-src 'self'; script-src 'self'; frame-ancestors 'self'; object-src 'none'</span><br><span class="line">X-Content-Type-Options: nosniff</span><br><span class="line">X-Frame-Options: SAMEORIGIN</span><br><span class="line">Content-Type: application/vnd.spring-boot.actuator.v3+json;charset=utf-8</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line">Date: Sun, 18 Feb 2024 07:36:22 GMT</span><br><span class="line"></span><br><span class="line">{"status":"UP","components":{"discoveryComposite":{"description":"Discovery Client not initialized","status":"UNKNOWN","components":{"discoveryClient":{"description":"Discovery Client not initialized","status":"UNKNOWN"}}},"diskSpace":{"status":"UP","details":{"total":133003395072,"free":94000709632,"threshold":10485760,"exists":true}},"livenessState":{"status":"UP"},"mail":{"status":"UP","details":{"location":"xxmail:465"}},"ping":{"status":"UP"},"readinessState":{"status":"UP"},"redis":{"status":"UP","details":{"version":"6.0.14"}},"refreshScope":{"status":"UP"}},"groups":["liveness","readiness"]}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="minio数据迁移到Azure-blob"><a href="#minio数据迁移到Azure-blob" class="headerlink" title="minio数据迁移到Azure blob"></a>minio数据迁移到Azure blob</h3><p>项目中需要将minio中保存的文件迁移到azure的blob中,然后minio中保存文件的路径是这样的 <code>2023/11/07/20231107164256A579/Image3.jpg</code>  相当于文件夹中包含了时间戳等信息，虽然blob不支持目录，但是它的虚拟目录可以有相同的效果，这里我们使用azure提供的azcopy命令来进行数据迁移。</p>
+<p>首先进入到minio所在的服务器,然后执行下面的命令</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">1.  sudo mkdir /home/azcopy </span><br><span class="line"></span><br><span class="line">2. cd /home/azcopy</span><br><span class="line"> </span><br><span class="line">3. sudo  wget -O azcopy_v10.tar.gz https://aka.ms/downloadazcopy-v10-linux &amp;&amp;</span><br><span class="line"></span><br><span class="line">4. sudo tar -xf azcopy_v10.tar.gz --strip-components=1</span><br><span class="line"></span><br><span class="line">5. sudo azcopy login  // 登录azure</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">6. 同步minio数据到blob,将sc-dev bucket的数据迁移到blob的container</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    // 这里的sc-dev是minio的bucket, saoscdev是azure blob的account name, bvsc是container name</span><br><span class="line">    a. sudo /home/azcopy/azcopy copy '/data/minio/data/sc-dev/*' 'https://saoscdev.blob.core.windows.net/bvsc' --recursive</span><br><span class="line"></span><br><span class="line">    // 将增量数据同步到blob中</span><br><span class="line">    b. sudo /home/azcopy/azcopy sync '/data/minio/data/sc-dev' 'https://saoscdev.blob.core.windows.net/bvsc' --recursive</span><br></pre></td></tr></tbody></table></figure>
+
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>以上就是我最近遇到的问题，第一个字典表的那个当时第一反应是写代码，但是后来想到写代码的时候太长，成本太高还是需要借助工具，恰好提供给我的又是excel,于是就用excel顺带完成了这个功能，同时后面的其他字典数据如法炮制，也就变简单了。</p>
+<p>第二个问题本来是定位重启的问题，但是看着看着就深入到了actuator的源码当中起了，这一点很不好，不过有失必有得，有顺带看了下actuator的源码,它其中的EntryPoint感觉很棒，后面针对这个写一篇。</p>
+<p>第三个问题的话就是微软没有提供如何迁移的文档，不过好在它本生工具不少，多尝试也就成功了，这里我把迁移的步骤给出来，希望能帮助到同样有需求的人。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2023/12/14/spring-cloud-openfeign-analysis/">
+
+    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Zhu.Yang">
+      <meta itemprop="description" content="来都来了看看吧.">
+    </span>
+
+    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhu.Yang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/12/14/spring-cloud-openfeign-analysis/" class="post-title-link" itemprop="url">因为一个bug,我还是掀开了openfeign的神秘面纱</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-12-14 10:41:39" itemprop="dateCreated datePublished" datetime="2023-12-14T10:41:39+08:00">2023-12-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-11-13 10:21:33" itemprop="dateModified" datetime="2024-11-13T10:21:33+08:00">2024-11-13</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 ≈</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="报错"><a href="#报错" class="headerlink" title="报错"></a>报错</h3><p>最近项目中访问一个外部api报错了，报错信息如下</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target</span><br></pre></td></tr></tbody></table></figure>
+<p>看着像是证书问题，这个时候我首先想到的是百度下，看看怎么解决。</p>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>百度告诉我说如果你open-feign中使用的是http client,那么可以通过下面的配置来让跳过SSL验证</p>
+<figure class="highlight yml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">feign:</span></span><br><span class="line">  <span class="attr">httpclient:</span></span><br><span class="line">    <span class="attr">disable-ssl-validation:</span> <span class="literal">false</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>结果还是报同样的错误。 于是我又百度,又重新找了一个解决方法，这次的方案是让我自己重写Client了,具体操作如下</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FeignConfiguration</span> </span>{</span><br><span class="line"></span><br><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Client <span class="title">feignClient</span><span class="params">()</span> <span class="keyword">throws</span> NoSuchAlgorithmException, KeyManagementException </span>{</span><br><span class="line">    SSLContext ctx = SSLContext.getInstance(<span class="string">"SSL"</span>);</span><br><span class="line">    X509TrustManager tm = <span class="keyword">new</span> X509TrustManager() {</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">checkClientTrusted</span><span class="params">(X509Certificate[] chain, String authType)</span> </span>{</span><br><span class="line">        }</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">checkServerTrusted</span><span class="params">(X509Certificate[] chain, String authType)</span> </span>{</span><br><span class="line">        }</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> X509Certificate[] getAcceptedIssuers() {</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        }</span><br><span class="line">    };</span><br><span class="line">    ctx.init(<span class="keyword">null</span>, <span class="keyword">new</span> TrustManager[]{tm}, <span class="keyword">null</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span>  <span class="keyword">new</span> Client.Default(ctx.getSocketFactory(), (hostName, session) -&gt; <span class="keyword">true</span>);</span><br><span class="line"></span><br><span class="line">}</span><br><span class="line">   </span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<p>这把我感觉要起飞了， 一切尽在掌握中,重新deploy,打开postman,测试测试我的接口。</p>
+<p>测试后感觉好了但是看日志又没有完全好。 这个接口倒是不报错了，但是我调用内部服务给我报错了，比如我这里的内部服务名称叫做</p>
+<p>pro-file, 就现在它没法根据我这个pro-file名字找到对应的IP了，从而导致我这个服务使用不了了。</p>
+<p>百度误我！</p>
+<h3 id="求人不如求己"><a href="#求人不如求己" class="headerlink" title="求人不如求己"></a>求人不如求己</h3><p>此刻我自信的打开了IDEA, 输入了类名 <code>FeignAutoConfiguration</code> , Spring Cloud关于某个组件的自动注入类大多是XXXConfiguration, 所以按照这么找准没错。</p>
+<p>然后我有自信的把断点打在了这个部分 <code>FeignAutoConfiguration:246</code></p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration(proxyBeanMethods = false)</span></span><br><span class="line"><span class="meta">@ConditionalOnClass(ApacheHttpClient.class)</span></span><br><span class="line"><span class="meta">@ConditionalOnMissingBean(CloseableHttpClient.class)</span></span><br><span class="line"><span class="meta">@ConditionalOnProperty(value = "feign.httpclient.enabled", matchIfMissing = true)</span></span><br><span class="line"><span class="meta">@Conditional(HttpClient5DisabledConditions.class)</span></span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">HttpClientFeignConfiguration</span> </span>{</span><br><span class="line">    <span class="comment">// 省略其他代码</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="meta">@ConditionalOnMissingBean(Client.class)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Client <span class="title">feignClient</span><span class="params">(HttpClient httpClient)</span> </span>{</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ApacheHttpClient(httpClient);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>重新启动项目，好家伙断点没进来呀。 没进来的原因大概率可能是不满足条件,我赶紧看看这里对应的Conditional, 发现了我的代码中没有</p>
+<p>设置<code>feign.httpclient.enabled</code>属性的值, 而且这里也没有设置havingValue, 根据源码可以知道， 如果没有设置havingValue, 那么这个属性的值会被和false进行比较</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//org.springframework.boot.autoconfigure.condition.OnPropertyCondition.Spec#isMatch</span></span><br><span class="line"><span class="comment">// 这里的requiredValue是havingValue</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">isMatch</span><span class="params">(String value, String requiredValue)</span> </span>{</span><br><span class="line">    <span class="keyword">if</span> (StringUtils.hasLength(requiredValue)) {</span><br><span class="line">        <span class="keyword">return</span> requiredValue.equalsIgnoreCase(value);</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">return</span> !<span class="string">"false"</span>.equalsIgnoreCase(value);</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+
+<p>搞半天这个Configurtion相当于没起作用。 </p>
+<p>好好好，这么玩是吧。</p>
+<p>既然这个配置不生效，那肯定有其他配置生效，我就找找其他配置，最终我在spring-cloud-openfeign-core这个jar包的loadbalancer这个包下面找到了我想要的配置</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ConditionalOnClass(Feign.class)</span></span><br><span class="line"><span class="meta">@ConditionalOnBean({ LoadBalancerClient.class, LoadBalancerClientFactory.class })</span></span><br><span class="line"><span class="meta">@AutoConfigureBefore(FeignAutoConfiguration.class)</span></span><br><span class="line"><span class="meta">@AutoConfigureAfter({ BlockingLoadBalancerClientAutoConfiguration.class, LoadBalancerAutoConfiguration.class })</span></span><br><span class="line"><span class="meta">@EnableConfigurationProperties(FeignHttpClientProperties.class)</span></span><br><span class="line"><span class="meta">@Configuration(proxyBeanMethods = false)</span></span><br><span class="line"><span class="comment">// Order is important here, last should be the default, first should be optional</span></span><br><span class="line"><span class="comment">// see</span></span><br><span class="line"><span class="comment">// https://github.com/spring-cloud/spring-cloud-netflix/issues/2086#issuecomment-316281653</span></span><br><span class="line"><span class="meta">@Import({ HttpClientFeignLoadBalancerConfiguration.class, OkHttpFeignLoadBalancerConfiguration.class,</span></span><br><span class="line"><span class="meta">        HttpClient5FeignLoadBalancerConfiguration.class, DefaultFeignLoadBalancerConfiguration.class })</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FeignLoadBalancerAutoConfiguration</span> </span>{</span><br><span class="line"></span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<p>因为我们项目是采用springcloud alibaba进行开发，所以引入了spring-cloud-loadbalancer这个包,因此这个这个配置类就会生效，由于我们没有配置使用httpclient,同样也未使用okhttp,所以生效的配置类只有一个，那就是 <code>DefaultFeignLoadBalancerConfiguration</code></p>
+<p>这个配置类中retryClient会被加载,因为我们引入了spring-retry.</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="meta">@ConditionalOnMissingBean</span></span><br><span class="line"><span class="meta">@ConditionalOnClass(name = "org.springframework.retry.support.RetryTemplate")</span></span><br><span class="line"><span class="meta">@ConditionalOnBean(LoadBalancedRetryFactory.class)</span></span><br><span class="line"><span class="meta">@ConditionalOnProperty(value = "spring.cloud.loadbalancer.retry.enabled", havingValue = "true",</span></span><br><span class="line"><span class="meta">        matchIfMissing = true)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Client <span class="title">feignRetryClient</span><span class="params">(LoadBalancerClient loadBalancerClient,</span></span></span><br><span class="line"><span class="function"><span class="params">        LoadBalancedRetryFactory loadBalancedRetryFactory, LoadBalancerClientFactory loadBalancerClientFactory)</span> </span>{</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> RetryableFeignBlockingLoadBalancerClient(<span class="keyword">new</span> Client.Default(<span class="keyword">null</span>, <span class="keyword">null</span>), loadBalancerClient,</span><br><span class="line">            loadBalancedRetryFactory, loadBalancerClientFactory);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>这也是为什么上面我们自己配置了自己的Client后，访问其他spring cloud服务会找不到地址，这是因为默认的client不会去通过LoadBalancer去获取服务地址。 </p>
+<h3 id="小插曲"><a href="#小插曲" class="headerlink" title="小插曲"></a>小插曲</h3><p>期间debug的时候,还发现最终的Client的SeataFeignClient,我一看才发现某个公共包引入了Seata,但是没有使用Seata功能,然后Seata会把我们最终使用的FeignClient在给封装一次，所以后面我就把seata从项目中移除了。</p>
+<h3 id="解决方案-1"><a href="#解决方案-1" class="headerlink" title="解决方案"></a>解决方案</h3><p>既然问题找到了,那么就好修改了，修改方式有两种，一种是创建自己的<code>RetryableFeignBlockingLoadBalancerClient</code>, 就把上面的代码拿过来抄一遍，只是自己指定SSLContext，另一种是启用httpclient</p>
+<h4 id="方案一"><a href="#方案一" class="headerlink" title="方案一"></a>方案一</h4><figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Client <span class="title">feignRetryClient</span><span class="params">(LoadBalancerClient loadBalancerClient,</span></span></span><br><span class="line"><span class="function"><span class="params">                               LoadBalancedRetryFactory loadBalancedRetryFactory, LoadBalancerClientFactory loadBalancerClientFactory)</span> <span class="keyword">throws</span> NoSuchAlgorithmException, KeyManagementException </span>{</span><br><span class="line">    SSLContext ctx = SSLContext.getInstance(<span class="string">"SSL"</span>);</span><br><span class="line">    X509TrustManager tm = <span class="keyword">new</span> X509TrustManager() {</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">checkClientTrusted</span><span class="params">(X509Certificate[] chain, String authType)</span> </span>{</span><br><span class="line">        }</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">checkServerTrusted</span><span class="params">(X509Certificate[] chain, String authType)</span> </span>{</span><br><span class="line">        }</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> X509Certificate[] getAcceptedIssuers() {</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        }</span><br><span class="line">    };</span><br><span class="line">    ctx.init(<span class="keyword">null</span>, <span class="keyword">new</span> TrustManager[]{tm}, <span class="keyword">null</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> RetryableFeignBlockingLoadBalancerClient(<span class="keyword">new</span> Client.Default(ctx.getSocketFactory(), (hostname, session) -&gt; <span class="keyword">true</span>), loadBalancerClient,</span><br><span class="line">            loadBalancedRetryFactory, loadBalancerClientFactory);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="方案二"><a href="#方案二" class="headerlink" title="方案二"></a>方案二</h4><p>另一种方案就是启用httpclient,并且禁用ssl验证，配置如下</p>
+<figure class="highlight yml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">feign:</span></span><br><span class="line">  <span class="attr">httpclient:</span></span><br><span class="line">    <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">disable-ssl-validation:</span> <span class="literal">true</span></span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+
+<p>自此这个问题解决了，当然在使用中更加倾向使用方案二，因为Feign默认的Client采用的是<code>HttpURLConnection</code>,它没有连接池,当然你也可以使用okhttp。</p>
+<h3 id="写到最后"><a href="#写到最后" class="headerlink" title="写到最后"></a>写到最后</h3><p>这个问题看起来简单，但是排查起来还是颇费心思,很多细节隐藏到了框架之下,所以我想看源码还是有好处的，因为网上的文章别人的情况可能和你不一样，与其遨游在各个文章里面，还不如debug一把。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2023/11/23/dns-analysis-in-k8s/">
+
+    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Zhu.Yang">
+      <meta itemprop="description" content="来都来了看看吧.">
+    </span>
+
+    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhu.Yang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/11/23/dns-analysis-in-k8s/" class="post-title-link" itemprop="url">k8s中如何进行DNS解析</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-11-23 09:53:16" itemprop="dateCreated datePublished" datetime="2023-11-23T09:53:16+08:00">2023-11-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-11-13 10:21:33" itemprop="dateModified" datetime="2024-11-13T10:21:33+08:00">2024-11-13</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 ≈</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>之前文章&lt;老大喊我7天从SpringCloud转到K8S&gt;中我提到过我们使用open-feign来访问内部服务,有很多童鞋留言问我访问内部服务的url应该怎么写，但是还是整个系统的整体url吗？</p>
+<p>比如我整个系统的url是  <code>http://www.think123.com</code>, 现在有user服务和manage服务,那我现在想要访问user服务的ip就变成 <code>http://www.think123.com/user</code>吗? 当然不是因为这样的话你的访问就相当于还是访问外网，又要重新走gateway, 这样子不仅增加网络开销，而且我们做鉴权也不方便，因为服务间的访问鉴权往往是通过一个注解或者token来实现的。</p>
+<p>&lt;!-more–&gt;</p>
+<h3 id="服务的ip地址"><a href="#服务的ip地址" class="headerlink" title="服务的ip地址"></a>服务的ip地址</h3><p>我们都知道在k8s中我们一般会部署多个pod, 而我们又是通过K8S的Service来做LoadBalance的,Service会根据一定的策略来选择具体访问的pod, 如下图所示</p>
+<p><img data-src="/images/k8s/website-to-k8s.png" alt="访问"></p>
+<p>因此实际上我们只需要知道service的地址就行了,使用下面的命令查看service的地址</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get  svc -n &lt;namespace&gt;</span><br></pre></td></tr></tbody></table></figure>
+<p><img data-src="/images/k8s/svc-ip.png" alt="service"></p>
+<p>我们可以看到service的ip,因为我们服务是部署到同一个集群的，那是不是只需要知道服务的ip就行了，然后在open-feign中声明要访问的服务的ip加上端口就可以了呢？</p>
+<p>原则是上可以的,但是实际上有问题,首先不同集群中ip地址不一样,如果你要部署不同集群，那么每次都要修改，其次就算只有一个集群，这个ip也是可能变动的，所以写ip不太靠谱。</p>
+<h3 id="服务的域名"><a href="#服务的域名" class="headerlink" title="服务的域名"></a>服务的域名</h3><p>好在kubernetes给某个服务都添加了一个域名(这是通过kube-proxy和iptables实现的), 域名的规则是  <code>..svc.cluster.local</code>。 </p>
+<p>比如对于我们的user服务,我们这个地址就是 <code>user.dev.svc.cluster.local(&lt;serviceName&gt;.&lt;namespace&gt;.svc.cluster.local)</code></p>
+<p>当然后面的这么一堆你都可以省略，实际上我们在open-feign的url中只需要声明 <code>http://user:9201/(服务名:端口)</code> 就可以了,kubernetes在进行dns寻址的时候会先在本地dns找user这个域名对应的ip地址</p>
+<h3 id="K8S的DNS解析机制"><a href="#K8S的DNS解析机制" class="headerlink" title="K8S的DNS解析机制"></a>K8S的DNS解析机制</h3><ol>
+<li><p>集群域名和后缀：Kubernetes集群中的每个服务都会被分配一个域名，该域名由服务名称（Service Name）和命名空间（Namespace）组成。例如，一个服务名为my-service，位于命名空间my-namespace的服务的完整域名将是my-service.my-namespace.svc.cluster.local。svc.cluster.local是Kubernetes集群默认的后缀。</p>
+</li>
+<li><p>Kubernetes DNS服务器：Kubernetes集群内部有一个专用的DNS服务器负责处理服务的DNS解析请求。这个DNS服务器通常被命名为kube-dns或coredns。</p>
+</li>
+<li><p>解析流程：在进行DNS解析时，应用程序或服务可以使用服务名作为主机名（hostname），然后发送DNS查询请求到Kubernetes DNS服务器。</p>
+</li>
+<li><p>DNS查询：Kubernetes DNS服务器接收到DNS查询请求后，会根据请求中的域名信息进行解析。它首先进行域名拆分，将服务名、命名空间和集群后缀分离开。</p>
+</li>
+<li><p>域名解析：Kubernetes DNS服务器会依次解析域名的各个部分。它首先解析命名空间，然后根据服务名在该命名空间下查找对应的Service资源。</p>
+</li>
+<li><p>Service资源解析：Kubernetes DNS服务器在Service资源中查找与请求的服务名和命名空间匹配的条目。如果找到匹配项，将返回与之关联的Pod IP地址列表。</p>
+</li>
+<li><p>IP地址返回：Kubernetes DNS服务器将解析到的Pod IP地址返回给发起请求的应用程序或服务。</p>
+</li>
+<li><p>重试机制：如果在初始查询时没有找到匹配的Service资源，Kubernetes DNS服务器可能会进行一些重试机制，以确保服务名得到正确解析。这样做是因为在创建和删除Service资源的过程中，可能会存在一定的延迟。<br>通过这种方式，Kubernetes DNS解析机制使得服务能够通过服务名进行通信，无需关心具体的Pod IP地址。这种抽象层简化了服务之间的通信配置，并支持动态扩展和管理服务。</p>
+</li>
+</ol>
+<h4 id="查看域名"><a href="#查看域名" class="headerlink" title="查看域名"></a>查看域名</h4><p>可以通过下面的命令查看域名</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get svc my-service -n my-namespace -o jsonpath='{.metadata.name}.{.metadata.namespace}.svc.cluster.local'</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="查看coredns"><a href="#查看coredns" class="headerlink" title="查看coredns"></a>查看coredns</h4><p>通过下面的命令可以查看coredns pod</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl -n kube-system get pods -l k8s-app=kube-dns</span><br></pre></td></tr></tbody></table></figure>
+
+<p>当然我们可以通过下面的命令查看coredns的配置</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl -n kube-system get cm -l k8s-app=kube-dns</span><br><span class="line">kubectl describe cm coredns -n kube-system</span><br></pre></td></tr></tbody></table></figure>
+
+<p>其核心配置如下</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">.:53 {</span><br><span class="line">    errors</span><br><span class="line">    ready</span><br><span class="line">    health</span><br><span class="line">    kubernetes cluster.local in-addr.arpa ip6.arpa {</span><br><span class="line">      pods insecure</span><br><span class="line">      fallthrough in-addr.arpa ip6.arpa</span><br><span class="line">    }</span><br><span class="line">    prometheus :9153</span><br><span class="line">    forward . /etc/resolv.conf</span><br><span class="line">    cache 30</span><br><span class="line">    loop</span><br><span class="line">    reload</span><br><span class="line">    loadbalance</span><br><span class="line">    import custom/*.override</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<ol>
+<li><p><code>.:53</code> 表示监听的 DNS 端口号为 53，. 表示根域名（Root Zone）。</p>
+</li>
+<li><p><code>kubernetes cluster.local in-addr.arpa ip6.arpa</code> 定义了多个域和反向解析配置项。</p>
+<ul>
+<li><p><code>kubernetes</code> 是 Kubernetes 插件的名称，用于解析 Kubernetes 集群的服务和 Pod。</p>
+</li>
+<li><p><code>cluster.local</code> 是 Kubernetes 集群内部域名的默认后缀。</p>
+</li>
+<li><p><code>in-addr.arpa</code> 和 <code>ip6.arpa</code> 是用于反向 DNS 解析的 IPv4 和 IPv6 地址后缀。</p>
+</li>
+<li><p><code>pods insecure</code> 允许对 Pod 进行非安全（insecure）的 DNS 解析。</p>
+</li>
+<li><p>fallthrough in-addr.arpa ip6.arpa 表示如果查询未匹配到任何资源记录，则继续向下查询反向 DNS 解析。</p>
+</li>
+</ul>
+</li>
+<li><p><code>forward . /etc/resolv.conf</code> 将未能解析的 DNS 请求转发给 /etc/resolv.conf 文件中配置的其他 DNS 服务器。</p>
+</li>
+</ol>
+<p>大家也可以去看pod中中/etc/host和/etc/resolv.conf然后也能发现一些迹象。</p>
+<h3 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h3><p>至此,讲清楚了集群中内部服务之间是如何访问的，且k8s是如何进行寻址导致对应的pod的,希望对大家有所帮助。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2023/11/16/cola-state-machine-in-project/">
+
+    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Zhu.Yang">
+      <meta itemprop="description" content="来都来了看看吧.">
+    </span>
+
+    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhu.Yang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/11/16/cola-state-machine-in-project/" class="post-title-link" itemprop="url">我在项目中这样使用状态机</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-11-16 15:30:15" itemprop="dateCreated datePublished" datetime="2023-11-16T15:30:15+08:00">2023-11-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-11-13 10:21:33" itemprop="dateModified" datetime="2024-11-13T10:21:33+08:00">2024-11-13</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 ≈</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>最近一个新的项目中的一个业务,状态的流转比较复杂，涉及到二十几个状态的流转,而且吸取了其他业务教训,我们决定使用状态机来解决状态流转的问题。</p>
+<p>要使用状态机除了自己写状态模式下还研究了当下两个开源项目，一个是spring的state machine,一个是cola-state-machine。</p>
+<p>spring的状态机可以做状态持久化,和spring结合比较好，但是太重了。 cola就比较简单,它只是简单做了一个抽象,我们只需要实现具体的行为就行了。 使用cola最重要的就是要记得”因为某个事件，导致了状态A向状态B进行了迁移”,当然这里的状态可以是同一个。</p>
+<p>因为项目中使用的是springboot,所以我这里结合起来做了一定的改造,下面给出我在项目中使用的例子,仅供大家参考</p>
+<h3 id="引入依赖"><a href="#引入依赖" class="headerlink" title="引入依赖"></a>引入依赖</h3><figure class="highlight xml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cola<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>cola-component-statemachine<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.3.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>因为某个事件，导致了状态A向状态B进行了迁移。所以需要定义状态,事件,流程。</p>
+<p><img data-src="/images/state-machine/state-process.png" alt="状态迁移"></p>
+<h4 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h4><p>根据我们的流程我定义了以下事件</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="meta">@Getter</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> StatusChangeEventEnum {</span><br><span class="line">    <span class="comment">// save as draft</span></span><br><span class="line">    SAVE_AS_DRAFT_EVENT,</span><br><span class="line">    <span class="comment">// draft submit</span></span><br><span class="line">    DRAFT_SUBMIT_EVENT,</span><br><span class="line">    <span class="comment">// submit</span></span><br><span class="line">    SUBMIT_EVENT;</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<h4 id="状态"><a href="#状态" class="headerlink" title="状态"></a>状态</h4><figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Getter</span></span><br><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> StatusEnum {</span><br><span class="line"></span><br><span class="line">    NONE(<span class="number">0</span>, <span class="string">"None"</span>),</span><br><span class="line">    DRAFT(<span class="number">1</span>, <span class="string">"Draft"</span>),</span><br><span class="line">    SUBMITTED(<span class="number">2</span>, <span class="string">"Submitted"</span>);</span><br><span class="line"></span><br><span class="line">     <span class="keyword">private</span> Integer code;</span><br><span class="line">    <span class="keyword">private</span> String desc;</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h4><p>定义状态迁移和事件的关系</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Getter</span></span><br><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> StatusChangeEnum implements StatusChange {</span><br><span class="line"></span><br><span class="line">    SAVE_AS_DRAFT(NONE, DRAFT, SAVE_AS_DRAFT_EVENT),</span><br><span class="line">    SUBMIT(NONE, SUBMITTED, SUBMIT_EVENT),</span><br><span class="line">    DRAFT_SUBMIT(DRAFT, SUBMITTED, DRAFT_SUBMIT_EVENT);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> StatusEnum fromStatus;</span><br><span class="line">    <span class="keyword">private</span> StatusEnum toStatus;</span><br><span class="line">    <span class="keyword">private</span> StatusChangeEventEnum event;</span><br><span class="line"></span><br><span class="line">     <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> StatusEnum <span class="title">from</span><span class="params">()</span> </span>{</span><br><span class="line">        <span class="keyword">return</span> fromStatus;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> StatusEnum <span class="title">to</span><span class="params">()</span> </span>{</span><br><span class="line">        <span class="keyword">return</span> toStatus;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> StatusChangeEventEnum <span class="title">event</span><span class="params">()</span> </span>{</span><br><span class="line">        <span class="keyword">return</span> event;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// 抽象状态变更的接口，因为可能会存在多个不同的状态变更流程</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">StatusChange</span> </span>{</span><br><span class="line"></span><br><span class="line">    <span class="function">StatusEnum <span class="title">from</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">StatusEnum <span class="title">to</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">StatusChangeEventEnum <span class="title">event</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="使用Spring管理状态机"><a href="#使用Spring管理状态机" class="headerlink" title="使用Spring管理状态机"></a>使用Spring管理状态机</h3><figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@RequiredArgsConstructor</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StateMachineConfiguration</span> </span>{</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> List&lt;StateMachineHandler&gt; handlerList;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String NEW_REQUEST_STATE_MACHINE = <span class="string">"newRequestStateMachine"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean(NEW_REQUEST_STATE_MACHINE)</span></span><br><span class="line">    <span class="keyword">public</span> &lt;C&gt; <span class="function">StateMachine&lt;StatusEnum, StatusChangeEventEnum, C&gt; <span class="title">newRequestStateMachine</span><span class="params">()</span> </span>{</span><br><span class="line"></span><br><span class="line">        StateMachineBuilder&lt;StatusEnum, StatusChangeEventEnum, C&gt; builder = StateMachineBuilderFactory.create();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (StatusChangeEnum changeEnum :StatusChangeEnum.values()) {</span><br><span class="line">            build(builder, changeEnum);</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">return</span> builder.build(NEW_REQUEST_STATE_MACHINE);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> &lt;C&gt; <span class="function"><span class="keyword">void</span> <span class="title">build</span><span class="params">(StateMachineBuilder&lt;StatusEnum, StatusChangeEventEnum, C&gt; builder, StatusChange statusChange)</span> </span>{</span><br><span class="line">        <span class="comment">// 找到对应的handler来处理</span></span><br><span class="line">        StateMachineHandler&lt;StatusEnum, StatusChangeEventEnum, C&gt; handler = getHandler(statusChange);</span><br><span class="line"></span><br><span class="line">        StatusEnum fromStatus = statusChange.from();</span><br><span class="line">        StatusEnum toStatus = statusChange.to();</span><br><span class="line">        StatusChangeEventEnum changeEvent = statusChange.event();</span><br><span class="line">        <span class="comment">// 只产生了事件,但是状态未发生变化</span></span><br><span class="line">        <span class="keyword">if</span> (fromStatus == toStatus) {</span><br><span class="line">            builder.internalTransition()</span><br><span class="line">                    .within(fromStatus)</span><br><span class="line">                    .on(changeEvent)</span><br><span class="line">                    .when(handler::isSatisfied)</span><br><span class="line">                    .perform((from, to, event, ctx) -&gt; handler.execute(from, to, event, ctx));</span><br><span class="line">        } <span class="keyword">else</span> {</span><br><span class="line">            builder.externalTransition()</span><br><span class="line">                    .from(fromStatus)</span><br><span class="line">                    .to(toStatus)</span><br><span class="line">                    .on(changeEvent)</span><br><span class="line">                    .when(handler::isSatisfied)</span><br><span class="line">                    .perform((from, to, event, ctx) -&gt; handler.execute(from, to, event, ctx));</span><br><span class="line">        }</span><br><span class="line">        <span class="comment">// 直接在handler中抛出更详细异常</span></span><br><span class="line">        <span class="comment">//builder.setFailCallback(new AlertFailCallback&lt;&gt;());</span></span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> &lt;C&gt; <span class="function">StateMachineHandler&lt;StatusEnum, StatusChangeEventEnum, C&gt; <span class="title">getHandler</span><span class="params">(StatusChange statusChange)</span> </span>{</span><br><span class="line">        <span class="keyword">return</span> handlerList.stream().filter(handler -&gt; handler.canHandle(statusChange))</span><br><span class="line">                .findFirst()</span><br><span class="line">                .orElse(<span class="keyword">new</span> DefaultStateMachineHandler&lt;C&gt;());</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+
+<p>经过上面的定义后,后续有新的状态变更流程,我们只需要在 <code>StatusChangeEnum</code> 中添加就行了。</p>
+<h3 id="实现对应的handler"><a href="#实现对应的handler" class="headerlink" title="实现对应的handler"></a>实现对应的handler</h3><p>这里我举一个例子,比如说首次提交数据</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@RequiredArgsConstructor</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NoneToSubmittedStatusHandler</span>  <span class="keyword">implements</span> </span></span><br><span class="line"><span class="class">                        <span class="title">StateMachineHandler</span>&lt;<span class="title">StatusEnum</span>, <span class="title">StatusChangeEventEnum</span>, <span class="title">SubmitDTO</span>&gt; </span>{</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">canHandle</span><span class="params">(StatusChange statusChange)</span> </span>{</span><br><span class="line">        <span class="comment">// handler能处理的变更流程</span></span><br><span class="line">        StatusChangeEnum changeEnum = StatusChangeEnum.SUBMIT;</span><br><span class="line">        <span class="keyword">return</span> statusChange == changeEnum;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">(StatusEnum from, StatusEnum to, StatusChangeEventEnum event, SubmitDTO context)</span> </span>{</span><br><span class="line">        <span class="comment">// 执行具体的业务逻辑,比如插入数据</span></span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isSatisfied</span><span class="params">(SubmitDTO context)</span> </span>{</span><br><span class="line">        <span class="comment">// 判断是否满足条件,比如是否是对应的用户等</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<p>这样子我们的每一个handler的功能就比较专一了,只需要处理对应状态的就行了，你可能回想要是有些状态的变成要做的事情类似,这样的代码不可能写两遍吧? 其实我们可以有一个抽象类可以将这些公用的逻辑放到抽象类里面,这样子有相同逻辑的就可以使用了。</p>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>万事具备,现在只差在项目中使用了</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@RequiredArgsConstructor</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StateMachine</span> </span>{</span><br><span class="line"></span><br><span class="line"> <span class="keyword">private</span> <span class="keyword">final</span> StateMachine&lt;StatusEnum, StatusChangeEventEnum, StatusChangeContext&gt; newRequestStateMachine;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">      <span class="meta">@Transactional(rollbackFor = Exception.class)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">statusChange</span><span class="params">(StatusChange changeEnum, StatusChangeContext context)</span> </span>{</span><br><span class="line">        newRequestStateMachine.fireEvent(changeEnum.from(), changeEnum.event(), context);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">StatusChangeContext</span> </span>{</span><br><span class="line">    </span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SubmitDTO</span> <span class="keyword">extends</span> <span class="title">StatusChangeContext</span> </span>{</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Long String;</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+
+<p>只要涉及到状态变更的,就都可以调用StateMachie了。 </p>
+<h3 id="写到最后"><a href="#写到最后" class="headerlink" title="写到最后"></a>写到最后</h3><p>这种方式其实会导致类的数量变多，但是职责更加清晰,每个类的代码行数也并不多，而且以后想要找某个状态变更到某个状态做了什么时候很很好找。</p>
+<p>这就是最近使用状态机的一些心得，希望能对你有所帮助。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2023/11/07/helm-use/">
+
+    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Zhu.Yang">
+      <meta itemprop="description" content="来都来了看看吧.">
+    </span>
+
+    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhu.Yang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/11/07/helm-use/" class="post-title-link" itemprop="url">helm常用命令</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-11-07 09:57:55" itemprop="dateCreated datePublished" datetime="2023-11-07T09:57:55+08:00">2023-11-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-11-13 10:21:33" itemprop="dateModified" datetime="2024-11-13T10:21:33+08:00">2024-11-13</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 ≈</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="helm官方文档"><a href="#helm官方文档" class="headerlink" title="helm官方文档"></a>helm官方文档</h3><p>hi, bro, 最好的永远是官方文档: <a target="_blank" rel="noopener" href="https://helm.sh/zh/docs/">https://helm.sh/zh/docs/</a></p>
+<p>就是它上面的东西太多了，我知道你看得费力，所以我给你总结了下面的常用命令</p>
+<h3 id="helm添加仓库"><a href="#helm添加仓库" class="headerlink" title="helm添加仓库"></a>helm添加仓库</h3><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">helm repo add  elastic  https://helm.elastic.co       </span><br><span class="line">helm repo add  gitlab   https://charts.gitlab.io       </span><br><span class="line">helm repo add  harbor   https://helm.goharbor.io</span><br><span class="line">helm repo add traefik   https://traefik.github.io/charts    </span><br><span class="line"></span><br><span class="line">//添加国内仓库       </span><br><span class="line">helm repo add stable http://mirror.azure.cn/kubernetes/charts       </span><br><span class="line">helm repo add aliyun https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts       </span><br><span class="line">helm repo update       </span><br><span class="line">helm repo list</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/11/07/helm-use/#more" rel="contents">
+                阅读全文 »
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2023/09/14/from-spring-cloud-to-springboot/">
+
+    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Zhu.Yang">
+      <meta itemprop="description" content="来都来了看看吧.">
+    </span>
+
+    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhu.Yang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/09/14/from-spring-cloud-to-springboot/" class="post-title-link" itemprop="url">from-spring-cloud-to-springboot</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-09-14 10:20:10" itemprop="dateCreated datePublished" datetime="2023-09-14T10:20:10+08:00">2023-09-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-11-13 10:21:33" itemprop="dateModified" datetime="2024-11-13T10:21:33+08:00">2024-11-13</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 ≈</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>之前项目使用的是springcloud,主要使用到的组件有 spring gateway, nacos, minio, load balancer,open-feign等,然后我们的微服务通过docker部署到虚拟机里面的。</p>
+<p>但是出于安全的考虑,需要将它迁移到azure的aks(kubernetes)中,所以需要将spring cloud改造成spring boot。这样就不用自己维护虚拟机的安全策略，也不需要去关注补丁了。</p>
+<h3 id="梳理项目结构"><a href="#梳理项目结构" class="headerlink" title="梳理项目结构"></a>梳理项目结构</h3><p>项目是一个一个微服务组织起来的，大概业务类的服务有5个,公共服务有4个。 设计到的改造主要集中在gateway, auth中，公共包的一些改造比较少，主要是将open-feign的访问改为通过url进行调用，而不是之前通过服务名来。</p>
+<p>而在kubernetes中，我们使用Traefik2来代替gateway的功能，不知道traefik2的，可以去翻翻之前的文章。</p>
+<p>同时对于授权,需要提供一个授权接口，配合traefik2使用，这样每一个请求都会进行授权的验证。</p>
+<h3 id="开始改造"><a href="#开始改造" class="headerlink" title="开始改造"></a>开始改造</h3><h4 id="确定分支"><a href="#确定分支" class="headerlink" title="确定分支"></a>确定分支</h4><p>最开始肯定是新拉一个分支进行这些改动，即便没改好也不影响其他人，所以我们先把分支名定好就叫做 feature/AKS-migrate。</p>
+<h4 id="改造gateway"><a href="#改造gateway" class="headerlink" title="改造gateway"></a>改造gateway</h4><p>首先把pom文件中的不需要的依赖包注释掉,比如spring cloud gateay, nacos, sentinel等spring cloud相关组件。注释掉之后<br>去看代码中有哪些报错，就针对性的修改。</p>
+<p>我们的项目中使用蛮多gateway的filter以及handler,最开始我看他们都是使用的webflux,我就想我单独引入这个包，代码是不是最小的改动就行了呢？</p>
+<p>这样尝试过之后我发现不行,因为项目中使用最多还是@RestController,如果使用webflux的方式,那么很多filter不生效的。 </p>
+<p>所以这种方式也不行，但是代码改得太多了，我只好回退到注释pom文件依赖的那一步。</p>
+<p>没办法,只能读之前对应的代码逻辑,然后将其转换了。</p>
+<p>读取gateway filter的代码,将其转换成spring filter,直接继承 <code>org.springframework.web.filter.OncePerRequestFilter</code> 即可，然后将之前的逻辑搬过来。 </p>
+<p>需要注意的是如果是全局filter需要放到公共包里面。</p>
+<p>handler也是一样的,将其转换成filter,需要注意执行顺序。</p>
+<p>这样,核心代码改造完毕,可以开启调试了</p>
+<h4 id="遇到的坑"><a href="#遇到的坑" class="headerlink" title="遇到的坑"></a>遇到的坑</h4><p>处理上面说的webflux的问题外,将springcloud变成springboot后,我们之前的配置文件名称是bootstrap.yml,bootstrap-dev.yml文件,但是改成了springboot后，配置文件名要改成application.yml,application-env.yml。</p>
+<p>不然你会发现你启动不了,说找不到文件，这个坑也是自己把自己给坑了。</p>
+<p>然后就是要将gateway的filter转换成spring filter的时候要注意一定要保证之前的逻辑完全移植过来了，我就遇到一个在改造前可以重复读取request的流,但是改造后这段代码报错了，就是因为没有将这段逻辑移植过去的问题。</p>
+<h4 id="改造nacos"><a href="#改造nacos" class="headerlink" title="改造nacos"></a>改造nacos</h4><p>前面提到了nacos主要在open-feign的调用中以及变量注入中使用到了。feign那个好改,只需要指定url参数即可,这样就可以去掉nacos的依赖了。 然后变量注入同样的我们可以使用Kubernetes的ConfigMap以及Secret来代替。 </p>
+<p>所以我们需要将以前配置到nacos中的变量放到配置文件中,这样变量可以直接通过Kubernetes进行注入了。</p>
+<p>我们在各个环境中只需要有一份代码(一个镜像),部署的时候只需要注入的配置不一样就可以了，这样就可以保证各个环境代码一致。</p>
+<p>比如之前的配置是这样的</p>
+<figure class="highlight yml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">redis:</span></span><br><span class="line">    <span class="attr">host:</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span></span><br><span class="line">    <span class="attr">port:</span> <span class="number">6379</span></span><br><span class="line">    <span class="attr">database:</span> <span class="number">0</span></span><br><span class="line">    <span class="attr">password:</span> <span class="number">123456</span></span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+
+<p>改造后配置文件的值为</p>
+<figure class="highlight yml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">redis:</span></span><br><span class="line">    <span class="attr">host:</span> <span class="string">${env_redis_host}</span></span><br><span class="line">    <span class="attr">port:</span> <span class="string">${env_redis_port}</span></span><br><span class="line">    <span class="attr">database:</span> <span class="string">${env_redis_database}</span></span><br><span class="line">    <span class="attr">password:</span> <span class="string">${env_redis_password}</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>而这里的变量是通过ConfigMap进行配置的,到时候会注入到容器环境变量中，这样spring就可以从环境变量中获取到值了。</p>
+<h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><p>之前使用的jenkins方式部署，jenkins也是自己搭建的，现在全部迁移到了azure github上,所以这里直接使用azure的pipeline进行部署。 而我们管理k8s的资源则使用的是helm。</p>
+<p>比如我项目中使用helm生成后结构如下</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">C:.                 </span><br><span class="line">│  .helmignore      </span><br><span class="line">│  Chart.yaml       </span><br><span class="line">│  values-prod.yaml </span><br><span class="line">│  values-qa.yaml   </span><br><span class="line">│  values-test.yaml </span><br><span class="line">│  values.yaml      </span><br><span class="line">│                   </span><br><span class="line">├─charts            </span><br><span class="line">├─config            </span><br><span class="line">│  ├─dev            </span><br><span class="line">│  │      config.yaml</span><br><span class="line">│  │      secret.yaml</span><br><span class="line">│  │                </span><br><span class="line">│  ├─prod           </span><br><span class="line">│  │      config.yaml</span><br><span class="line">│  │      secret.yaml</span><br><span class="line">│  │                </span><br><span class="line">│  ├─qa             </span><br><span class="line">│  │      config.yaml</span><br><span class="line">│  │      secret.yaml</span><br><span class="line">│  │                </span><br><span class="line">│  └─test           </span><br><span class="line">│          config.yaml</span><br><span class="line">│          secret.yaml</span><br><span class="line">│                   </span><br><span class="line">└─templates         </span><br><span class="line">        configmap.yaml</span><br><span class="line">        deployment.yaml</span><br><span class="line">        hpa.yaml    </span><br><span class="line">        secret.yaml </span><br><span class="line">        service.yaml</span><br><span class="line">        _helpers.tpl</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+
+<p>这里只需要部署的时候指定不同的value 文件，就可以实现同一个镜像部署到不同的环境了。</p>
+<p>dev目录下config.yaml，secret.yaml文件内容大致如下:</p>
+<figure class="highlight yml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># config.yaml</span></span><br><span class="line"><span class="attr">env_redis_host:</span> <span class="string">localhost</span></span><br><span class="line"><span class="attr">env_redis_port:</span> <span class="number">6379</span></span><br><span class="line"><span class="attr">env_redis_database:</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#secret.yaml</span></span><br><span class="line"></span><br><span class="line"><span class="attr">env_redis_password:</span> <span class="number">123456</span></span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<p>在template中configmap.yaml, secret.yaml中主要是如何将文件内容转换成对应的yaml</p>
+<figure class="highlight yml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#values.yaml 指定有哪些文件</span></span><br><span class="line"><span class="attr">configOverrides:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">config/dev/config.yaml</span></span><br><span class="line"><span class="attr">secretOverrides:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">config/dev/secret.yaml</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># configmap.yaml</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ConfigMap</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> {{ <span class="string">include</span> <span class="string">"think-manifesto.fullname"</span> <span class="string">.</span> }}<span class="string">-configmap</span></span><br><span class="line">  <span class="attr">namespace:</span> {{ <span class="string">.Values.nameSpace</span> }}</span><br><span class="line"><span class="attr">data:</span></span><br><span class="line">{{<span class="bullet">-</span> <span class="string">$files</span> <span class="string">:=</span> <span class="string">.Files</span> }}</span><br><span class="line">{{<span class="bullet">-</span> <span class="string">range</span>  <span class="string">.Values.configOverrides</span> }}</span><br><span class="line">{{<span class="bullet">-</span> <span class="string">range</span> <span class="string">$key</span>, <span class="string">$value</span> <span class="string">:=</span>  <span class="string">($files.Get</span> <span class="string">(printf</span> <span class="string">"%s"</span> <span class="string">.)</span> <span class="string">|</span> <span class="string">fromYaml)</span> }}</span><br><span class="line">{{ <span class="string">$key</span> <span class="string">|</span> <span class="string">indent</span> <span class="number">2</span> }}<span class="string">:</span> {{ <span class="string">$value</span> <span class="string">|</span> <span class="string">quote</span> }}</span><br><span class="line">{{<span class="bullet">-</span> <span class="string">end</span> }}</span><br><span class="line">{{<span class="bullet">-</span> <span class="string">end</span> }}</span><br><span class="line"></span><br><span class="line"><span class="comment"># secret.yaml</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Secret</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> {{ <span class="string">include</span> <span class="string">"think-manifesto.fullname"</span> <span class="string">.</span> }}<span class="string">-secret</span></span><br><span class="line">  <span class="attr">namespace:</span> {{ <span class="string">.Values.nameSpace</span> }}</span><br><span class="line"><span class="attr">type:</span> <span class="string">Opaque</span></span><br><span class="line"><span class="attr">data:</span></span><br><span class="line">{{<span class="bullet">-</span> <span class="string">$files</span> <span class="string">:=</span> <span class="string">.Files</span> }}</span><br><span class="line">{{<span class="bullet">-</span> <span class="string">range</span>  <span class="string">.Values.secretOverrides</span> }}</span><br><span class="line">{{<span class="bullet">-</span> <span class="string">range</span> <span class="string">$key</span>, <span class="string">$value</span> <span class="string">:=</span>  <span class="string">($files.Get</span> <span class="string">(printf</span> <span class="string">"%s"</span> <span class="string">.)</span> <span class="string">|</span> <span class="string">fromYaml)</span> }}</span><br><span class="line">{{ <span class="string">$key</span> <span class="string">|</span> <span class="string">indent</span> <span class="number">2</span> }}<span class="string">:</span> {{ <span class="string">$value</span> <span class="string">|</span> <span class="string">b64enc</span> }}</span><br><span class="line">{{<span class="bullet">-</span> <span class="string">end</span> }}</span><br><span class="line">{{<span class="bullet">-</span> <span class="string">end</span> }}</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+
+<p>最后给我deployment.yaml的例子,大家可以参考下</p>
+<figure class="highlight yaml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> {{ <span class="string">include</span> <span class="string">"think-manifesto.fullname"</span> <span class="string">.</span> }}</span><br><span class="line">  <span class="attr">namespace:</span> {{ <span class="string">.Values.nameSpace</span> }}</span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    {{<span class="bullet">-</span> <span class="string">include</span> <span class="string">"think-manifesto.labels"</span> <span class="string">.</span> <span class="string">|</span> <span class="string">nindent</span> <span class="number">4</span> }}</span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">replicas:</span> {{ <span class="string">.Values.replicaCount</span> }}</span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      {{<span class="bullet">-</span> <span class="string">include</span> <span class="string">"think-manifesto.selectorLabels"</span> <span class="string">.</span> <span class="string">|</span> <span class="string">nindent</span> <span class="number">6</span> }}</span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        {{<span class="bullet">-</span> <span class="string">include</span> <span class="string">"think-manifesto.selectorLabels"</span> <span class="string">.</span> <span class="string">|</span> <span class="string">nindent</span> <span class="number">8</span> }}</span><br><span class="line">      <span class="attr">annotations:</span></span><br><span class="line">        {{<span class="bullet">-</span> <span class="string">if</span> <span class="string">.Values.configOverrides</span>}}</span><br><span class="line">        <span class="attr">checksum/config:</span> {{ <span class="string">include</span> <span class="string">(print</span> <span class="string">$.Template.BasePath</span> <span class="string">"/configmap.yaml"</span><span class="string">)</span> <span class="string">.</span> <span class="string">|</span> <span class="string">sha256sum</span> }}</span><br><span class="line">        {{<span class="bullet">-</span> <span class="string">end</span> }}</span><br><span class="line">        {{<span class="bullet">-</span> <span class="string">if</span> <span class="string">.Values.secretOverrides</span>}}</span><br><span class="line">        <span class="attr">checksum/secret:</span> {{ <span class="string">include</span> <span class="string">(print</span> <span class="string">$.Template.BasePath</span> <span class="string">"/secret.yaml"</span><span class="string">)</span> <span class="string">.</span> <span class="string">|</span> <span class="string">sha256sum</span> }}</span><br><span class="line">        {{<span class="bullet">-</span> <span class="string">end</span> }}</span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      {{<span class="bullet">-</span> <span class="string">with</span> <span class="string">.Values.imagePullSecrets</span> }}</span><br><span class="line">      <span class="attr">imagePullSecrets:</span></span><br><span class="line">        {{<span class="bullet">-</span> <span class="string">toYaml</span> <span class="string">.</span> <span class="string">|</span> <span class="string">nindent</span> <span class="number">8</span> }}</span><br><span class="line">      {{<span class="bullet">-</span> <span class="string">end</span> }}</span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> {{ <span class="string">.Chart.Name</span> }}</span><br><span class="line">          <span class="attr">image:</span> <span class="string">"<span class="template-variable">{{ .Values.image.repository }}</span>:<span class="template-variable">{{ .Values.image.tag | default .Chart.AppVersion }}</span>"</span></span><br><span class="line">          <span class="attr">imagePullPolicy:</span> {{ <span class="string">.Values.image.pullPolicy</span> }}</span><br><span class="line">          <span class="attr">ports:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> {{ <span class="string">.Values.service.portName</span> }}</span><br><span class="line">              <span class="attr">containerPort:</span> {{ <span class="string">.Values.service.port</span> }}</span><br><span class="line">          <span class="attr">envFrom:</span></span><br><span class="line">            {{<span class="bullet">-</span> <span class="string">if</span> <span class="string">.Values.configOverrides</span> }}</span><br><span class="line">            <span class="bullet">-</span> <span class="attr">configMapRef:</span></span><br><span class="line">                <span class="attr">name:</span> {{ <span class="string">include</span> <span class="string">"think-manifesto.fullname"</span> <span class="string">.</span> }}<span class="string">-configmap</span></span><br><span class="line">            {{<span class="bullet">-</span> <span class="string">end</span> }}</span><br><span class="line">            {{<span class="bullet">-</span> <span class="string">if</span> <span class="string">.Values.secretOverrides</span> }}</span><br><span class="line">            <span class="bullet">-</span> <span class="attr">secretRef:</span></span><br><span class="line">                <span class="attr">name:</span> {{ <span class="string">include</span> <span class="string">"think-manifesto.fullname"</span> <span class="string">.</span> }}<span class="string">-secret</span></span><br><span class="line">            {{<span class="bullet">-</span> <span class="string">end</span> }}</span><br><span class="line">          {{<span class="bullet">-</span> <span class="string">with</span> <span class="string">.Values.livenessProbe</span> }}</span><br><span class="line">          <span class="attr">livenessProbe:</span></span><br><span class="line">            {{<span class="bullet">-</span> <span class="string">toYaml</span> <span class="string">.</span> <span class="string">|</span> <span class="string">nindent</span> <span class="number">12</span> }}</span><br><span class="line">          {{<span class="bullet">-</span> <span class="string">end</span> }}</span><br><span class="line">          {{<span class="bullet">-</span> <span class="string">with</span> <span class="string">.Values.readinessProbe</span> }}</span><br><span class="line">          <span class="attr">readinessProbe:</span></span><br><span class="line">            {{<span class="bullet">-</span> <span class="string">toYaml</span> <span class="string">.</span> <span class="string">|</span> <span class="string">nindent</span> <span class="number">12</span> }}</span><br><span class="line">          {{<span class="bullet">-</span> <span class="string">end</span> }}</span><br><span class="line">          <span class="attr">resources:</span></span><br><span class="line">            {{<span class="bullet">-</span> <span class="string">toYaml</span> <span class="string">.Values.resources</span> <span class="string">|</span> <span class="string">nindent</span> <span class="number">12</span> }}</span><br><span class="line">      {{<span class="bullet">-</span> <span class="string">with</span> <span class="string">.Values.nodeSelector</span> }}</span><br><span class="line">      <span class="attr">nodeSelector:</span></span><br><span class="line">        {{<span class="bullet">-</span> <span class="string">toYaml</span> <span class="string">.</span> <span class="string">|</span> <span class="string">nindent</span> <span class="number">8</span> }}</span><br><span class="line">      {{<span class="bullet">-</span> <span class="string">end</span> }}</span><br><span class="line">      {{<span class="bullet">-</span> <span class="string">with</span> <span class="string">.Values.affinity</span> }}</span><br><span class="line">      <span class="attr">affinity:</span></span><br><span class="line">        {{<span class="bullet">-</span> <span class="string">toYaml</span> <span class="string">.</span> <span class="string">|</span> <span class="string">nindent</span> <span class="number">8</span> }}</span><br><span class="line">      {{<span class="bullet">-</span> <span class="string">end</span> }}</span><br><span class="line">      {{<span class="bullet">-</span> <span class="string">with</span> <span class="string">.Values.tolerations</span> }}</span><br><span class="line">      <span class="attr">tolerations:</span></span><br><span class="line">        {{<span class="bullet">-</span> <span class="string">toYaml</span> <span class="string">.</span> <span class="string">|</span> <span class="string">nindent</span> <span class="number">8</span> }}</span><br><span class="line">      {{<span class="bullet">-</span> <span class="string">end</span> }}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+
+<p>至于values.yaml我就不给出来了，基本上是其他模板需要什么就写在上面就好了。</p>
+<p>和Kustomize相比,helm安装第三方chart很方便，它有自己的仓库，这里附上我安装traefik2的命令</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 添加traefiK仓库</span><br><span class="line">helm repo add traefik   https://traefik.github.io/charts    </span><br><span class="line">#添加国内仓库       </span><br><span class="line">helm repo add stable http://mirror.azure.cn/kubernetes/charts       </span><br><span class="line">helm repo add aliyun https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts       </span><br><span class="line">helm repo update       </span><br><span class="line">helm repo list</span><br><span class="line"></span><br><span class="line">helm install --set deployment.kind=DaemonSet --set namespaceOverride=traefik --set service.enabled=false traefik traefik/traefik</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="本地验证"><a href="#本地验证" class="headerlink" title="本地验证"></a>本地验证</h4><p>当你写好了上面的chart之后,如果你本地没有kubernetes环境(因为它可能在服务器才存在),而你又想要在本地进行验证你写得是否有问题，那么可以使用下面的命令。</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 将下面的变量替换成你自己的。 chart-name表示chart的名字,chart-dir表示chart地址</span><br><span class="line">helm template --dry-run --debug --disable-openapi-validation ${chart-name} .\${chart-dir}\</span><br></pre></td></tr></tbody></table></figure>
+
+<p>然后如果你想要在k8s环境中安装的时候,而k8s环境又在远端服务器,那么你可以将chart打包，然后到服务器中进行安装，然后也可以在<br>将chart上传到服务器中，然后进行安装(服务器中要先安装helm)。</p>
+<h3 id="写到最后"><a href="#写到最后" class="headerlink" title="写到最后"></a>写到最后</h3><p>自此,从springcloud迁移到k8s集群总算是完成了。因为是第一次使用helm(以前都用的kustomize),所以在helm这里耗费了一些功夫，主要是排查错误方面的,不过不得不说helm的文档写得不错，很清晰。</p>
+<p>再然后就是代码改造以及一些配置问题,因为迁移azure,所以上面的关于它pipeline的一些配置不是很清楚，不过好在可以直接练习他们的运维,还是帮我们解决了一些问题的。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">…</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Zhu.Yang</p>
+  <div class="site-description" itemprop="description">来都来了看看吧.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">133</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">81</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  © 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhu.Yang</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">668k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">10:07</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> &amp; <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script data-pjax="" async="" src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+
+    </div>
+
+
+<script src="/bundle.js"></script><script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+;
+
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+;
+
+document.querySelectorAll('.pdfobject-container').forEach(element => {
+  let url = element.dataset.target;
+  let pdfOpenParams = {
+    navpanes : 0,
+    toolbar  : 0,
+    statusbar: 0,
+    pagemode : 'thumbs',
+    view     : 'FitH'
+  };
+  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+
+  if (NexT.utils.supportsPDFs()) {
+    element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
+  } else {
+    element.innerHTML = `<iframe src="${fullURL}" style="height: ${element.dataset.height};" frameborder="0"></iframe>`;
+  }
+});
+</script></body></html>
