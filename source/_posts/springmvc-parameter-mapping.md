@@ -6,7 +6,7 @@ tags: [SpringMVC, Handler, HandlerMapping, Jackson]
 
 在之前的文章[SpringMVC源码深度分析](https://juejin.cn/post/6844903911426359303)分析了SpringMVC的启动流程，现在在来回顾下总体流程。
 
-！[总体流程](/images/)
+！[总体流程](/images/spring-mvc-structure.png)
 
 
 ### 核心组件
