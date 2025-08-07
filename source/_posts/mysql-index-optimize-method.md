@@ -3,7 +3,40 @@ title: mysql-index-optimize-method
 date: 2024-09-23 10:03:44
 tags: [mysql, 索引优化, join, explain]
 ---
-·
+
+今天遇到的一个问题
+SELECT
+            id,
+            name,
+            service_line_id serviceLineId,
+            company_id companyId,
+            source,
+            form_type formType,
+            form_config formConfig,
+            columns_config columnsConfig
+        FROM
+            sys_published_form_config
+        WHERE
+            del_flag = '0' AND status = '0' AND source IN
+            <foreach collection="sources" item="source" open="(" separator="," close=")">
+                #{source}
+            </foreach>
+
+source是bitInt, del_flag,status都是bit类型的数据
+
+最开始尝试添加了索引idx_source_status_del_flag,但是同样的sql突然查询不出来数据了(mysql版本8.0.23).
+
+但是如果把其中部分sql换成 del_flag = b'0' AND status = b'0' 或者 del_flag = 0 AND status = 0就可以查询出来数据了。
+
+所以字段最好不要使用bit类型的 
+
+
+SELECT * FROM your_table WHERE bit_column = 0;
+SHOW WARNINGS;
+
+SELECT * FROM your_table WHERE bit_column = '0';
+SHOW WARNINGS;
+
 
 原始sql:
 
